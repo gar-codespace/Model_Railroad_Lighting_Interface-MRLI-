@@ -11,5 +11,4 @@ while True:
     except KeyboardInterrupt:
         break
 pin.off()
-
 print("Finished.")
