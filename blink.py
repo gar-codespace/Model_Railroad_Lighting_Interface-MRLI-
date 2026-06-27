@@ -1,15 +1,17 @@
 from machine import Pin
 from utime import sleep
 
-pin = Pin("LED", Pin.OUT)
+led = Pin(15, Pin.OUT)
+led.value(0)
 
 print("LED starts flashing...")
 while True:
     try:
-        pin.toggle()
+        led.toggle()
         sleep(1) # sleep 1sec
+        print("Finished.")
     except KeyboardInterrupt:
         break
-pin.off()
+led.off()
 
 print("Finished.")
