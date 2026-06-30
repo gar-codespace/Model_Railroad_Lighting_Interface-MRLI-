@@ -2,7 +2,6 @@
 These are the methods that control the interface
 '''
 
-# local libraries
 import entities
 
 class Display() :
@@ -25,16 +24,20 @@ class Display() :
         
         return entities.SSD1306_I2C(128, 64, i2c)
     
-    def testDisplay(self, display):
+    
+def testDisplay(display):
 
+    display.fill(0)
+    j = 0
+
+    for i in range(entities.DISPLAY_ROWS):
+        display.text(entities.DISPLAY_TEST_MESSAGE, 0, j)
+        display.show()
+        entities.SLEEP(.2)
         display.fill(0)
-        j = 0
+        j += entities.DISPLAY_LINE_HEIGHT
 
-        for i in range(entities.DISPLAY_ROWS):
-            display.text(entities.DISPLAY_TEST_MESSAGE, 0, j)
-            display.show()
-            entities.SLEEP(.2)
-            display.fill(0)
-            j += entities.DISPLAY_LINE_HEIGHT
-
-        return
+    entities.SLEEP(.2)
+    display.text(entities.MESSAGES[1], 0, 0)
+    display.show()
+    return

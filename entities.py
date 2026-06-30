@@ -34,6 +34,10 @@ ROUTINES = {1:'Daytime',
             8:'Off'}
 CURRENT_ROUTINE = 1
 
+# messages
+MESSAGES = {1:'Display OK'
+            }
+
 # Raspi Pico pin assignments
 SWITCHES = (6, 7, 8, 9, 10)
 LEDS = (11, 12, 13, 14, 15)
@@ -62,7 +66,8 @@ class Initialize:
         
         LED.value(MACHINE_ON)
 
-        interface.Display().testDisplay(interface.Display().display())
+        display = interface.Display().display()
+        interface.testDisplay(display)
 
         self.result += self.initializeSwitches()
 
