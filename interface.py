@@ -4,25 +4,29 @@ These are the methods that control the interface
 
 import entities
 
-class Display() :
+class Display1() :
 
     # Everything about the OLED display
+    # Tuple items: sda, scl, width, height, addr
 
-    def __init__(self):
+    def __init__(self, list):
 
         self.result = ''
-
-        return
+        self.sda = list[0]
+        self.scl = list[1]
+        self.width = list[2]
+        self.height = list[3]
+        self.addr = list[4]
 
     def getDisplay(self):
 
         i2c = entities.I2C(0,
-                        sda = entities.PIN(entities.OLED['sda']),
-                        scl = entities.PIN(entities.OLED['scl']),
+                        sda = entities.PIN(self.sda),
+                        scl = entities.PIN(self.scl),
                         freq = 400000
                         )
         
-        return entities.SSD1306_I2C(entities.OLED_WIDTH, entities.OLED_HEIGHT, i2c)
+        return entities.SSD1306_I2C(self.width, self.height, i2c, self.addr)
     
     
 def testDisplay(display):

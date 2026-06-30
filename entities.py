@@ -22,8 +22,8 @@ MACHINE_ON = CONST(1)
 LED = PIN('LED', PIN.OUT)
 
 # OLED
-OLED_ADDRESS1 = const(0x3C)
-OLED_ADDRESS0 = const(0x3D)
+OLED0_ADDRESS = const(0x3D)
+OLED1_ADDRESS = const(0x3C)
 OLED_WIDTH = CONST(128)
 OLED_HEIGHT = CONST(64)
 DISPLAY_LINE_HEIGHT = CONST(14)
@@ -48,7 +48,13 @@ MESSAGES = {1:'Display OK'
 # Raspi Pico pin assignments
 SWITCHES = (6, 7, 8, 9, 10)
 LEDS = (11, 12, 13, 14, 15)
-OLED = {'scl': 17, 'sda':16}
+OLED0 = {'sda':0, 'scl': 0}
+OLED1 = {'sda':16, 'scl': 17}
+
+# Configurations
+# sda, scl, width, height, addr
+DISPLAY0 = (OLED0['sda'], OLED0['scl'], OLED_WIDTH, OLED_HEIGHT, OLED0_ADDRESS)
+DISPLAY1 = (OLED1['sda'], OLED1['scl'], OLED_WIDTH, OLED_HEIGHT, OLED1_ADDRESS)
 
 # local methods
 class Initialize:
