@@ -22,6 +22,8 @@ MACHINE_ON = CONST(1)
 LED = PIN('LED', PIN.OUT)
 
 # OLED
+OLED_ADDRESS1 = const(0x3C)
+OLED_ADDRESS0 = const(0x3D)
 OLED_WIDTH = CONST(128)
 OLED_HEIGHT = CONST(64)
 DISPLAY_LINE_HEIGHT = CONST(14)
@@ -70,9 +72,6 @@ class Initialize:
     def initializeAll(self):
         
         LED.value(MACHINE_ON)
-
-        display = interface.Display().display()
-        interface.testDisplay(display)
 
         self.result += self.initializeSwitches()
 

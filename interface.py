@@ -14,7 +14,7 @@ class Display() :
 
         return
 
-    def display(self):
+    def getDisplay(self):
 
         i2c = entities.I2C(0,
                         sda = entities.PIN(entities.OLED['sda']),

@@ -1,9 +1,12 @@
 '''
-MUTT Layout Lighting Automation
+Metropolitan Harbor Railroad
+Metropolitan Uniom Transfer Terminal
+Layout Lighting Automation
 Copyright 2026 Greg Ritacco
 '''
 
 import entities
+import interface
 
-entities.Initialize().initializeAll()
-
+display = interface.Display().getDisplay()
+interface.testDisplay(display)
