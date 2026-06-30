@@ -5,7 +5,9 @@ Entities is the file that has support functions
 # packaged libraries
 from machine import Pin as PIN, I2C
 from utime import sleep as SLEEP
-from utime import sleep_ms as SLEEP_MS
+# from utime import sleep_ms as SLEEP_MS
+from micropython import const as CONST
+import framebuf as FRAMEBUF
 
 # 3rd party libraries
 from ssd1306 import SSD1306_I2C
@@ -14,14 +16,17 @@ from ssd1306 import SSD1306_I2C
 import interface
 
 # constants
-SCRIPT_REV = '20260626'
-MACHINE_OFF = 0
-MACHINE_ON = 1
+SCRIPT_REV = CONST('20260626')
+MACHINE_OFF = CONST(0)
+MACHINE_ON = CONST(1)
 LED = PIN('LED', PIN.OUT)
-DISPLAY_LINE_HEIGHT = 14
-DISPLAY_ROWS = 5
-DISPLAY_TEST_MESSAGE = 'abcdefghijklmnopqrstuvwxyz'
-CURRENT_ROUTINE = 1
+
+# OLED
+OLED_WIDTH = CONST(128)
+OLED_HEIGHT = CONST(64)
+DISPLAY_LINE_HEIGHT = CONST(14)
+DISPLAY_ROWS = CONST(5)
+DISPLAY_TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
 
 # routines
 ROUTINES = {1:'Daytime',

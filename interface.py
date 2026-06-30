@@ -22,7 +22,7 @@ class Display() :
                         freq = 400000
                         )
         
-        return entities.SSD1306_I2C(128, 64, i2c)
+        return entities.SSD1306_I2C(entities.OLED_WIDTH, entities.OLED_HEIGHT, i2c)
     
     
 def testDisplay(display):
