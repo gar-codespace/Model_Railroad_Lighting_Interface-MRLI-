@@ -1,19 +1,9 @@
-from machine import Pin
-from utime import sleep
+'''
+MUTT Layout Lighting Automation
+Copyright 2026 Greg Ritacco
+'''
 
-led = Pin(15, Pin.OUT)
-check = Pin("LED", Pin.OUT)
-led.value(0)
+import entities
 
-print("LED starts flashing...")
-while True:
-    try:
-        led.toggle()
-        check.toggle()
-        sleep(0.5) # sleep 1sec
-    except KeyboardInterrupt:
-        break
-led.off()
-check.off()
+entities.Initialize().initializeAll()
 
-print("Finished.")
