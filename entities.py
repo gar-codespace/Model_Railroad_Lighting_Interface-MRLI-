@@ -4,13 +4,21 @@ Entities is the file that has support functions
 
 # packaged libraries
 from machine import Pin as PIN, I2C
-from utime import sleep as SLEEP
-# from utime import sleep_ms as SLEEP_MS
 from micropython import const as CONST
+import utime as UTIME
 import framebuf as FRAMEBUF
 
 # 3rd party libraries
 from ssd1306 import SSD1306_I2C
+from rotary_encoder import RotaryEncoder, RotaryEncoderEvent
+from rotary_encoder_rp2 import RotaryEncoderRP2
+
+
+
+
+
+
+
 
 # local libraries
 import interface
