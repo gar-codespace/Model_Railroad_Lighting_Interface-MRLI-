@@ -49,7 +49,8 @@ MESSAGES = {1:'Display OK'
 SWITCHES = (6, 7, 8, 9, 10)
 LEDS = (11, 12, 13, 14, 15)
 OLED0 = {'sda':16, 'scl': 17} # Pins 4 and 5 are the default for the Pico
-OLED1 = {'sda':14, 'scl': 15}
+OLED1 = {'sda':0, 'scl': 0}
+ROTARY = {'push':18, 'dir':19, 'step':20}
 
 # Configurations
 # sda, scl, width, height, addr
