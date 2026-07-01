@@ -8,5 +8,5 @@ Copyright 2026 Greg Ritacco
 import entities
 import interface
 
-display1 = interface.Display1(entities.DISPLAY1).getDisplay()
-interface.testDisplay(display1)
+display = interface.Display1(entities.DISPLAY0).getDisplay()
+interface.testDisplay(display)

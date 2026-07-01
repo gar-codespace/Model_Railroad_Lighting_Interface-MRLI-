@@ -12,15 +12,17 @@ class Display1() :
     def __init__(self, list):
 
         self.result = ''
-        self.sda = list[0]
-        self.scl = list[1]
-        self.width = list[2]
-        self.height = list[3]
-        self.addr = list[4]
+        self.bus = list[0]
+        self.sda = list[1]
+        self.scl = list[2]
+        self.width = list[3]
+        self.height = list[4]
+        self.addr = list[5]
 
     def getDisplay(self):
 
-        i2c = entities.I2C(0,
+        i2c = entities.I2C(
+                        self.bus,
                         sda = entities.PIN(self.sda),
                         scl = entities.PIN(self.scl),
                         freq = 400000
