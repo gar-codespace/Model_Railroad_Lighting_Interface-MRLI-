@@ -4,26 +4,6 @@ These are the methods that control the interface
 
 import entities
 
-# Listeners
-def any_event_listener(event, clicks):
-    print(f"ANY Event ID: {event} Clicks: {clicks}")
-
-
-def turn_left_listener():
-    print(f"Turn Left")
-
-
-def turn_left_fast_listener():
-    print(f"Turn Left Fast")
-
-
-def turn_right_listener():
-    print(f"Turn Right")
-
-
-def turn_right_fast_listener():
-    print(f"Turn Right Fast")
-
 
 class Display1() :
 
@@ -74,9 +54,8 @@ class Rotary():
         # Create the rotary encoder and selector object
         encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_pin_clk, pin_dt=self.encoder_pin_dt, pin_sw=self.encoder_pin_sw)
 
-
         # subscribe to events
-        encoder.on(entities.RotaryEncoderEvent.ANY, self.any_event_listener)
+        # encoder.on(entities.RotaryEncoderEvent.ANY, self.any_event_listener)
         encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_listener)
         encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_listener)
 
@@ -85,13 +64,9 @@ class Rotary():
         # additional listeners
         # encoder.on(entities.RotaryEncoderEvent.TURN_LEFT_FAST, self.turn_left_fast_listener)
         # encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT_FAST, self.turn_right_fast_listener)
+        # encoder.on(entities.RotaryEncoderEvent.RELEASED, self.released_listener)
         # encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.multy_click_listener)
         # encoder.on(entities.RotaryEncoderEvent.HELD, self.held_listener)
-        # encoder.on(entities.RotaryEncoderEvent.RELEASED, self.released_listener)
-
-
-
-
 
         return encoder
 
@@ -121,21 +96,3 @@ class Rotary():
 
     def released_listener(self):
         print(f"Released")
-
-
-def testDisplay(display):
-
-    display.fill(0)
-    j = 0
-
-    for i in range(entities.DISPLAY_ROWS):
-        display.text(entities.DISPLAY_TEST_MESSAGE, 0, j)
-        display.show()
-        entities.UTIME.sleep(.2)
-        display.fill(0)
-        j += entities.DISPLAY_LINE_HEIGHT
-
-    entities.UTIME.sleep(.2)
-    display.text(entities.MESSAGES[1], 0, 0)
-    display.show()
-    return

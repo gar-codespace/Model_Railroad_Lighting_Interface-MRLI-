@@ -87,6 +87,23 @@ class Initialize:
         return self.result
 
 
+def testDisplay(display):
+
+    display.fill(0)
+    j = 0
+
+    for i in range(DISPLAY_ROWS):
+        display.text(DISPLAY_TEST_MESSAGE, 0, j)
+        display.show()
+        UTIME.sleep(.2)
+        display.fill(0)
+        j += DISPLAY_LINE_HEIGHT
+
+    UTIME.sleep(.2)
+    display.text(MESSAGES[1], 0, 0)
+    display.show()
+    return
+
 def testSwitches() -> None:
     for i in SWITCHES:
         toggleX = PIN(i)
