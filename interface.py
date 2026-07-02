@@ -40,7 +40,6 @@ class Rotary():
     def __init__(self, rotary):
 
         self.result = ''
-        ROTARY = {'push':18, 'dir':19, 'step':20}
         self.push = rotary['push']
         self.dt = rotary['dt']
         self.clk = rotary['clk']
@@ -49,6 +48,8 @@ class Rotary():
         self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_pin_clk = entities.PIN(self.clk, entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_pin_sw = entities.PIN(self.push, entities.PIN.IN, entities.PIN.PULL_UP)
+
+        self.display = Display1(entities.DISPLAY0).getDisplay()
 
     def getRotary(self):
         # Create the rotary encoder and selector object
@@ -74,10 +75,14 @@ class Rotary():
         print(f"ANY Event ID: {event} Clicks: {clicks}")
     
     def turn_left_listener(self):
-        print(f"Turn Left")
+        self.display.fill(0)
+        self.display.text(f"Turn Left", 0, 0)
+        self.display.show()
 
     def turn_right_listener(self):
-        print(f"Turn Right")
+        self.display.fill(0)
+        self.display.text(f"Turn Right", 0, 0)
+        self.display.show()
 
     def turn_left_fast_listener(self):
         print(f"Turn Left Fast")
@@ -86,7 +91,9 @@ class Rotary():
         print(f"Turn Right Fast")
 
     def single_click_listener(self):
-        print(f"Single Click")
+        self.display.fill(0)
+        self.display.text(f"Selected", 0, 0)
+        self.display.show()
     
     def multy_click_listener(self, clicks):
         print(f"Multiply Clicks: {clicks}")
