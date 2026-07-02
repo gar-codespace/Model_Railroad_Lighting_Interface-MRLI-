@@ -1,6 +1,6 @@
 ## MUTT Layout Lighting Automation
 MUTT is the name of my model railroad.  
-Mertopolitan Union Transfer Terminal  
+Metropolitan Union Transfer Terminal  
 This is the Micropython code for my layout lighting automation  
 The code runs on a Rasberry Pi Pico  
 
