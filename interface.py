@@ -4,6 +4,27 @@ These are the methods that control the interface
 
 import entities
 
+# Listeners
+def any_event_listener(event, clicks):
+    print(f"ANY Event ID: {event} Clicks: {clicks}")
+
+
+def turn_left_listener():
+    print(f"Turn Left")
+
+
+def turn_left_fast_listener():
+    print(f"Turn Left Fast")
+
+
+def turn_right_listener():
+    print(f"Turn Right")
+
+
+def turn_right_fast_listener():
+    print(f"Turn Right Fast")
+
+
 class Display1() :
 
     # Everything about the OLED display
@@ -29,24 +50,6 @@ class Display1() :
                         )
         
         return entities.SSD1306_I2C(self.width, self.height, i2c, self.addr)
-    
-    
-def testDisplay(display):
-
-    display.fill(0)
-    j = 0
-
-    for i in range(entities.DISPLAY_ROWS):
-        display.text(entities.DISPLAY_TEST_MESSAGE, 0, j)
-        display.show()
-        entities.SLEEP(.2)
-        display.fill(0)
-        j += entities.DISPLAY_LINE_HEIGHT
-
-    entities.SLEEP(.2)
-    display.text(entities.MESSAGES[1], 0, 0)
-    display.show()
-    return
 
 
 class Rotary():
@@ -59,13 +62,55 @@ class Rotary():
         self.result = ''
         ROTARY = {'push':18, 'dir':19, 'step':20}
         self.push = rotary['push']
-        self.dir = rotary['dir']
-        self.step = rotary['step']
+        self.dt = rotary['dt']
+        self.clk = rotary['clk']
+
+        # Define the pins for the rotary encoder and the button
+        self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP)
+        self.encoder_pin_clk = entities.PIN(self.clk, entities.PIN.IN, entities.PIN.PULL_UP)
 
     def getRotary(self):
+        # Create the rotary encoder object
+        encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_pin_clk, pin_dt=self.encoder_pin_dt)
 
-        push = entities.PIN(self.push, entities.PIN.IN, entities.PIN.PULL_UP)
-        dir = entities.PIN(self.dir, entities.PIN.IN, entities.PIN.PULL_UP)
-        step = entities.PIN(self.step, entities.PIN.IN, entities.PIN.PULL_UP)
+        # subscribe to events
+        encoder.on(entities.RotaryEncoderEvent.ANY, self.any_event_listener)
+        encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_listener)
+        encoder.on(entities.RotaryEncoderEvent.TURN_LEFT_FAST, self.turn_left_fast_listener)
+        encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_listener)
+        encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT_FAST, self.turn_right_fast_listener)
 
-        return
+        return encoder
+
+    def any_event_listener(self, event, clicks):
+        print(f"ANY Event ID: {event} Clicks: {clicks}")
+    
+    def turn_left_listener(self):
+        print(f"Turn Left")
+
+    def turn_right_listener(self):
+        print(f"Turn Right")
+
+    def turn_left_fast_listener(self):
+        print(f"Turn Left Fast")
+
+    def turn_right_fast_listener(self):
+        print(f"Turn Right Fast")
+
+    
+def testDisplay(display):
+
+    display.fill(0)
+    j = 0
+
+    for i in range(entities.DISPLAY_ROWS):
+        display.text(entities.DISPLAY_TEST_MESSAGE, 0, j)
+        display.show()
+        entities.UTIME.sleep(.2)
+        display.fill(0)
+        j += entities.DISPLAY_LINE_HEIGHT
+
+    entities.UTIME.sleep(.2)
+    display.text(entities.MESSAGES[1], 0, 0)
+    display.show()
+    return

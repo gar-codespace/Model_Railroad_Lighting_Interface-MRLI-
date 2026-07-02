@@ -1,3 +1,7 @@
+'''
+https://github.com/TTitanUA/micropython_rotary_encoder/tree/main
+'''
+
 from machine import Pin, Timer
 import uasyncio as asyncio
 from rotary_encoder import RotaryEncoder

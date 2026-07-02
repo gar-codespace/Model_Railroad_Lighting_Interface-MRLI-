@@ -7,18 +7,12 @@ from machine import Pin as PIN, I2C
 from micropython import const as CONST
 import utime as UTIME
 import framebuf as FRAMEBUF
+import uasyncio as ASYNCIO
 
 # 3rd party libraries
 from ssd1306 import SSD1306_I2C
 from rotary_encoder import RotaryEncoder, RotaryEncoderEvent
 from rotary_encoder_rp2 import RotaryEncoderRP2
-
-
-
-
-
-
-
 
 # local libraries
 import interface
@@ -58,7 +52,7 @@ SWITCHES = (6, 7, 8, 9, 10)
 LEDS = (11, 12, 13, 14, 15)
 OLED0 = {'sda':16, 'scl': 17} # Pins 4 and 5 are the default for the Pico
 OLED1 = {'sda':0, 'scl': 0}
-ROTARY = {'push':18, 'dir':19, 'step':20}
+ROTARY = {'push':18, 'dt':19, 'clk':20}
 
 # Configurations
 # sda, scl, width, height, addr

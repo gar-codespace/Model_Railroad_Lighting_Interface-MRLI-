@@ -1,3 +1,7 @@
+'''
+https://github.com/TTitanUA/micropython_rotary_encoder/tree/main
+'''
+
 import utime
 from machine import Pin
 
