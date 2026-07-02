@@ -54,7 +54,7 @@ class Display1() :
 
 class Rotary():
 
-    # Everything about the rotary encoder
+    # Everything about the rotary encoder, including the buttons
     # dist items push, direction, step
 
     def __init__(self, rotary):
@@ -68,17 +68,30 @@ class Rotary():
         # Define the pins for the rotary encoder and the button
         self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_pin_clk = entities.PIN(self.clk, entities.PIN.IN, entities.PIN.PULL_UP)
+        self.encoder_pin_sw = entities.PIN(self.push, entities.PIN.IN, entities.PIN.PULL_UP)
 
     def getRotary(self):
-        # Create the rotary encoder object
-        encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_pin_clk, pin_dt=self.encoder_pin_dt)
+        # Create the rotary encoder and selector object
+        encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_pin_clk, pin_dt=self.encoder_pin_dt, pin_sw=self.encoder_pin_sw)
+
 
         # subscribe to events
         encoder.on(entities.RotaryEncoderEvent.ANY, self.any_event_listener)
         encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_listener)
-        encoder.on(entities.RotaryEncoderEvent.TURN_LEFT_FAST, self.turn_left_fast_listener)
         encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_listener)
-        encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT_FAST, self.turn_right_fast_listener)
+
+        encoder.on(entities.RotaryEncoderEvent.CLICK, self.single_click_listener)
+
+        # additional listeners
+        # encoder.on(entities.RotaryEncoderEvent.TURN_LEFT_FAST, self.turn_left_fast_listener)
+        # encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT_FAST, self.turn_right_fast_listener)
+        # encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.multy_click_listener)
+        # encoder.on(entities.RotaryEncoderEvent.HELD, self.held_listener)
+        # encoder.on(entities.RotaryEncoderEvent.RELEASED, self.released_listener)
+
+
+
+
 
         return encoder
 
@@ -97,7 +110,19 @@ class Rotary():
     def turn_right_fast_listener(self):
         print(f"Turn Right Fast")
 
+    def single_click_listener(self):
+        print(f"Single Click")
     
+    def multy_click_listener(self, clicks):
+        print(f"Multiply Clicks: {clicks}")
+
+    def held_listener(self):
+        print(f"Held")
+
+    def released_listener(self):
+        print(f"Released")
+
+
 def testDisplay(display):
 
     display.fill(0)
