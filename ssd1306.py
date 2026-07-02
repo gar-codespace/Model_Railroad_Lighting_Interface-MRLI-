@@ -1,5 +1,7 @@
-# MicroPython SSD1306 OLED driver, I2C and SPI interfaces
-# https://github.com/stlehmann/micropython-ssd1306/blob/master/ssd1306.py
+'''
+MicroPython SSD1306 OLED driver, I2C and SPI interfaces
+https://github.com/stlehmann/micropython-ssd1306/blob/master/ssd1306.py
+'''
 
 import entities
 
