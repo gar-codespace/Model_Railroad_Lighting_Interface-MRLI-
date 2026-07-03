@@ -5,9 +5,10 @@ These are the methods that control the interface
 import entities
 
 
-class Display1() :
+class Display() :
 
     # Everything about the OLED display
+    # this display shows the menu items
     # Tuple items: buss, sda, scl, width, height, addr
 
     def __init__(self, list):
@@ -45,27 +46,27 @@ class Rotary():
         self.clk = rotary['clk']
         self.routines = entities.ROUTINES
         self.current_routine = entities.CURRENT_ROUTINE
-        #self.menu_rows = entities.OLED0_ROWS
+        self.highlighted_item = entities.CURRENT_ROUTINE
 
         # Define the pins for the rotary encoder and the button
         self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_pin_clk = entities.PIN(self.clk, entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_pin_sw = entities.PIN(self.push, entities.PIN.IN, entities.PIN.PULL_UP)
 
-        self.display = Display1(entities.DISPLAY0).getDisplay()
+        self.display = Display(entities.DISPLAY0).getDisplay()
 
     def getRotary(self):
         # Create the rotary encoder and selector object
         encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_pin_clk, pin_dt=self.encoder_pin_dt, pin_sw=self.encoder_pin_sw)
 
         # subscribe to events
-        # encoder.on(entities.RotaryEncoderEvent.ANY, self.any_event_listener)
         encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_listener)
         encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_listener)
 
         encoder.on(entities.RotaryEncoderEvent.CLICK, self.single_click_listener)
 
         # additional listeners
+        # encoder.on(entities.RotaryEncoderEvent.ANY, self.any_event_listener)
         # encoder.on(entities.RotaryEncoderEvent.TURN_LEFT_FAST, self.turn_left_fast_listener)
         # encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT_FAST, self.turn_right_fast_listener)
         # encoder.on(entities.RotaryEncoderEvent.RELEASED, self.released_listener)
@@ -74,21 +75,25 @@ class Rotary():
 
         return encoder
     
-    def menu_items(self):
+    def get_menu_items(self, direction):
 
-        items: tuple
+        items = {0:7, 1:8, 2:0, 3:1, 4:2}
+
+        return {0:7, 1:8, 2:0, 3:1, 4:2}
 
 
     def get_menu(self, direction):
 
         increment = 0
         # menu_items = self.get_menu_items(direction)
-        menu_items = {0:7, 1:8, 2:0, 3:1, 4:2} # def get_menu_items
+        menu_items = self.get_menu_items(direction)
 
-        self.display.rect(0, 24, 128, 15, 1) # abstract this
+        self.display.rect(0, 24, 128, 15, 1) # eliminate hard coding
         for i in range (entities.OLED0['ROWS']):
             self.display.text(self.routines[menu_items[i]], 4, increment)
             increment += entities.OLED0['LINE_HEIGHT']
+
+        self.highlighted_item = menu_items[2] # eliminate hard coding
 
         return self.display
 
@@ -97,7 +102,7 @@ class Rotary():
     
     def turn_left_listener(self):
         self.display.fill(0)
-        self.display.text(f"Turn Left", 0, 0)
+        self.get_menu('left')
         self.display.show()
 
     def turn_right_listener(self):
@@ -106,9 +111,8 @@ class Rotary():
         self.display.show()
 
     def single_click_listener(self):
-        self.display.fill(0)
-        self.display.text(f"Selected", 0, 0)
-        self.display.show()
+        entities.play_routine(self.highlighted_item)
+
 
     def turn_left_fast_listener(self):
         print(f"Turn Left Fast")

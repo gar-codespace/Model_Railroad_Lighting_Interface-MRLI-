@@ -57,47 +57,6 @@ ROUTINES = {0:'Daytime',
             8:'Off'}
 CURRENT_ROUTINE = 0
 
+def play_routine(routine):
 
-
-class Initialize:
-
-    def __init__(self):
-
-        self.result = ''
-
-        return
-    
-    def initializeSwitches(self): # Turn all the switches on
-        
-        status = ''
-        for i in P_SWITCHES:
-            switchX = PIN(i, PIN.OUT)
-            switchX.value(MACHINE_ON)
-            status += (f"GPIO {switchX} set to {switchX.value()} \n")
-
-        return status
-    
-    def initializeAll(self):
-        
-        LED.value(MACHINE_ON)
-
-        self.result += self.initializeSwitches()
-
-        return self.result
-
-
-
-
-def testSwitches() -> None:
-    for i in P_SWITCHES:
-        toggleX = PIN(i)
-        toggleX.toggle()
-
-def shutDown() -> None:
-    for i in P_SWITCHES:
-        switchX = PIN(i)
-        switchX.value(MACHINE_OFF)
-
-    for i in P_LEDS:
-        ledX = PIN(i)
-        ledX.value(MACHINE_OFF)
+    print(ROUTINES[routine])
