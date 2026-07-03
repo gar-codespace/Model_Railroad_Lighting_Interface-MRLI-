@@ -43,6 +43,9 @@ class Rotary():
         self.push = rotary['push']
         self.dt = rotary['dt']
         self.clk = rotary['clk']
+        self.routines = entities.ROUTINES
+        self.current_routine = entities.CURRENT_ROUTINE
+        #self.menu_rows = entities.OLED0_ROWS
 
         # Define the pins for the rotary encoder and the button
         self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP)
@@ -70,6 +73,24 @@ class Rotary():
         # encoder.on(entities.RotaryEncoderEvent.HELD, self.held_listener)
 
         return encoder
+    
+    def menu_items(self):
+
+        items: tuple
+
+
+    def get_menu(self, direction):
+
+        increment = 0
+        # menu_items = self.get_menu_items(direction)
+        menu_items = {0:7, 1:8, 2:0, 3:1, 4:2} # def get_menu_items
+
+        self.display.rect(0, 24, 128, 15, 1) # abstract this
+        for i in range (entities.OLED0['ROWS']):
+            self.display.text(self.routines[menu_items[i]], 4, increment)
+            increment += entities.OLED0['LINE_HEIGHT']
+
+        return self.display
 
     def any_event_listener(self, event, clicks):
         print(f"ANY Event ID: {event} Clicks: {clicks}")
@@ -81,7 +102,12 @@ class Rotary():
 
     def turn_right_listener(self):
         self.display.fill(0)
-        self.display.text(f"Turn Right", 0, 0)
+        self.get_menu('right')
+        self.display.show()
+
+    def single_click_listener(self):
+        self.display.fill(0)
+        self.display.text(f"Selected", 0, 0)
         self.display.show()
 
     def turn_left_fast_listener(self):
@@ -89,11 +115,6 @@ class Rotary():
 
     def turn_right_fast_listener(self):
         print(f"Turn Right Fast")
-
-    def single_click_listener(self):
-        self.display.fill(0)
-        self.display.text(f"Selected", 0, 0)
-        self.display.show()
     
     def multy_click_listener(self, clicks):
         print(f"Multiply Clicks: {clicks}")

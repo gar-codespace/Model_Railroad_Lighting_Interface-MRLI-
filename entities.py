@@ -17,49 +17,48 @@ from rotary_encoder_rp2 import RotaryEncoderRP2
 # local libraries
 import interface
 
+# Raspi Pico pin assignments
+P_SWITCHES = (6, 7, 8, 9, 10)
+P_LEDS = (11, 12, 13, 14, 15)
+P_OLED0 = {'sda':16, 'scl': 17} # Pins 4 and 5 are the default for the Pico
+P_OLED1 = {'sda':0, 'scl': 0}
+P_ROTARY = {'push':18, 'dt':19, 'clk':20}
+
 # constants
 SCRIPT_REV = CONST('20260626')
 MACHINE_OFF = CONST(0)
 MACHINE_ON = CONST(1)
 LED = PIN('LED', PIN.OUT)
+TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
 
-# OLED
-OLED0_ADDRESS = const(0x3C)
-OLED1_ADDRESS = const(0x3C)
-OLED_WIDTH = CONST(128)
-OLED_HEIGHT = CONST(64)
-DISPLAY_LINE_HEIGHT = CONST(14)
-DISPLAY_ROWS = CONST(5)
-DISPLAY_TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
-
-# routines
-ROUTINES = {1:'Daytime',
-            2:'Twlight',
-            3:'Nightime',
-            4:'Sunrise',
-            5:'Sunset',
-            6:'Manual',
-            7:'Maintenance',
-            8:'Off'}
-CURRENT_ROUTINE = 1
-
-# messages
-MESSAGES = {1:'Display OK'
-            }
-
-# Raspi Pico pin assignments
-SWITCHES = (6, 7, 8, 9, 10)
-LEDS = (11, 12, 13, 14, 15)
-OLED0 = {'sda':16, 'scl': 17} # Pins 4 and 5 are the default for the Pico
-OLED1 = {'sda':0, 'scl': 0}
-ROTARY = {'push':18, 'dt':19, 'clk':20}
+# OLED0 specs
+OLED0 = {'ADDRESS': CONST(0x3C),
+         'WIDTH': CONST(128),
+         'HEIGHT': CONST(64),
+         'LINE_HEIGHT': CONST(14),
+         'ROWS': CONST(5),
+        }
 
 # Configurations
 # sda, scl, width, height, addr
-DISPLAY0 = (0, OLED0['sda'], OLED0['scl'], OLED_WIDTH, OLED_HEIGHT, OLED0_ADDRESS)
-DISPLAY1 = (1, OLED1['sda'], OLED1['scl'], OLED_WIDTH, OLED_HEIGHT, OLED1_ADDRESS)
+DISPLAY0 = (0, P_OLED0['sda'], P_OLED0['scl'], OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
 
-# local methods
+OLED1_ADDRESS = const(0x3C)
+
+# routines
+ROUTINES = {0:'Daytime',
+            1:'Twlight',
+            2:'Nightime',
+            3:'Sunrise',
+            4:'Sunset',
+            5:'Lightning',
+            6:'Manual',
+            7:'Maintenance',
+            8:'Off'}
+CURRENT_ROUTINE = 0
+
+
+
 class Initialize:
 
     def __init__(self):
@@ -71,7 +70,7 @@ class Initialize:
     def initializeSwitches(self): # Turn all the switches on
         
         status = ''
-        for i in SWITCHES:
+        for i in P_SWITCHES:
             switchX = PIN(i, PIN.OUT)
             switchX.value(MACHINE_ON)
             status += (f"GPIO {switchX} set to {switchX.value()} \n")
@@ -87,33 +86,18 @@ class Initialize:
         return self.result
 
 
-def testDisplay(display):
 
-    display.fill(0)
-    j = 0
-
-    for i in range(DISPLAY_ROWS):
-        display.text(DISPLAY_TEST_MESSAGE, 0, j)
-        display.show()
-        UTIME.sleep(.2)
-        display.fill(0)
-        j += DISPLAY_LINE_HEIGHT
-
-    UTIME.sleep(.2)
-    display.text(MESSAGES[1], 0, 0)
-    display.show()
-    return
 
 def testSwitches() -> None:
-    for i in SWITCHES:
+    for i in P_SWITCHES:
         toggleX = PIN(i)
         toggleX.toggle()
 
 def shutDown() -> None:
-    for i in SWITCHES:
+    for i in P_SWITCHES:
         switchX = PIN(i)
         switchX.value(MACHINE_OFF)
 
-    for i in LEDS:
+    for i in P_LEDS:
         ledX = PIN(i)
         ledX.value(MACHINE_OFF)
