@@ -1,8 +1,5 @@
-'''
-These are the methods that control the interface
-'''
-
 import entities
+import model
 
 
 class Display() :# abstract this to inherit from SSD1360_I2C
@@ -13,7 +10,6 @@ class Display() :# abstract this to inherit from SSD1360_I2C
 
     def __init__(self, list):
 
-        self.result = ''
         self.bus = list[0]
         self.sda = list[1]
         self.scl = list[2]
@@ -46,18 +42,27 @@ class Controller():
         self.push = rotary['push']
         self.dt = rotary['dt']
         self.clk = rotary['clk']
-        # menu creation
-        self.routines = entities.ROUTINES
-        self.current_routine = entities.CURRENT_ROUTINE
-        self.highlighted_item = entities.CURRENT_ROUTINE
-        self.menu_top = 2
 
-        # Define the pins for the rotary encoder and the button
+        # Define the rotary encoder and the button
         self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_pin_clk = entities.PIN(self.clk, entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_pin_sw = entities.PIN(self.push, entities.PIN.IN, entities.PIN.PULL_UP)
 
-        self.display = Display(entities.DISPLAY0).getDisplay() # abstract this
+        # Define the display
+        self.menu_display = entities.MENU_DISPLAY
+        self.line_height = self.menu_display[6]
+        self.menu_rows = self.menu_display[7]
+        self.x_offset = self.menu_display[8]
+        self.highlight_row = self.menu_display[9]
+        self.display = Display(self.menu_display).getDisplay()
+
+        # menu creation
+        self.routines = entities.ROUTINES
+        self.current_routine = entities.CURRENT_ROUTINE
+        self.highlighted_item = entities.CURRENT_ROUTINE
+        self.highlight = entities.MENU_HIGHLIGHT
+        self.menu_top = 2
+
 
     def getRotary(self):
         # Create the rotary encoder and selector object
@@ -81,22 +86,25 @@ class Controller():
     
 
     def get_menu_items(self, direction):
-        # format of y is {0:7, 1:8, 2:0, 3:1, 4:2}
+        # format of sub_list is {0:7, 1:8, 2:0, 3:1, 4:2}
 
-        y = tuple(range(0, len(self.routines)))
-        x = y + y
+        sub_list = tuple(range(0, len(self.routines)))
+        imenu_items_doubled = sub_list + sub_list
 
-        y = {}
-        start = self.menu_top + 1
+        sub_list = {}
 
-        for i in range (entities.OLED0['ROWS']):
-            y[i] = x[start]
+        start = self.menu_top - 1
+        if direction:
+            start = self.menu_top + 1
+
+        for i in range (self.menu_rows):
+            sub_list[i] = imenu_items_doubled[start]
             start += 1
 
-        print(y)
-        self.menu_top = y[0]
+        # print(sub_list)
+        self.menu_top = sub_list[0]
 
-        return y
+        return sub_list
 
     def get_menu(self, direction):
 
@@ -105,17 +113,14 @@ class Controller():
 
         self.display.rect(0, 24, 128, 15, 1) # eliminate hard coding
 
-        for i in range (entities.OLED0['ROWS']):
-            self.display.text(self.routines[menu_items[i]], entities.OLED0['X_OFFSET'], line_y) # eliminate hard coding
-            line_y += entities.OLED0['LINE_HEIGHT']
+        for i in range (self.menu_rows):
+            self.display.text(self.routines[menu_items[i]], self.x_offset, line_y)
+            line_y += self.line_height
 
-            self.highlighted_item = menu_items[2] # eliminate hard coding
+            self.highlighted_item = menu_items[self.highlight_row]
 
         return self.display
 
-    def any_event_listener(self, event, clicks):
-        print(f"ANY Event ID: {event} Clicks: {clicks}")
-    
     def turn_left_listener(self):
         self.display.fill(0)
         self.get_menu(False)
@@ -127,8 +132,11 @@ class Controller():
         self.display.show()
 
     def single_click_listener(self):
-        entities.play_routine(self.highlighted_item)
+        model.play_routine(self.highlighted_item)
 
+    # These are not used
+    def any_event_listener(self, event, clicks):
+        print(f"ANY Event ID: {event} Clicks: {clicks}")
 
     def turn_left_fast_listener(self):
         print(f"Turn Left Fast")
