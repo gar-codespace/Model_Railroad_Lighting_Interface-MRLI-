@@ -1,7 +1,3 @@
-'''
-Entities is the file that has support functions
-'''
-
 # packaged libraries
 from machine import Pin as PIN, I2C
 from micropython import const as CONST
@@ -37,6 +33,7 @@ OLED0 = {'ADDRESS': CONST(0x3C),
          'HEIGHT': CONST(64),
          'LINE_HEIGHT': CONST(14),
          'ROWS': CONST(5),
+         'X_OFFSET': 4
         }
 
 # Configurations

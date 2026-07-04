@@ -33,20 +33,24 @@ class Display() :
         return entities.SSD1306_I2C(self.width, self.height, i2c, self.addr)
 
 
-class Rotary():
+class Controller():
 
-    # Everything about the rotary encoder, including the buttons
+    # Everything everything to build a controller
+    # Integrates the rotary encoder and the display
+
     # dist items push, direction, step
 
     def __init__(self, rotary):
 
-        self.result = ''
+        # rotary encoder
         self.push = rotary['push']
         self.dt = rotary['dt']
         self.clk = rotary['clk']
+        # menu creation
         self.routines = entities.ROUTINES
         self.current_routine = entities.CURRENT_ROUTINE
         self.highlighted_item = entities.CURRENT_ROUTINE
+        self.menu_top = 2
 
         # Define the pins for the rotary encoder and the button
         self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP)
@@ -75,25 +79,37 @@ class Rotary():
 
         return encoder
     
+
     def get_menu_items(self, direction):
+        # format of y is {0:7, 1:8, 2:0, 3:1, 4:2}
 
-        items = {0:7, 1:8, 2:0, 3:1, 4:2}
+        y = tuple(range(0, len(self.routines)))
+        x = y + y
 
-        return {0:7, 1:8, 2:0, 3:1, 4:2}
+        y = {}
+        start = self.menu_top + 1
 
+        for i in range (entities.OLED0['ROWS']):
+            y[i] = x[start]
+            start += 1
+
+        print(y)
+        self.menu_top = y[0]
+
+        return y
 
     def get_menu(self, direction):
 
-        increment = 0
-        # menu_items = self.get_menu_items(direction)
+        line_y = 0
         menu_items = self.get_menu_items(direction)
 
         self.display.rect(0, 24, 128, 15, 1) # eliminate hard coding
-        for i in range (entities.OLED0['ROWS']):
-            self.display.text(self.routines[menu_items[i]], 4, increment)
-            increment += entities.OLED0['LINE_HEIGHT']
 
-        self.highlighted_item = menu_items[2] # eliminate hard coding
+        for i in range (entities.OLED0['ROWS']):
+            self.display.text(self.routines[menu_items[i]], entities.OLED0['X_OFFSET'], line_y) # eliminate hard coding
+            line_y += entities.OLED0['LINE_HEIGHT']
+
+            self.highlighted_item = menu_items[2] # eliminate hard coding
 
         return self.display
 
@@ -102,12 +118,12 @@ class Rotary():
     
     def turn_left_listener(self):
         self.display.fill(0)
-        self.get_menu('left')
+        self.get_menu(False)
         self.display.show()
 
     def turn_right_listener(self):
         self.display.fill(0)
-        self.get_menu('right')
+        self.get_menu(True)
         self.display.show()
 
     def single_click_listener(self):
