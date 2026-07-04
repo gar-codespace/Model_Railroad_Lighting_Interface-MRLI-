@@ -5,7 +5,7 @@ These are the methods that control the interface
 import entities
 
 
-class Display() :
+class Display() :# abstract this to inherit from SSD1360_I2C
 
     # Everything about the OLED display
     # this display shows the menu items
@@ -57,7 +57,7 @@ class Controller():
         self.encoder_pin_clk = entities.PIN(self.clk, entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_pin_sw = entities.PIN(self.push, entities.PIN.IN, entities.PIN.PULL_UP)
 
-        self.display = Display(entities.DISPLAY0).getDisplay()
+        self.display = Display(entities.DISPLAY0).getDisplay() # abstract this
 
     def getRotary(self):
         # Create the rotary encoder and selector object
