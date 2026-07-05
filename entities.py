@@ -34,7 +34,7 @@ P_OLED1 = {'sda':0, 'scl': 0}
 P_ROTARY = {'push':18, 'dt':19, 'clk':20}
 
 # constants
-SCRIPT_REV = CONST('20260626')
+SCRIPT_REV = CONST('20260704')
 MACHINE_OFF = CONST(0)
 MACHINE_ON = CONST(1)
 LED = PIN('LED', PIN.OUT)
@@ -95,7 +95,7 @@ OFF = {'name':'Off',
            'warm':(0, 0, 0),
            'white':(0, 0, 0),
            'duration':0,
-           'end':'stop'
+           'loop':0
            }
 
 DAYTIME = {'name':'Daytime',
@@ -111,9 +111,117 @@ DAYTIME = {'name':'Daytime',
            'warm':(80, 80, 80),
            'white':(20, 20, 20),
            'duration':0,
-           'end':'stop'
+           'loop': 1
            }
 
+TWLIGHT = {'name':'Twlight',
+           'bank0':(True, True),
+           'bank1':(True, True),
+           'bank2':(True, True),
+           'bank3':(True, True),
+           'bank4':(True, True),
+           'lights':(True, True),
+           'red':(100, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(40, 40, 40),
+           'white':(0, 0, 0),
+           'duration':0,
+           'loop':0
+           }
 
+NIGHTIME = {'name':'Nightime',
+           'bank0':(True, True),
+           'bank1':(True, True),
+           'bank2':(True, True),
+           'bank3':(True, True),
+           'bank4':(True, True),
+           'lights':(True, True),
+           'red':(0, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(40, 40, 40),
+           'white':(0, 0, 0),
+           'duration':0,
+           'loop':0
+           }
 
+SUNRISE = {'name':'Sunrise',
+           'bank0':(True, True),
+           'bank1':(True, True),
+           'bank2':(True, True),
+           'bank3':(True, True),
+           'bank4':(True, True),
+           'lights':(True, True),
+           'red':(0, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(40, 40, 40),
+           'white':(0, 0, 0),
+           'duration':0,
+           'loop':0
+           }
 
+SUNSET = {'name':'Sunset',
+           'bank0':(True, True),
+           'bank1':(True, True),
+           'bank2':(True, True),
+           'bank3':(True, True),
+           'bank4':(True, True),
+           'lights':(True, True),
+           'red':(0, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(40, 40, 40),
+           'white':(0, 0, 0),
+           'duration':0,
+           'loop':0
+           }
+
+LIGHTNING = {'name':'Lightning',
+           'bank0':(True, True),
+           'bank1':(True, True),
+           'bank2':(True, True),
+           'bank3':(True, True),
+           'bank4':(True, True),
+           'lights':(True, True),
+           'red':(0, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(40, 40, 40),
+           'white':(0, 0, 0),
+           'duration':0,
+           'loop':1
+           }
+
+MANUAL = {'name':'Manual',
+           'bank0':(True, True),
+           'bank1':(True, True),
+           'bank2':(True, True),
+           'bank3':(True, True),
+           'bank4':(True, True),
+           'lights':(True, True),
+           'red':(0, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(40, 40, 40),
+           'white':(0, 0, 0),
+           'duration':0,
+           'loop':0
+           }
+
+MAINTENANCE = {'name':'Maintenance',
+           'bank0':(True, True),
+           'bank1':(True, True),
+           'bank2':(True, True),
+           'bank3':(True, True),
+           'bank4':(True, True),
+           'lights':(True, True),
+           'red':(0, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(40, 40, 40),
+           'white':(0, 0, 0),
+           'duration':0,
+           'loop':0
+           }
