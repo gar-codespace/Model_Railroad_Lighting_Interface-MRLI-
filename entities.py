@@ -94,7 +94,8 @@ OFF = {'name':'Off',
            'blue':(0, 0, 0),
            'warm':(0, 0, 0),
            'white':(0, 0, 0),
-           'duration':0
+           'duration':0,
+           'end':'stop'
            }
 
 DAYTIME = {'name':'Daytime',
@@ -109,7 +110,8 @@ DAYTIME = {'name':'Daytime',
            'blue':(0, 0, 0),
            'warm':(80, 80, 80),
            'white':(20, 20, 20),
-           'duration':0
+           'duration':0,
+           'end':'stop'
            }
 
 

@@ -64,7 +64,7 @@ class Controller():
         self.menu_top = 2
 
 
-    def getRotary(self):
+    def get_interface(self):
         # Create the rotary encoder and selector object
         encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_pin_clk, pin_dt=self.encoder_pin_dt, pin_sw=self.encoder_pin_sw)
 
