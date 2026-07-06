@@ -8,7 +8,7 @@ Copyright 2026 Greg Ritacco
 import entities
 import interface
 
-# both the rotary encoder and selector button
+# the display, the rotary encoder and selector button
 control_interface = interface.Controller(entities.P_ROTARY).get_interface()
 
 async def run_routine(delay):
