@@ -132,7 +132,8 @@ class Controller():
         self.display.show()
 
     def single_click_listener(self):
-        model.play_routine(self.highlighted_item)
+        entities.CURRENT_ROUTINE = self.highlighted_item
+        model.RunRoutine(self.highlighted_item).run()
 
     # These are not used
     def any_event_listener(self, event, clicks):
