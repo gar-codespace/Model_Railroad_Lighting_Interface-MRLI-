@@ -51,11 +51,9 @@ class RunRoutine():
 
     def run(self):
 
-        self.start_switches()
+        #self.start_switches()
         #self.start_leds()
 
         # midpoint = (self.duration / 2) - 2
         #entities.UTIME.sleep(1)
         print(self.run_parameters['name'])
-        print(self.run_parameters['duration'])
-        print(self.run_parameters['loop'])
