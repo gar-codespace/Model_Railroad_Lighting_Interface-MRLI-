@@ -70,15 +70,15 @@ MENU_HIGHLIGHT = HIGHLIGHT_RECT['LINE2']
 AUX_DISPLAY = DISPLAY1 # Not used, future capacity
 
 # routines
-ROUTINES = {0:'Daytime',
-            1:'Twlight',
-            2:'Nightime',
-            3:'Sunrise',
-            4:'Sunset',
-            5:'Lightning',
-            6:'Manual',
-            7:'Maintenance',
-            8:'Off'}
+ROUTINES = {0:'DAY',
+            1:'TWLIGHT',
+            2:'NIGHT',
+            3:'SUNRISE',
+            4:'SUNSET',
+            5:'STORMY',
+            6:'MANUAL',
+            7:'MAINTENANCE',
+            8:'OFF'}
 CURRENT_ROUTINE = 0
 
 # routine parameters
@@ -98,7 +98,7 @@ OFF = {'name':'Off',
         'loop':0
         }
 
-DAYTIME = {'name':'Daytime',
+DAY = {'name':'Cloudy Day',
            'bank0':(1, 1),
            'bank1':(1, 1),
            'bank2':(1, 1),
@@ -130,7 +130,7 @@ TWLIGHT = {'name':'Twlight',
            'loop':0
            }
 
-NIGHTIME = {'name':'Nightime',
+NIGHT = {'name':'Nightime',
            'bank0':(1, 1),
            'bank1':(1, 1),
            'bank2':(1, 1),
@@ -178,7 +178,7 @@ SUNSET = {'name':'Sunset',
            'loop':0
            }
 
-LIGHTNING = {'name':'Lightning',
+STORMY = {'name':'Stormy Night',
            'bank0':(1, 1),
            'bank1':(1, 1),
            'bank2':(1, 1),

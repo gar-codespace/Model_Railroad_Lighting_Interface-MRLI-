@@ -114,7 +114,9 @@ class Controller():
         self.display.rect(0, 24, 128, 15, 1) # eliminate hard coding
 
         for i in range (self.menu_rows):
-            self.display.text(self.routines[menu_items[i]], self.x_offset, line_y)
+            menu_item = self.routines[menu_items[i]]
+            display_item = getattr(entities, menu_item, 'DAY')['name']
+            self.display.text(display_item, self.x_offset, line_y)
             line_y += self.line_height
 
             self.highlighted_item = menu_items[self.highlight_row]
