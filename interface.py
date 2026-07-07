@@ -36,7 +36,9 @@ class Controller():
 
     # dist items push, direction, step
 
-    def __init__(self, rotary):
+    def __init__(self, rotary, q):
+
+        self.q = q
 
         # rotary encoder
         self.push = rotary['push']
@@ -135,7 +137,8 @@ class Controller():
 
     def single_click_listener(self):
         entities.CURRENT_ROUTINE = self.highlighted_item
-        model.RunRoutine(self.highlighted_item).run()
+        await self.q.put(self.highlighted_item)
+        # model.RunRoutine(self.highlighted_item).run()
 
     # These are not used
     def any_event_listener(self, event, clicks):

@@ -56,4 +56,15 @@ class RunRoutine():
 
         # midpoint = (self.duration / 2) - 2
         #entities.UTIME.sleep(1)
-        print(self.run_parameters['name'])
+        print(entities.CURRENT_ROUTINE)
+
+# Coroutine: blink on a timer
+def run_routine(q):
+    delay_ms = 300
+    routine = 11
+    while True:
+        if not q.empty():
+            routine = await q.get()
+        entities.LED.toggle()
+        print(routine)
+        await entities.ASYNCIO.sleep_ms(delay_ms)
