@@ -4,6 +4,7 @@ from micropython import const as CONST
 import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as ASYNCIO
+import queue as QUEUE
 
 # 3rd party libraries
 from ssd1306 import SSD1306_I2C

@@ -2,11 +2,6 @@ import entities
 import model
 import interface
 
-import machine
-import uasyncio
-import utime
-import queue
-
 # Settings
 # btn = machine.Pin(18, machine.Pin.IN, machine.Pin.PULL_UP)
 
@@ -24,11 +19,11 @@ async def main():
     # the display, the rotary encoder and selector button
     
     # Queue for passing messages
-    q = queue.Queue()
+    q = entities.QUEUE.Queue()
 
     control_interface = interface.Controller(entities.P_ROTARY, q).get_interface()
     
-    uasyncio.create_task(model.run_routine(q))
+    entities.ASYNCIO.create_task(model.run_routine(q))
     
     while True:
         
@@ -36,4 +31,4 @@ async def main():
 
     
 # Start event loop and run entry point coroutine
-uasyncio.run(main())
+entities.ASYNCIO.run(main())
