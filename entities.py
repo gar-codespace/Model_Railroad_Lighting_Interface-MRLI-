@@ -31,7 +31,8 @@ P_LEDS = {'red':11,
 
 P_OLED0 = {'sda':16, 'scl': 17} # Pins 4 and 5 are the default for the Pico
 P_OLED1 = {'sda':0, 'scl': 0}
-P_ROTARY = {'push':18, 'dt':19, 'clk':20}
+P_ROTARY = {'psh':18, 'tra':19, 'trb':20} # pin labels for the incoder I'm using
+# P_ROTARY = {'push':18, 'dt':19, 'clk':20} from the library
 
 # constants
 SCRIPT_REV = CONST('20260704')

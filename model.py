@@ -8,6 +8,7 @@ class RunRoutine():
 
         # Switch control
         self.p_switches = entities.P_SWITCHES
+        # btn = machine.Pin(18, machine.Pin.IN, machine.Pin.PULL_UP)
         self.switch0 = entities.PIN(self.p_switches[0], entities.PIN.OUT)
         self.switch1 = entities.PIN(self.p_switches[1], entities.PIN.OUT)
         self.switch2 = entities.PIN(self.p_switches[2], entities.PIN.OUT)

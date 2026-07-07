@@ -8,7 +8,7 @@ import utime
 import queue
 
 # Settings
-btn = machine.Pin(18, machine.Pin.IN, machine.Pin.PULL_UP)
+# btn = machine.Pin(18, machine.Pin.IN, machine.Pin.PULL_UP)
 
 
         
@@ -25,13 +25,13 @@ async def main():
     
     # Queue for passing messages
     q = queue.Queue()
+
     control_interface = interface.Controller(entities.P_ROTARY, q).get_interface()
+    
     uasyncio.create_task(model.run_routine(q))
     
-
     while True:
         
-
         await control_interface.async_tick()
 
     

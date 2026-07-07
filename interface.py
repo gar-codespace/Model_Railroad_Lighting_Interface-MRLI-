@@ -41,9 +41,9 @@ class Controller():
         self.q = q
 
         # rotary encoder
-        self.push = rotary['push']
-        self.dt = rotary['dt']
-        self.clk = rotary['clk']
+        self.push = rotary['psh']
+        self.dt = rotary['tra']
+        self.clk = rotary['trb']
 
         # Define the rotary encoder and the button
         self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP)
@@ -88,16 +88,18 @@ class Controller():
     
 
     def get_menu_items(self, direction):
-        # format of sub_list is {0:7, 1:8, 2:0, 3:1, 4:2}
+        # direction is passed in as a boolean
 
+        # format of sub_list is {0:7, 1:8, 2:0, 3:1, 4:2}
         sub_list = tuple(range(0, len(self.routines)))
         imenu_items_doubled = sub_list + sub_list
 
         sub_list = {}
 
-        start = self.menu_top - 1
+        # print(direction)
+        start = self.menu_top + 1
         if direction:
-            start = self.menu_top + 1
+            start = self.menu_top - 1
 
         for i in range (self.menu_rows):
             sub_list[i] = imenu_items_doubled[start]
@@ -125,7 +127,8 @@ class Controller():
 
         return self.display
 
-    def turn_left_listener(self):
+    # The left and right listeners are backwards
+    def turn_left_listener(self): # really the right turn listener
         self.display.fill(0)
         self.get_menu(False)
         self.display.show()
