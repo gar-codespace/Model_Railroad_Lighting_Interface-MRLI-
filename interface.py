@@ -140,7 +140,8 @@ class Controller():
 
     def single_click_listener(self):
         entities.CURRENT_ROUTINE = self.highlighted_item
-        await self.q.put(self.highlighted_item)
+        print(f'Selected routine: ' + str(entities.CURRENT_ROUTINE))
+        # self.q.put(self.highlighted_item)
         # model.RunRoutine(self.highlighted_item).run()
 
     # These are not used

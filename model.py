@@ -61,11 +61,14 @@ class RunRoutine():
 
 # Coroutine: blink on a timer
 def run_routine(q):
-    delay_ms = 300
-    routine = 11
+    delay_ms = 500
+    run_routine = 11
     while True:
-        if not q.empty():
-            routine = await q.get()
+        selected_routine = entities.CURRENT_ROUTINE
+        if not run_routine == selected_routine:
+            print('New Routine')
+            run_routine = selected_routine
+            RunRoutine(run_routine).run()
         entities.LED.toggle()
-        print(routine)
+        print(f'Current routine is: ' + str(run_routine))
         await entities.ASYNCIO.sleep_ms(delay_ms)
