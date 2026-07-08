@@ -1,6 +1,44 @@
 import entities
 
 
+class Routine():
+
+    def __init__(self):
+        # routine is passed in as an integer, the key of the ROUTINES library
+
+        # Switch control
+        self.p_switches = entities.P_SWITCHES
+        # btn = machine.Pin(18, machine.Pin.IN, machine.Pin.PULL_UP)
+        self.switch0 = entities.PIN(self.p_switches[0], entities.PIN.OUT)
+        self.switch1 = entities.PIN(self.p_switches[1], entities.PIN.OUT)
+        self.switch2 = entities.PIN(self.p_switches[2], entities.PIN.OUT)
+        self.switch3 = entities.PIN(self.p_switches[3], entities.PIN.OUT)
+        self.switch4 = entities.PIN(self.p_switches[4], entities.PIN.OUT)
+        self.switch5 = entities.PIN(self.p_switches[5], entities.PIN.OUT) # the lights in the model buildings
+
+        # LED Control
+        self.p_leds = entities.P_LEDS
+        self.red = entities.PIN(self.p_leds['red'])
+        self.green = entities.PIN(self.p_leds['green'])
+        self.blue = entities.PIN(self.p_leds['blue'])
+        self.warm = entities.PIN(self.p_leds['warm'])
+        self.white = entities.PIN(self.p_leds['white'])
+
+    # Coroutine: runs the selected routine
+    def run_routine(self):
+        delay_ms = 280
+        run_routine = 0
+        while True:
+            selected_routine = entities.CURRENT_ROUTINE
+            if not run_routine == selected_routine:
+                print('New Routine')
+                run_routine = selected_routine
+                #RunRoutine(run_routine).run()
+            entities.LED.toggle()
+            print(f'Current routine is: ' + str(run_routine))
+            await entities.ASYNCIO.sleep_ms(delay_ms)
+
+
 class RunRoutine():
 
     def __init__(self, routine):
@@ -59,10 +97,25 @@ class RunRoutine():
         #entities.UTIME.sleep(1)
         print(entities.CURRENT_ROUTINE)
 
-# Coroutine: blink on a timer
+
+    # Coroutine: runs the selected routine
+    def run_routine(self):
+        delay_ms = 500
+        run_routine = 0
+        while True:
+            selected_routine = entities.CURRENT_ROUTINE
+            if not run_routine == selected_routine:
+                print('New Routine')
+                run_routine = selected_routine
+                RunRoutine(run_routine).run()
+            entities.LED.toggle()
+            print(f'Current routine is: ' + str(run_routine))
+            await entities.ASYNCIO.sleep_ms(delay_ms)
+
+# Coroutine: runs the selected routine
 def run_routine():
     delay_ms = 500
-    run_routine = 11
+    run_routine = 0
     while True:
         selected_routine = entities.CURRENT_ROUTINE
         if not run_routine == selected_routine:

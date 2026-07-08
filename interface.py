@@ -21,7 +21,7 @@ class Display() :# abstract this to inherit from SSD1360_I2C
 
         i2c = entities.I2C(
                         self.bus,
-                        sda = entities.PIN(self.sda), # maybe add PIN.PULL_UP
+                        sda = entities.PIN(self.sda),
                         scl = entities.PIN(self.scl),
                         freq = 400000
                         )
