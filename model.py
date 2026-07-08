@@ -60,7 +60,7 @@ class RunRoutine():
         print(entities.CURRENT_ROUTINE)
 
 # Coroutine: blink on a timer
-def run_routine(q):
+def run_routine():
     delay_ms = 500
     run_routine = 11
     while True:

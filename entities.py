@@ -81,7 +81,7 @@ ROUTINES = {0:'DAY',
             6:'MANUAL',
             7:'MAINTENANCE',
             8:'OFF'}
-CURRENT_ROUTINE = 0
+CURRENT_ROUTINE = 0 # this gets changed by asyncio
 
 # routine parameters
 OFF = {'name':'Off',

@@ -35,10 +35,7 @@ class Controller():
     # Integrates the rotary encoder and the display
 
     # dist items push, direction, step
-
-    def __init__(self, rotary, q):
-
-        self.q = q
+    def __init__(self, rotary):
 
         # rotary encoder
         self.push = rotary['psh']
@@ -46,7 +43,7 @@ class Controller():
         self.clk = rotary['trb']
 
         # Define the rotary encoder and the button
-        self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP)
+        self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP) # Try these w/o pull up
         self.encoder_pin_clk = entities.PIN(self.clk, entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_pin_sw = entities.PIN(self.push, entities.PIN.IN, entities.PIN.PULL_UP)
 
