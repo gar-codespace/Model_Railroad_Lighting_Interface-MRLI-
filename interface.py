@@ -41,11 +41,15 @@ class Controller():
         self.push = rotary['psh']
         self.dt = rotary['tra']
         self.clk = rotary['trb']
+        self.con = rotary['con']
+        self.bak = rotary['bak']
 
         # Define the rotary encoder and the button
         self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP) # Try these w/o pull up
         self.encoder_pin_clk = entities.PIN(self.clk, entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_pin_sw = entities.PIN(self.push, entities.PIN.IN, entities.PIN.PULL_UP)
+        self.encoder_pin_con = entities.PIN(self.con, entities.PIN.IN, entities.PIN.PULL_UP)
+        self.encoder_pin_bak = entities.PIN(self.bak, entities.PIN.IN, entities.PIN.PULL_UP)
 
         # Define the display
         self.menu_display = entities.MENU_DISPLAY
@@ -65,14 +69,19 @@ class Controller():
 
     def get_interface(self):
         # Create the rotary encoder and selector object
-        encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_pin_clk, pin_dt=self.encoder_pin_dt, pin_sw=self.encoder_pin_sw)
+        encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_pin_clk,
+                                            pin_dt=self.encoder_pin_dt,
+                                            pin_sw=self.encoder_pin_sw,
+                                            pin_con=self.encoder_pin_con,
+                                            pin_bak=self.encoder_pin_bak
+                                            )
 
         # subscribe to events
         encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_listener)
         encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_listener)
 
         encoder.on(entities.RotaryEncoderEvent.CLICK, self.single_click_listener)
-        # encoder.on(entities.RotaryEncoderEvent.CONFIRM, self.single_click_listener)
+        encoder.on(entities.RotaryEncoderEvent.CONFIRM, self.confirm_click_listener)
         # encoder.on(entities.RotaryEncoderEvent.BACK, self.single_click_listener)
 
         # additional listeners

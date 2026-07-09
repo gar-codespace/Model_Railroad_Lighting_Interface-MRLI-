@@ -17,6 +17,8 @@ class RotaryEncoderRP2(RotaryEncoder):
             pin_clk: entities.PIN = None,
             pin_dt: entities.PIN = None,
             pin_sw: entities.PIN = None,
+            pin_con: entities.PIN = None,
+            pin_bak: entities.PIN = None,
             debounce_ms: int = 50,
             encoder_step: int = 1,
             half_step: bool = False,
@@ -30,6 +32,8 @@ class RotaryEncoderRP2(RotaryEncoder):
             pin_clk=pin_clk,
             pin_dt=pin_dt,
             pin_sw=pin_sw,
+            pin_con=pin_con,
+            pin_bak=pin_bak,
             debounce_ms=debounce_ms,
             encoder_step=encoder_step,
             half_step=half_step,
@@ -71,3 +75,7 @@ class RotaryEncoderRP2(RotaryEncoder):
 
         if self.pin_sw is not None:
             self.pin_sw.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._sw_irq_handler)
+
+
+        if self.pin_con is not None:
+            self.pin_con.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._sw_irq_handler)
