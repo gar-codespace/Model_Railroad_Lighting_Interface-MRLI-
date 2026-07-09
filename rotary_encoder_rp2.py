@@ -1,5 +1,6 @@
 '''
 https://github.com/TTitanUA/micropython_rotary_encoder/tree/main
+Added confirm and back buttons marked with a #
 '''
 
 from machine import Pin, Timer

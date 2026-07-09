@@ -72,6 +72,8 @@ class Controller():
         encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_listener)
 
         encoder.on(entities.RotaryEncoderEvent.CLICK, self.single_click_listener)
+        # encoder.on(entities.RotaryEncoderEvent.CONFIRM, self.single_click_listener)
+        # encoder.on(entities.RotaryEncoderEvent.BACK, self.single_click_listener)
 
         # additional listeners
         # encoder.on(entities.RotaryEncoderEvent.ANY, self.any_event_listener)
@@ -140,6 +142,12 @@ class Controller():
         print(f'Selected routine: ' + str(entities.CURRENT_ROUTINE))
         # self.q.put(self.highlighted_item)
         # model.RunRoutine(self.highlighted_item).run()
+
+    def confirm_click_listener(self):
+        print('Confirn')
+
+    def back_click_listener(self):
+        print('Back')
 
     # These are not used
     def any_event_listener(self, event, clicks):
