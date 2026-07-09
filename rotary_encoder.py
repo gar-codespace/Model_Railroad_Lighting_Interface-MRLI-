@@ -1,11 +1,10 @@
 '''
 https://github.com/TTitanUA/micropython_rotary_encoder/tree/main
+Move imports to entities
 Added confirm and back buttons marked with a #
 '''
 
-import utime
-from machine import Pin
-
+import entities
 
 class RotaryEncoderEvent:
     ANY = 1
@@ -28,13 +27,13 @@ class RotaryEncoderEvent:
 class RotaryEncoder:
     """Base class for encoder button"""
 
-    pin_clk: Pin
+    pin_clk: entities.PIN
     "attribute EncoderButton.pin_clk is the pin for the encoder clk"
 
-    pin_dt: Pin
+    pin_dt: entities.PIN
     "attribute EncoderButton.pin_dt is the pin for the encoder dt"
 
-    pin_sw: Pin
+    pin_sw: entities.PIN
     "attribute EncoderButton.pin_sw is the pin for the encoder sw"
 
     sw_debounce_ms: int = 50
@@ -84,9 +83,9 @@ class RotaryEncoder:
 
     def __init__(
             self,
-            pin_clk: Pin = None,
-            pin_dt: Pin = None,
-            pin_sw: Pin = None,
+            pin_clk: entities.PIN = None,
+            pin_dt: entities.PIN = None,
+            pin_sw: entities.PIN = None,
             debounce_ms: int = 50,
             encoder_step: int = 1,
             half_step: bool = False, # support increment every click for KY040 encoder
@@ -125,10 +124,10 @@ class RotaryEncoder:
                     self._listeners[event].remove(callback)
 
     def _sw_irq_handler(self, pin):
-        timestamp = utime.ticks_ms()
+        timestamp = entities.UTIME.ticks_ms()
         c_s = pin.value() == 0
 
-        if self._sw_last_state == c_s or utime.ticks_diff(timestamp, self._sw_last_event_ms) < self.sw_debounce_ms:
+        if self._sw_last_state == c_s or entities.UTIME.ticks_diff(timestamp, self._sw_last_event_ms) < self.sw_debounce_ms:
             return
 
         self._sw_prev_state = self._sw_last_state
@@ -156,16 +155,16 @@ class RotaryEncoder:
             self._sw_last_event_ms = 0
             return
 
-        timestamp = utime.ticks_ms()
+        timestamp = entities.UTIME.ticks_ms()
 
         # button pressed
         if __sw_l_s:
             # button held
-            if utime.ticks_diff(utime.ticks_ms(), __sw_l_e_ms) > self.sw_hold_ms and not self._sw_held:
+            if entities.UTIME.ticks_diff(entities.UTIME.ticks_ms(), __sw_l_e_ms) > self.sw_hold_ms and not self._sw_held:
                 self._sw_held = True
                 self._flag_last_event = RotaryEncoderEvent.HELD
             # it's a multiple click
-            elif utime.ticks_diff(__sw_l_e_ms, self._sw_prev_event_ms) < __sw_s_ms:
+            elif entities.UTIME.ticks_diff(__sw_l_e_ms, self._sw_prev_event_ms) < __sw_s_ms:
                 self._sw_prev_event_ms = 1
         else:
             # button release
@@ -174,14 +173,14 @@ class RotaryEncoder:
                 self._flag_last_event = RotaryEncoderEvent.RELEASED
                 self._sw_prev_state = __sw_l_s
             # maybe a multiple click, need wait for the next event
-            elif utime.ticks_diff(timestamp, __sw_l_e_ms) < __sw_s_ms:
+            elif entities.UTIME.ticks_diff(timestamp, __sw_l_e_ms) < __sw_s_ms:
                 if __sw_p_e_ms == 1:
                     if self._sw_clicks == 0:
                         self._sw_clicks = 1
                     self._sw_clicks += 1
                 self._sw_prev_event_ms = timestamp
             # maybe a single click
-            elif utime.ticks_diff(timestamp, __sw_l_e_ms) < self.sw_click_ms:
+            elif entities.UTIME.ticks_diff(timestamp, __sw_l_e_ms) < self.sw_click_ms:
                 # it's a single click
                 if self._sw_clicks == 0:
                     self._flag_last_event = RotaryEncoderEvent.CLICK
@@ -215,7 +214,7 @@ class RotaryEncoder:
 
     def _enc_process_event(self, direction: int):
         self._enc_last_dir += direction
-        self._enc_last_event_ms = utime.ticks_ms()
+        self._enc_last_event_ms = entities.UTIME.ticks_ms()
 
     def _enc_tick_process_turn_event(self):
         # local cache
@@ -259,7 +258,7 @@ class RotaryEncoder:
     def __tick(self):
         self._sw_tick_process_event()
 
-        if self.__encoder_has_event() and utime.ticks_diff(utime.ticks_ms(),
+        if self.__encoder_has_event() and entities.UTIME.ticks_diff(entities.UTIME.ticks_ms(),
                                                            self._enc_last_event_ms) > self.enc_fast_ms:
 
             self._enc_tick_process_turn_event()

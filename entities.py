@@ -1,5 +1,5 @@
 # packaged libraries
-from machine import Pin as PIN, I2C
+from machine import Pin as PIN, I2C, Timer as TIMER
 from micropython import const as CONST
 import utime as UTIME
 import framebuf as FRAMEBUF

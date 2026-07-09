@@ -1,22 +1,22 @@
 '''
 https://github.com/TTitanUA/micropython_rotary_encoder/tree/main
+Move imports to entities
 Added confirm and back buttons marked with a #
 '''
 
-from machine import Pin, Timer
-import uasyncio as asyncio
+import entities
 from rotary_encoder import RotaryEncoder
 
 
 class RotaryEncoderRP2(RotaryEncoder):
-    timer: Timer = None
+    timer: entities.TIMER = None
     alive: bool = True
 
     def __init__(
             self,
-            pin_clk: Pin = None,
-            pin_dt: Pin = None,
-            pin_sw: Pin = None,
+            pin_clk: entities.PIN = None,
+            pin_dt: entities.PIN = None,
+            pin_sw: entities.PIN = None,
             debounce_ms: int = 50,
             encoder_step: int = 1,
             half_step: bool = False,
@@ -48,17 +48,17 @@ class RotaryEncoderRP2(RotaryEncoder):
             self.timer.deinit()
 
     async def async_tick(self, timeout=1):
-        """async_tick is used to process the encoder events. It should be run by asyncio."""
+        """async_tick is used to process the encoder events. It should be run by entities.ASYNCIO."""
         while self.alive:
             self.__tick()
-            await asyncio.sleep_ms(timeout)
+            await entities.ASYNCIO.sleep_ms(timeout)
 
     def timer_tick(self, timeout=1):
         """
             timer_tick is used to process the encoder events. It automatically creates the system irq timer.
             :link https://docs.micropython.org/en/latest/rp2/quickref.html#timers
         """
-        self.timer = Timer(-1, period=timeout, mode=Timer.PERIODIC, callback=lambda t: self.__tick())
+        self.timer = entities.TIMER(-1, period=timeout, mode=entities.TIMER.PERIODIC, callback=lambda t: self.__tick())
 
     def raw_tick(self):
         """raw_tick is used to process the encoder events. It should be run by the main loop manually. """
@@ -66,8 +66,8 @@ class RotaryEncoderRP2(RotaryEncoder):
 
     def _enable_irq(self):
         if self.pin_clk is not None and self.pin_dt is not None:
-            self.pin_clk.irq(trigger=Pin.IRQ_FALLING | Pin.IRQ_RISING, handler=self._enc_irq_handler)
-            self.pin_dt.irq(trigger=Pin.IRQ_FALLING | Pin.IRQ_RISING, handler=self._enc_irq_handler)
+            self.pin_clk.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._enc_irq_handler)
+            self.pin_dt.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._enc_irq_handler)
 
         if self.pin_sw is not None:
-            self.pin_sw.irq(trigger=Pin.IRQ_FALLING | Pin.IRQ_RISING, handler=self._sw_irq_handler)
+            self.pin_sw.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._sw_irq_handler)
