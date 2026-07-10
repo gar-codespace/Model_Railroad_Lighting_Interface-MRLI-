@@ -60,7 +60,6 @@ class Controller():
         self.highlight = entities.MENU_HIGHLIGHT
         self.menu_top = 2 # move this into entities
 
-
     def display_splash(self):
         line_y = 0
         self.display.fill(0)
@@ -68,10 +67,6 @@ class Controller():
             self.display.text(entities.SPLASH_SCREEN[i], self.x_offset, line_y)
             line_y += self.line_height
         self.display.show()
-
-
-
-
 
     def get_interface(self):
         # Create the rotary encoder and selector object

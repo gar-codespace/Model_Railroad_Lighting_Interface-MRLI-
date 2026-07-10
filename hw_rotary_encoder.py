@@ -1,4 +1,5 @@
 '''
+hardware library
 https://github.com/TTitanUA/micropython_rotary_encoder/tree/main
 Move imports to entities
 Added confirm and back buttons marked with a #

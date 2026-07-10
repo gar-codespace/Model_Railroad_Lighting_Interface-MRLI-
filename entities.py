@@ -5,9 +5,10 @@ import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as ASYNCIO
 
-# 3rd party libraries
-from ssd1306 import SSD1306_I2C
-from rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
+# hardware libraries
+from hw_ssd1306 import SSD1306_I2C
+from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
+from hw_button import Button
 
 # local libraries
 
