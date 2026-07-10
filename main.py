@@ -1,30 +1,35 @@
-'''
-Metropolitan Harbor Railroad
-Metropolitan Uniom Transfer Terminal
-Layout Lighting Automation
-Copyright 2026 Greg Ritacco
-'''
-
 import entities
+import model
 import interface
 
-# the display, the rotary encoder and selector button
-control_interface = interface.Controller(entities.P_ROTARY).get_interface()
-
-async def run_routine(delay):
+#add a definition for each button
+async def confirm_button():
     while True:
-        entities.LED.toggle()
-        await entities.ASYNCIO.sleep_ms(delay)
+        await entities.ASYNCIO.sleep(0.1)
+
+async def back_button():
+    while True:
+        await entities.ASYNCIO.sleep(0.1)
 
 async def main():
+    
+    # the display, the rotary encoder and selector button
+    control_interface = interface.Controller(entities.P_ROTARY).get_interface()
+    # create additional buttons
+    interface.Button(entities.P_BUTTONS['confirm'], "Confirm", handler=interface.ConfirmHandler())
+    interface.Button(entities.P_BUTTONS['back'], "Back", handler=interface.BackHandler())
 
-    entities.ASYNCIO.create_task(run_routine(200))
+    routine = model.Routine()
+    entities.ASYNCIO.create_task(routine.run_routine())
 
-    entities.ASYNCIO.create_task(control_interface.async_tick())
-
+    # play harbor sounds
+    
     while True:
-        print(entities.CURRENT_ROUTINE)
-        await entities.ASYNCIO.sleep_ms(1000)
+        
+        await entities.ASYNCIO.gather(control_interface.async_tick(),
+                                      confirm_button(),
+                                      back_button()
+                                      )
 
 
 entities.ASYNCIO.run(main())

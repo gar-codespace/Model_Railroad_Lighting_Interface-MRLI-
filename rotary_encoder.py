@@ -88,8 +88,6 @@ class RotaryEncoder:
             pin_clk: entities.PIN = None,
             pin_dt: entities.PIN = None,
             pin_sw: entities.PIN = None,
-            pin_con: entities.PIN = None, #
-            pin_bak: entities.PIN = None, #
             debounce_ms: int = 50,
             encoder_step: int = 1,
             half_step: bool = False, # support increment every click for KY040 encoder
@@ -101,8 +99,6 @@ class RotaryEncoder:
         self.pin_clk = pin_clk
         self.pin_dt = pin_dt
         self.pin_sw = pin_sw
-        self.pin_con = pin_con #
-        self.pin_bak = pin_bak #
         self.sw_debounce_ms = debounce_ms
         self.enc_step = encoder_step
         self.half_step=half_step
