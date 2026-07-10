@@ -8,8 +8,8 @@ import queue as QUEUE
 
 # 3rd party libraries
 from ssd1306 import SSD1306_I2C
-from rotary_encoder import RotaryEncoder, RotaryEncoderEvent
-from rotary_encoder_rp2 import RotaryEncoderRP2
+from rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
+# from rotary_encoder_rp2 import RotaryEncoderRP2
 
 # local libraries
 import interface
