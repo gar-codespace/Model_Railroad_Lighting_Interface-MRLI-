@@ -61,6 +61,18 @@ class Controller():
         self.menu_top = 2 # move this into entities
 
 
+    def display_splash(self):
+        line_y = 0
+        self.display.fill(0)
+        for i in range(len(entities.SPLASH_SCREEN)):
+            self.display.text(entities.SPLASH_SCREEN[i], self.x_offset, line_y)
+            line_y += self.line_height
+        self.display.show()
+
+
+
+
+
     def get_interface(self):
         # Create the rotary encoder and selector object
         encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_pin_clk,

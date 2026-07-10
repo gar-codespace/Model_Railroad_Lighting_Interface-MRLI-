@@ -14,7 +14,9 @@ async def back_button():
 async def main():
     
     # the display, the rotary encoder and selector button
-    control_interface = interface.Controller(entities.P_ROTARY).get_interface()
+    control_interface = interface.Controller(entities.P_ROTARY)
+    control_interface.display_splash()
+    
     # create additional buttons
     interface.Button(entities.P_BUTTONS['confirm'], "Confirm", handler=interface.ConfirmHandler())
     interface.Button(entities.P_BUTTONS['back'], "Back", handler=interface.BackHandler())
@@ -26,7 +28,7 @@ async def main():
     
     while True:
         
-        await entities.ASYNCIO.gather(control_interface.async_tick(),
+        await entities.ASYNCIO.gather(control_interface.get_interface().async_tick(),
                                       confirm_button(),
                                       back_button()
                                       )

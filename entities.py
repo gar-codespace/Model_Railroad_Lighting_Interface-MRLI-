@@ -11,6 +11,8 @@ from rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 
 # local libraries
 
+# splash screen
+SPLASH_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
 # Raspi Pico pin assignments
 P_SWITCHES = {0:5,
               1:6,
