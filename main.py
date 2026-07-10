@@ -3,10 +3,11 @@ import model
 import interface
 
 #add a definition for each button
+# Coroutine: runs the selected method
 async def confirm_button():
     while True:
         await entities.ASYNCIO.sleep(0.1)
-
+# Coroutine: runs the selected method
 async def back_button():
     while True:
         await entities.ASYNCIO.sleep(0.1)
