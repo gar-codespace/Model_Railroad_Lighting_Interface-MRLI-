@@ -4,15 +4,12 @@ from micropython import const as CONST
 import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as ASYNCIO
-import queue as QUEUE
 
 # 3rd party libraries
 from ssd1306 import SSD1306_I2C
 from rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
-# from rotary_encoder_rp2 import RotaryEncoderRP2
 
 # local libraries
-import interface
 
 # Raspi Pico pin assignments
 P_SWITCHES = {0:5,
@@ -105,19 +102,19 @@ OFF = {'name':'Off',
         }
 
 DAY = {'name':'Cloudy Day',
-           'bank0':(1, 1),
-           'bank1':(1, 1),
-           'bank2':(1, 1),
-           'bank3':(1, 1),
-           'bank4':(1, 1),
-           'lights':(0, 0),
-           'red':(0, 0, 0),
-           'green':(0, 0, 0),
-           'blue':(0, 0, 0),
-           'warm':(80, 80, 80),
-           'white':(20, 20, 20),
-           'duration':0,
-           'loop': 1
+        'bank0':(1, 1),
+        'bank1':(1, 1),
+        'bank2':(1, 1),
+        'bank3':(1, 1),
+        'bank4':(1, 1),
+        'lights':(0, 0),
+        'red':(0, 0, 0),
+        'green':(0, 0, 0),
+        'blue':(0, 0, 0),
+        'warm':(80, 80, 80),
+        'white':(20, 20, 20),
+        'duration':0,
+        'loop':1
            }
 
 TWLIGHT = {'name':'Twlight',

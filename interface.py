@@ -31,9 +31,7 @@ class Display() :# abstract this to inherit from SSD1360_I2C
 
 class Controller():
 
-    # Everything everything to build a controller
     # Integrates the rotary encoder and the display
-
     # dist items push, direction, step
     def __init__(self, rotary):
 
@@ -60,7 +58,7 @@ class Controller():
         self.current_routine = entities.CURRENT_ROUTINE
         self.highlighted_item = entities.CURRENT_ROUTINE
         self.highlight = entities.MENU_HIGHLIGHT
-        self.menu_top = 2
+        self.menu_top = 2 # move this into entities
 
 
     def get_interface(self):
@@ -139,8 +137,6 @@ class Controller():
     def single_click_listener(self):
         entities.CURRENT_ROUTINE = self.highlighted_item
         print(f'Selected routine: ' + str(entities.CURRENT_ROUTINE))
-        # self.q.put(self.highlighted_item)
-        # model.RunRoutine(self.highlighted_item).run()
 
     # These are not used
     # def any_event_listener(self, event, clicks):
