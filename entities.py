@@ -30,9 +30,13 @@ P_LEDS = {'red':11,
           'white':15
           }
 
+P_BUTTONS = {'confirm':19, # part of the integrated display
+             'back':20 # part of the integrated display
+             }
+
 P_OLED0 = {'sda':16, 'scl': 17} # Pins 4 and 5 are the default for the Pico
 P_OLED1 = {'sda':0, 'scl': 0}
-P_ROTARY = {'psh':18, 'con':19, 'bak':20, 'tra':21, 'trb':22} # pin labels for the encoder I'm using
+P_ROTARY = {'psh':18, 'tra':21, 'trb':22} # pin labels for the encoder I'm using
 # P_ROTARY = {'push':18, 'dt':19, 'clk':20} from the library
 
 # constants

@@ -41,15 +41,11 @@ class Controller():
         self.push = rotary['psh']
         self.dt = rotary['tra']
         self.clk = rotary['trb']
-        self.con = rotary['con']
-        self.bak = rotary['bak']
 
         # Define the rotary encoder and the button
         self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP) # Try these w/o pull up
         self.encoder_pin_clk = entities.PIN(self.clk, entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_pin_sw = entities.PIN(self.push, entities.PIN.IN, entities.PIN.PULL_UP)
-        self.encoder_pin_con = entities.PIN(self.con, entities.PIN.IN, entities.PIN.PULL_UP)
-        self.encoder_pin_bak = entities.PIN(self.bak, entities.PIN.IN, entities.PIN.PULL_UP)
 
         # Define the display
         self.menu_display = entities.MENU_DISPLAY
@@ -71,18 +67,13 @@ class Controller():
         # Create the rotary encoder and selector object
         encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_pin_clk,
                                             pin_dt=self.encoder_pin_dt,
-                                            pin_sw=self.encoder_pin_sw,
-                                            pin_con=self.encoder_pin_con,
-                                            pin_bak=self.encoder_pin_bak
+                                            pin_sw=self.encoder_pin_sw
                                             )
 
         # subscribe to events
         encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_listener)
         encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_listener)
-
         encoder.on(entities.RotaryEncoderEvent.CLICK, self.single_click_listener)
-        encoder.on(entities.RotaryEncoderEvent.CONFIRM, self.confirm_click_listener)
-        # encoder.on(entities.RotaryEncoderEvent.BACK, self.single_click_listener)
 
         # additional listeners
         # encoder.on(entities.RotaryEncoderEvent.ANY, self.any_event_listener)
@@ -93,7 +84,6 @@ class Controller():
         # encoder.on(entities.RotaryEncoderEvent.HELD, self.held_listener)
 
         return encoder
-    
 
     def get_menu_items(self, direction):
         # direction is passed in as a boolean
@@ -152,27 +142,99 @@ class Controller():
         # self.q.put(self.highlighted_item)
         # model.RunRoutine(self.highlighted_item).run()
 
-    def confirm_click_listener(self):
-        print('Confirn')
-
-    def back_click_listener(self):
-        print('Back')
-
     # These are not used
-    def any_event_listener(self, event, clicks):
-        print(f"ANY Event ID: {event} Clicks: {clicks}")
+    # def any_event_listener(self, event, clicks):
+    #     print(f"ANY Event ID: {event} Clicks: {clicks}")
+# 
+    # def turn_left_fast_listener(self):
+    #     print(f"Turn Left Fast")
+# 
+    # def turn_right_fast_listener(self):
+    #     print(f"Turn Right Fast")
+    # 
+    # def multy_click_listener(self, clicks):
+    #     print(f"Multiply Clicks: {clicks}")
+# 
+    # def held_listener(self):
+    #     print(f"Held")
+# 
+    # def released_listener(self):
+    #     print(f"Released")
 
-    def turn_left_fast_listener(self):
-        print(f"Turn Left Fast")
 
-    def turn_right_fast_listener(self):
-        print(f"Turn Right Fast")
+class Button:
+    """
+    A simple Button class
+    Create the button using Button(pinnumber, name, handler)
+    handler is typically self, and create two methods buttonPressed and buttonReleased
+    to handle the push and release of the button.
+    The name of the button will be passed back to the handler to identify
+    which button was pressed/released
+    https://github.com/jitsengupta/PicoLibrary/blob/main/Button.py
+    """
     
-    def multy_click_listener(self, clicks):
-        print(f"Multiply Clicks: {clicks}")
+    def __init__(self, pin, name, *, handler=None, lowActive=True):
+        """
+        Initialize attributes and other internal data
+        """
+        
+        self._pinNo = pin
+        self._name = name
+        if lowActive:
+            self._pin = entities.PIN(pin, entities.PIN.IN, entities.PIN.PULL_UP)
+        else:
+            self._pin = entities.PIN(pin, entities.PIN.IN, entities.PIN.PULL_DOWN)
+        self._debounce_time = 0
+        self._lowActive = lowActive
+        self._lastStatus = None
+        self._handler = None
+        self.setHandler(handler)
+        
+    def isPressed(self):
+        """ Check if the button is pressed or not - useful if polling """
+        
+        status = (self._lowActive and self._pin.value() ==0) or (not self._lowActive and self._pin.value() == 1)
+        return status
+    
+    def setHandler(self, handler):
+        """ 
+	    set the handler to a new handler. Pass None to remove existing handler
+	    """
+        
+        # if the old handler was active already, or if the new handler is None, remove the irq
+        if self._handler is not None or handler is None:
+            self._pin.irq(handler = None)
+    
+        # Now set it to th enew handler
+        self._handler = handler
+        # Create the IRQ if the handler is not None
+        if self._handler:
+            self._pin.irq(trigger = entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler = self._callback)
+        
+    def _callback(self, pin):
+        """ The private interrupt handler - will call appropriate handlers """
+        
+        t = entities.UTIME.ticks_ms()
+        v = self._pin.value()
+        if ((self._lastStatus == None or self._lastStatus != v) and t-self._debounce_time) > 50:
+            self._debounce_time=t
+            self._lastStatus = v
+            if self._handler is not None:
+                if self.isPressed():
+                    self._handler.buttonPressed(self._name)
+                else:
+                    self._handler.buttonReleased(self._name)
+        #self._debounce_time=t
 
-    def held_listener(self):
-        print(f"Held")
+# make a handler for each button
+class ConfirmHandler:
+    def buttonPressed(self, name):
+        print(f"Handler: Button {name} pressed")
+    def buttonReleased(self, name):
+        print(f"Handler: Button {name} released")
 
-    def released_listener(self):
-        print(f"Released")
+class BackHandler:
+    def buttonPressed(self, name):
+        print(f"Handler: Button {name} pressed")
+    def buttonReleased(self, name):
+        print(f"Handler: Button {name} released")

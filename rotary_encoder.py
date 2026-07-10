@@ -20,8 +20,6 @@ class RotaryEncoderEvent:
     TURN_RIGHT_FAST = 11
     TURN_RIGHT_HOLD = 12
     TURN_RIGHT_FAST_HOLD = 13
-    CONFIRM = 14 #
-    BACK = 15 #
 
 
 class RotaryEncoder:
