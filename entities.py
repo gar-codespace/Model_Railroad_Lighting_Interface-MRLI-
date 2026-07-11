@@ -106,157 +106,158 @@ ROUTINES = {
             }
 
 CURRENT_ROUTINE = 1 # this gets changed by what exactly?
+ROUTINE_BUFFER = 0.1 # minutes
 
 # routine parameters
-OFF = {'name':'Off',
+OFF =  {'name':'Off',
+        'test': 100,
         'bank0':(0, 0), # a specific led strip, begin state, end state
         'bank1':(0, 0),
         'bank2':(0, 0),
         'bank3':(0, 0),
         'bank4':(0, 0),
-        'bank5':(0, 0),
         'red':(0, 0, 0), # the specific color, begin value, midpoint value, end value in percentage
         'green':(0, 0, 0),
         'blue':(0, 0, 0),
         'warm':(0, 0, 0),
         'white':(0, 0, 0),
-        'duration':0, # time in seconds
-        'random':0, # factor to randomize the duration. 0 to 1
-        'loop':0 # 1 = routines loops
+        'duration':0.0, # time in minutes
+        'random':0.0, # factor to randomize the duration. 0 to 1
+        'loop':False
         }
 
 MANUAL = {'name':'Manual',
+          'test': 200,
            'bank0':(1, 1),
            'bank1':(1, 1),
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'bank5':(1, 1),
-           'red':(0, 0, 0),
-           'green':(0, 0, 0),
-           'blue':(0, 0, 0),
-           'warm':(.4, .4, .4),
-           'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':0
+           'red':(.5, 0, 0),
+           'green':(.5, 0, 0),
+           'blue':(.5, 0, 0),
+           'warm':(5, 0, 0),
+           'white':(.5, 0, 0),
+           'duration':0.0,
+           'random':0.0,
+           'loop':False
            }
 
-MAINTENANCE = {'name':'Maintenance',
-           'bank0':(1, 1),
-           'bank1':(1, 1),
-           'bank2':(1, 1),
-           'bank3':(1, 1),
-           'bank4':(1, 1),
-           'bank5':(1, 1),
-           'red':(0, 0, 0),
-           'green':(0, 0, 0),
-           'blue':(0, 0, 0),
-           'warm':(.4, .4, .4),
-           'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':0
-           }
+MAINTENANCE =  {'name':'Maintenance',
+                'test': 300,
+                'bank0':(1, 1),
+                'bank1':(1, 1),
+                'bank2':(1, 1),
+                'bank3':(1, 1),
+                'bank4':(1, 1),
+                'red':(1, 0, 0),
+                'green':(1, 0, 0),
+                'blue':(1, 0, 0),
+                'warm':(1, 0, 0),
+                'white':(1, 0, 0),
+                'duration':0.0,
+                'random':0.0,
+                'loop':False
+                }
 
-DAY = {'name':'Cloudy Day',
+DAY =  {'name':'Cloudy Day',
+        'test': 400,
         'bank0':(1, 1),
         'bank1':(1, 1),
         'bank2':(1, 1),
         'bank3':(1, 1),
         'bank4':(1, 1),
-        'bank5':(0, 0),
         'red':(0, 0, 0),
         'green':(0, 0, 0),
         'blue':(0, 0, 0),
         'warm':(.8, .8, .8),
         'white':(.2, .2, .2),
-        'duration':0,
-        'random':0,
-        'loop':1
-           }
+        'duration':5.0,
+        'random':0.3,
+        'loop':True
+        }
 
 TWLIGHT = {'name':'Twlight',
+           'test': 500,
            'bank0':(1, 1),
            'bank1':(1, 1),
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'bank5':(1, 1),
            'red':(1, 0, 0),
            'green':(0, 0, 0),
            'blue':(0, 0, 0),
            'warm':(.4, .4, .4),
            'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':0
+           'duration':0.0,
+           'random':0.0,
+           'loop':False
            }
 
-NIGHT = {'name':'Nightime',
+NIGHT =   {'name':'Nightime',
+           'test': 600,
            'bank0':(1, 1),
            'bank1':(1, 1),
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'bank5':(1, 1),
            'red':(0, 0, 0),
            'green':(0, 0, 0),
            'blue':(0, 0, 0),
            'warm':(.4, .4, .4),
            'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':0
+           'duration':0.0,
+           'random':0.0,
+           'loop':False
            }
 
 SUNRISE = {'name':'Sunrise',
+           'test': 700,
            'bank0':(1, 1),
            'bank1':(1, 1),
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'bank5':(1, 1),
            'red':(0, 0, 0),
            'green':(0, 0, 0),
            'blue':(0, 0, 0),
            'warm':(.4, .4, .4),
            'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':0
+           'duration':30.0,
+           'random':0.0,
+           'loop':False
            }
 
-SUNSET = {'name':'Sunset',
+SUNSET =  {'name':'Sunset',
+           'test': 800,
            'bank0':(1, 1),
            'bank1':(1, 1),
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'bank5':(1, 1),
            'red':(0, 0, 0),
            'green':(0, 0, 0),
            'blue':(0, 0, 0),
            'warm':(.4, .4, .4),
            'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':0
+           'duration':30.0,
+           'random':0.0,
+           'loop':False
            }
 
-STORMY = {'name':'Stormy Night',
+STORMY =  {'name':'Stormy Night',
+           'test': 900,
            'bank0':(1, 1),
            'bank1':(1, 1),
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'bank5':(1, 1),
            'red':(0, 0, 0),
            'green':(0, 0, 0),
            'blue':(0, 0, 0),
            'warm':(.4, .4, .4),
            'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':1
+           'duration':0.0,
+           'random':0.0,
+           'loop':True
            }

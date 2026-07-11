@@ -9,9 +9,7 @@ class Routine():
 
     def __init__(self):
         
-        routine_index = entities.CURRENT_ROUTINE # int
-        routine_name = entities.ROUTINES[routine_index] # string
-        self.routine_parameters = getattr(entities, routine_name, 'DAY') # dict
+        self.routine_parameters: dict = {}
 
         # Switch control, assigns each bank of lights to a Pico pin
         self.switch0 = entities.PIN(entities.PICO_PIN['BANK0'], entities.PIN.OUT)
@@ -31,6 +29,12 @@ class Routine():
         self.warm.freq(entities.PWM_FREQ)
         self.white = entities.PWM(entities.PICO_PIN['WHITE'])
         self.white.freq(entities.PWM_FREQ)
+
+    def get_routine_parameters(self):
+
+        routine_index = entities.CURRENT_ROUTINE # int
+        routine_name = entities.ROUTINES[routine_index] # string
+        self.routine_parameters = getattr(entities, routine_name, 'DAY') # dict
 
     def set_light_banks(self, index):
         # turns each bank of lights on or off
@@ -57,19 +61,20 @@ class Routine():
         self.white.duty_u16(self._get_pwm_value(self.routine_parameters['white'][index]))
 
     def make_new_routine(self):
+        self.get_routine_parameters()
         self.set_light_banks(0)
         self.set_light_colors(0)
 
         # x = entities.RANDOM.randint(100, 700)
 
-        return 300
+        return self.routine_parameters['test']
     
     def increment_routine(self):
         print('increment')
 
     # Coroutine: runs the selected routine
     def run_routine(self):
-        delay_ms = 300
+        delay_ms = 200
         run_this_routine = 0
         while True:
             # selected_routine = entities.CURRENT_ROUTINE
