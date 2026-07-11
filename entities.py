@@ -8,6 +8,7 @@ from micropython import const as CONST
 import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as ASYNCIO
+import random as RANDOM
 
 # hardware libraries (3rd party)
 from hw_ssd1306 import SSD1306_I2C
@@ -50,13 +51,12 @@ PICO_PIN = {
         }
 
 # Raspi Pico parameters
-PWM_FREQ = 1000
 LED = PIN('LED', PIN.OUT)
+PWM_FREQ = 1000
+PWM_STEPS = 65535
 
-#temp:
-bldg_lights = PIN(10, PIN.OUT)
-bldg_lights.value(0)
 
+# Misc
 SCRIPT_REV = CONST('20260704')
 MACHINE_OFF = CONST(0)
 MACHINE_ON = CONST(1)
@@ -93,7 +93,7 @@ MENU_HIGHLIGHT = HIGHLIGHT_RECT['LINE2'] # This doesn't quite work but it's clos
 AUX_DISPLAY = DISPLAY1 # Not used, future capacity
 
 # Lighting Routines
-ROUTINES = {0:'DAY',
+ROUTINES = {0:'DAY', # maybe off should be listed first
             1:'TWLIGHT',
             2:'NIGHT',
             3:'SUNRISE',
@@ -103,7 +103,7 @@ ROUTINES = {0:'DAY',
             7:'MAINTENANCE',
             8:'OFF'}
 
-CURRENT_ROUTINE = 0 # this gets changed by what exactly?
+CURRENT_ROUTINE = 1 # this gets changed by what exactly?
 
 # routine parameters
 OFF = {'name':'Off',
@@ -123,108 +123,6 @@ OFF = {'name':'Off',
         'loop':0 # 1 = routines loops
         }
 
-DAY = {'name':'Cloudy Day',
-        'bank0':(1, 1),
-        'bank1':(1, 1),
-        'bank2':(1, 1),
-        'bank3':(1, 1),
-        'bank4':(1, 1),
-        'bank5':(0, 0),
-        'red':(0, 0, 0),
-        'green':(0, 0, 0),
-        'blue':(0, 0, 0),
-        'warm':(80, 80, 80),
-        'white':(20, 20, 20),
-        'duration':0,
-        'random':0,
-        'loop':1
-           }
-
-TWLIGHT = {'name':'Twlight',
-           'bank0':(1, 1),
-           'bank1':(1, 1),
-           'bank2':(1, 1),
-           'bank3':(1, 1),
-           'bank4':(1, 1),
-           'bank5':(1, 1),
-           'red':(100, 0, 0),
-           'green':(0, 0, 0),
-           'blue':(0, 0, 0),
-           'warm':(40, 40, 40),
-           'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':0
-           }
-
-NIGHT = {'name':'Nightime',
-           'bank0':(1, 1),
-           'bank1':(1, 1),
-           'bank2':(1, 1),
-           'bank3':(1, 1),
-           'bank4':(1, 1),
-           'bank5':(1, 1),
-           'red':(0, 0, 0),
-           'green':(0, 0, 0),
-           'blue':(0, 0, 0),
-           'warm':(40, 40, 40),
-           'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':0
-           }
-
-SUNRISE = {'name':'Sunrise',
-           'bank0':(1, 1),
-           'bank1':(1, 1),
-           'bank2':(1, 1),
-           'bank3':(1, 1),
-           'bank4':(1, 1),
-           'bank5':(1, 1),
-           'red':(0, 0, 0),
-           'green':(0, 0, 0),
-           'blue':(0, 0, 0),
-           'warm':(40, 40, 40),
-           'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':0
-           }
-
-SUNSET = {'name':'Sunset',
-           'bank0':(1, 1),
-           'bank1':(1, 1),
-           'bank2':(1, 1),
-           'bank3':(1, 1),
-           'bank4':(1, 1),
-           'bank5':(1, 1),
-           'red':(0, 0, 0),
-           'green':(0, 0, 0),
-           'blue':(0, 0, 0),
-           'warm':(40, 40, 40),
-           'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':0
-           }
-
-STORMY = {'name':'Stormy Night',
-           'bank0':(1, 1),
-           'bank1':(1, 1),
-           'bank2':(1, 1),
-           'bank3':(1, 1),
-           'bank4':(1, 1),
-           'bank5':(1, 1),
-           'red':(0, 0, 0),
-           'green':(0, 0, 0),
-           'blue':(0, 0, 0),
-           'warm':(40, 40, 40),
-           'white':(0, 0, 0),
-           'duration':0,
-           'random':0,
-           'loop':1
-           }
-
 MANUAL = {'name':'Manual',
            'bank0':(1, 1),
            'bank1':(1, 1),
@@ -235,7 +133,7 @@ MANUAL = {'name':'Manual',
            'red':(0, 0, 0),
            'green':(0, 0, 0),
            'blue':(0, 0, 0),
-           'warm':(40, 40, 40),
+           'warm':(.4, .4, .4),
            'white':(0, 0, 0),
            'duration':0,
            'random':0,
@@ -252,9 +150,111 @@ MAINTENANCE = {'name':'Maintenance',
            'red':(0, 0, 0),
            'green':(0, 0, 0),
            'blue':(0, 0, 0),
-           'warm':(40, 40, 40),
+           'warm':(.4, .4, .4),
            'white':(0, 0, 0),
            'duration':0,
            'random':0,
            'loop':0
+           }
+
+DAY = {'name':'Cloudy Day',
+        'bank0':(1, 1),
+        'bank1':(1, 1),
+        'bank2':(1, 1),
+        'bank3':(1, 1),
+        'bank4':(1, 1),
+        'bank5':(0, 0),
+        'red':(0, 0, 0),
+        'green':(0, 0, 0),
+        'blue':(0, 0, 0),
+        'warm':(.8, .8, .8),
+        'white':(.2, .2, .2),
+        'duration':0,
+        'random':0,
+        'loop':1
+           }
+
+TWLIGHT = {'name':'Twlight',
+           'bank0':(1, 1),
+           'bank1':(1, 1),
+           'bank2':(1, 1),
+           'bank3':(1, 1),
+           'bank4':(1, 1),
+           'bank5':(1, 1),
+           'red':(1, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(.4, .4, .4),
+           'white':(0, 0, 0),
+           'duration':0,
+           'random':0,
+           'loop':0
+           }
+
+NIGHT = {'name':'Nightime',
+           'bank0':(1, 1),
+           'bank1':(1, 1),
+           'bank2':(1, 1),
+           'bank3':(1, 1),
+           'bank4':(1, 1),
+           'bank5':(1, 1),
+           'red':(0, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(.4, .4, .4),
+           'white':(0, 0, 0),
+           'duration':0,
+           'random':0,
+           'loop':0
+           }
+
+SUNRISE = {'name':'Sunrise',
+           'bank0':(1, 1),
+           'bank1':(1, 1),
+           'bank2':(1, 1),
+           'bank3':(1, 1),
+           'bank4':(1, 1),
+           'bank5':(1, 1),
+           'red':(0, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(.4, .4, .4),
+           'white':(0, 0, 0),
+           'duration':0,
+           'random':0,
+           'loop':0
+           }
+
+SUNSET = {'name':'Sunset',
+           'bank0':(1, 1),
+           'bank1':(1, 1),
+           'bank2':(1, 1),
+           'bank3':(1, 1),
+           'bank4':(1, 1),
+           'bank5':(1, 1),
+           'red':(0, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(.4, .4, .4),
+           'white':(0, 0, 0),
+           'duration':0,
+           'random':0,
+           'loop':0
+           }
+
+STORMY = {'name':'Stormy Night',
+           'bank0':(1, 1),
+           'bank1':(1, 1),
+           'bank2':(1, 1),
+           'bank3':(1, 1),
+           'bank4':(1, 1),
+           'bank5':(1, 1),
+           'red':(0, 0, 0),
+           'green':(0, 0, 0),
+           'blue':(0, 0, 0),
+           'warm':(.4, .4, .4),
+           'white':(0, 0, 0),
+           'duration':0,
+           'random':0,
+           'loop':1
            }
