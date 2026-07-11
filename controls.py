@@ -1,11 +1,28 @@
+'''
+I'm trying to keep this as vinella as possible
+'''
+
 import entities
+import model
+
+# make a handler for each button
+class ConfirmHandler:
+    def buttonPressed(self, name):
+        print(f"Handler: Button {name} pressed")
+    def buttonReleased(self, name):
+        print(f"Handler: Button {name} released")
+        entities.bldg_lights.toggle()
+
+class BackHandler:
+    def buttonPressed(self, name):
+        print(f"Handler: Button {name} pressed")
+    def buttonReleased(self, name):
+        print(f"Handler: Button {name} released")
 
 
 class Display():
 
-    # Everything about the OLED display
-    # this display shows the menu items
-    # Tuple items: buss, sda, scl, width, height, addr
+    # Generic code to create a specific display
 
     def __init__(self, list):
 
@@ -27,12 +44,16 @@ class Display():
 
 
 class DisplayModule():
+    '''
+    The display module is considered the display and encoder
+    Integrates the rotary encoder and the display
+    the confirm and back buttons are on my specific
+    display are handled seperately
+    '''
 
-    # Integrates the rotary encoder and the display
-    # dist items push, direction, step
     def __init__(self):
 
-        # rotary encoder
+        # rotary encoder pins
         self.push = entities.PICO_PIN['PSH']
         self.dt = entities.PICO_PIN['TRA']
         self.clk = entities.PICO_PIN['TRB']
@@ -115,7 +136,9 @@ class DisplayModule():
         line_y = 0
         menu_items = self.get_menu_items(direction)
 
-        self.display.rect(0, 24, 128, 15, 1) # eliminate hard coding
+        # self.display.rect(0, 24, 128, 15, 1) # eliminate hard coding
+        highlight = entities.MENU_HIGHLIGHT
+        self.display.rect(highlight[0], highlight[1], highlight[2], highlight[3], highlight[4])
 
         for i in range (self.menu_rows):
             menu_item = self.routines[menu_items[i]]
@@ -127,8 +150,8 @@ class DisplayModule():
 
         return self.display
 
-    # The left and right listeners are backwards
-    def turn_left_listener(self): # really the right turn listener
+    # The left and right listeners are backwards for my display
+    def turn_left_listener(self):
         self.display.fill(0)
         self.get_menu(False)
         self.display.show()
@@ -140,7 +163,7 @@ class DisplayModule():
 
     def single_click_listener(self):
         entities.CURRENT_ROUTINE = self.highlighted_item
-        print(f'Selected routine: ' + str(entities.CURRENT_ROUTINE))
+        # print(f'Selected routine: ' + str(entities.CURRENT_ROUTINE))
 
     # These are not used
     # def any_event_listener(self, event, clicks):

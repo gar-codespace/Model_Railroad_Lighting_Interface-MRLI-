@@ -53,6 +53,10 @@ PICO_PIN = {
 PWM_FREQ = 1000
 LED = PIN('LED', PIN.OUT)
 
+#temp:
+bldg_lights = PIN(4, PIN.OUT)
+bldg_lights.value(1)
+
 SCRIPT_REV = CONST('20260704')
 MACHINE_OFF = CONST(0)
 MACHINE_ON = CONST(1)
@@ -67,7 +71,7 @@ OLED0 = {'ADDRESS': CONST(0x3C),
          'ROWS': CONST(5),
          'X_OFFSET': 4
         }
-
+# future capacity
 OLED1 = {'ADDRESS': CONST(0x3C),
          'WIDTH': CONST(128),
          'HEIGHT': CONST(64),
@@ -76,8 +80,8 @@ OLED1 = {'ADDRESS': CONST(0x3C),
          'X_OFFSET': 4
         }
 
-HIGHLIGHT_RECT = {'LINE2':(0, 24, 128, 15, 1)}
-HIGHLIGHT_LINE = {}
+HIGHLIGHT_RECT = {'LINE0':(0, 0, 128, 15, 1), 'LINE1':(0, 12, 128, 15, 1), 'LINE2':(0, 24, 128, 15, 1)}
+HIGHLIGHT_LINE = {} # not used at this time
 
 # OLED Configurations
 # bus, width, height, addr, line height, rows, x offset, highlight row
@@ -85,7 +89,7 @@ DISPLAY0 = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'], OLED0['LINE_HE
 DISPLAY1 = (1, OLED1['WIDTH'], OLED1['HEIGHT'], OLED1['ADDRESS'], OLED0['LINE_HEIGHT'], OLED0['ROWS'], OLED0['X_OFFSET'], 2)
 
 MENU_DISPLAY = DISPLAY0
-MENU_HIGHLIGHT = HIGHLIGHT_RECT['LINE2']
+MENU_HIGHLIGHT = HIGHLIGHT_RECT['LINE2'] # This doesn't quite work but it's close
 AUX_DISPLAY = DISPLAY1 # Not used, future capacity
 
 # Lighting Routines
@@ -103,19 +107,20 @@ CURRENT_ROUTINE = 0 # this gets changed by what exactly?
 
 # routine parameters
 OFF = {'name':'Off',
-        'bank0':(0, 0),
+        'bank0':(0, 0), # a specific led strip, begin state, end state
         'bank1':(0, 0),
         'bank2':(0, 0),
         'bank3':(0, 0),
         'bank4':(0, 0),
         'bank5':(0, 0),
-        'red':(0, 0, 0),
+        'red':(0, 0, 0), # the specific color, begin value, midpoint value, end value in percentage
         'green':(0, 0, 0),
         'blue':(0, 0, 0),
         'warm':(0, 0, 0),
         'white':(0, 0, 0),
-        'duration':0,
-        'loop':0
+        'duration':0, # time in seconds
+        'random':0, # factor to randomize the duration. 0 to 1
+        'loop':0 # 1 = routines loops
         }
 
 DAY = {'name':'Cloudy Day',
@@ -131,6 +136,7 @@ DAY = {'name':'Cloudy Day',
         'warm':(80, 80, 80),
         'white':(20, 20, 20),
         'duration':0,
+        'random':0,
         'loop':1
            }
 
@@ -147,6 +153,7 @@ TWLIGHT = {'name':'Twlight',
            'warm':(40, 40, 40),
            'white':(0, 0, 0),
            'duration':0,
+           'random':0,
            'loop':0
            }
 
@@ -163,6 +170,7 @@ NIGHT = {'name':'Nightime',
            'warm':(40, 40, 40),
            'white':(0, 0, 0),
            'duration':0,
+           'random':0,
            'loop':0
            }
 
@@ -179,6 +187,7 @@ SUNRISE = {'name':'Sunrise',
            'warm':(40, 40, 40),
            'white':(0, 0, 0),
            'duration':0,
+           'random':0,
            'loop':0
            }
 
@@ -195,6 +204,7 @@ SUNSET = {'name':'Sunset',
            'warm':(40, 40, 40),
            'white':(0, 0, 0),
            'duration':0,
+           'random':0,
            'loop':0
            }
 
@@ -211,6 +221,7 @@ STORMY = {'name':'Stormy Night',
            'warm':(40, 40, 40),
            'white':(0, 0, 0),
            'duration':0,
+           'random':0,
            'loop':1
            }
 
@@ -227,6 +238,7 @@ MANUAL = {'name':'Manual',
            'warm':(40, 40, 40),
            'white':(0, 0, 0),
            'duration':0,
+           'random':0,
            'loop':0
            }
 
@@ -243,5 +255,6 @@ MAINTENANCE = {'name':'Maintenance',
            'warm':(40, 40, 40),
            'white':(0, 0, 0),
            'duration':0,
+           'random':0,
            'loop':0
            }
