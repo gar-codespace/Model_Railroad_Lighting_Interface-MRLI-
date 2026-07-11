@@ -5,6 +5,18 @@ writen by me
 
 import entities
 
+# make a handler for each button
+class ConfirmHandler:
+    def buttonPressed(self, name):
+        print(f"Handler: Button {name} pressed")
+    def buttonReleased(self, name):
+        print(f"Handler: Button {name} released")
+
+class BackHandler:
+    def buttonPressed(self, name):
+        print(f"Handler: Button {name} pressed")
+    def buttonReleased(self, name):
+        print(f"Handler: Button {name} released")
 
 class Routine():
 

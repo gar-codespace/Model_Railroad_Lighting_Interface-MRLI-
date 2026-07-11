@@ -1,6 +1,6 @@
 import entities
 import model
-import interface
+import display_module
 
 #add a definition for each button
 # Coroutine: runs the selected method
@@ -15,12 +15,12 @@ async def back_button():
 async def main():
     
     # the display, the rotary encoder and selector button
-    control_interface = interface.Controller()
-    control_interface.display_splash()
+    dm = display_module.DisplayModule()
+    dm.display_splash()
 
     # create additional buttons
-    entities.Button(entities.PICO_PIN['CONFIRM'], "Confirm", handler=interface.ConfirmHandler())
-    entities.Button(entities.PICO_PIN['BACK'], "Back", handler=interface.BackHandler())
+    entities.Button(entities.PICO_PIN['CONFIRM'], "Confirm", handler=model.ConfirmHandler())
+    entities.Button(entities.PICO_PIN['BACK'], "Back", handler=model.BackHandler())
 
     routine = model.Routine()
     entities.ASYNCIO.create_task(routine.run_routine())
@@ -29,7 +29,7 @@ async def main():
     
     while True:
         
-        await entities.ASYNCIO.gather(control_interface.get_interface().async_tick(),
+        await entities.ASYNCIO.gather(dm.get_interface().async_tick(),
                                       confirm_button(),
                                       back_button()
                                       )

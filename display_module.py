@@ -1,7 +1,7 @@
 import entities
 
 
-class Display() :# abstract this to inherit from SSD1360_I2C
+class Display():
 
     # Everything about the OLED display
     # this display shows the menu items
@@ -26,7 +26,7 @@ class Display() :# abstract this to inherit from SSD1360_I2C
         return entities.SSD1306_I2C(self.width, self.height, i2c, self.addr)
 
 
-class Controller():
+class DisplayModule():
 
     # Integrates the rotary encoder and the display
     # dist items push, direction, step
@@ -161,15 +161,3 @@ class Controller():
     # def released_listener(self):
     #     print(f"Released")
 
-# make a handler for each button
-class ConfirmHandler:
-    def buttonPressed(self, name):
-        print(f"Handler: Button {name} pressed")
-    def buttonReleased(self, name):
-        print(f"Handler: Button {name} released")
-
-class BackHandler:
-    def buttonPressed(self, name):
-        print(f"Handler: Button {name} pressed")
-    def buttonReleased(self, name):
-        print(f"Handler: Button {name} released")
