@@ -1,5 +1,4 @@
 import entities
-import model
 
 
 class Display() :# abstract this to inherit from SSD1360_I2C
@@ -11,18 +10,16 @@ class Display() :# abstract this to inherit from SSD1360_I2C
     def __init__(self, list):
 
         self.bus = list[0]
-        self.sda = list[1]
-        self.scl = list[2]
-        self.width = list[3]
-        self.height = list[4]
-        self.addr = list[5]
+        self.width = list[1]
+        self.height = list[2]
+        self.addr = list[3]
 
     def getDisplay(self):
 
         i2c = entities.I2C(
                         self.bus,
-                        sda = entities.PIN(self.sda),
-                        scl = entities.PIN(self.scl),
+                        sda = entities.PIN(entities.PICO_PIN['SDA']),
+                        scl = entities.PIN(entities.PICO_PIN['SCL']),
                         freq = 400000
                         )
         
@@ -33,12 +30,12 @@ class Controller():
 
     # Integrates the rotary encoder and the display
     # dist items push, direction, step
-    def __init__(self, rotary):
+    def __init__(self):
 
         # rotary encoder
-        self.push = rotary['psh']
-        self.dt = rotary['tra']
-        self.clk = rotary['trb']
+        self.push = entities.PICO_PIN['PSH']
+        self.dt = entities.PICO_PIN['TRA']
+        self.clk = entities.PICO_PIN['TRB']
 
         # Define the rotary encoder and the button
         self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP) # Try these w/o pull up
@@ -47,10 +44,10 @@ class Controller():
 
         # Define the display
         self.menu_display = entities.MENU_DISPLAY
-        self.line_height = self.menu_display[6]
-        self.menu_rows = self.menu_display[7]
-        self.x_offset = self.menu_display[8]
-        self.highlight_row = self.menu_display[9]
+        self.line_height = self.menu_display[4]
+        self.menu_rows = self.menu_display[5]
+        self.x_offset = self.menu_display[6]
+        self.highlight_row = self.menu_display[7]
         self.display = Display(self.menu_display).getDisplay()
 
         # menu creation

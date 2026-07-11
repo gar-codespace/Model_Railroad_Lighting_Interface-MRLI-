@@ -1,5 +1,6 @@
 '''
-this is the class that makes and runs any routine
+this is the library that makes and runs the lighting routines
+writen by me
 '''
 
 import entities
@@ -11,27 +12,25 @@ class Routine():
         # entities.CURRENT_ROUTINE is an integer, the key of the ROUTINES dictionary
         self.routine_parameters: dict = {}
 
-        # Switch control, matches each bank of lights with a Pico pin
-        self.p_switches = entities.P_SWITCHES
-        self.switch0 = entities.PIN(self.p_switches[0], entities.PIN.OUT)
-        self.switch1 = entities.PIN(self.p_switches[1], entities.PIN.OUT)
-        self.switch2 = entities.PIN(self.p_switches[2], entities.PIN.OUT)
-        self.switch3 = entities.PIN(self.p_switches[3], entities.PIN.OUT)
-        self.switch4 = entities.PIN(self.p_switches[4], entities.PIN.OUT)
-        self.switch5 = entities.PIN(self.p_switches[5], entities.PIN.OUT) # the lights in the model buildings
+        # Switch control, assigns each bank of lights to a Pico pin
+        self.switch0 = entities.PIN(entities.PICO_PIN['BANK0'], entities.PIN.OUT)
+        self.switch1 = entities.PIN(entities.PICO_PIN['BANK1'], entities.PIN.OUT)
+        self.switch2 = entities.PIN(entities.PICO_PIN['BANK2'], entities.PIN.OUT)
+        self.switch3 = entities.PIN(entities.PICO_PIN['BANK3'], entities.PIN.OUT)
+        self.switch4 = entities.PIN(entities.PICO_PIN['BANK4'], entities.PIN.OUT)
+        self.switch5 = entities.PIN(entities.PICO_PIN['BANK0'], entities.PIN.OUT) # the lights in the model buildings
 
         # LED control, sets the Pico pins for PWM
-        self.p_leds = entities.P_LEDS
+      
 
-        pwm = PWM(Pin(pin_number))
-        self.red = entities.PWM(entities.PIN(self.p_leds['red']))
+
 
         
-        self.red = entities.PIN(self.p_leds['red'])
-        self.green = entities.PIN(self.p_leds['green'])
-        self.blue = entities.PIN(self.p_leds['blue'])
-        self.warm = entities.PIN(self.p_leds['warm'])
-        self.white = entities.PIN(self.p_leds['white'])
+        self.red = entities.PIN(entities.PICO_PIN['RED'])
+        self.green = entities.PIN(entities.PICO_PIN['GREEN'])
+        self.blue = entities.PIN(entities.PICO_PIN['BLUE'])
+        self.warm = entities.PIN(entities.PICO_PIN['WARM'])
+        self.white = entities.PIN(entities.PICO_PIN['WHITE'])
 
     def make_new_routine(self):
         routine_index = entities.CURRENT_ROUTINE

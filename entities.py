@@ -1,3 +1,7 @@
+'''
+I like to keep all the imports in one place
+'''
+
 # packaged libraries
 from machine import Pin as PIN, I2C, Timer as TIMER, PWM
 from micropython import const as CONST
@@ -5,18 +9,15 @@ import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as ASYNCIO
 
-# hardware libraries
+# hardware libraries (3rd party)
 from hw_ssd1306 import SSD1306_I2C
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 from hw_button import Button
 
 # local libraries
 
-# splash screen
-SPLASH_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
-
 # Raspi Pico GP pin assignments
-RASPI_PIN = {
+PICO_PIN = {
         'NA':0,
         'NA':1,
         'NA':2,
@@ -36,49 +37,27 @@ RASPI_PIN = {
         'SDA':16,
         'SCL':17,
         'PSH':18,
-        'CONFIRM':19,
-        'BACK':20,
+        'CONFIRM':19, # part of the integrated display
+        'BACK':20, # part of the integrated display
         'TRA':21,
         'TRB':22,
-        'NA':23,
-        'NA':24,
-        'NA':25,
+        'RESERVED':23,
+        'RESERVED':24,
+        'LED':'LED',
         'NA':26,
         'NA':27,
         'NA':28
         }
-# Raspi Pico pin assignments
-P_SWITCHES = {0:5,
-              1:6,
-              2:7,
-              3:8,
-              4:9,
-              5:10 # used for model buildings lighting
-              }
 
-P_LEDS = {'red':11,
-          'green':12,
-          'blue':13,
-          'warm':14,
-          'white':15
-          }
+# Raspi Pico parameters
 PWM_FREQ = 1000
+LED = PIN('LED', PIN.OUT)
 
-P_BUTTONS = {'confirm':19, # part of the integrated display
-             'back':20 # part of the integrated display
-             }
-
-P_OLED0 = {'sda':16, 'scl': 17} # Pins 4 and 5 are the default for the Pico
-P_OLED1 = {'sda':0, 'scl': 0}
-P_ROTARY = {'psh':18, 'tra':21, 'trb':22} # pin labels for the encoder I'm using
-# P_ROTARY = {'push':18, 'dt':19, 'clk':20} from the library
-
-# constants
 SCRIPT_REV = CONST('20260704')
 MACHINE_OFF = CONST(0)
 MACHINE_ON = CONST(1)
-LED = PIN('LED', PIN.OUT)
 TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
+SPLASH_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
 
 # OLED0 specs
 OLED0 = {'ADDRESS': CONST(0x3C),
@@ -100,16 +79,16 @@ OLED1 = {'ADDRESS': CONST(0x3C),
 HIGHLIGHT_RECT = {'LINE2':(0, 24, 128, 15, 1)}
 HIGHLIGHT_LINE = {}
 
-# Configurations
-# bus, sda, scl, width, height, addr, line height, rows, x offset, highlight row
-DISPLAY0 = (0, P_OLED0['sda'], P_OLED0['scl'], OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'], OLED0['LINE_HEIGHT'], OLED0['ROWS'], OLED0['X_OFFSET'], 2)
-DISPLAY1 = (1, P_OLED1['sda'], P_OLED1['scl'], OLED1['WIDTH'], OLED1['HEIGHT'], OLED1['ADDRESS'], OLED0['LINE_HEIGHT'], OLED0['ROWS'], OLED0['X_OFFSET'], 2)
+# OLED Configurations
+# bus, width, height, addr, line height, rows, x offset, highlight row
+DISPLAY0 = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'], OLED0['LINE_HEIGHT'], OLED0['ROWS'], OLED0['X_OFFSET'], 2)
+DISPLAY1 = (1, OLED1['WIDTH'], OLED1['HEIGHT'], OLED1['ADDRESS'], OLED0['LINE_HEIGHT'], OLED0['ROWS'], OLED0['X_OFFSET'], 2)
 
 MENU_DISPLAY = DISPLAY0
 MENU_HIGHLIGHT = HIGHLIGHT_RECT['LINE2']
 AUX_DISPLAY = DISPLAY1 # Not used, future capacity
 
-# routines
+# Lighting Routines
 ROUTINES = {0:'DAY',
             1:'TWLIGHT',
             2:'NIGHT',
@@ -119,7 +98,8 @@ ROUTINES = {0:'DAY',
             6:'MANUAL',
             7:'MAINTENANCE',
             8:'OFF'}
-CURRENT_ROUTINE = 0 # this gets changed by asyncio
+
+CURRENT_ROUTINE = 0 # this gets changed by what exactly?
 
 # routine parameters
 OFF = {'name':'Off',
