@@ -93,15 +93,17 @@ MENU_HIGHLIGHT = HIGHLIGHT_RECT['LINE2'] # This doesn't quite work but it's clos
 AUX_DISPLAY = DISPLAY1 # Not used, future capacity
 
 # Lighting Routines
-ROUTINES = {0:'DAY', # maybe off should be listed first
-            1:'TWLIGHT',
-            2:'NIGHT',
-            3:'SUNRISE',
-            4:'SUNSET',
-            5:'STORMY',
-            6:'MANUAL',
-            7:'MAINTENANCE',
-            8:'OFF'}
+ROUTINES = {
+            0:'OFF',
+            1:'MANUAL',
+            2:'MAINTENANCE',
+            3:'DAY',
+            4:'TWLIGHT',
+            5:'NIGHT',
+            6:'SUNRISE',
+            7:'SUNSET',
+            8:'STORMY'
+            }
 
 CURRENT_ROUTINE = 1 # this gets changed by what exactly?
 
