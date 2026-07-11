@@ -11,7 +11,7 @@ class ConfirmHandler:
         print(f"Handler: Button {name} pressed")
     def buttonReleased(self, name):
         print(f"Handler: Button {name} released")
-        entities.bldg_lights.toggle()
+        entities.PIN(entities.PICO_PIN['BANK5']).toggle()
 
 class BackHandler:
     def buttonPressed(self, name):

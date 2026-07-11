@@ -54,8 +54,8 @@ PWM_FREQ = 1000
 LED = PIN('LED', PIN.OUT)
 
 #temp:
-bldg_lights = PIN(4, PIN.OUT)
-bldg_lights.value(1)
+bldg_lights = PIN(10, PIN.OUT)
+bldg_lights.value(0)
 
 SCRIPT_REV = CONST('20260704')
 MACHINE_OFF = CONST(0)

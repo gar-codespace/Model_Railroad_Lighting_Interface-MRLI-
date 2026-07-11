@@ -1,5 +1,9 @@
 import entities
 
+def building_lights():
+     # the lights that decorate the model buildings
+    entities.PIN(entities.PICO_PIN['BANK5'], entities.PIN.OUT).value(0)
+
 
 class Routine():
 
@@ -15,7 +19,6 @@ class Routine():
         self.switch2 = entities.PIN(entities.PICO_PIN['BANK2'], entities.PIN.OUT)
         self.switch3 = entities.PIN(entities.PICO_PIN['BANK3'], entities.PIN.OUT)
         self.switch4 = entities.PIN(entities.PICO_PIN['BANK4'], entities.PIN.OUT)
-        self.switch5 = entities.PIN(entities.PICO_PIN['BANK0'], entities.PIN.OUT) # the lights in the model buildings
 
         # LED control, sets the Pico pins for PWM
         self.red = entities.PWM(entities.PIN(entities.PICO_PIN['RED']))
@@ -38,7 +41,6 @@ class Routine():
         self.switch2.value(self.routine_parameters['bank2'][0])
         self.switch3.value(self.routine_parameters['bank3'][0])
         self.switch4.value(self.routine_parameters['bank4'][0])
-        self.switch5.value(self.routine_parameters['bank5'][0]) # the lights in the model buildings
 
     def make_new_routine(self):
         self.set_light_banks()
