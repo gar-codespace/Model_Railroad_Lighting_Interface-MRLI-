@@ -3,7 +3,7 @@ I'm trying to keep this as vinella as possible
 '''
 
 import entities
-import model
+# import model
 
 # make a handler for each button
 class ConfirmHandler:
@@ -11,7 +11,8 @@ class ConfirmHandler:
         print(f"Handler: Button {name} pressed")
     def buttonReleased(self, name):
         print(f"Handler: Button {name} released")
-        entities.PIN(entities.PICO_PIN['SCENIC']).toggle()
+        if entities.CURRENT_ROUTINE == 1 or entities.CURRENT_ROUTINE == 2:
+            entities.PIN(entities.PICO_PIN['SCENIC']).toggle()
 
 class BackHandler:
     def buttonPressed(self, name):
