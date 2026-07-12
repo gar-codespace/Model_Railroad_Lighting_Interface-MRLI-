@@ -106,7 +106,8 @@ ROUTINES = {
             }
 
 CURRENT_ROUTINE = 1 # this gets changed by what exactly?
-ROUTINE_BUFFER = 0.1 # minutes
+ROUTINE_OFFSET = 0.1 # minutes
+ROUTINE_TICK = 0.025 # seconds. How often the routine is updated
 
 # routine parameters
 OFF =  {'name':'Off',
@@ -126,8 +127,8 @@ OFF =  {'name':'Off',
         'loop':False
         }
 
-MANUAL = {'name':'Manual',
-          'test': 200,
+MANUAL =  {'name':'Manual',
+           'test': 200,
            'bank0':(1, 1),
            'bank1':(1, 1),
            'bank2':(1, 1),

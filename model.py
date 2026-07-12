@@ -60,12 +60,29 @@ class Routine():
         self.warm.duty_u16(self._get_pwm_value(self.routine_parameters['warm'][index]))
         self.white.duty_u16(self._get_pwm_value(self.routine_parameters['white'][index]))
 
+    def _get_duration(self):
+        '''
+        The duration is retrieved from the specs, it's in minutes.
+        It's processed and returned as the number of ticks at the rate of entities.ROUTINE_TICK
+        '''
+        
+        dur = self.routine_parameters['duration'] * 60 # the specified dur in seconds
+        dur = dur / 2 # chop the dur in half for the A and B parts of the routine
+        rand_factor = 1 - self.routine_parameters['random'] # need it to be non-zero
+        dur_minimum = dur * rand_factor
+        duration_seconds = entities.RANDOM.randint(int(dur_minimum), int(dur)) # seconds
+        duration_ticks = duration_seconds / entities.ROUTINE_TICK
+
+        print(int(duration_ticks))
+        return duration_ticks
+
     def make_new_routine(self):
         self.get_routine_parameters()
         self.set_light_banks(0)
         self.set_light_colors(0)
 
-        # x = entities.RANDOM.randint(100, 700)
+        if not self.routine_parameters['duration'] == 0:
+            self._get_duration()
 
         return self.routine_parameters['test']
     
