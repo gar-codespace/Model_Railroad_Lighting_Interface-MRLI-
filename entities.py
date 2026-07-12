@@ -108,6 +108,7 @@ ROUTINES = {
 CURRENT_ROUTINE = 1 # this gets changed by what exactly?
 ROUTINE_OFFSET = 0.1 # minutes
 ROUTINE_TICK = 0.025 # seconds. How often the routine is updated
+DEFAULT_TICK = 0.25 # use this if the routine duration is zero
 
 # routine parameters
 OFF =  {'name':'Off',

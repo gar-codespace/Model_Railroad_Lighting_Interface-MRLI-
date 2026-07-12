@@ -11,6 +11,7 @@ class Routine():
         
         self.routine_parameters: dict = {}
         self.duration_ticks: int = 5000
+        self.offset_ticks: int = 5
 
         # Switch control, assigns each bank of lights to a Pico pin
         self.switch0 = entities.PIN(entities.PICO_PIN['BANK0'], entities.PIN.OUT)
@@ -81,8 +82,13 @@ class Routine():
         self.set_light_banks(0)
         self.set_light_colors(0)
 
+
         if not self.routine_parameters['duration'] == 0:
             self._get_duration()
+        # *** self._get_offset():
+        # get the offset in ticks
+        else:
+            self.duration_ticks = entities.DEFAULT_TICK
 
         return self.routine_parameters['test']
     
