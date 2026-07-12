@@ -19,6 +19,45 @@ class BackHandler:
     def buttonReleased(self, name):
         print(f"Handler: Button {name} released")
 
+class Bank0Handler:
+    def buttonPressed(self, name):
+        print(f"Handler: Button {name} pressed")
+    def buttonReleased(self, name):
+        print(f"Handler: Button {name} released")
+        if entities.CURRENT_ROUTINE == 1:
+            entities.PIN(entities.PICO_PIN['BANK0']).toggle()
+
+class Bank1Handler:
+    def buttonPressed(self, name):
+        print(f"Handler: Button {name} pressed")
+    def buttonReleased(self, name):
+        print(f"Handler: Button {name} released")
+        if entities.CURRENT_ROUTINE == 1:
+            entities.PIN(entities.PICO_PIN['BANK1']).toggle()
+            
+class Bank2Handler:
+    def buttonPressed(self, name):
+        print(f"Handler: Button {name} pressed")
+    def buttonReleased(self, name):
+        print(f"Handler: Button {name} released")
+        if entities.CURRENT_ROUTINE == 1:
+            entities.PIN(entities.PICO_PIN['BANK2']).toggle()
+
+class Bank3Handler:
+    def buttonPressed(self, name):
+        print(f"Handler: Button {name} pressed")
+    def buttonReleased(self, name):
+        print(f"Handler: Button {name} released")
+        if entities.CURRENT_ROUTINE == 1:
+            entities.PIN(entities.PICO_PIN['BANK3']).toggle()
+
+class Bank4Handler:
+    def buttonPressed(self, name):
+        print(f"Handler: Button {name} pressed")
+    def buttonReleased(self, name):
+        print(f"Handler: Button {name} released")
+        if entities.CURRENT_ROUTINE == 1:
+            entities.PIN(entities.PICO_PIN['BANK4']).toggle()
 
 class Display():
 

@@ -19,35 +19,35 @@ from hw_button import Button
 
 # Raspi Pico GP pin assignments
 PICO_PIN = {
-        'NA':0,
-        'NA':1,
-        'NA':2,
-        'NA':3,
-        'NA':4,
-        'BANK0':5,
+        'RED_V':0, # pot to manually control red brightness
+        'GREEN_V':1,
+        'BLUE_V':2,
+        'WARM_V':3,
+        'WHITE_V':4,
+        'BANK0':5, # led bank0 on or off
         'BANK1':6,
         'BANK2':7,
         'BANK3':8,
         'BANK4':9,
         'SCENIC':10,
-        'RED':11,
+        'RED':11, # red brightness for all banks
         'GREEN':12,
         'BLUE':13,
         'WARM':14,
         'WHITE':15,
-        'SDA':16,
-        'SCL':17,
-        'PSH':18,
+        'SDA':16, # display
+        'SCL':17, # display
+        'PSH':18, # encoder
         'CONFIRM':19, # part of the integrated display
         'BACK':20, # part of the integrated display
-        'TRA':21,
-        'TRB':22,
+        'TRA':21, # encoder
+        'TRB':22, # encoder
         'RESERVED':23,
         'RESERVED':24,
         'LED':'LED',
-        'NA':26,
-        'NA':27,
-        'NA':28
+        'BANK2_B':26, # button to manuallu turn bank2 on or off
+        'BANK3_B':27,
+        'BANK4_B':28
         }
 
 # Raspi Pico parameters
