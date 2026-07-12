@@ -1,8 +1,8 @@
 import entities
 
 def building_lights():
-     # the lights that decorate the model buildings
-    entities.PIN(entities.PICO_PIN['BANK5'], entities.PIN.OUT).value(0)
+     # the lights that decorate the model railroad
+    entities.PIN(entities.PICO_PIN['SCENIC'], entities.PIN.OUT).value(0)
 
 
 class Routine():
@@ -10,6 +10,7 @@ class Routine():
     def __init__(self):
         
         self.routine_parameters: dict = {}
+        self.duration_ticks: int = 5000
 
         # Switch control, assigns each bank of lights to a Pico pin
         self.switch0 = entities.PIN(entities.PICO_PIN['BANK0'], entities.PIN.OUT)
@@ -17,6 +18,7 @@ class Routine():
         self.switch2 = entities.PIN(entities.PICO_PIN['BANK2'], entities.PIN.OUT)
         self.switch3 = entities.PIN(entities.PICO_PIN['BANK3'], entities.PIN.OUT)
         self.switch4 = entities.PIN(entities.PICO_PIN['BANK4'], entities.PIN.OUT)
+        self.scenic = entities.PIN(entities.PICO_PIN['SCENIC'], entities.PIN.OUT)
 
         # LED control, sets the Pico pins for PWM
         self.red = entities.PWM(entities.PIN(entities.PICO_PIN['RED']))
@@ -45,6 +47,7 @@ class Routine():
         self.switch2.value(self.routine_parameters['bank2'][index])
         self.switch3.value(self.routine_parameters['bank3'][index])
         self.switch4.value(self.routine_parameters['bank4'][index])
+        self.scenic.value(self.routine_parameters['scenic'][index])
 
     def _get_pwm_value(self, setting=0):
         value = entities.PWM_STEPS * setting
@@ -71,10 +74,7 @@ class Routine():
         rand_factor = 1 - self.routine_parameters['random'] # need it to be non-zero
         dur_minimum = dur * rand_factor
         duration_seconds = entities.RANDOM.randint(int(dur_minimum), int(dur)) # seconds
-        duration_ticks = duration_seconds / entities.ROUTINE_TICK
-
-        print(int(duration_ticks))
-        return duration_ticks
+        self.duration_ticks = duration_seconds / entities.ROUTINE_TICK
 
     def make_new_routine(self):
         self.get_routine_parameters()
