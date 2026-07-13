@@ -26,13 +26,17 @@ async def bank2_button():
 
 async def main():
     
-    # the display and the rotary encoder
-    dm = controls.DisplayModule()
-    dm.display_splash()
+    # dm = controls.DisplayModule() # display and encoder
+    # dm.display_splash()
+    
+    main_display = controls.Display(entities.MAIN_DISPLAY_PARAMETERS).get_display()
+    controls.DisplayScreens(main_display).welcome_screen()
+
+
 
     # create buttons
     entities.Button(entities.PICO_PIN['CONFIRM'], "Confirm", handler=controls.ConfirmHandler())
-    # entities.Button(entities.PICO_PIN['BACK'], "Back", handler=controls.BackHandler())
+    entities.Button(entities.PICO_PIN['BACK'], "Back", handler=controls.BackHandler())
     entities.Button(entities.PICO_PIN['BANK0_B'], "Bank0", handler=controls.Bank0Handler())
     entities.Button(entities.PICO_PIN['BANK1_B'], "Bank1", handler=controls.Bank1Handler())
     entities.Button(entities.PICO_PIN['BANK2_B'], "Bank2", handler=controls.Bank2Handler())
@@ -46,7 +50,7 @@ async def main():
     
     while True:
         
-        await entities.ASYNCIO.gather(dm.get_interface().async_tick(),
+        await entities.ASYNCIO.gather(controls.Encoder().get_interface().async_tick(),
                                       confirm_button(),
                                       bank0_button(),
                                       bank1_button(),
