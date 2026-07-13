@@ -19,7 +19,7 @@ from hw_button import Button
 
 # Raspi Pico GP pin assignments
 PICO_PIN = {
-        'NA':0, # pot to manually control red brightness
+        'NA':0, # put audio dac here
         'NA':1,
         'RED_V':2, # red value control pot
         'GREEN_V':3,
@@ -29,8 +29,8 @@ PICO_PIN = {
         'BANK0':7, # led bank0 on or off
         'BANK1':8,
         'BANK2':9,
-        'SCENIC':10,
-        'RED':11, # red brightness for all banks
+        'SCENIC':10, # the lights that decorate the layout
+        'RED':11, # pwm, red brightness for all banks
         'GREEN':12,
         'BLUE':13,
         'WARM':14,
@@ -92,6 +92,12 @@ MENU_DISPLAY = DISPLAY0
 MENU_HIGHLIGHT = HIGHLIGHT_RECT['LINE2'] # This doesn't quite work but it's close
 AUX_DISPLAY = DISPLAY1 # Not used, future capacity
 
+CURRENT_ROUTINE = 1 # this gets changed by what exactly?
+ROUTINE_OFFSET = 0.1 # minutes
+ROUTINE_TICK = .025 # seconds. How often the routine is updated
+DEFAULT_TICK = .25 # use this if the routine duration is zero
+CLOCK_RATIO = 6
+
 # Lighting Routines
 ROUTINES = {
             0:'OFF',
@@ -104,12 +110,6 @@ ROUTINES = {
             7:'SUNSET',
             8:'STORMY'
             }
-
-CURRENT_ROUTINE = 1 # this gets changed by what exactly?
-ROUTINE_OFFSET = 0.1 # minutes
-ROUTINE_TICK = .025 # seconds. How often the routine is updated
-DEFAULT_TICK = .25 # use this if the routine duration is zero
-CLOCK_RATIO = 6
 
 # routine parameters
 OFF =  {'name':'Off',
@@ -135,10 +135,10 @@ MANUAL =  {'name':'Manual',
            'bank2':(1, 1),
            'scenic':(1,0),
            'red':(1, 0, 0),
-           'green':(.5, 0, 0),
+           'green':(1, 0, 0),
            'blue':(.5, 0, 0),
-           'warm':(5, 0, 0),
-           'white':(.5, 0, 0),
+           'warm':(.1, 0, 0),
+           'white':(1, 0, 0),
            'duration':0.0,
            'random':0.0,
            'loop':False

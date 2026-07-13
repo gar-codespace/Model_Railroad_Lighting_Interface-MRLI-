@@ -3,7 +3,6 @@ I'm trying to keep this as vinella as possible
 '''
 
 import entities
-# import model
 
 # make a handler for each button
 class ConfirmHandler:
@@ -43,22 +42,6 @@ class Bank2Handler:
         print(f"Handler: Button {name} released")
         if entities.CURRENT_ROUTINE == 1:
             entities.PIN(entities.PICO_PIN['BANK2']).toggle()
-
-class Bank3Handler:
-    def buttonPressed(self, name):
-        print(f"Handler: Button {name} pressed")
-    def buttonReleased(self, name):
-        print(f"Handler: Button {name} released")
-        if entities.CURRENT_ROUTINE == 1:
-            entities.PIN(entities.PICO_PIN['BANK3']).toggle()
-
-class Bank4Handler:
-    def buttonPressed(self, name):
-        print(f"Handler: Button {name} pressed")
-    def buttonReleased(self, name):
-        print(f"Handler: Button {name} released")
-        if entities.CURRENT_ROUTINE == 1:
-            entities.PIN(entities.PICO_PIN['BANK4']).toggle()
 
 class Display():
 

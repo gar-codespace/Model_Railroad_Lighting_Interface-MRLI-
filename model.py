@@ -1,6 +1,6 @@
 import entities
 
-def building_lights():
+def scenic_lights():
      # the lights that decorate the model railroad
     entities.PIN(entities.PICO_PIN['SCENIC'], entities.PIN.OUT).value(0)
 
@@ -38,13 +38,13 @@ class Routine():
         self.white = entities.PWM(entities.PICO_PIN['WHITE'])
         self.white.freq(entities.PWM_FREQ)
 
-    def get_routine_parameters(self):
+    def _get_routine_parameters(self):
 
         routine_index = entities.CURRENT_ROUTINE # int
         routine_name = entities.ROUTINES[routine_index] # string
         self.routine_parameters = getattr(entities, routine_name, 'DAY') # dict
 
-    def set_light_banks(self, index):
+    def _set_light_banks(self, index):
         # turns each bank of lights on or off
         # for now each bank of lights stays on or off for the duration of the routine
         # format: 'bank0':(1, 1),
@@ -58,7 +58,7 @@ class Routine():
         value = entities.PWM_STEPS * setting
         return int(value)
     
-    def set_light_colors(self, index):
+    def _set_light_colors(self, index):
         # sets eachj lights brightness to its initial value
         # format: 'warm':(.8, .8, .8),
         x = self._get_pwm_value(self.routine_parameters['red'][index])
@@ -102,7 +102,7 @@ class Routine():
 
         self.routine_midpoint_ticks = int(self.routine_ticks / 2)
 
-    def get_color_change_matrix(self):
+    def _get_color_change_matrix(self):
 
         x = self._steps_per_tick(self.routine_parameters['red'][0], self.routine_parameters['red'][1])
         y = self._steps_per_tick(self.routine_parameters['red'][1], self.routine_parameters['red'][2])
@@ -134,10 +134,10 @@ class Routine():
 
     def make_new_routine(self):
         delay = entities.DEFAULT_TICK
-        self.get_routine_parameters()
-        self.set_light_banks(0)
-        self.set_light_colors(0)
-        self.get_color_change_matrix()
+        self._get_routine_parameters()
+        self._set_light_banks(0)
+        self._set_light_colors(0)
+        self._get_color_change_matrix()
 
         if not self.routine_parameters['duration'] == 0:
             self._get_routine_duration()

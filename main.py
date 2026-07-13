@@ -11,24 +11,16 @@ async def confirm_button():
 # async def back_button():
 #     while True:
 #         await entities.ASYNCIO.sleep(0.2)
-# 
-# async def bank0_button():
-#     while True:
-#         await entities.ASYNCIO.sleep(0.2)
-# 
-# async def bank1_button():
-#     while True:
-#         await entities.ASYNCIO.sleep(0.2)
+
+async def bank0_button():
+    while True:
+        await entities.ASYNCIO.sleep(0.2)
+
+async def bank1_button():
+    while True:
+        await entities.ASYNCIO.sleep(0.2)
 
 async def bank2_button():
-    while True:
-        await entities.ASYNCIO.sleep(0.2)
-
-async def bank3_button():
-    while True:
-        await entities.ASYNCIO.sleep(0.2)
-
-async def bank4_button():
     while True:
         await entities.ASYNCIO.sleep(0.2)
 
@@ -40,7 +32,7 @@ async def main():
 
     # create buttons
     entities.Button(entities.PICO_PIN['CONFIRM'], "Confirm", handler=controls.ConfirmHandler())
-    entities.Button(entities.PICO_PIN['BACK'], "Back", handler=controls.BackHandler())
+    # entities.Button(entities.PICO_PIN['BACK'], "Back", handler=controls.BackHandler())
     entities.Button(entities.PICO_PIN['BANK0_B'], "Bank0", handler=controls.Bank0Handler())
     entities.Button(entities.PICO_PIN['BANK1_B'], "Bank1", handler=controls.Bank1Handler())
     entities.Button(entities.PICO_PIN['BANK2_B'], "Bank2", handler=controls.Bank2Handler())
@@ -48,7 +40,7 @@ async def main():
     routine = model.Routine()
     entities.ASYNCIO.create_task(routine.run_routine())
 
-    model.building_lights()
+    model.scenic_lights()
 
     # model.play harbor sounds
     
@@ -56,9 +48,9 @@ async def main():
         
         await entities.ASYNCIO.gather(dm.get_interface().async_tick(),
                                       confirm_button(),
-                                      bank2_button(),
-                                      bank3_button(),
-                                      bank4_button()
+                                      bank0_button(),
+                                      bank1_button(),
+                                      bank2_button()
                                       )
 
 
