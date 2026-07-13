@@ -19,16 +19,16 @@ from hw_button import Button
 
 # Raspi Pico GP pin assignments
 PICO_PIN = {
-        'RED_V':0, # pot to manually control red brightness
-        'GREEN_V':1,
-        'BLUE_V':2,
-        'WARM_V':3,
-        'WHITE_V':4,
-        'BANK0':5, # led bank0 on or off
-        'BANK1':6,
-        'BANK2':7,
-        'BANK3':8,
-        'BANK4':9,
+        'NA':0, # pot to manually control red brightness
+        'NA':1,
+        'RED_V':2, # red value control pot
+        'GREEN_V':3,
+        'BLUE_V':4,
+        'WARM_V':5,
+        'WHITE_V':6,
+        'BANK0':7, # led bank0 on or off
+        'BANK1':8,
+        'BANK2':9,
         'SCENIC':10,
         'RED':11, # red brightness for all banks
         'GREEN':12,
@@ -45,9 +45,9 @@ PICO_PIN = {
         'RESERVED':23,
         'RESERVED':24,
         'LED':'LED',
-        'BANK2_B':26, # button to manuallu turn bank2 on or off
-        'BANK3_B':27,
-        'BANK4_B':28
+        'BANK0_B':26, # button to manually turn bank0 on or off
+        'BANK1_B':27,
+        'BANK2_B':28
         }
 
 # Raspi Pico parameters
@@ -209,7 +209,7 @@ NIGHT =   {'name':'Nightime',
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'scenic':(0,0),
+           'scenic':(1,0),
            'red':(0, 0, 0),
            'green':(0, 0, 0),
            'blue':(0, 0, 0),
@@ -227,7 +227,7 @@ SUNRISE = {'name':'Sunrise',
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'scenic':(0,0),
+           'scenic':(1,0),
            'red':(0, 0, 0),
            'green':(0, 0, 0),
            'blue':(0, 0, 0),

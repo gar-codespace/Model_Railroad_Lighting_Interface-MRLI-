@@ -24,8 +24,6 @@ class Routine():
         self.switch0 = entities.PIN(entities.PICO_PIN['BANK0'], entities.PIN.OUT)
         self.switch1 = entities.PIN(entities.PICO_PIN['BANK1'], entities.PIN.OUT)
         self.switch2 = entities.PIN(entities.PICO_PIN['BANK2'], entities.PIN.OUT)
-        self.switch3 = entities.PIN(entities.PICO_PIN['BANK3'], entities.PIN.OUT)
-        self.switch4 = entities.PIN(entities.PICO_PIN['BANK4'], entities.PIN.OUT)
         self.scenic = entities.PIN(entities.PICO_PIN['SCENIC'], entities.PIN.OUT)
 
         # LED control, sets the Pico pins for PWM
@@ -54,8 +52,6 @@ class Routine():
         self.switch0.value(self.routine_parameters['bank0'][index])
         self.switch1.value(self.routine_parameters['bank1'][index])
         self.switch2.value(self.routine_parameters['bank2'][index])
-        self.switch3.value(self.routine_parameters['bank3'][index])
-        self.switch4.value(self.routine_parameters['bank4'][index])
         self.scenic.value(self.routine_parameters['scenic'][index])
 
     def _get_pwm_value(self, setting=0):
