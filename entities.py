@@ -107,8 +107,9 @@ ROUTINES = {
 
 CURRENT_ROUTINE = 1 # this gets changed by what exactly?
 ROUTINE_OFFSET = 0.1 # minutes
-ROUTINE_TICK = 0.025 # seconds. How often the routine is updated
-DEFAULT_TICK = 0.25 # use this if the routine duration is zero
+ROUTINE_TICK = .025 # seconds. How often the routine is updated
+DEFAULT_TICK = .25 # use this if the routine duration is zero
+CLOCK_RATIO = 6
 
 # routine parameters
 OFF =  {'name':'Off',
@@ -232,7 +233,7 @@ SUNRISE = {'name':'Sunrise',
            'blue':(0, 0, 0),
            'warm':(.4, .4, .4),
            'white':(0, 0, 0),
-           'duration':30.0,
+           'duration':180.0,
            'random':0.0,
            'loop':False
            }
@@ -244,13 +245,13 @@ SUNSET =  {'name':'Sunset',
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'scenic':(0,0),
-           'red':(0, 0, 0),
+           'scenic':(1,0),
+           'red':(0, .5, 0),
            'green':(0, 0, 0),
-           'blue':(0, 0, 0),
-           'warm':(.4, .4, .4),
+           'blue':(0, 0, .5),
+           'warm':(.4, .1, 0),
            'white':(0, 0, 0),
-           'duration':30.0,
+           'duration':180.0,
            'random':0.0,
            'loop':False
            }
