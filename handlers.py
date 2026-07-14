@@ -1,14 +1,5 @@
 import entities
 
-# the left and right listeners are swapped
-def turn_left_listener():
-    print('Left')
-
-def turn_right_listener():
-    print('Right')
-
-def single_click_listener():
-        print('Select')
 
 # make a handler for each button
 class ConfirmHandler:

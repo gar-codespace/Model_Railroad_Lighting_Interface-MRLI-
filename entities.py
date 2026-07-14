@@ -61,36 +61,41 @@ SCRIPT_REV = CONST('20260704')
 MACHINE_OFF = CONST(0)
 MACHINE_ON = CONST(1)
 TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
-SPLASH_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
 
 # OLED0 specs
 OLED0 = {'ADDRESS': CONST(0x3C),
          'WIDTH': CONST(128),
          'HEIGHT': CONST(64),
          'LINE_HEIGHT': CONST(14),
-         'ROWS': CONST(5),
-         'X_OFFSET': 4
         }
 # future capacity
 OLED1 = {'ADDRESS': CONST(0x3C),
          'WIDTH': CONST(128),
          'HEIGHT': CONST(64),
          'LINE_HEIGHT': CONST(14),
-         'ROWS': CONST(5),
-         'X_OFFSET': 4
         }
 
-HIGHLIGHT_RECT = {'LINE0':(0, 0, 128, 15, 1), 'LINE1':(0, 12, 128, 15, 1), 'LINE2':(0, 24, 128, 15, 1)}
-HIGHLIGHT_LINE = {} # not used at this time
 
 # OLED Configurations
 # bus, width, height, addr, line height, rows, x offset, highlight row
-DISPLAY0 = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'], OLED0['LINE_HEIGHT'], OLED0['ROWS'], OLED0['X_OFFSET'], 2)
-DISPLAY1 = (1, OLED1['WIDTH'], OLED1['HEIGHT'], OLED1['ADDRESS'], OLED0['LINE_HEIGHT'], OLED0['ROWS'], OLED0['X_OFFSET'], 2)
-
-MENU_DISPLAY = DISPLAY0
-MENU_HIGHLIGHT = HIGHLIGHT_RECT['LINE2'] # This doesn't quite work but it's close
+DISPLAY0 = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
+DISPLAY1 = (1, OLED1['WIDTH'], OLED1['HEIGHT'], OLED1['ADDRESS'])
+MAIN_DISPLAY = DISPLAY0
 AUX_DISPLAY = DISPLAY1 # Not used, future capacity
+
+# Display formatting
+MAIN_FORMAT =  {'LINE_HEIGHT': CONST(14),
+                'ROWS': CONST(5),
+                'X_OFFSET': 4
+                }
+
+HIGHLIGHT_RECT = {'LINE0':(0, 0, 128, 15, 1), 'LINE1':(0, 12, 128, 15, 1), 'LINE2':(0, 24, 128, 15, 1)}
+HIGHLIGHT_LINE = {} # not used at this time
+MENU_HIGHLIGHT = HIGHLIGHT_RECT['LINE2'] # This doesn't quite work but it's close
+
+# Routine parameters
+SCREEN_STATUS = 'routine' # Can be: routine, status, adjust
+WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
 
 CURRENT_ROUTINE = 1 # this gets changed by what exactly?
 ROUTINE_OFFSET = 0.1 # minutes
@@ -98,7 +103,12 @@ ROUTINE_TICK = .025 # seconds. How often the routine is updated
 DEFAULT_TICK = .25 # use this if the routine duration is zero
 CLOCK_RATIO = 6
 
-# Lighting Routines
+PWM_VALUES = {'red':20000,
+              'green':30000,
+              'blue':40000,
+              'warm':50000,
+              'white':60000
+              }
 ROUTINES = {
             0:'OFF',
             1:'MANUAL',

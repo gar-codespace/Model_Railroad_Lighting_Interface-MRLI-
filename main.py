@@ -1,6 +1,7 @@
 import entities
 import model
 import controls
+import handlers
 
 #add a definition for each button
 # Coroutine: runs the selected method
@@ -8,9 +9,9 @@ async def confirm_button():
     while True:
         await entities.ASYNCIO.sleep(0.2)
 
-# async def back_button():
-#     while True:
-#         await entities.ASYNCIO.sleep(0.2)
+async def back_button():
+    while True:
+        await entities.ASYNCIO.sleep(0.2)
 
 async def bank0_button():
     while True:
@@ -26,27 +27,24 @@ async def bank2_button():
 
 async def main():
     
-    # the display and the rotary encoder
     dm = controls.DisplayModule()
-    dm.display_splash()
+    dm.show_welcome_screen()
+
+    # model.play harbor sounds
 
     # create buttons
-    entities.Button(entities.PICO_PIN['CONFIRM'], "Confirm", handler=controls.ConfirmHandler())
-    # entities.Button(entities.PICO_PIN['BACK'], "Back", handler=controls.BackHandler())
-    entities.Button(entities.PICO_PIN['BANK0_B'], "Bank0", handler=controls.Bank0Handler())
-    entities.Button(entities.PICO_PIN['BANK1_B'], "Bank1", handler=controls.Bank1Handler())
-    entities.Button(entities.PICO_PIN['BANK2_B'], "Bank2", handler=controls.Bank2Handler())
+    entities.Button(entities.PICO_PIN['CONFIRM'], "Confirm", handler=handlers.ConfirmHandler())
+    entities.Button(entities.PICO_PIN['BACK'], "Back", handler=handlers.BackHandler())
+    entities.Button(entities.PICO_PIN['BANK0_B'], "Bank0", handler=handlers.Bank0Handler())
+    entities.Button(entities.PICO_PIN['BANK1_B'], "Bank1", handler=handlers.Bank1Handler())
+    entities.Button(entities.PICO_PIN['BANK2_B'], "Bank2", handler=handlers.Bank2Handler())
 
     routine = model.Routine()
     entities.ASYNCIO.create_task(routine.run_routine())
 
-    model.scenic_lights()
-
-    # model.play harbor sounds
-    
     while True:
         
-        await entities.ASYNCIO.gather(dm.get_interface().async_tick(),
+        await entities.ASYNCIO.gather(dm.get_encoder().async_tick(),
                                       confirm_button(),
                                       bank0_button(),
                                       bank1_button(),
