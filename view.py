@@ -3,6 +3,7 @@ Support methods for the controls library
 '''
 
 import entities
+import model
 
 
 class Display():
@@ -34,6 +35,58 @@ def welcome_screen(display):
         line_y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
     return
+
+def status_screen(display):
+
+    x = entities.MAIN_FORMAT['X_OFFSET']
+    y = 1
+
+    value = model.pwm2percent(entities.PWM_VALUES['RED'])
+    display.text(f'Red:   {value}%', x, y)
+    y += entities.MAIN_FORMAT['LINE_HEIGHT']
+
+    value = model.pwm2percent(entities.PWM_VALUES['GREEN'])
+    display.text(f'Green: {value}%', x, y)
+    y += entities.MAIN_FORMAT['LINE_HEIGHT']
+
+    value = model.pwm2percent(entities.PWM_VALUES['BLUE'])
+    display.text(f'Blue:  {value}%', x, y)
+    y += entities.MAIN_FORMAT['LINE_HEIGHT']
+
+    value = model.pwm2percent(entities.PWM_VALUES['WARM'])
+    display.text(f'Warm:  {value}%', x, y)
+    y += entities.MAIN_FORMAT['LINE_HEIGHT']
+
+    value = model.pwm2percent(entities.PWM_VALUES['WHITE'])
+    display.text(f'White: {value}%', x, y)
+    y += entities.MAIN_FORMAT['LINE_HEIGHT']
+
+def status_hilight(display, direction: str):
+
+    minimum = 0 # This can be hardcoded because there are 5 led colors
+    maximum = 4
+#    maximum = int(entities.MAIN_FORMAT['LINE_HEIGHT'] * (entities.MAIN_FORMAT['ROWS'] - 1))
+
+    if direction == 'RIGHT':
+        entities.STATUS_HILIGHT_INDEX -= 1
+        entities.STATUS_HILIGHT_INDEX = max(0, entities.STATUS_HILIGHT_INDEX)
+        entities.STATUS_HILIGHT_LOCATION = entities.MAIN_FORMAT['LINE_HEIGHT'] * entities.STATUS_HILIGHT_INDEX
+
+    if direction == 'LEFT':
+        entities.STATUS_HILIGHT_INDEX += 1
+        entities.STATUS_HILIGHT_INDEX = min(entities.STATUS_HILIGHT_INDEX, 4)
+        entities.STATUS_HILIGHT_LOCATION = entities.MAIN_FORMAT['LINE_HEIGHT'] * entities.STATUS_HILIGHT_INDEX
+
+    hilight = display.rect(0, entities.STATUS_HILIGHT_LOCATION, 128, 10, 1)
+
+    return hilight
+
+
+    
+
+
+
+
 
 
 

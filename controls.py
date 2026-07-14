@@ -41,7 +41,7 @@ class DisplayModule():
 
     def show_status_screen(self):
         self.display.fill(0)
-
+        view.status_screen(self.display)
         self.display.show()
 
     def get_encoder(self):
@@ -59,25 +59,39 @@ class DisplayModule():
         return encoder
 
     def turn_left_listener(self):
-        if entities.SCREEN_STATUS == 'routine':
+        if entities.SCREEN_STATUS == 'ROUTINE':
             print('Left')
-        if entities.SCREEN_STATUS == 'status':
-            print('Left')
-        if entities.SCREEN_STATUS == 'adjust':
+
+        if entities.SCREEN_STATUS == 'STATUS':
+            self.display.fill(0)
+            view.status_screen(self.display)
+            view.status_hilight(self.display, 'LEFT')
+            self.display.show()
+
+        if entities.SCREEN_STATUS == 'ADJUST':
             print('Left')
 
     def turn_right_listener(self):
-        if entities.SCREEN_STATUS == 'routine':
+        if entities.SCREEN_STATUS == 'ROUTINE':
             print('Right')
-        if entities.SCREEN_STATUS == 'status':
-            print('Right')
-        if entities.SCREEN_STATUS == 'adjust':
+
+        if entities.SCREEN_STATUS == 'STATUS':
+            self.display.fill(0)
+            view.status_screen(self.display)
+            view.status_hilight(self.display, 'RIGHT')
+            self.display.show()
+            
+        if entities.SCREEN_STATUS == 'ADJUST':
             print('Right')
 
     def single_click_listener(self):
-        if entities.SCREEN_STATUS == 'routine':
+        if entities.SCREEN_STATUS == 'ROUTINE':
             print('Select')
-        if entities.SCREEN_STATUS == 'status':
+
+        if entities.SCREEN_STATUS == 'STATUS':
+            print(entities.STATUS_HILIGHT_INDEX)
+
+        if entities.SCREEN_STATUS == 'ADJUST':
             print('Select')
-        if entities.SCREEN_STATUS == 'adjust':
-            print('Select')
+
+

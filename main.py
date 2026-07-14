@@ -3,7 +3,6 @@ import model
 import controls
 import handlers
 
-#add a definition for each button
 # Coroutine: runs the selected method
 async def confirm_button():
     while True:
@@ -28,7 +27,8 @@ async def bank2_button():
 async def main():
     
     dm = controls.DisplayModule()
-    dm.show_welcome_screen()
+    dm.show_status_screen()
+    entities.SCREEN_STATUS = 'STATUS'
 
     # model.play harbor sounds
 

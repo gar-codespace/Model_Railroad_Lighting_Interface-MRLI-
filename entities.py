@@ -84,18 +84,27 @@ MAIN_DISPLAY = DISPLAY0
 AUX_DISPLAY = DISPLAY1 # Not used, future capacity
 
 # Display formatting
-MAIN_FORMAT =  {'LINE_HEIGHT': CONST(14),
+MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
                 'ROWS': CONST(5),
                 'X_OFFSET': 4
                 }
 
-HIGHLIGHT_RECT = {'LINE0':(0, 0, 128, 15, 1), 'LINE1':(0, 12, 128, 15, 1), 'LINE2':(0, 24, 128, 15, 1)}
-HIGHLIGHT_LINE = {} # not used at this time
-MENU_HIGHLIGHT = HIGHLIGHT_RECT['LINE2'] # This doesn't quite work but it's close
+
+
+
 
 # Routine parameters
-SCREEN_STATUS = 'routine' # Can be: routine, status, adjust
+SCREEN_STATUS = 'WELCOME' # Can be: WELCOME, ROUTINE, STATUS, ADJUST
 WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
+STATUS_HILIGHT_LOCATION = 0
+STATUS_HILIGHT_INDEX = 0
+
+LED_INDEX_MAP = {0: 'RED',
+                 1: 'GREEN',
+                 2: 'BLUE',
+                 3: 'WARM',
+                 4: 'WHITE'
+                 }
 
 CURRENT_ROUTINE = 1 # this gets changed by what exactly?
 ROUTINE_OFFSET = 0.1 # minutes
@@ -103,11 +112,11 @@ ROUTINE_TICK = .025 # seconds. How often the routine is updated
 DEFAULT_TICK = .25 # use this if the routine duration is zero
 CLOCK_RATIO = 6
 
-PWM_VALUES = {'red':20000,
-              'green':30000,
-              'blue':40000,
-              'warm':50000,
-              'white':60000
+PWM_VALUES = {'RED':20000,
+              'GREEN':30000,
+              'BLUE':40000,
+              'WARM':50000,
+              'WHITE':60000
               }
 ROUTINES = {
             0:'OFF',

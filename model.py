@@ -4,6 +4,14 @@ def scenic_lights():
      # the lights that decorate the model railroad
     entities.PIN(entities.PICO_PIN['SCENIC'], entities.PIN.OUT).value(0)
 
+def pwm2percent(pwm):
+    '''
+    Convert a pwm valut to percentage rounded to 3 places.
+    '''
+
+    x = pwm / entities.PWM_STEPS
+    x = round(x * 100, 3)
+    return x
 
 class Routine():
 
