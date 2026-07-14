@@ -62,22 +62,21 @@ def status_screen(display):
     y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
 def status_hilight(display, direction: str):
-
-    minimum = 0 # This can be hardcoded because there are 5 led colors
-    maximum = 4
-#    maximum = int(entities.MAIN_FORMAT['LINE_HEIGHT'] * (entities.MAIN_FORMAT['ROWS'] - 1))
+    '''
+    The min and max values can be hardcoded because there are 5 led colors and that's not changing
+    (famous last words)
+    '''
 
     if direction == 'RIGHT':
         entities.STATUS_HILIGHT_INDEX -= 1
         entities.STATUS_HILIGHT_INDEX = max(0, entities.STATUS_HILIGHT_INDEX)
-        entities.STATUS_HILIGHT_LOCATION = entities.MAIN_FORMAT['LINE_HEIGHT'] * entities.STATUS_HILIGHT_INDEX
 
     if direction == 'LEFT':
         entities.STATUS_HILIGHT_INDEX += 1
         entities.STATUS_HILIGHT_INDEX = min(entities.STATUS_HILIGHT_INDEX, 4)
-        entities.STATUS_HILIGHT_LOCATION = entities.MAIN_FORMAT['LINE_HEIGHT'] * entities.STATUS_HILIGHT_INDEX
 
-    hilight = display.rect(0, entities.STATUS_HILIGHT_LOCATION, 128, 10, 1)
+    x = entities.MAIN_FORMAT['LINE_HEIGHT'] * entities.STATUS_HILIGHT_INDEX
+    hilight = display.rect(0, x, 128, 10, 1)
 
     return hilight
 

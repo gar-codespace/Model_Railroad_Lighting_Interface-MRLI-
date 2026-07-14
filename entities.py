@@ -96,7 +96,6 @@ MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
 # Routine parameters
 SCREEN_STATUS = 'WELCOME' # Can be: WELCOME, ROUTINE, STATUS, ADJUST
 WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
-STATUS_HILIGHT_LOCATION = 0
 STATUS_HILIGHT_INDEX = 0
 
 LED_INDEX_MAP = {0: 'RED',
@@ -106,18 +105,18 @@ LED_INDEX_MAP = {0: 'RED',
                  4: 'WHITE'
                  }
 
-CURRENT_ROUTINE = 1 # this gets changed by what exactly?
-ROUTINE_OFFSET = 0.1 # minutes
-ROUTINE_TICK = .025 # seconds. How often the routine is updated
-DEFAULT_TICK = .25 # use this if the routine duration is zero
-CLOCK_RATIO = 6
-
 PWM_VALUES = {'RED':20000,
               'GREEN':30000,
               'BLUE':40000,
               'WARM':50000,
               'WHITE':60000
               }
+
+CURRENT_ROUTINE = 1 # this gets changed by what exactly?
+ROUTINE_OFFSET = 0.1 # minutes
+ROUTINE_TICK = .025 # seconds. How often the routine is updated
+DEFAULT_TICK = .25 # use this if the routine duration is zero
+CLOCK_RATIO = 6
 ROUTINES = {
             0:'OFF',
             1:'MANUAL',
