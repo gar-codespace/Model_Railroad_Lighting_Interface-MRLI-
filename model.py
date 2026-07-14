@@ -20,7 +20,7 @@ def set_encoder_pins():
     entities.PIN(entities.PICO_PIN['TRB'], entities.PIN.IN, entities.PIN.PULL_UP)
     entities.PIN(entities.PICO_PIN['PSH'], entities.PIN.IN, entities.PIN.PULL_UP)
 
-def set_switche_pins():
+def set_switch_pins():
 
     entities.PIN(entities.PICO_PIN['BANK0'], entities.PIN.OUT)
     entities.PIN(entities.PICO_PIN['BANK1'], entities.PIN.OUT)

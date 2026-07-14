@@ -1,7 +1,7 @@
 import entities
 import controls
 
-controls.Buttons()
+# controls.Buttons()
 
 dm = controls.ControlInterface()
 
