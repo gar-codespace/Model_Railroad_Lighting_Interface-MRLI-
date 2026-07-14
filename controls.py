@@ -7,6 +7,12 @@ import model
 import view
 
 
+class Buttons():
+
+    def __init__(self):
+        model.set_button_pins()
+
+
 class DisplayModule():
     '''
     The display module is the display and encoder, they work together.
@@ -16,18 +22,11 @@ class DisplayModule():
 
     def __init__(self):
 
-        # rotary encoder pins
-        self.push = entities.PICO_PIN['PSH']
-        self.dt = entities.PICO_PIN['TRA']
-        self.clk = entities.PICO_PIN['TRB']
-
-        # Define the rotary encoder and the button
-        self.encoder_pin_dt = entities.PIN(self.dt, entities.PIN.IN, entities.PIN.PULL_UP) # Try these w/o pull up
-        self.encoder_pin_clk = entities.PIN(self.clk, entities.PIN.IN, entities.PIN.PULL_UP)
-        self.encoder_pin_sw = entities.PIN(self.push, entities.PIN.IN, entities.PIN.PULL_UP)
-
-        # Define the display
+        model.set_encoder_pins()
+        
         self.display = view.Display(entities.MAIN_DISPLAY).getDisplay()
+
+        self.show_welcome_screen()
 
     def show_welcome_screen(self):
         self.display.fill(0)
@@ -46,9 +45,9 @@ class DisplayModule():
 
     def get_encoder(self):
         # Create the rotary encoder and selector object
-        encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_pin_clk,
-                                            pin_dt=self.encoder_pin_dt,
-                                            pin_sw=self.encoder_pin_sw
+        encoder = entities.RotaryEncoderRP2(pin_clk=entities.PIN(entities.PICO_PIN['TRB']),
+                                            pin_dt=entities.PIN(entities.PICO_PIN['TRA']),
+                                            pin_sw=entities.PIN(entities.PICO_PIN['PSH'])
                                             )
 
         # subscribe to events
