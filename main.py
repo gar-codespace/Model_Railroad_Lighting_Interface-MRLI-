@@ -39,11 +39,11 @@ async def main():
     entities.Button(entities.PICO_PIN['BANK1_B'], "Bank1", handler=listeners.Bank1Handler())
     entities.Button(entities.PICO_PIN['BANK2_B'], "Bank2", handler=listeners.Bank2Handler())
 
+    # model.loop harbor sounds
+
     # run the default lighting routine
     routine = model.Routine()
     entities.ASYNCIO.create_task(routine.run_routine())
-
-    # model.play harbor sounds
     
     while True:
         
