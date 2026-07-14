@@ -3,6 +3,13 @@ import model
 import controls
 import handlers
 
+
+dm = controls.DisplayModule()
+dm.show_status_screen()
+entities.SCREEN_STATUS = 'STATUS'
+
+# model.play harbor sounds
+
 # Coroutine: runs the selected method
 async def confirm_button():
     while True:
@@ -26,11 +33,6 @@ async def bank2_button():
 
 async def main():
     
-    dm = controls.DisplayModule()
-    dm.show_status_screen()
-    entities.SCREEN_STATUS = 'STATUS'
-
-    # model.play harbor sounds
 
     # create buttons
     entities.Button(entities.PICO_PIN['CONFIRM'], "Confirm", handler=handlers.ConfirmHandler())

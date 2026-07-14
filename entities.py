@@ -89,10 +89,6 @@ MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
                 'X_OFFSET': 4
                 }
 
-
-
-
-
 # Routine parameters
 SCREEN_STATUS = 'WELCOME' # Can be: WELCOME, ROUTINE, STATUS, ADJUST
 WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
@@ -105,7 +101,8 @@ LED_INDEX_MAP = {0: 'RED',
                  4: 'WHITE'
                  }
 
-PWM_VALUES = {'RED':20000,
+PWM_TICKS = 100
+PWM_VALUES = {'RED':10000,
               'GREEN':30000,
               'BLUE':40000,
               'WARM':50000,

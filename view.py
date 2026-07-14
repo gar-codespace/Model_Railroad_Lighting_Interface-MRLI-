@@ -80,6 +80,20 @@ def status_hilight(display, direction: str):
 
     return hilight
 
+def adjust_color_value(direction: str):
+
+    color_being_adjusted = entities.LED_INDEX_MAP[entities.STATUS_HILIGHT_INDEX]
+    pwm_color_value = entities.PWM_VALUES[color_being_adjusted]
+
+    if direction == 'RIGHT': # turn it up
+        pwm_color_value += entities.PWM_TICKS
+        pwm_color_value = min(pwm_color_value, entities.PWM_STEPS)
+        entities.PWM_VALUES[color_being_adjusted] = pwm_color_value
+
+    if direction == 'LEFT': # turn it down
+        pwm_color_value -= entities.PWM_TICKS
+        pwm_color_value = max(0, pwm_color_value)
+        entities.PWM_VALUES[color_being_adjusted] = pwm_color_value
 
     
 

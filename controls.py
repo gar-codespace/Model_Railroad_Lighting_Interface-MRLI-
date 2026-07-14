@@ -1,5 +1,5 @@
 '''
-I'm trying to keep this as vinella as possible
+I'm trying to keep this as simple as possible
 '''
 
 import entities
@@ -62,36 +62,46 @@ class DisplayModule():
         if entities.SCREEN_STATUS == 'ROUTINE':
             print('Left')
 
-        if entities.SCREEN_STATUS == 'STATUS':
+        elif entities.SCREEN_STATUS == 'STATUS':
             self.display.fill(0)
             view.status_screen(self.display)
             view.status_hilight(self.display, 'LEFT')
             self.display.show()
 
-        if entities.SCREEN_STATUS == 'ADJUST':
-            print('Left')
+        elif entities.SCREEN_STATUS == 'ADJUST':
+            view.adjust_color_value('LEFT')
+            self.display.fill(0)
+            view.status_screen(self.display)
+            self.display.show()
 
     def turn_right_listener(self):
         if entities.SCREEN_STATUS == 'ROUTINE':
             print('Right')
 
-        if entities.SCREEN_STATUS == 'STATUS':
+        elif entities.SCREEN_STATUS == 'STATUS':
             self.display.fill(0)
             view.status_screen(self.display)
             view.status_hilight(self.display, 'RIGHT')
             self.display.show()
             
-        if entities.SCREEN_STATUS == 'ADJUST':
-            print('Right')
+        elif entities.SCREEN_STATUS == 'ADJUST':
+            view.adjust_color_value('RIGHT')
+            self.display.fill(0)
+            view.status_screen(self.display)
+            self.display.show()
 
     def single_click_listener(self):
         if entities.SCREEN_STATUS == 'ROUTINE':
             print('Select')
 
-        if entities.SCREEN_STATUS == 'STATUS':
+        elif entities.SCREEN_STATUS == 'STATUS':
+            entities.SCREEN_STATUS = 'ADJUST'
+            print(entities.SCREEN_STATUS)
             print(entities.STATUS_HILIGHT_INDEX)
 
-        if entities.SCREEN_STATUS == 'ADJUST':
+        elif entities.SCREEN_STATUS == 'ADJUST':
+            entities.SCREEN_STATUS = 'STATUS'
             print('Select')
+            # update leds with new values
 
 

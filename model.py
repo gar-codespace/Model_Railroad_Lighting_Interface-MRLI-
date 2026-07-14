@@ -13,6 +13,36 @@ def pwm2percent(pwm):
     x = round(x * 100, 3)
     return x
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class Routine():
 
     def __init__(self):
