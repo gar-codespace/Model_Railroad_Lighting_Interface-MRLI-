@@ -3,7 +3,7 @@ import controls
 
 controls.Buttons()
 
-dm = controls.DisplayModule()
+dm = controls.ControlInterface()
 
 entities.SCREEN_STATUS = 'STATUS'
 

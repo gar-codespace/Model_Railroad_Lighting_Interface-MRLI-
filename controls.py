@@ -13,11 +13,10 @@ class Buttons():
         model.set_button_pins()
 
 
-class DisplayModule():
+class ControlInterface():
     '''
-    The display module is the display and encoder, they work together.
-    The confirm and back buttons are handled seperately.
-    The left and right listeners are flipped for my display module.
+    The control interface is the display, encoder, and all the buttons
+    used to control the Pico
     '''
 
     def __init__(self):
@@ -54,8 +53,17 @@ class DisplayModule():
         encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_listener)
         encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_listener)
         encoder.on(entities.RotaryEncoderEvent.CLICK, self.single_click_listener)
+        entities.Button(entities.PICO_PIN['CONFIRM'], "Return", handler=self.ConfirmHandler())
 
         return encoder
+    
+    class ConfirmHandler:
+        def buttonPressed(self, name):
+            print(f"Handler: Button {name} pressed")
+        def buttonReleased(self, name):
+            print(f"Handler: Button {name} released")
+            if entities.CURRENT_ROUTINE == 1 or entities.CURRENT_ROUTINE == 2:
+                entities.PIN(entities.PICO_PIN['SCENIC']).toggle()
 
     def turn_left_listener(self):
         if entities.SCREEN_STATUS == 'ROUTINE':

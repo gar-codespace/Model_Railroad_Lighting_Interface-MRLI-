@@ -37,7 +37,6 @@ def set_pwm_led_pins():
 
 def set_button_pins():
 
-    entities.Button(entities.PICO_PIN['CONFIRM'], "Confirm", handler=handlers.ConfirmHandler())
     entities.Button(entities.PICO_PIN['BACK'], "Back", handler=handlers.BackHandler())
     entities.Button(entities.PICO_PIN['BANK0_B'], "Bank0", handler=handlers.Bank0Handler())
     entities.Button(entities.PICO_PIN['BANK1_B'], "Bank1", handler=handlers.Bank1Handler())
