@@ -1,12 +1,10 @@
 import entities
-import model
 import controls
-import handlers
 
 controls.Buttons()
 
 dm = controls.DisplayModule()
-#dm.show_status_screen()
+
 entities.SCREEN_STATUS = 'STATUS'
 
 # model.play harbor sounds
