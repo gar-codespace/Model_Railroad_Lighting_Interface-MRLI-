@@ -39,7 +39,7 @@ PICO_PIN = {
         'SCL':17, # display
         'PSH':18, # encoder
         'CONFIRM':19, # part of the integrated display
-        'BACK':20, # part of the integrated display
+        'SCENIC_B':20,
         'TRA':21, # encoder
         'TRB':22, # encoder
         'RESERVED':23,

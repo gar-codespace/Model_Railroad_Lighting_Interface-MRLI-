@@ -17,6 +17,7 @@ class ControlInterface():
 
         model.set_encoder_pins()
         model.set_switch_pins()
+        model.set_button_pins()
         
         self.display = view.Display(entities.MAIN_DISPLAY).getDisplay()
 
@@ -29,7 +30,7 @@ class ControlInterface():
 
     def show_routines_screen(self):
         self.display.fill(0)
-
+        view.welcome_screen(self.display)
         self.display.show()
 
     def show_status_screen(self):
@@ -43,20 +44,14 @@ class ControlInterface():
                                             pin_dt=entities.PIN(entities.PICO_PIN['TRA']),
                                             pin_sw=entities.PIN(entities.PICO_PIN['PSH'])
                                             )
-
         # subscribe to events
         encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_listener)
         encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_listener)
         encoder.on(entities.RotaryEncoderEvent.CLICK, self.single_click_listener)
-        entities.Button(entities.PICO_PIN['CONFIRM'], "Return", handler=self.ReturnHandler())
-        # entities.Button(entities.PICO_PIN['BACK'], "Back", handler=self.BackHandler())
-        entities.Button(entities.PICO_PIN['BANK0_B'], "Bank0", handler=self.Bank0Handler())
-        entities.Button(entities.PICO_PIN['BANK1_B'], "Bank1", handler=self.Bank1Handler())
-        entities.Button(entities.PICO_PIN['BANK2_B'], "Bank2", handler=self.Bank2Handler())
-        entities.Button(entities.PICO_PIN['SCENIC'], "Scenic", handler=self.ScenicHandler())
+        encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.multy_click_listener)
 
-        return encoder
-############################# ENCODER ##################################    
+        return encoder 
+
     def turn_left_listener(self):
         if entities.SCREEN_STATUS == 'ROUTINE':
             print('Left')
@@ -102,44 +97,17 @@ class ControlInterface():
             entities.SCREEN_STATUS = 'STATUS'
             print('Select')
             # update leds with new values
-############################# BUTTONS ##################################
-    class ReturnHandler:
-        def buttonPressed(self, name):
-            print(f"Handler: Button {name} pressed")
-        def buttonReleased(self, name):
-            print(f"Handler: Button {name} released")
-            if entities.CURRENT_ROUTINE == 1 or entities.CURRENT_ROUTINE == 2:
-                entities.PIN(entities.PICO_PIN['SCENIC']).toggle()
-    # class BackHandler:
-    #     def buttonPressed(self, name):
-    #         print(f"Handler: Button {name} pressed")
-    #     def buttonReleased(self, name):
-    #         print(f"Handler: Button {name} released")
-    class Bank0Handler:
-        def buttonPressed(self, name):
-            print(f"Handler: Button {name} pressed")
-        def buttonReleased(self, name):
-            print(f"Handler: Button {name} released")
-            if entities.SCREEN_STATUS == 'STATUS':
-                entities.PIN(entities.PICO_PIN['BANK0']).toggle()
-    class Bank1Handler:
-        def buttonPressed(self, name):
-            print(f"Handler: Button {name} pressed")
-        def buttonReleased(self, name):
-            print(f"Handler: Button {name} released")
-            if entities.SCREEN_STATUS == 'STATUS':
-                entities.PIN(entities.PICO_PIN['BANK1']).toggle()
-    class Bank2Handler:
-        def buttonPressed(self, name):
-            print(f"Handler: Button {name} pressed")
-        def buttonReleased(self, name):
-            print(f"Handler: Button {name} released")
-            if entities.SCREEN_STATUS == 'STATUS':
-                entities.PIN(entities.PICO_PIN['BANK2']).toggle()
-    class ScenicHandler:
-        def buttonPressed(self, name):
-            print(f"Handler: Button {name} pressed")
-        def buttonReleased(self, name):
-            print(f"Handler: Button {name} released")
-            if entities.SCREEN_STATUS == 'STATUS':
-                entities.PIN(entities.PICO_PIN['SCENIC']).toggle()
+
+    def multy_click_listener(self, clicks):
+        print(f"Multiply Clicks: {clicks}")
+        if entities.SCREEN_STATUS == 'ROUTINE':
+            entities.SCREEN_STATUS = 'STATUS'
+            self.show_status_screen()
+            
+            
+        elif entities.SCREEN_STATUS == 'STATUS':
+            entities.SCREEN_STATUS = 'ROUTINE'
+            self.show_welcome_screen()
+            
+
+        print(entities.SCREEN_STATUS)
