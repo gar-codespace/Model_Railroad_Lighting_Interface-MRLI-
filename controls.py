@@ -15,6 +15,8 @@ class ControlInterface():
 
     def __init__(self):
 
+        entities.SCREEN_STATUS = 'ROUTINE'
+
         model.set_encoder_pins()
         model.set_switch_pins()
         model.set_button_pins()
@@ -30,7 +32,7 @@ class ControlInterface():
 
     def show_routines_screen(self):
         self.display.fill(0)
-        view.welcome_screen(self.display)
+        view.routine_screen(self.display)
         self.display.show()
 
     def show_status_screen(self):
@@ -39,7 +41,7 @@ class ControlInterface():
         self.display.show()
 
     def get_encoder(self):
-        # Create the rotary encoder and selector object
+
         encoder = entities.RotaryEncoderRP2(pin_clk=entities.PIN(entities.PICO_PIN['TRB']),
                                             pin_dt=entities.PIN(entities.PICO_PIN['TRA']),
                                             pin_sw=entities.PIN(entities.PICO_PIN['PSH'])
@@ -48,13 +50,14 @@ class ControlInterface():
         encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_listener)
         encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_listener)
         encoder.on(entities.RotaryEncoderEvent.CLICK, self.single_click_listener)
-        encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.multy_click_listener)
+        encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.multi_click_listener)
 
         return encoder 
 
     def turn_left_listener(self):
         if entities.SCREEN_STATUS == 'ROUTINE':
-            print('Left')
+            model.increment_current_routine('left')
+            self.show_routines_screen()
 
         elif entities.SCREEN_STATUS == 'STATUS':
             self.display.fill(0)
@@ -68,9 +71,11 @@ class ControlInterface():
             view.status_screen(self.display)
             self.display.show()
 
+
     def turn_right_listener(self):
         if entities.SCREEN_STATUS == 'ROUTINE':
-            print('Right')
+            model.increment_current_routine('right')
+            self.show_routines_screen()
 
         elif entities.SCREEN_STATUS == 'STATUS':
             self.display.fill(0)
@@ -84,30 +89,25 @@ class ControlInterface():
             view.status_screen(self.display)
             self.display.show()
 
+
     def single_click_listener(self):
         if entities.SCREEN_STATUS == 'ROUTINE':
-            print('Select')
+            print(entities.SELECTED_ROUTINE)
 
         elif entities.SCREEN_STATUS == 'STATUS':
             entities.SCREEN_STATUS = 'ADJUST'
-            print(entities.SCREEN_STATUS)
-            print(entities.STATUS_HILIGHT_INDEX)
 
         elif entities.SCREEN_STATUS == 'ADJUST':
             entities.SCREEN_STATUS = 'STATUS'
-            print('Select')
             # update leds with new values
 
-    def multy_click_listener(self, clicks):
-        print(f"Multiply Clicks: {clicks}")
+
+    def multi_click_listener(self, clicks):
+        #print(f"Multiply Clicks: {clicks}")
         if entities.SCREEN_STATUS == 'ROUTINE':
             entities.SCREEN_STATUS = 'STATUS'
             self.show_status_screen()
             
-            
         elif entities.SCREEN_STATUS == 'STATUS':
             entities.SCREEN_STATUS = 'ROUTINE'
-            self.show_welcome_screen()
-            
-
-        print(entities.SCREEN_STATUS)
+            self.show_routines_screen()

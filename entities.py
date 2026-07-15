@@ -109,24 +109,26 @@ PWM_VALUES = {'RED':10000,
               'WHITE':60000
               }
 
-CURRENT_ROUTINE = 1 # this gets changed by what exactly?
 ROUTINE_OFFSET = 0.1 # minutes
 ROUTINE_TICK = .025 # seconds. How often the routine is updated
 DEFAULT_TICK = .25 # use this if the routine duration is zero
 CLOCK_RATIO = 6
+
+# Routines
+CURRENT_ROUTINE = 2 # this gets changed by the encoder rotation
+SELECTED_ROUTINE: int
 ROUTINES = {
             0:'OFF',
-            1:'MANUAL',
-            2:'MAINTENANCE',
-            3:'DAY',
-            4:'TWLIGHT',
-            5:'NIGHT',
-            6:'SUNRISE',
-            7:'SUNSET',
-            8:'STORMY'
+            1:'MAINTENANCE',
+            2:'DAY',
+            3:'TWLIGHT',
+            4:'NIGHT',
+            5:'SUNRISE',
+            6:'SUNSET',
+            7:'STORMY'
             }
 
-# routine parameters
+# parameters
 OFF =  {'name':'Off',
         'test': 100,
         'bank0':(0, 0), # a specific led strip, begin state, end state
@@ -239,7 +241,7 @@ SUNRISE = {'name':'Sunrise',
            'loop':False
            }
 
-SUNSET =  {'name':'Test',
+SUNSET =  {'name':'Sunset',
            'test': 800,
            'bank0':(1, 1),
            'bank1':(1, 1),

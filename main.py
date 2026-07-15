@@ -1,14 +1,10 @@
 import entities
 import controls
-
-# controls.Buttons()
+import model
 
 dm = controls.ControlInterface()
 
-entities.SCREEN_STATUS = 'ROUTINE'
-
 # model.play harbor sounds
-
 
 async def main():
 

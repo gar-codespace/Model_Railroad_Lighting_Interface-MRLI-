@@ -36,6 +36,30 @@ def welcome_screen(display):
 
     return
 
+def routine_screen(display):
+    
+    x = entities.MAIN_FORMAT['X_OFFSET']
+    y = 1
+    index = model.get_menu_index()
+    entities.SELECTED_ROUTINE = index[2]
+    for i in range(0, entities.MAIN_FORMAT['ROWS']):
+        routine = entities.ROUTINES[index[i]]
+        routine = getattr(entities, routine, 'DAY')['name']
+        display.text(routine, x, y)
+        y += entities.MAIN_FORMAT['LINE_HEIGHT']
+
+    display.rect(0, 26, 128, 10, 1)
+
+    return
+
+
+
+    
+
+
+
+
+
 def status_screen(display):
 
     x = entities.MAIN_FORMAT['X_OFFSET']
@@ -80,7 +104,7 @@ def status_hilight(display, direction: str):
 
     return hilight
 
-def adjust_color_value(direction: str):
+def adjust_color_value(direction: str): # move to model?
 
     color_being_adjusted = entities.LED_INDEX_MAP[entities.STATUS_HILIGHT_INDEX]
     pwm_color_value = entities.PWM_VALUES[color_being_adjusted]
