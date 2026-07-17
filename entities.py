@@ -19,35 +19,36 @@ from hw_button import Button
 
 # Raspi Pico GP pin assignments
 PICO_PIN = {
-        'NA':0, # put audio dac here
-        'NA':1,
-        'RED_V':2, # red value control pot
-        'GREEN_V':3,
-        'BLUE_V':4,
-        'WARM_V':5,
-        'WHITE_V':6,
-        'BANK0':7, # led bank0 on or off
-        'BANK1':8,
-        'BANK2':9,
-        'SCENIC':10, # the lights that decorate the layout
-        'RED':11, # pwm, red brightness for all banks
-        'GREEN':12,
-        'BLUE':13,
-        'WARM':14,
-        'WHITE':15,
-        'NA':16, # display
-        'PSH':17, # display
+        'BANK0_B':0, # buttons
+        'BANK1_B':1,
+        'BANK2_B':2,
+        'BANK3_B':3,
+        'BANK4_B':4,
+        'SCENIC_B':5,
+        'BANK0_S':6, # switches
+        'BANK1_S':7,
+        'BANK2_S':8,
+        'BANK3_S':9,
+        'BANK4_S':10,
+        'SCENIC_S':11,
+        'RED':12, # PWM led
+        'GREEN':13,
+        'BLUE':14,
+        'WARM':15,
+        #
+        'COOL':16, # 
+        'PSH':17, # encoder
         'TRA':18, # encoder
-        'TRB':19, # part of the integrated display
-        'SDA':20,
-        'SCL':21, # encoder
+        'TRB':19, # encoder
+        'SDA':20, # display
+        'SCL':21, # display
         'CONFIRM':22, # encoder
-        'RESERVED':23,
-        'RESERVED':24,
+        'RESERVED':23, # WiFi
+        'RESERVED':24, # WiFi
         'LED':'LED',
-        'BANK0_B':26, # button to manually turn bank0 on or off
-        'BANK1_B':27,
-        'BANK2_B':28
+        'NA':26,
+        'NA':27,
+        'NA':28
         }
 
 # Raspi Pico parameters
@@ -98,7 +99,7 @@ LED_INDEX_MAP = {0: 'RED',
                  1: 'GREEN',
                  2: 'BLUE',
                  3: 'WARM',
-                 4: 'WHITE'
+                 4: 'COOL'
                  }
 
 PWM_TICKS = 100
@@ -106,7 +107,7 @@ PWM_VALUES = {'RED':10000,
               'GREEN':30000,
               'BLUE':40000,
               'WARM':50000,
-              'WHITE':60000
+              'COOL':60000
               }
 
 ROUTINE_OFFSET = 0.1 # minutes

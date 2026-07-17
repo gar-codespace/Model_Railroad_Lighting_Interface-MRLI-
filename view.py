@@ -81,8 +81,8 @@ def status_screen(display):
     display.text(f'Warm:  {value}%', x, y)
     y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
-    value = model.pwm2percent(entities.PWM_VALUES['WHITE'])
-    display.text(f'White: {value}%', x, y)
+    value = model.pwm2percent(entities.PWM_VALUES['COOL'])
+    display.text(f'Cool:  {value}%', x, y)
     y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
 def status_hilight(display, direction: str):

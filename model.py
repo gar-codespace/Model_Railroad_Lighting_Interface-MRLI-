@@ -22,10 +22,12 @@ def set_encoder_pins():
 
 def set_switch_pins():
 
-    entities.PIN(entities.PICO_PIN['BANK0'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['BANK1'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['BANK2'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['SCENIC'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK0_S'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK1_S'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK2_S'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK3_S'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK4_S'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['SCENIC_S'], entities.PIN.OUT)
 
 def set_pwm_led_pins():
         
@@ -33,16 +35,16 @@ def set_pwm_led_pins():
     entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']))
     entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']))
     entities.PWM(entities.PIN(entities.PICO_PIN['WARM']))
-    entities.PWM(entities.PIN(entities.PICO_PIN['WHITE']))
+    entities.PWM(entities.PIN(entities.PICO_PIN['COOL']))
 
 def set_button_pins():
 
-    # entities.Button(entities.PICO_PIN['CONFIRM'], "Confirm", handler=handlers.ConfirmHandler())
-    # entities.Button(entities.PICO_PIN['BACK'], "Back", handler=handlers.BackHandler()) # there is no pin available for the back button
     entities.Button(entities.PICO_PIN['BANK0_B'], "Bank0", handler=handlers.Bank0Handler())
     entities.Button(entities.PICO_PIN['BANK1_B'], "Bank1", handler=handlers.Bank1Handler())
     entities.Button(entities.PICO_PIN['BANK2_B'], "Bank2", handler=handlers.Bank2Handler())
-    #entities.Button(entities.PICO_PIN['SCENIC_B'], "Scenic", handler=handlers.Bank2Handler())
+    entities.Button(entities.PICO_PIN['BANK3_B'], "Bank2", handler=handlers.Bank2Handler())
+    entities.Button(entities.PICO_PIN['BANK4_B'], "Bank2", handler=handlers.Bank2Handler())
+    entities.Button(entities.PICO_PIN['SCENIC_B'], "Scenic", handler=handlers.Bank2Handler())
 
 def get_menu_index():
     
