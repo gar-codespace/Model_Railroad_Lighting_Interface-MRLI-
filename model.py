@@ -42,7 +42,7 @@ def set_button_pins():
     entities.Button(entities.PICO_PIN['BANK0_B'], "Bank0", handler=handlers.Bank0Handler())
     entities.Button(entities.PICO_PIN['BANK1_B'], "Bank1", handler=handlers.Bank1Handler())
     entities.Button(entities.PICO_PIN['BANK2_B'], "Bank2", handler=handlers.Bank2Handler())
-    entities.Button(entities.PICO_PIN['SCENIC_B'], "Scenic", handler=handlers.Bank2Handler())
+    #entities.Button(entities.PICO_PIN['SCENIC_B'], "Scenic", handler=handlers.Bank2Handler())
 
 def get_menu_index():
     

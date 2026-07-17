@@ -35,13 +35,13 @@ PICO_PIN = {
         'BLUE':13,
         'WARM':14,
         'WHITE':15,
-        'SDA':16, # display
-        'SCL':17, # display
-        'PSH':18, # encoder
-        'CONFIRM':19, # part of the integrated display
-        'SCENIC_B':20,
-        'TRA':21, # encoder
-        'TRB':22, # encoder
+        'NA':16, # display
+        'PSH':17, # display
+        'TRA':18, # encoder
+        'TRB':19, # part of the integrated display
+        'SDA':20,
+        'SCL':21, # encoder
+        'CONFIRM':22, # encoder
         'RESERVED':23,
         'RESERVED':24,
         'LED':'LED',
