@@ -73,3 +73,20 @@ def increment_current_routine(direction:str):
         entities.SCROLL_ROUTINE = 0
 
 
+def get_highlighted_routine(): # abstract this
+
+    menu_position = entities.HIGHLIGHT_ROW
+    x = entities.SCROLL_ROUTINE + menu_position
+
+    if x == len(entities.ROUTINES):
+        x = 0
+    elif x == len(entities.ROUTINES) + 1:
+        x = 1
+    elif x == len(entities.ROUTINES) + 2:
+        x = 2
+    elif x == len(entities.ROUTINES) + 3:
+        x = 3
+    elif x == len(entities.ROUTINES) + 4:
+        x = 4
+
+    entities.SELECTED_ROUTINE = x

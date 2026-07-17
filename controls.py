@@ -100,6 +100,8 @@ class ControlInterface():
 
     def single_click_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
+            model.get_highlighted_routine()
+            print(entities.SELECTED_ROUTINE)
             entities.SELECTED_ROUTINE = entities.SCROLL_ROUTINE
             entities.SCREEN_MODE = 'MONITOR'
             self.show_status_screen()

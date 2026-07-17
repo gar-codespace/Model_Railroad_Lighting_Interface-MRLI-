@@ -44,7 +44,9 @@ def routine_screen(display):
     The routine screen is displayed when the machine is in routine mode.
     This is where the user selects which routine to run.
     '''
-    
+
+    hilight_height = 13
+    hilight_row = entities.HIGHLIGHT_ROW * hilight_height
     x = entities.MAIN_FORMAT['X_OFFSET']
     y = 1
     index = model.get_menu_index()
@@ -55,7 +57,7 @@ def routine_screen(display):
         display.text(routine, x, y)
         y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
-    display.rect(0, 26, 128, 10, 1)
+    display.rect(0, hilight_row, 128, 10, 1)
 
     return
 

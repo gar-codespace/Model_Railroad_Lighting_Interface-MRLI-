@@ -89,7 +89,7 @@ MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
                 'ROWS': CONST(5),
                 'X_OFFSET': 4
                 }
-
+HIGHLIGHT_ROW = 3
 # Routine parameters
 SCREEN_MODE = 'WELCOME' # Can be: WELCOME, AUTOMATIC, MONITOR. MANUAL, ADJUST
 WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
@@ -110,7 +110,7 @@ PWM_VALUES = {'RED':10000,
               'COOL':60000
               }
 
-ROUTINE_TICK = .25 # ms. How often the routine is updated
+ROUTINE_TICK = 25 # ms. How often the routine is updated
 DEFAULT_TICK = 250 # ms use this if the routine duration is zero
 CLOCK_RATIO = 6
 
@@ -118,6 +118,8 @@ CLOCK_RATIO = 6
 CURRENT_ROUTINE = 2 # the routine that is running
 SELECTED_ROUTINE: int # the routine that is selected by the user
 SCROLL_ROUTINE = 0 # the top routine listed in the menu
+HILIGHTED_ROUTINE = 0
+
 ROUTINES = {
             0:'OFF',
             1:'MAINTENANCE',
