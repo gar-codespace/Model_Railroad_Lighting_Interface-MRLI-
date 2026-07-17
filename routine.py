@@ -58,4 +58,4 @@ class Routine():
             self.increment_routine()
             entities.LED.toggle()
 
-            await entities.ASYNCIO.sleep_ms(int(delay))
+            await entities.ASYNCIO.sleep_ms(delay)

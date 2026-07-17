@@ -110,8 +110,8 @@ PWM_VALUES = {'RED':10000,
               'COOL':60000
               }
 
-ROUTINE_TICK = .025 # seconds. How often the routine is updated
-DEFAULT_TICK = .25 # use this if the routine duration is zero
+ROUTINE_TICK = .25 # ms. How often the routine is updated
+DEFAULT_TICK = 250 # ms use this if the routine duration is zero
 CLOCK_RATIO = 6
 
 # Routines

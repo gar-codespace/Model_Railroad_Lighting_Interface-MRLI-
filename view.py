@@ -48,7 +48,7 @@ def routine_screen(display):
     x = entities.MAIN_FORMAT['X_OFFSET']
     y = 1
     index = model.get_menu_index()
-    entities.SCROLL_ROUTINE = index[2]
+    entities.SCROLL_ROUTINE = index[0]
     for i in range(0, entities.MAIN_FORMAT['ROWS']):
         routine = entities.ROUTINES[index[i]]
         routine = getattr(entities, routine, 'DAY')['name']
@@ -87,7 +87,7 @@ def status_screen(display):
     display.text(f'Cool:  {value}%', x, y)
     y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
-def manual_hilight(display, direction: str):
+def manual_hilight(display, direction: str='None'):
     '''
     Manual hilight is only used when the machine is is manual mode.
     The min and max values can be hardcoded because there are 5 led colors and that's not changing
@@ -98,7 +98,7 @@ def manual_hilight(display, direction: str):
         entities.STATUS_HILIGHT_INDEX -= 1
         entities.STATUS_HILIGHT_INDEX = max(0, entities.STATUS_HILIGHT_INDEX)
 
-    if direction == 'LEFT':
+    elif direction == 'LEFT':
         entities.STATUS_HILIGHT_INDEX += 1
         entities.STATUS_HILIGHT_INDEX = min(entities.STATUS_HILIGHT_INDEX, 4)
 

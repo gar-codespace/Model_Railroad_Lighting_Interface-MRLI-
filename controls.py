@@ -72,6 +72,7 @@ class ControlInterface():
             view.adjust_color_value('LEFT')
             self.display.fill(0)
             view.status_screen(self.display)
+            view.manual_hilight(self.display)
             self.display.show()
 
 
@@ -93,6 +94,7 @@ class ControlInterface():
             view.adjust_color_value('RIGHT')
             self.display.fill(0)
             view.status_screen(self.display)
+            view.manual_hilight(self.display)
             self.display.show()
 
 
