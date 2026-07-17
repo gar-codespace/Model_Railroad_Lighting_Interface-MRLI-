@@ -91,7 +91,7 @@ MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
                 }
 
 # Routine parameters
-SCREEN_STATUS = 'WELCOME' # Can be: WELCOME, ROUTINE, STATUS, ADJUST
+SCREEN_MODE = 'WELCOME' # Can be: WELCOME, ROUTINE, MONITOR. MANUAL, ADJUST
 WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
 STATUS_HILIGHT_INDEX = 0
 

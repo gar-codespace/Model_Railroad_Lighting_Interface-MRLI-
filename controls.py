@@ -15,7 +15,7 @@ class ControlInterface():
 
     def __init__(self):
 
-        entities.SCREEN_STATUS = 'ROUTINE'
+        entities.SCREEN_MODE = 'ROUTINE'
 
         model.set_encoder_pins()
         model.set_switch_pins()
@@ -55,17 +55,20 @@ class ControlInterface():
         return encoder 
 
     def turn_left_listener(self):
-        if entities.SCREEN_STATUS == 'ROUTINE':
+        if entities.SCREEN_MODE == 'ROUTINE':
             model.increment_current_routine('left')
             self.show_routines_screen()
 
-        elif entities.SCREEN_STATUS == 'STATUS':
+        elif entities.SCREEN_MODE == 'MONITOR':
+            pass
+
+        elif entities.SCREEN_MODE == 'MANUAL':
             self.display.fill(0)
             view.status_screen(self.display)
-            view.status_hilight(self.display, 'LEFT')
+            view.manual_hilight(self.display, 'LEFT')
             self.display.show()
 
-        elif entities.SCREEN_STATUS == 'ADJUST':
+        elif entities.SCREEN_MODE == 'ADJUST':
             view.adjust_color_value('LEFT')
             self.display.fill(0)
             view.status_screen(self.display)
@@ -73,17 +76,20 @@ class ControlInterface():
 
 
     def turn_right_listener(self):
-        if entities.SCREEN_STATUS == 'ROUTINE':
+        if entities.SCREEN_MODE == 'ROUTINE':
             model.increment_current_routine('right')
             self.show_routines_screen()
 
-        elif entities.SCREEN_STATUS == 'STATUS':
+        elif entities.SCREEN_MODE == 'MONITOR':
+            pass
+
+        elif entities.SCREEN_MODE == 'MANUAL':
             self.display.fill(0)
             view.status_screen(self.display)
-            view.status_hilight(self.display, 'RIGHT')
+            view.manual_hilight(self.display, 'RIGHT')
             self.display.show()
             
-        elif entities.SCREEN_STATUS == 'ADJUST':
+        elif entities.SCREEN_MODE == 'ADJUST':
             view.adjust_color_value('RIGHT')
             self.display.fill(0)
             view.status_screen(self.display)
@@ -91,23 +97,29 @@ class ControlInterface():
 
 
     def single_click_listener(self):
-        if entities.SCREEN_STATUS == 'ROUTINE':
-            print(entities.SELECTED_ROUTINE)
+        if entities.SCREEN_MODE == 'ROUTINE':
+            print(entities.SELECTED_ROUTINE) # this is where routines get changed
+            entities.SCREEN_MODE = 'MONITOR'
+            self.show_status_screen()
 
-        elif entities.SCREEN_STATUS == 'STATUS':
-            entities.SCREEN_STATUS = 'ADJUST'
+        elif entities.SCREEN_MODE == 'MONITOR':
+            entities.SCREEN_MODE = 'ROUTINE'
+            self.show_routines_screen()
 
-        elif entities.SCREEN_STATUS == 'ADJUST':
-            entities.SCREEN_STATUS = 'STATUS'
+        elif entities.SCREEN_MODE == 'MANUAL':
+            entities.SCREEN_MODE = 'ADJUST'
+
+        elif entities.SCREEN_MODE == 'ADJUST':
+            entities.SCREEN_MODE = 'MANUAL'
             # update leds with new values
 
 
     def multi_click_listener(self, clicks):
         #print(f"Multiply Clicks: {clicks}")
-        if entities.SCREEN_STATUS == 'ROUTINE':
-            entities.SCREEN_STATUS = 'STATUS'
+        if entities.SCREEN_MODE == 'ROUTINE':
+            entities.SCREEN_MODE = 'MANUAL'
             self.show_status_screen()
             
-        elif entities.SCREEN_STATUS == 'STATUS':
-            entities.SCREEN_STATUS = 'ROUTINE'
+        elif entities.SCREEN_MODE == 'MANUAL':
+            entities.SCREEN_MODE = 'ROUTINE'
             self.show_routines_screen()

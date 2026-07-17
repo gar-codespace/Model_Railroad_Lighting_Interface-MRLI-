@@ -28,6 +28,9 @@ class Display():
     
     
 def welcome_screen(display):
+    '''
+    Only displayed on start up,
+    '''
 
     line_y = 0
     for i in range(entities.MAIN_FORMAT['ROWS']):
@@ -37,6 +40,10 @@ def welcome_screen(display):
     return
 
 def routine_screen(display):
+    '''
+    The routine screen is displayed when the machine is in routine mode.
+    This is where the user selects which routine to run.
+    '''
     
     x = entities.MAIN_FORMAT['X_OFFSET']
     y = 1
@@ -52,15 +59,10 @@ def routine_screen(display):
 
     return
 
-
-
-    
-
-
-
-
-
 def status_screen(display):
+    '''
+    The status screen is displayed when the machine is in monitor or manual mode.
+    '''
 
     x = entities.MAIN_FORMAT['X_OFFSET']
     y = 1
@@ -85,8 +87,9 @@ def status_screen(display):
     display.text(f'Cool:  {value}%', x, y)
     y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
-def status_hilight(display, direction: str):
+def manual_hilight(display, direction: str):
     '''
+    Manual hilight is only used when the machine is is manual mode.
     The min and max values can be hardcoded because there are 5 led colors and that's not changing
     (famous last words)
     '''
@@ -118,62 +121,3 @@ def adjust_color_value(direction: str): # move to model?
         pwm_color_value -= entities.PWM_TICKS
         pwm_color_value = max(0, pwm_color_value)
         entities.PWM_VALUES[color_being_adjusted] = pwm_color_value
-
-    
-
-
-
-
-
-
-
-        # menu creation
-        #self.routines = entities.ROUTINES
-        #self.current_routine = entities.CURRENT_ROUTINE
-        #self.highlighted_item = entities.CURRENT_ROUTINE
-        #self.highlight = entities.MENU_HIGHLIGHT
-        #self.menu_top = 2 # move this into entities
-
-
-
-    # def get_menu_items(self, direction):
-    #     # direction is passed in as a boolean
-# 
-    #     # format of sub_list is {0:7, 1:8, 2:0, 3:1, 4:2}
-    #     sub_list = tuple(range(0, len(self.routines)))
-    #     imenu_items_doubled = sub_list + sub_list
-# 
-    #     sub_list = {}
-# 
-    #     # print(direction)
-    #     start = self.menu_top + 1
-    #     if direction:
-    #         start = self.menu_top - 1
-# 
-    #     for i in range (self.menu_rows):
-    #         sub_list[i] = imenu_items_doubled[start]
-    #         start += 1
-# 
-    #     # print(sub_list)
-    #     self.menu_top = sub_list[0]
-# 
-    #     return sub_list
-# 
-    # def get_menu(self, direction):
-# 
-    #     line_y = 0
-    #     menu_items = self.get_menu_items(direction)
-# 
-    #     # self.display.rect(0, 24, 128, 15, 1) # eliminate hard coding
-    #     highlight = entities.MENU_HIGHLIGHT
-    #     self.display.rect(highlight[0], highlight[1], highlight[2], highlight[3], highlight[4])
-# 
-    #     for i in range (self.menu_rows):
-    #         menu_item = self.routines[menu_items[i]]
-    #         display_item = getattr(entities, menu_item, 'DAY')['name']
-    #         self.display.text(display_item, self.x_offset, line_y)
-    #         line_y += self.line_height
-# 
-    #         self.highlighted_item = menu_items[self.highlight_row]
-# 
-    #     return self.display

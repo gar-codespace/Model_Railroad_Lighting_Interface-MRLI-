@@ -1,15 +1,15 @@
 import entities
 import controls
-import model
+import routine
 
 dm = controls.ControlInterface()
 
-# model.play harbor sounds
+# controls.play harbor sounds
 
 async def main():
 
-    #routine = model.Routine()
-    #entities.ASYNCIO.create_task(routine.run_routine())
+    r = routine.Routine()
+    entities.ASYNCIO.create_task(r.run_standin_routine())
 
     while True:
         
