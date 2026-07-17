@@ -15,7 +15,7 @@ class ControlInterface():
 
     def __init__(self):
 
-        entities.SCREEN_MODE = 'ROUTINE'
+        entities.SCREEN_MODE = 'AUTOMATIC'
 
         model.set_encoder_pins()
         model.set_switch_pins()
@@ -55,7 +55,7 @@ class ControlInterface():
         return encoder 
 
     def turn_left_listener(self):
-        if entities.SCREEN_MODE == 'ROUTINE':
+        if entities.SCREEN_MODE == 'AUTOMATIC':
             model.increment_current_routine('left')
             self.show_routines_screen()
 
@@ -76,7 +76,7 @@ class ControlInterface():
 
 
     def turn_right_listener(self):
-        if entities.SCREEN_MODE == 'ROUTINE':
+        if entities.SCREEN_MODE == 'AUTOMATIC':
             model.increment_current_routine('right')
             self.show_routines_screen()
 
@@ -97,13 +97,13 @@ class ControlInterface():
 
 
     def single_click_listener(self):
-        if entities.SCREEN_MODE == 'ROUTINE':
+        if entities.SCREEN_MODE == 'AUTOMATIC':
             print(entities.SELECTED_ROUTINE) # this is where routines get changed
             entities.SCREEN_MODE = 'MONITOR'
             self.show_status_screen()
 
         elif entities.SCREEN_MODE == 'MONITOR':
-            entities.SCREEN_MODE = 'ROUTINE'
+            entities.SCREEN_MODE = 'AUTOMATIC'
             self.show_routines_screen()
 
         elif entities.SCREEN_MODE == 'MANUAL':
@@ -116,10 +116,10 @@ class ControlInterface():
 
     def multi_click_listener(self, clicks):
         #print(f"Multiply Clicks: {clicks}")
-        if entities.SCREEN_MODE == 'ROUTINE':
+        if entities.SCREEN_MODE == 'AUTOMATIC':
             entities.SCREEN_MODE = 'MANUAL'
             self.show_status_screen()
             
         elif entities.SCREEN_MODE == 'MANUAL':
-            entities.SCREEN_MODE = 'ROUTINE'
+            entities.SCREEN_MODE = 'AUTOMATIC'
             self.show_routines_screen()

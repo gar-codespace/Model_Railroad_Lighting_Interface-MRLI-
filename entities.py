@@ -91,7 +91,7 @@ MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
                 }
 
 # Routine parameters
-SCREEN_MODE = 'WELCOME' # Can be: WELCOME, ROUTINE, MONITOR. MANUAL, ADJUST
+SCREEN_MODE = 'WELCOME' # Can be: WELCOME, AUTOMATIC, MONITOR. MANUAL, ADJUST
 WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
 STATUS_HILIGHT_INDEX = 0
 
@@ -110,7 +110,6 @@ PWM_VALUES = {'RED':10000,
               'COOL':60000
               }
 
-ROUTINE_OFFSET = 0.1 # minutes
 ROUTINE_TICK = .025 # seconds. How often the routine is updated
 DEFAULT_TICK = .25 # use this if the routine duration is zero
 CLOCK_RATIO = 6
