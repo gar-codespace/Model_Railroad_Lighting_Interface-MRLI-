@@ -115,8 +115,9 @@ DEFAULT_TICK = .25 # use this if the routine duration is zero
 CLOCK_RATIO = 6
 
 # Routines
-CURRENT_ROUTINE = 2 # this gets changed by the encoder rotation
-SELECTED_ROUTINE: int
+CURRENT_ROUTINE = 2 # the routine that is running
+SELECTED_ROUTINE: int # the routine that is selected by the user
+SCROLL_ROUTINE = 0 # the top routine listed in the menu
 DEFAULT_ROUTINE = 2
 ROUTINES = {
             0:'OFF',

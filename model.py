@@ -54,7 +54,7 @@ def get_menu_index():
     index_list = tuple(range(0, len(entities.ROUTINES)))
     index_list = index_list + index_list
     
-    index_list = index_list[entities.CURRENT_ROUTINE:]
+    index_list = index_list[entities.SCROLL_ROUTINE:]
 
     return index_list
 
@@ -63,14 +63,14 @@ def increment_current_routine(direction:str):
     wrap = len(entities.ROUTINES) - 1
 
     if direction == 'right':
-        entities.CURRENT_ROUTINE += 1
+        entities.SCROLL_ROUTINE += 1
     elif direction == 'left':
-        entities.CURRENT_ROUTINE -= 1
+        entities.SCROLL_ROUTINE -= 1
 
-    if entities.CURRENT_ROUTINE < 0:
-        entities.CURRENT_ROUTINE = wrap
-    elif entities.CURRENT_ROUTINE > wrap:
-        entities.CURRENT_ROUTINE = 0
+    if entities.SCROLL_ROUTINE < 0:
+        entities.SCROLL_ROUTINE = wrap
+    elif entities.SCROLL_ROUTINE > wrap:
+        entities.SCROLL_ROUTINE = 0
 
 def run_routine(index):
     pass

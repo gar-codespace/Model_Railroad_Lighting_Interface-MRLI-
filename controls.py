@@ -99,6 +99,9 @@ class ControlInterface():
     def single_click_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
             print(entities.SELECTED_ROUTINE) # this is where routines get changed
+            print(entities.SCROLL_ROUTINE)
+            print(entities.CURRENT_ROUTINE)
+            entities.CURRENT_ROUTINE = entities.SELECTED_ROUTINE
             entities.SCREEN_MODE = 'MONITOR'
             self.show_status_screen()
 
