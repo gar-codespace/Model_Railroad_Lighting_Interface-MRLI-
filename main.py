@@ -9,7 +9,8 @@ dm = controls.ControlInterface()
 async def main():
 
     r = routine.Routine()
-    entities.ASYNCIO.create_task(r.run_standin_routine())
+    #entities.ASYNCIO.create_task(r.run_standin_routine())
+    entities.ASYNCIO.create_task(r.run_routine())
 
     while True:
         

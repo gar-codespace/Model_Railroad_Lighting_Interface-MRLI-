@@ -72,5 +72,4 @@ def increment_current_routine(direction:str):
     elif entities.SCROLL_ROUTINE > wrap:
         entities.SCROLL_ROUTINE = 0
 
-def run_routine(index):
-    pass
+

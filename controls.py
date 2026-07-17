@@ -98,10 +98,7 @@ class ControlInterface():
 
     def single_click_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
-            print(entities.SELECTED_ROUTINE) # this is where routines get changed
-            print(entities.SCROLL_ROUTINE)
-            print(entities.CURRENT_ROUTINE)
-            entities.CURRENT_ROUTINE = entities.SELECTED_ROUTINE
+            entities.SELECTED_ROUTINE = entities.SCROLL_ROUTINE
             entities.SCREEN_MODE = 'MONITOR'
             self.show_status_screen()
 
@@ -114,7 +111,7 @@ class ControlInterface():
 
         elif entities.SCREEN_MODE == 'ADJUST':
             entities.SCREEN_MODE = 'MANUAL'
-            # update leds with new values
+            # update leds with new values here
 
 
     def multi_click_listener(self, clicks):

@@ -59,8 +59,8 @@ PWM_STEPS = 65535
 
 # Misc
 SCRIPT_REV = CONST('20260704')
-MACHINE_OFF = CONST(0)
-MACHINE_ON = CONST(1)
+MACHINE_OFF = CONST(0) # not used
+MACHINE_ON = CONST(1) # not used
 TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
 
 # OLED0 specs
@@ -69,7 +69,7 @@ OLED0 = {'ADDRESS': CONST(0x3C),
          'HEIGHT': CONST(64),
          'LINE_HEIGHT': CONST(14),
         }
-# future capacity
+# future capacity maybe fast time display
 OLED1 = {'ADDRESS': CONST(0x3C),
          'WIDTH': CONST(128),
          'HEIGHT': CONST(64),
@@ -118,7 +118,6 @@ CLOCK_RATIO = 6
 CURRENT_ROUTINE = 2 # the routine that is running
 SELECTED_ROUTINE: int # the routine that is selected by the user
 SCROLL_ROUTINE = 0 # the top routine listed in the menu
-DEFAULT_ROUTINE = 2
 ROUTINES = {
             0:'OFF',
             1:'MAINTENANCE',
@@ -179,9 +178,9 @@ DAY =  {'name':'Daytime',
         'blue':(.5, 0, 0),
         'warm':(.5, .8, .8),
         'cool':(.5, .2, .2),
-        'duration':5.0,
-        'random':0.3,
-        'loop':True
+        'duration':0.0,
+        'random':0.0,
+        'loop':False
         }
 
 TWLIGHT = {'name':'Twlight',
@@ -269,9 +268,9 @@ SUNSET =  {'name':'Sunset',
            'blue':(0, 1, 0),
            'warm':(1, 0, 1),
            'cool':(1, 0, 1),
-           'duration':4.0,
+           'duration':180.0,
            'random':0.0,
-           'loop':True
+           'loop':False
            }
 
 STORMY =  {'name':'Stormy Night',
@@ -287,7 +286,7 @@ STORMY =  {'name':'Stormy Night',
            'blue':(0, 0, 0),
            'warm':(.4, .4, .4),
            'cool':(0, 0, 0),
-           'duration':0.0,
-           'random':0.0,
+           'duration':4.0,
+           'random':0.7,
            'loop':True
            }

@@ -26,10 +26,36 @@ class Routine():
         self.switch4 = entities.PIN(entities.PICO_PIN['BANK4_S'])
         self.scenic= entities.PIN(entities.PICO_PIN['SCENIC_S'])
 
+    def make_routine(self):
+        print('make new routine')
+
+    def increment_routine(self):
+        pass
+
     # Coroutine: runs the selected routine
     def run_standin_routine(self):
+
+        delay = entities.DEFAULT_TICK
         
         while True:            
             entities.LED.toggle()
 
-            await entities.ASYNCIO.sleep_ms(200)
+            await entities.ASYNCIO.sleep_ms(delay)
+
+    # Coroutine: runs the selected routine
+    def run_routine(self):
+
+        delay = entities.DEFAULT_TICK
+        entities.SELECTED_ROUTINE = entities.CURRENT_ROUTINE
+        self.make_routine()
+        
+        while True:
+
+            if not entities.SELECTED_ROUTINE == entities.CURRENT_ROUTINE:
+                entities.CURRENT_ROUTINE = entities.SELECTED_ROUTINE
+                self.make_routine()
+
+            self.increment_routine()
+            entities.LED.toggle()
+
+            await entities.ASYNCIO.sleep_ms(int(delay))
