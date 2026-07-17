@@ -18,7 +18,7 @@ class ControlInterface():
         entities.SCREEN_STATUS = 'ROUTINE'
 
         model.set_encoder_pins()
-        # model.set_switch_pins()
+        model.set_switch_pins()
         model.set_button_pins()
         
         self.display = view.Display(entities.MAIN_DISPLAY).getDisplay()
