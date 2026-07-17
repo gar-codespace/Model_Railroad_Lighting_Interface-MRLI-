@@ -120,7 +120,10 @@ class ControlInterface():
         #print(f"Multiply Clicks: {clicks}")
         if entities.SCREEN_MODE == 'AUTOMATIC':
             entities.SCREEN_MODE = 'MANUAL'
-            self.show_status_screen()
+            self.display.fill(0)
+            view.status_screen(self.display)
+            view.manual_hilight(self.display)
+            self.display.show()
             
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'AUTOMATIC'
