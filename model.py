@@ -73,7 +73,7 @@ def increment_current_routine(direction:str):
         entities.SCROLL_ROUTINE = 0
 
 
-def get_highlighted_routine(): # abstract this
+def get_highlighted_routine(): # list comprehension
 
     menu_position = entities.HIGHLIGHT_ROW
     x = entities.SCROLL_ROUTINE + menu_position

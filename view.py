@@ -45,7 +45,7 @@ def routine_screen(display):
     This is where the user selects which routine to run.
     '''
 
-    hilight_height = 13
+    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.HIGHLIGHT_ROW * hilight_height
     x = entities.MAIN_FORMAT['X_OFFSET']
     y = 1

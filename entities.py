@@ -56,11 +56,8 @@ LED = PIN('LED', PIN.OUT)
 PWM_FREQ = 1000
 PWM_STEPS = 65535
 
-
 # Misc
 SCRIPT_REV = CONST('20260704')
-MACHINE_OFF = CONST(0) # not used
-MACHINE_ON = CONST(1) # not used
 TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
 
 # OLED0 specs
@@ -76,24 +73,26 @@ OLED1 = {'ADDRESS': CONST(0x3C),
          'LINE_HEIGHT': CONST(14),
         }
 
-
 # OLED Configurations
-# bus, width, height, addr, line height, rows, x offset, highlight row
+# bus, width, height, addr
 DISPLAY0 = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
 DISPLAY1 = (1, OLED1['WIDTH'], OLED1['HEIGHT'], OLED1['ADDRESS'])
 MAIN_DISPLAY = DISPLAY0
-AUX_DISPLAY = DISPLAY1 # Not used, future capacity
-
+AUX_DISPLAY = DISPLAY1 # Not used, maybe a fast time clock
 # Display formatting
 MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
                 'ROWS': CONST(5),
                 'X_OFFSET': 4
                 }
-HIGHLIGHT_ROW = 3
+HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling routines
+
 # Routine parameters
 SCREEN_MODE = 'WELCOME' # Can be: WELCOME, AUTOMATIC, MONITOR. MANUAL, ADJUST
 WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
 STATUS_HILIGHT_INDEX = 0
+
+# Color Control
+PWM_TICKS = 100 # how many ticks per indent of the rotary encoder
 
 LED_INDEX_MAP = {0: 'RED',
                  1: 'GREEN',
@@ -102,15 +101,15 @@ LED_INDEX_MAP = {0: 'RED',
                  4: 'COOL'
                  }
 
-PWM_TICKS = 100
-PWM_VALUES = {'RED':10000,
-              'GREEN':30000,
-              'BLUE':40000,
-              'WARM':50000,
-              'COOL':60000
+PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
+              'GREEN':32500,
+              'BLUE':32500,
+              'WARM':32500,
+              'COOL':32500
               }
 
-ROUTINE_TICK = 25 # ms. How often the routine is updated
+# Time Base
+ROUTINE_TICK = 25 # ms. how often the routine is incremented
 DEFAULT_TICK = 250 # ms use this if the routine duration is zero
 CLOCK_RATIO = 6
 
@@ -118,7 +117,7 @@ CLOCK_RATIO = 6
 CURRENT_ROUTINE = 2 # the routine that is running
 SELECTED_ROUTINE: int # the routine that is selected by the user
 SCROLL_ROUTINE = 0 # the top routine listed in the menu
-HILIGHTED_ROUTINE = 0
+HILIGHTED_ROUTINE = 0 # the routine on the hilighted row
 
 ROUTINES = {
             0:'OFF',
@@ -157,11 +156,11 @@ MAINTENANCE =  {'name':'Maintenance',
                 'bank1':(1, 1),
                 'bank2':(1, 1),
                 'scenic':(0,0),
-                'red':(1, 0, 0),
-                'green':(1, 0, 0),
-                'blue':(1, 0, 0),
-                'warm':(1, 0, 0),
-                'cool':(1, 0, 0),
+                'red':(9, 0, 0),
+                'green':(.9, 0, 0),
+                'blue':(.9, 0, 0),
+                'warm':(.9, 0, 0),
+                'cool':(.9, 0, 0),
                 'duration':0.0,
                 'random':0.0,
                 'loop':False
