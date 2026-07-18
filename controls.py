@@ -104,7 +104,6 @@ class UserInterface():
         if entities.SCREEN_MODE == 'AUTOMATIC':
             model.get_highlighted_routine()
             entities.SCREEN_MODE = 'MONITOR'
-            self.show_status_screen()
 
         elif entities.SCREEN_MODE == 'MONITOR':
             entities.SCREEN_MODE = 'AUTOMATIC'
@@ -134,15 +133,17 @@ class UserInterface():
     # Coroutine: runs the selected routine
     def run_routine(self):
 
-        delay = entities.DEFAULT_TICK
+        #delay = entities.DEFAULT_TICK
+        delay = entities.ROUTINE_TICK
+        r = routine.Routine()
         
         while True:
 
             if not entities.SELECTED_ROUTINE == entities.CURRENT_ROUTINE:
                 entities.CURRENT_ROUTINE = entities.SELECTED_ROUTINE
-                routine.Routine().make_routine()
+                r.make_routine()
 #
-            routine.Routine().increment_routine()
+            r.increment_routine()
             entities.LED.toggle()
             if entities.SCREEN_MODE == 'MONITOR':
                 self.show_status_screen()

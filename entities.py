@@ -274,7 +274,7 @@ SUNSET =  {'name':'Sunset',
            'blue':(0, 1, 0),
            'warm':(1, 0, 1),
            'cool':(1, 0, 1),
-           'duration':180.0,
+           'duration':1.0,
            'random':0.0,
            'loop':False
            }
