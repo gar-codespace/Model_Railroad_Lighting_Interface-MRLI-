@@ -135,8 +135,6 @@ class UserInterface():
     def run_routine(self):
 
         delay = entities.DEFAULT_TICK
-        #entities.SELECTED_ROUTINE = entities.CURRENT_ROUTINE
-        #routine.Routine.make_routine()
         
         while True:
 
@@ -148,5 +146,16 @@ class UserInterface():
             entities.LED.toggle()
             if entities.SCREEN_MODE == 'MONITOR':
                 self.show_status_screen()
+
+            await entities.ASYNCIO.sleep_ms(delay)
+
+    # Coroutine: runs the selected routine
+    def run_standin_routine(self):
+        ''' For testing. '''
+       
+        delay = entities.DEFAULT_TICK
+        
+        while True:            
+            entities.LED.toggle()
 
             await entities.ASYNCIO.sleep_ms(delay)

@@ -39,12 +39,11 @@ class Routine():
         
         return getattr(entities, routine_name, 'DAY') # dict
 
-    def make_static_routine(self, params):
+    def make_static_routine(self, routine_params):
 
-        self.set_pwm_values(params, 0)
-        self.set_switch_status(params, 0)
-
-
+        self.set_pwm_values(routine_params, 0)
+        self.set_switch_status(routine_params, 0)
+        self.set_led_values(routine_params)
 
     def set_pwm_values(self, routine_params, index=0):
 
@@ -70,40 +69,11 @@ class Routine():
 
     def set_led_values(self, routine_params):
 
-        entities.PWM(entities.PIN(entities.PICO_PIN['RED'])).duty_u16(entities.PWM_VALUES['RED'])
-        entities.PWM(entities.PIN(entities.PICO_PIN['GREEN'])).duty_u16(entities.PWM_VALUES['GREEN'])
-        entities.PWM(entities.PIN(entities.PICO_PIN['BLUE'])).duty_u16(entities.PWM_VALUES['BLUE'])
-        entities.PWM(entities.PIN(entities.PICO_PIN['WARM'])).duty_u16(entities.PWM_VALUES['WARM'])
-        entities.PWM(entities.PIN(entities.PICO_PIN['COOL'])).duty_u16(entities.PWM_VALUES['COOL'])
+        entities.PWM(entities.PIN(entities.PICO_PIN['RED'])).duty_u16(int(entities.PWM_VALUES['RED']))
+        entities.PWM(entities.PIN(entities.PICO_PIN['GREEN'])).duty_u16(int(entities.PWM_VALUES['GREEN']))
+        entities.PWM(entities.PIN(entities.PICO_PIN['BLUE'])).duty_u16(int(entities.PWM_VALUES['BLUE']))
+        entities.PWM(entities.PIN(entities.PICO_PIN['WARM'])).duty_u16(int(entities.PWM_VALUES['WARM']))
+        entities.PWM(entities.PIN(entities.PICO_PIN['COOL'])).duty_u16(int(entities.PWM_VALUES['COOL']))
 
     def increment_routine(self):
         pass
-
-    # Coroutine: runs the selected routine
-    def run_standin_routine(self):
-
-        delay = entities.DEFAULT_TICK
-        
-        while True:            
-            entities.LED.toggle()
-
-            await entities.ASYNCIO.sleep_ms(delay)
-
-    # Coroutine: runs the selected routine
-    #def run_routine(self):
-#
-    #    delay = entities.DEFAULT_TICK
-    #    entities.SELECTED_ROUTINE = entities.CURRENT_ROUTINE
-    #    self.make_routine()
-    #    
-    #    while True:
-#
-    #        if not entities.SELECTED_ROUTINE == entities.CURRENT_ROUTINE:
-    #            entities.CURRENT_ROUTINE = entities.SELECTED_ROUTINE
-    #            self.make_routine()
-#
-    #        self.increment_routine()
-    #        entities.LED.toggle()
-#
-    #        await entities.ASYNCIO.sleep_ms(delay)
-#
