@@ -84,7 +84,10 @@ MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
                 'ROWS': CONST(5),
                 'X_OFFSET': 4
                 }
+
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling routines
+
+DISPLAY_OBJECT: object
 
 # Routine parameters
 SCREEN_MODE = 'WELCOME' # Can be: WELCOME, AUTOMATIC, MONITOR. MANUAL, ADJUST
@@ -156,7 +159,7 @@ MAINTENANCE =  {'name':'Maintenance',
                 'bank1':(1, 1),
                 'bank2':(1, 1),
                 'scenic':(0,0),
-                'red':(9, 0, 0),
+                'red':(.9, 0, 0),
                 'green':(.9, 0, 0),
                 'blue':(.9, 0, 0),
                 'warm':(.9, 0, 0),

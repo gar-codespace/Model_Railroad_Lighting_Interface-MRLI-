@@ -80,6 +80,7 @@ class ControlInterface():
         if entities.SCREEN_MODE == 'AUTOMATIC':
             model.increment_current_routine('right')
             self.show_routines_screen()
+            
 
         elif entities.SCREEN_MODE == 'MONITOR':
             pass
@@ -101,7 +102,6 @@ class ControlInterface():
     def single_click_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
             model.get_highlighted_routine()
-            entities.SELECTED_ROUTINE = entities.SCROLL_ROUTINE
             entities.SCREEN_MODE = 'MONITOR'
             self.show_status_screen()
 

@@ -26,8 +26,27 @@ class Routine():
         self.switch4 = entities.PIN(entities.PICO_PIN['BANK4_S'])
         self.scenic= entities.PIN(entities.PICO_PIN['SCENIC_S'])
 
-    def make_routine(self):
-        print('make new routine')
+    def make_routine(self):        
+
+        routine_params = self._get_routine_parameters()
+        
+        if routine_params['duration'] == 0:
+            self.make_static_routine(routine_params)
+
+    def _get_routine_parameters(self):
+
+        routine_name = entities.ROUTINES[entities.CURRENT_ROUTINE] # string, IE OFF or DAY
+        
+        return getattr(entities, routine_name, 'DAY') # dict
+
+    def make_static_routine(self, params):
+
+        x = params['red'][0] * entities.PWM_STEPS
+        entities.PWM_VALUES['RED'] = x
+        entities.PWM_VALUES['GREEN'] = params['green'][0]
+        entities.PWM_VALUES['BLUE'] = params['blue'][0]
+        entities.PWM_VALUES['WARM'] = params['warm'][0]
+        entities.PWM_VALUES['COOL'] = params['cool'][0]
 
     def increment_routine(self):
         pass
