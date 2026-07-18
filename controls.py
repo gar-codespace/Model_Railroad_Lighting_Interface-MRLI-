@@ -5,9 +5,10 @@ I'm trying to keep this as simple as possible
 import entities
 import model
 import view
+import routine
 
 
-class ControlInterface():
+class UserInterface():
     '''
     The control interface is the display, encoder, and all the buttons
     used to control the Pico
@@ -129,3 +130,23 @@ class ControlInterface():
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'AUTOMATIC'
             self.show_routines_screen()
+
+    # Coroutine: runs the selected routine
+    def run_routine(self):
+
+        delay = entities.DEFAULT_TICK
+        #entities.SELECTED_ROUTINE = entities.CURRENT_ROUTINE
+        #routine.Routine.make_routine()
+        
+        while True:
+
+            if not entities.SELECTED_ROUTINE == entities.CURRENT_ROUTINE:
+                entities.CURRENT_ROUTINE = entities.SELECTED_ROUTINE
+                routine.Routine().make_routine()
+#
+            routine.Routine().increment_routine()
+            entities.LED.toggle()
+            if entities.SCREEN_MODE == 'MONITOR':
+                self.show_status_screen()
+
+            await entities.ASYNCIO.sleep_ms(delay)

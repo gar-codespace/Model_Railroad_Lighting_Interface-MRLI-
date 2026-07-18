@@ -117,8 +117,8 @@ DEFAULT_TICK = 250 # ms use this if the routine duration is zero
 CLOCK_RATIO = 6
 
 # Routines
-CURRENT_ROUTINE = 2 # the routine that is running
-SELECTED_ROUTINE: int # the routine that is selected by the user
+CURRENT_ROUTINE = 0 # the routine that is running
+SELECTED_ROUTINE = 2 # the routine that is selected by the user
 SCROLL_ROUTINE = 0 # the top routine listed in the menu
 HILIGHTED_ROUTINE = 0 # the routine on the hilighted row
 
@@ -158,6 +158,8 @@ MAINTENANCE =  {'name':'Maintenance',
                 'bank0':(1, 1),
                 'bank1':(1, 1),
                 'bank2':(1, 1),
+                'bank3':(1,0),
+                'bank4':(1,0),
                 'scenic':(0,0),
                 'red':(.9, 0, 0),
                 'green':(.9, 0, 0),

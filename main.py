@@ -2,7 +2,7 @@ import entities
 import controls
 import routine
 
-dm = controls.ControlInterface()
+ui = controls.UserInterface()
 
 # controls.play harbor sounds
 
@@ -10,11 +10,11 @@ async def main():
 
     r = routine.Routine()
     #entities.ASYNCIO.create_task(r.run_standin_routine())
-    entities.ASYNCIO.create_task(r.run_routine())
+    entities.ASYNCIO.create_task(ui.run_routine())
 
     while True:
         
-        await entities.ASYNCIO.gather(dm.get_encoder().async_tick())
+        await entities.ASYNCIO.gather(ui.get_encoder().async_tick())
 
 
 entities.ASYNCIO.run(main())
