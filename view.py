@@ -39,6 +39,11 @@ def welcome_screen(display):
 
     return
 
+def show_welcome_screen(display):
+    display.fill(0)
+    welcome_screen(display)
+    display.show()
+
 def effect_screen(display):
     '''
     The effect screen is displayed when the machine is in effect mode.
@@ -60,6 +65,11 @@ def effect_screen(display):
     display.rect(0, hilight_row, 128, 10, 1)
 
     return
+
+def show_effects_screen(display):
+    display.fill(0)
+    effect_screen(display)
+    display.show()
 
 def status_screen(display):
     '''
@@ -88,6 +98,11 @@ def status_screen(display):
     value = model.pwm2percent(entities.PWM_VALUES['COOL'])
     display.text(f'Cool:  {value}%', x, y)
     y += entities.MAIN_FORMAT['LINE_HEIGHT']
+
+def show_status_screen(display):
+    display.fill(0)
+    status_screen(display)
+    display.show()
 
 def manual_hilight(display, direction: str='None'):
     '''

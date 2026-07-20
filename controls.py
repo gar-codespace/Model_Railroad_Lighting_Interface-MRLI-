@@ -24,22 +24,7 @@ class UserInterface():
         
         self.display = view.Display(entities.MAIN_DISPLAY).getDisplay()
 
-        self.show_welcome_screen()
-
-    def show_welcome_screen(self):
-        self.display.fill(0)
-        view.welcome_screen(self.display)
-        self.display.show()
-
-    def show_effects_screen(self):
-        self.display.fill(0)
-        view.effect_screen(self.display)
-        self.display.show()
-
-    def show_status_screen(self):
-        self.display.fill(0)
-        view.status_screen(self.display)
-        self.display.show()
+        view.show_welcome_screen(self.display)
 
     def get_encoder(self):
 
@@ -58,7 +43,7 @@ class UserInterface():
     def turn_left_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
             model.increment_current_effect('left')
-            self.show_effects_screen()
+            view.show_effects_screen(self.display)
 
         elif entities.SCREEN_MODE == 'MONITOR':
             pass
@@ -80,7 +65,7 @@ class UserInterface():
     def turn_right_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
             model.increment_current_effect('right')
-            self.show_effects_screen()
+            view.show_effects_screen(self.display)
             
 
         elif entities.SCREEN_MODE == 'MONITOR':
@@ -107,7 +92,7 @@ class UserInterface():
 
         elif entities.SCREEN_MODE == 'MONITOR':
             entities.SCREEN_MODE = 'AUTOMATIC'
-            self.show_effects_screen()
+            view.show_effects_screen(self.display)
 
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'ADJUST'
@@ -128,7 +113,7 @@ class UserInterface():
             
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'AUTOMATIC'
-            self.show_effects_screen()
+            view.show_effects_screen(self.display)
 
     # Coroutine: runs the selected effect
     def run_effect(self):
@@ -146,7 +131,7 @@ class UserInterface():
             r.increment_effect()
             entities.LED.toggle()
             if entities.SCREEN_MODE == 'MONITOR':
-                self.show_status_screen()
+                view.show_status_screen(self.display)
 
             await entities.ASYNCIO.sleep_ms(delay)
 
