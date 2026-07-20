@@ -52,7 +52,7 @@ def effect_screen(display):
     index = model.get_menu_index()
     entities.SCROLL_EFFECTS = index[0]
     for i in range(0, entities.MAIN_FORMAT['ROWS']):
-        effect = entities.EFFECTSS[index[i]]
+        effect = entities.EFFECTS[index[i]]
         effect = getattr(entities, effect, 'DAY')['name']
         display.text(effect, x, y)
         y += entities.MAIN_FORMAT['LINE_HEIGHT']

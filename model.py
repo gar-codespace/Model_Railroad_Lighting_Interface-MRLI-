@@ -51,7 +51,7 @@ def set_button_pins():
 
 def get_menu_index():
     
-    index_list = tuple(range(0, len(entities.EFFECTSS)))
+    index_list = tuple(range(0, len(entities.EFFECTS)))
     index_list = index_list + index_list
     
     index_list = index_list[entities.SCROLL_EFFECTS:]
@@ -60,7 +60,7 @@ def get_menu_index():
 
 def increment_current_effect(direction:str):
 
-    wrap = len(entities.EFFECTSS) - 1
+    wrap = len(entities.EFFECTS) - 1
 
     if direction == 'right':
         entities.SCROLL_EFFECTS += 1
@@ -77,9 +77,9 @@ def get_highlighted_effect(): # list comprehension
     
     x = entities.SCROLL_EFFECTS + entities.HIGHLIGHT_ROW
 
-    if x == len(entities.EFFECTSS):
+    if x == len(entities.EFFECTS):
         x = 0
-    elif x == len(entities.EFFECTSS) + 1:
+    elif x == len(entities.EFFECTS) + 1:
         x = 1
 
 

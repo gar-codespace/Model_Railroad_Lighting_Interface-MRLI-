@@ -36,7 +36,7 @@ class Effect():
 
     def _get_effect_parameters(self):
 
-        effect_name = entities.EFFECTSS[entities.CURRENT_EFFECTS] # string, IE OFF or DAY
+        effect_name = entities.EFFECTS[entities.CURRENT_EFFECTS] # string, IE OFF or DAY
         
         return getattr(entities, effect_name, 'DAY') # dict
 

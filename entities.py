@@ -17,6 +17,17 @@ from hw_button import Button
 
 # local libraries
 
+# Boilerplate
+SCRIPT_REV = CONST('20260704')
+TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
+
+###### HARDWARE ######
+
+# Raspi Pico parameters
+LED = PIN('LED', PIN.OUT)
+PWM_FREQ = 1000
+PWM_STEPS = 65535
+
 # Raspi Pico GP pin assignments
 PICO_PIN = {
         'BANK0_B':0, # buttons
@@ -51,15 +62,6 @@ PICO_PIN = {
         'NA':28
         }
 
-# Raspi Pico parameters
-LED = PIN('LED', PIN.OUT)
-PWM_FREQ = 1000
-PWM_STEPS = 65535
-
-# Misc
-SCRIPT_REV = CONST('20260704')
-TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
-
 # OLED0 specs
 OLED0 = {'ADDRESS': CONST(0x3C),
          'WIDTH': CONST(128),
@@ -73,23 +75,23 @@ OLED1 = {'ADDRESS': CONST(0x3C),
          'LINE_HEIGHT': CONST(14),
         }
 
-# OLED Configurations
-# bus, width, height, addr
+# OLED Configurations (bus, width, height, addr)
 DISPLAY0 = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
 DISPLAY1 = (1, OLED1['WIDTH'], OLED1['HEIGHT'], OLED1['ADDRESS'])
 MAIN_DISPLAY = DISPLAY0
 AUX_DISPLAY = DISPLAY1 # Not used, maybe a fast time clock
+
 # Display formatting
 MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
                 'ROWS': CONST(5),
                 'X_OFFSET': 4
                 }
 
+###### SOFTWARE ######
+
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling routines
 
-DISPLAY_OBJECT: object
-
-# Routine parameters
+# Effect parameters
 SCREEN_MODE = 'WELCOME' # Can be: WELCOME, AUTOMATIC, MONITOR. MANUAL, ADJUST
 WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
 STATUS_HILIGHT_INDEX = 0
@@ -116,13 +118,13 @@ EFFECTS_TICK = 25 # ms. how often the routine is incremented
 DEFAULT_TICK = 250 # ms use this if the routine duration is zero
 CLOCK_RATIO = 6
 
-# Routines
+# Effects
 CURRENT_EFFECTS = 0 # the routine that is running
 SELECTED_EFFECTS = 2 # the routine that is selected by the user
 SCROLL_EFFECTS = 0 # the top routine listed in the menu
 HILIGHTED_EFFECTS = 0 # the routine on the hilighted row
 
-EFFECTSS = {
+EFFECTS = {
             0:'OFF',
             1:'MAINTENANCE',
             2:'DAY',
@@ -140,9 +142,9 @@ OFF =  {'name':'Off',
         'bank0':(0, 0), # a specific led strip, begin state, end state
         'bank1':(0, 0),
         'bank2':(0, 0),
-        'bank3':(0,0),
-        'bank4':(0,0),
-        'scenic':(0,0),
+        'bank3':(0, 0),
+        'bank4':(0, 0),
+        'scenic':(0, 0),
         'red':(0, 0, 0), # the specific color, begin value, midpoint value, end value in percentage
         'green':(0, 0, 0),
         'blue':(0, 0, 0),
@@ -158,9 +160,9 @@ MAINTENANCE =  {'name':'Maintenance',
                 'bank0':(1, 1),
                 'bank1':(1, 1),
                 'bank2':(1, 1),
-                'bank3':(1,0),
-                'bank4':(1,0),
-                'scenic':(0,0),
+                'bank3':(1, 0),
+                'bank4':(1, 0),
+                'scenic':(0, 0),
                 'red':(.9, 0, 0),
                 'green':(.9, 0, 0),
                 'blue':(.9, 0, 0),
@@ -178,7 +180,7 @@ DAY =  {'name':'Daytime',
         'bank2':(1, 1),
         'bank3':(1, 1),
         'bank4':(1, 1),
-        'scenic':(0,0),
+        'scenic':(0, 0),
         'red':(.5, 0, 0),
         'green':(.5, 0, 0),
         'blue':(.5, 0, 0),
@@ -196,7 +198,7 @@ TWLIGHT = {'name':'Twlight',
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'scenic':(1,0),
+           'scenic':(1, 0),
            'red':(.2, 0, 0),
            'green':(.05, 0, 0),
            'blue':(.2, 0, 0),
@@ -214,7 +216,7 @@ NIGHT =   {'name':'Nightime',
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'scenic':(1,0),
+           'scenic':(1, 0),
            'red':(0, 0, 0),
            'green':(0, 0, 0),
            'blue':(0, 0, 0),
@@ -232,7 +234,7 @@ SUNRISE = {'name':'Sunrise',
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'scenic':(1,0),
+           'scenic':(1, 0),
            'red':(0, .1, .4),
            'green':(0, 0, 0),
            'blue':(.4, .1, 0),
@@ -250,7 +252,7 @@ CLOUDY =  {'name':'Cloudy Day',
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'scenic':(0,0),
+           'scenic':(0, 0),
            'red':(.5, 0, 0),
            'green':(.5, 0, 0),
            'blue':(.5, 0, 0),
@@ -268,7 +270,7 @@ SUNSET =  {'name':'Sunset',
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'scenic':(1,0),
+           'scenic':(1, 0),
            'red':(0, 1, 0),
            'green':(0, 1, 0),
            'blue':(0, 1, 0),
@@ -286,7 +288,7 @@ STORMY =  {'name':'Stormy Night',
            'bank2':(1, 1),
            'bank3':(1, 1),
            'bank4':(1, 1),
-           'scenic':(0,0),
+           'scenic':(0, 0),
            'red':(0, 0, 0),
            'green':(0, 0, 0),
            'blue':(0, 0, 0),
