@@ -5,7 +5,7 @@ I'm trying to keep this as simple as possible
 import entities
 import model
 import view
-import routine
+import effects
 
 
 class UserInterface():
@@ -31,9 +31,9 @@ class UserInterface():
         view.welcome_screen(self.display)
         self.display.show()
 
-    def show_routines_screen(self):
+    def show_effects_screen(self):
         self.display.fill(0)
-        view.routine_screen(self.display)
+        view.effect_screen(self.display)
         self.display.show()
 
     def show_status_screen(self):
@@ -57,8 +57,8 @@ class UserInterface():
 
     def turn_left_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
-            model.increment_current_routine('left')
-            self.show_routines_screen()
+            model.increment_current_effect('left')
+            self.show_effects_screen()
 
         elif entities.SCREEN_MODE == 'MONITOR':
             pass
@@ -79,8 +79,8 @@ class UserInterface():
 
     def turn_right_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
-            model.increment_current_routine('right')
-            self.show_routines_screen()
+            model.increment_current_effect('right')
+            self.show_effects_screen()
             
 
         elif entities.SCREEN_MODE == 'MONITOR':
@@ -102,12 +102,12 @@ class UserInterface():
 
     def single_click_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
-            model.get_highlighted_routine()
+            model.get_highlighted_effect()
             entities.SCREEN_MODE = 'MONITOR'
 
         elif entities.SCREEN_MODE == 'MONITOR':
             entities.SCREEN_MODE = 'AUTOMATIC'
-            self.show_routines_screen()
+            self.show_effects_screen()
 
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'ADJUST'
@@ -128,30 +128,30 @@ class UserInterface():
             
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'AUTOMATIC'
-            self.show_routines_screen()
+            self.show_effects_screen()
 
-    # Coroutine: runs the selected routine
-    def run_routine(self):
+    # Coroutine: runs the selected effect
+    def run_effect(self):
 
         #delay = entities.DEFAULT_TICK
-        delay = entities.ROUTINE_TICK
-        r = routine.Routine()
+        delay = entities.EFFECTS_TICK
+        r = effects.Effect()
         
         while True:
 
-            if not entities.SELECTED_ROUTINE == entities.CURRENT_ROUTINE:
-                entities.CURRENT_ROUTINE = entities.SELECTED_ROUTINE
-                r.make_routine()
+            if not entities.SELECTED_EFFECTS == entities.CURRENT_EFFECTS:
+                entities.CURRENT_EFFECTS = entities.SELECTED_EFFECTS
+                r.make_effect()
 #
-            r.increment_routine()
+            r.increment_effect()
             entities.LED.toggle()
             if entities.SCREEN_MODE == 'MONITOR':
                 self.show_status_screen()
 
             await entities.ASYNCIO.sleep_ms(delay)
 
-    # Coroutine: runs the selected routine
-    def run_standin_routine(self):
+    # Coroutine: runs the selected effect
+    def run_standin_effect(self):
         ''' For testing. '''
        
         delay = entities.DEFAULT_TICK

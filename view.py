@@ -39,10 +39,10 @@ def welcome_screen(display):
 
     return
 
-def routine_screen(display):
+def effect_screen(display):
     '''
-    The routine screen is displayed when the machine is in routine mode.
-    This is where the user selects which routine to run.
+    The effect screen is displayed when the machine is in effect mode.
+    This is where the user selects which effect to run.
     '''
 
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
@@ -50,11 +50,11 @@ def routine_screen(display):
     x = entities.MAIN_FORMAT['X_OFFSET']
     y = 1
     index = model.get_menu_index()
-    entities.SCROLL_ROUTINE = index[0]
+    entities.SCROLL_EFFECTS = index[0]
     for i in range(0, entities.MAIN_FORMAT['ROWS']):
-        routine = entities.ROUTINES[index[i]]
-        routine = getattr(entities, routine, 'DAY')['name']
-        display.text(routine, x, y)
+        effect = entities.EFFECTSS[index[i]]
+        effect = getattr(entities, effect, 'DAY')['name']
+        display.text(effect, x, y)
         y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
     display.rect(0, hilight_row, 128, 10, 1)

@@ -1,6 +1,5 @@
 import entities
 import controls
-import routine
 
 ui = controls.UserInterface()
 
@@ -8,9 +7,7 @@ ui = controls.UserInterface()
 
 async def main():
 
-    r = routine.Routine()
-    #entities.ASYNCIO.create_task(r.run_standin_routine())
-    entities.ASYNCIO.create_task(ui.run_routine())
+    entities.ASYNCIO.create_task(ui.run_effect())
 
     while True:
         

@@ -51,37 +51,37 @@ def set_button_pins():
 
 def get_menu_index():
     
-    index_list = tuple(range(0, len(entities.ROUTINES)))
+    index_list = tuple(range(0, len(entities.EFFECTSS)))
     index_list = index_list + index_list
     
-    index_list = index_list[entities.SCROLL_ROUTINE:]
+    index_list = index_list[entities.SCROLL_EFFECTS:]
 
     return index_list
 
-def increment_current_routine(direction:str):
+def increment_current_effect(direction:str):
 
-    wrap = len(entities.ROUTINES) - 1
+    wrap = len(entities.EFFECTSS) - 1
 
     if direction == 'right':
-        entities.SCROLL_ROUTINE += 1
+        entities.SCROLL_EFFECTS += 1
     elif direction == 'left':
-        entities.SCROLL_ROUTINE -= 1
+        entities.SCROLL_EFFECTS -= 1
 
-    if entities.SCROLL_ROUTINE < 0:
-        entities.SCROLL_ROUTINE = wrap
-    elif entities.SCROLL_ROUTINE > wrap:
-        entities.SCROLL_ROUTINE = 0
+    if entities.SCROLL_EFFECTS < 0:
+        entities.SCROLL_EFFECTS = wrap
+    elif entities.SCROLL_EFFECTS > wrap:
+        entities.SCROLL_EFFECTS = 0
 
 
-def get_highlighted_routine(): # list comprehension
+def get_highlighted_effect(): # list comprehension
     
-    x = entities.SCROLL_ROUTINE + entities.HIGHLIGHT_ROW
+    x = entities.SCROLL_EFFECTS + entities.HIGHLIGHT_ROW
 
-    if x == len(entities.ROUTINES):
+    if x == len(entities.EFFECTSS):
         x = 0
-    elif x == len(entities.ROUTINES) + 1:
+    elif x == len(entities.EFFECTSS) + 1:
         x = 1
 
 
-    entities.SELECTED_ROUTINE = x
+    entities.SELECTED_EFFECTS = x
     

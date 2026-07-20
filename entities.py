@@ -112,17 +112,17 @@ PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
               }
 
 # Time Base
-ROUTINE_TICK = 25 # ms. how often the routine is incremented
+EFFECTS_TICK = 25 # ms. how often the routine is incremented
 DEFAULT_TICK = 250 # ms use this if the routine duration is zero
 CLOCK_RATIO = 6
 
 # Routines
-CURRENT_ROUTINE = 0 # the routine that is running
-SELECTED_ROUTINE = 2 # the routine that is selected by the user
-SCROLL_ROUTINE = 0 # the top routine listed in the menu
-HILIGHTED_ROUTINE = 0 # the routine on the hilighted row
+CURRENT_EFFECTS = 0 # the routine that is running
+SELECTED_EFFECTS = 2 # the routine that is selected by the user
+SCROLL_EFFECTS = 0 # the top routine listed in the menu
+HILIGHTED_EFFECTS = 0 # the routine on the hilighted row
 
-ROUTINES = {
+EFFECTSS = {
             0:'OFF',
             1:'MAINTENANCE',
             2:'DAY',
