@@ -104,6 +104,17 @@ def show_status_screen(display):
     status_screen(display)
     display.show()
 
+
+
+def show_status_screen_manual(display, direction:str):
+        display.fill(0)
+        status_screen(display)
+        manual_hilight(display, direction)
+        display.show()
+    
+
+
+
 def manual_hilight(display, direction: str='None'):
     '''
     Manual hilight is only used when the machine is is manual mode.
@@ -111,11 +122,11 @@ def manual_hilight(display, direction: str='None'):
     (famous last words)
     '''
 
-    if direction == 'RIGHT':
+    if direction == 'right':
         entities.STATUS_HILIGHT_INDEX -= 1
         entities.STATUS_HILIGHT_INDEX = max(0, entities.STATUS_HILIGHT_INDEX)
 
-    elif direction == 'LEFT':
+    elif direction == 'left':
         entities.STATUS_HILIGHT_INDEX += 1
         entities.STATUS_HILIGHT_INDEX = min(entities.STATUS_HILIGHT_INDEX, 4)
 
@@ -129,12 +140,12 @@ def adjust_color_value(direction: str): # move to model?
     color_being_adjusted = entities.LED_INDEX_MAP[entities.STATUS_HILIGHT_INDEX]
     pwm_color_value = entities.PWM_VALUES[color_being_adjusted]
 
-    if direction == 'RIGHT': # turn it up
+    if direction == 'right': # turn it up
         pwm_color_value += entities.PWM_TICKS
         pwm_color_value = min(pwm_color_value, entities.PWM_STEPS)
         entities.PWM_VALUES[color_being_adjusted] = pwm_color_value
 
-    if direction == 'LEFT': # turn it down
+    if direction == 'left': # turn it down
         pwm_color_value -= entities.PWM_TICKS
         pwm_color_value = max(0, pwm_color_value)
         entities.PWM_VALUES[color_being_adjusted] = pwm_color_value

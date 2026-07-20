@@ -49,17 +49,11 @@ class UserInterface():
             pass
 
         elif entities.SCREEN_MODE == 'MANUAL':
-            self.display.fill(0)
-            view.status_screen(self.display)
-            view.manual_hilight(self.display, 'LEFT')
-            self.display.show()
+            view.show_status_screen_manual(self.display, 'left')
 
         elif entities.SCREEN_MODE == 'ADJUST':
-            view.adjust_color_value('LEFT')
-            self.display.fill(0)
-            view.status_screen(self.display)
-            view.manual_hilight(self.display)
-            self.display.show()
+            view.adjust_color_value('left')
+            view.show_status_screen_manual(self.display, 'none')
 
 
     def turn_right_listener(self):
@@ -67,22 +61,15 @@ class UserInterface():
             model.increment_current_effect('right')
             view.show_effects_screen(self.display)
             
-
         elif entities.SCREEN_MODE == 'MONITOR':
             pass
 
         elif entities.SCREEN_MODE == 'MANUAL':
-            self.display.fill(0)
-            view.status_screen(self.display)
-            view.manual_hilight(self.display, 'RIGHT')
-            self.display.show()
+            view.show_status_screen_manual(self.display, 'right')
             
         elif entities.SCREEN_MODE == 'ADJUST':
-            view.adjust_color_value('RIGHT')
-            self.display.fill(0)
-            view.status_screen(self.display)
-            view.manual_hilight(self.display)
-            self.display.show()
+            view.adjust_color_value('right')
+            view.show_status_screen_manual(self.display, 'none')
 
 
     def single_click_listener(self):
@@ -106,10 +93,7 @@ class UserInterface():
         #print(f"Multiply Clicks: {clicks}")
         if entities.SCREEN_MODE == 'AUTOMATIC':
             entities.SCREEN_MODE = 'MANUAL'
-            self.display.fill(0)
-            view.status_screen(self.display)
-            view.manual_hilight(self.display)
-            self.display.show()
+            view.show_status_screen_manual(self.display, 'none')
             
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'AUTOMATIC'
