@@ -72,7 +72,6 @@ def increment_current_effect(direction:str):
     elif entities.SCROLL_EFFECTS > wrap:
         entities.SCROLL_EFFECTS = 0
 
-
 def get_highlighted_effect(): # list comprehension
     
     x = entities.SCROLL_EFFECTS + entities.HIGHLIGHT_ROW
@@ -82,6 +81,12 @@ def get_highlighted_effect(): # list comprehension
     elif x == len(entities.EFFECTS) + 1:
         x = 1
 
-
     entities.SELECTED_EFFECTS = x
     
+def reset_clocks():
+
+    entities.RED_CLOCK = 0
+    entities.GREEN_CLOCK = 0
+    entities.BLUE_CLOCK = 0
+    entities.WARM_CLOCK = 0
+    entities.COOL_CLOCK = 0

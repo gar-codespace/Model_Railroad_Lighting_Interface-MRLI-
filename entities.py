@@ -113,6 +113,16 @@ PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
               'COOL':32500
               }
 
+# Effect type
+EFFECT_TYPE = 'static'
+
+# Animated effects countdown
+RED_CLOCK = 0
+GREEN_CLOCK = 0
+BLUE_CLOCK = 0
+WARM_CLOCK = 0
+COOL_CLOCK = 0
+
 # Time Base
 EFFECTS_TICK = 25 # ms. how often the routine is incremented
 DEFAULT_TICK = 250 # ms use this if the routine duration is zero

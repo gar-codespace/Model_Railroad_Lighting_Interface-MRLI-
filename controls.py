@@ -17,6 +17,13 @@ class UserInterface():
     def __init__(self):
 
         entities.SCREEN_MODE = 'AUTOMATIC'
+        self.effect = effects.Effect()
+
+        self.red_time_delay = 0
+        self.green_time_delay = 0
+        self.blue_time_delay = 0
+        self.warm_time_delay = 0
+        self.cool_time_delay = 0
 
         model.set_encoder_pins()
         model.set_switch_pins()
@@ -73,12 +80,18 @@ class UserInterface():
 
 
     def single_click_listener(self):
-        if entities.SCREEN_MODE == 'AUTOMATIC':
-            model.get_highlighted_effect()
+        if entities.SCREEN_MODE == 'AUTOMATIC': # this is where effects get selected
             entities.SCREEN_MODE = 'MONITOR'
+            self.effect.make_effect()
+            view.show_status_screen(self.display)
+            #entities.UTIME.sleep(2) # give the coroutines time to stop
+            entities.ASYNCIO.create_task(self.run_red_effect())
+            entities.ASYNCIO.create_task(self.run_green_effect())
+            entities.ASYNCIO.create_task(self.run_blue_effect())
 
         elif entities.SCREEN_MODE == 'MONITOR':
             entities.SCREEN_MODE = 'AUTOMATIC'
+            model.reset_clocks()
             view.show_effects_screen(self.display)
 
         elif entities.SCREEN_MODE == 'MANUAL':
@@ -98,6 +111,56 @@ class UserInterface():
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'AUTOMATIC'
             view.show_effects_screen(self.display)
+
+    # Color coroutine: runs the selected effect, one for each color
+    def run_red_effect(self):
+
+        delay = entities.DEFAULT_TICK
+        while entities.RED_CLOCK > 0:
+            pass
+
+            # entities.PWM_VALUES['RED'] = entities.RED_CLOCK
+            # entities.RED_CLOCK -= 250
+            # print(entities.RED_CLOCK)
+# 
+            # view.show_status_screen(self.display)
+
+            await entities.ASYNCIO.sleep_ms(delay) #10 sec
+        
+        print('red effect finished')
+        
+    def run_green_effect(self):
+
+        delay = entities.DEFAULT_TICK
+        while entities.GREEN_CLOCK > 0:
+            pass
+
+            # entities.GREEN_CLOCK -= 250
+            # print(entities.GREEN_CLOCK)
+
+            # view.show_status_screen(self.display)
+
+            await entities.ASYNCIO.sleep_ms(delay)
+        
+        print('green effect finished')
+
+    def run_blue_effect(self):
+
+        delay = entities.DEFAULT_TICK
+        while entities.BLUE_CLOCK > 0:
+            pass
+
+            # entities.BLUE_CLOCK -= 250
+            # print(entities.BLUE_CLOCK)
+# 
+            # view.show_status_screen(self.display)
+
+            await entities.ASYNCIO.sleep_ms(delay)
+        
+        print('blue effect finished')
+
+
+
 
     # Coroutine: runs the selected effect
     def run_effect(self):

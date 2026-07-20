@@ -1,13 +1,11 @@
 import entities
 import controls
 
-ui = controls.UserInterface()
-
-# controls.play harbor sounds
 
 async def main():
 
-    entities.ASYNCIO.create_task(ui.run_effect())
+    ui = controls.UserInterface()
+    # controls.play harbor sounds
 
     while True:
         
