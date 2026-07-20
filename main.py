@@ -9,7 +9,8 @@ async def main():
 
     while True:
         
-        await entities.ASYNCIO.gather(ui.get_encoder().async_tick())
+        await entities.ASYNCIO.gather(ui.get_encoder().async_tick(),
+                                      ui.get_confirm())
 
 
 entities.ASYNCIO.run(main())

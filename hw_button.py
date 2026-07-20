@@ -1,69 +1,69 @@
 '''
 hardware library
+https://github.com/ubidefeo/MicroPython-Button
 '''
+
+from time import ticks_ms
 import entities
 
+class Button(object):
+  rest_state = False
+  # pin = None
+  # pin_number = 0
+  RELEASED = 'released'
+  PRESSED = 'pressed'
+  DEBOUNCE_TIME = 50
 
-class Button:
-    """
-    A simple Button class
-    Create the button using Button(pinnumber, name, handler)
-    handler is typically self, and create two methods buttonPressed and buttonReleased
-    to handle the push and release of the button.
-    The name of the button will be passed back to the handler to identify
-    which button was pressed/released
-    https://github.com/jitsengupta/PicoLibrary/blob/main/Button.py
-    """
-    
-    def __init__(self, pin, name, *, handler=None, lowActive=True):
-        """
-        Initialize attributes and other internal data
-        """
-        
-        self._pinNo = pin
-        self._name = name
-        if lowActive:
-            self._pin = entities.PIN(pin, entities.PIN.IN, entities.PIN.PULL_UP)
-        else:
-            self._pin = entities.PIN(pin, entities.PIN.IN, entities.PIN.PULL_DOWN)
-        self._debounce_time = 0
-        self._lowActive = lowActive
-        self._lastStatus = None
-        self._handler = None
-        self.setHandler(handler)
-        
-    def isPressed(self):
-        """ Check if the button is pressed or not - useful if polling """
-        
-        status = (self._lowActive and self._pin.value() ==0) or (not self._lowActive and self._pin.value() == 1)
-        return status
-    
-    def setHandler(self, handler):
-        """ 
-	    set the handler to a new handler. Pass None to remove existing handler
-	    """
-        
-        # if the old handler was active already, or if the new handler is None, remove the irq
-        if self._handler is not None or handler is None:
-            self._pin.irq(handler = None)
-    
-        # Now set it to th enew handler
-        self._handler = handler
-        # Create the IRQ if the handler is not None
-        if self._handler:
-            self._pin.irq(trigger = entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler = self._callback)
-        
-    def _callback(self, pin):
-        """ The private interrupt handler - will call appropriate handlers """
-        
-        t = entities.UTIME.ticks_ms()
-        v = self._pin.value()
-        if ((self._lastStatus == None or self._lastStatus != v) and t-self._debounce_time) > 50:
-            self._debounce_time=t
-            self._lastStatus = v
-            if self._handler is not None:
-                if self.isPressed():
-                    self._handler.buttonPressed(self._name)
-                else:
-                    self._handler.buttonReleased(self._name)
-        #self._debounce_time=t
+  def __init__(self, pin, rest_state = False, callback = None, internal_pullup = False, internal_pulldown = False, debounce_time = None):
+    self.pin_number = pin
+    self.rest_state = rest_state
+    self.previous_state = rest_state
+    self.current_state = rest_state
+    self.previous_debounced_state = rest_state
+    self.current_debounced_state = rest_state
+    self.last_check_tick = ticks_ms()
+    self.debounce_time = debounce_time or Button.DEBOUNCE_TIME
+    if internal_pulldown:
+      self.internal_pull = entities.PIN.PULL_DOWN
+      self.rest_state = False
+    elif internal_pullup:
+      self.internal_pull = entities.PIN.PULL_UP
+      self.rest_state = True
+    else:
+      self.internal_pull = None
+    if isinstance(pin, int):
+      self.pin = entities.PIN(pin, mode = entities.PIN.IN, pull = self.internal_pull)
+    else:
+      self.pin = pin
+      
+    self.callback = callback
+    self.active = False
+  
+  def debounce(self):
+    ms_now = ticks_ms()
+    self.current_state = self.pin.value()
+    state_changed = self.current_state != self.previous_state
+    if state_changed:
+      self.last_check_tick = ms_now
+    state_stable = (ms_now - self.last_check_tick) > self.debounce_time
+    if state_stable and not state_changed:
+      self.last_check_tick = ms_now
+      self.current_debounced_state = self.current_state
+    self.previous_state = self.current_state
+
+  def check_debounce_state(self):
+    if self.current_debounced_state != self.previous_debounced_state:
+      if self.current_debounced_state != self.rest_state:
+        self.active = True
+        if self.callback != None:
+          self.callback(self.pin_number, Button.PRESSED)
+      else:
+        self.active = False
+        if self.callback != None:
+          self.callback(self.pin_number, Button.RELEASED)
+    self.previous_debounced_state = self.current_debounced_state
+
+  def update(self):
+    self.debounce()
+    self.check_debounce_state()
+

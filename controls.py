@@ -8,6 +8,8 @@ import view
 import effects
 
 
+
+
 class UserInterface():
     '''
     The control interface is the display, encoder, and all the buttons
@@ -29,6 +31,7 @@ class UserInterface():
         model.set_switch_pins()
         model.set_button_pins()
         
+        self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_listener)
         self.display = view.Display(entities.MAIN_DISPLAY).getDisplay()
 
         view.show_welcome_screen(self.display)
@@ -46,6 +49,18 @@ class UserInterface():
         encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.multi_click_listener)
 
         return encoder 
+    
+    def get_confirm(self):
+
+        while(True):
+            self.confirm.update()
+            await entities.ASYNCIO.sleep_ms(25)
+
+    def confirm_button_listener(self, button, event):
+        if event == entities.Button.PRESSED:
+            print('confirm button pressed')
+        if event == entities.Button.RELEASED:
+            print('confirm button released')
 
     def turn_left_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
@@ -62,7 +77,6 @@ class UserInterface():
             view.adjust_color_value('left')
             view.show_status_screen_manual(self.display, 'none')
 
-
     def turn_right_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
             model.increment_current_effect('right')
@@ -77,7 +91,6 @@ class UserInterface():
         elif entities.SCREEN_MODE == 'ADJUST':
             view.adjust_color_value('right')
             view.show_status_screen_manual(self.display, 'none')
-
 
     def single_click_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC': # this is where effects get selected
@@ -100,7 +113,6 @@ class UserInterface():
         elif entities.SCREEN_MODE == 'ADJUST':
             entities.SCREEN_MODE = 'MANUAL'
             # update leds with new values here
-
 
     def multi_click_listener(self, clicks):
         #print(f"Multiply Clicks: {clicks}")

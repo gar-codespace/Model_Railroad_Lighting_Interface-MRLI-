@@ -1,5 +1,5 @@
 import entities
-import handlers
+import listeners
 
 def scenic_lights():
      # the lights that decorate the model railroad
@@ -42,12 +42,14 @@ def set_button_pins():
     The button library sets up the buttons.
     '''
 
-    entities.Button(entities.PICO_PIN['BANK0_B'], "Bank0", handler=handlers.Bank0Handler())
-    entities.Button(entities.PICO_PIN['BANK1_B'], "Bank1", handler=handlers.Bank1Handler())
-    entities.Button(entities.PICO_PIN['BANK2_B'], "Bank2", handler=handlers.Bank2Handler())
-    entities.Button(entities.PICO_PIN['BANK3_B'], "Bank2", handler=handlers.Bank2Handler())
-    entities.Button(entities.PICO_PIN['BANK4_B'], "Bank2", handler=handlers.Bank2Handler())
-    entities.Button(entities.PICO_PIN['SCENIC_B'], "Scenic", handler=handlers.Bank2Handler())
+    entities.Button(entities.PICO_PIN['BANK0_B'], True, listeners.bank0_button_listener)
+
+    # entities.Button(entities.PICO_PIN['BANK0_B'], "Bank0", handler=handlers.Bank0Handler())
+    # entities.Button(entities.PICO_PIN['BANK1_B'], "Bank1", handler=handlers.Bank1Handler())
+    # entities.Button(entities.PICO_PIN['BANK2_B'], "Bank2", handler=handlers.Bank2Handler())
+    # entities.Button(entities.PICO_PIN['BANK3_B'], "Bank2", handler=handlers.Bank2Handler())
+    # entities.Button(entities.PICO_PIN['BANK4_B'], "Bank2", handler=handlers.Bank2Handler())
+    # entities.Button(entities.PICO_PIN['SCENIC_B'], "Scenic", handler=handlers.Bank2Handler())
 
 def get_menu_index():
     
