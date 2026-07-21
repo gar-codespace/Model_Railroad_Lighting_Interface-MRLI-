@@ -5,6 +5,7 @@ I like to keep all the imports in one place
 # packaged libraries
 from machine import Pin as PIN, I2C, Timer as TIMER, PWM
 from micropython import const as CONST
+from time import ticks_ms
 import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as ASYNCIO

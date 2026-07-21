@@ -58,9 +58,9 @@ class UserInterface():
 
     def confirm_button_listener(self, button, event):
         if event == entities.Button.PRESSED:
-            print('confirm button pressed')
+            print(button)
         if event == entities.Button.RELEASED:
-            print('confirm button released')
+            print(button)
 
     def turn_left_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':

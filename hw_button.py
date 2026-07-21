@@ -3,7 +3,7 @@ hardware library
 https://github.com/ubidefeo/MicroPython-Button
 '''
 
-from time import ticks_ms
+#from time import entities.ticks_ms
 import entities
 
 class Button(object):
@@ -21,7 +21,7 @@ class Button(object):
     self.current_state = rest_state
     self.previous_debounced_state = rest_state
     self.current_debounced_state = rest_state
-    self.last_check_tick = ticks_ms()
+    self.last_check_tick = entities.ticks_ms()
     self.debounce_time = debounce_time or Button.DEBOUNCE_TIME
     if internal_pulldown:
       self.internal_pull = entities.PIN.PULL_DOWN
@@ -40,7 +40,7 @@ class Button(object):
     self.active = False
   
   def debounce(self):
-    ms_now = ticks_ms()
+    ms_now = entities.ticks_ms()
     self.current_state = self.pin.value()
     state_changed = self.current_state != self.previous_state
     if state_changed:
