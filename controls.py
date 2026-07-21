@@ -2,7 +2,7 @@
 I'm trying to keep this as simple as possible
 The buttons on the display module are added here as they
 will probably do something that affects the display.
-The back button is roughed in but not implamented.
+The back button is roughed in but not implemented.
 '''
 
 import entities
@@ -13,7 +13,7 @@ import effects
 
 class UserInterface():
     '''
-    The control interface is the display, encoder, and additional
+    The user interface is the display, encoder, and additional
     buttons associated with the display module
     '''
 
@@ -84,7 +84,7 @@ class UserInterface():
             view.show_status_screen_manual(self.display, 'left')
 
         elif entities.SCREEN_MODE == 'ADJUST':
-            view.adjust_color_value('left')
+            model.adjust_color_value('left')
             view.show_status_screen_manual(self.display, 'none')
 
     def turn_right_listener(self):
@@ -99,7 +99,7 @@ class UserInterface():
             view.show_status_screen_manual(self.display, 'right')
             
         elif entities.SCREEN_MODE == 'ADJUST':
-            view.adjust_color_value('right')
+            model.adjust_color_value('right')
             view.show_status_screen_manual(self.display, 'none')
 
     def single_click_listener(self):
