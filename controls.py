@@ -1,7 +1,8 @@
 '''
 I'm trying to keep this as simple as possible
 The buttons on the display module are added here as they
-will probably do something that affects the display
+will probably do something that affects the display.
+The back button is roughed in but not implamented.
 '''
 
 import entities
@@ -10,12 +11,10 @@ import view
 import effects
 
 
-
-
 class UserInterface():
     '''
-    The control interface is the display, encoder, and all the buttons
-    used to control the Pico
+    The control interface is the display, encoder, and additional
+    buttons associated with the display module
     '''
 
     def __init__(self):
@@ -33,6 +32,7 @@ class UserInterface():
         model.set_switch_pins()
         
         self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_listener)
+        # self.back = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_listener)
         self.display = view.Display(entities.MAIN_DISPLAY).getDisplay()
 
         view.show_welcome_screen(self.display)
@@ -62,6 +62,15 @@ class UserInterface():
             print(button)
         if event == entities.Button.RELEASED:
             print(button)
+
+    def get_back(self): # not implemented
+
+        while(True):
+            self.back.update()
+            await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
+
+    def back_button_listener(self, button, event): # not implemented
+        pass
 
     def turn_left_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':

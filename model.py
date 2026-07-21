@@ -1,13 +1,9 @@
 import entities
-import listeners
 
-def scenic_lights():
-     # the lights that decorate the model railroad
-    entities.PIN(entities.PICO_PIN['SCENIC'], entities.PIN.OUT).value(0)
 
 def pwm2percent(pwm):
     '''
-    Convert a pwm valut to percentage rounded to 3 places.
+    Convert a pwm value to percentage rounded to 3 places.
     '''
 
     x = pwm / entities.PWM_STEPS
@@ -21,6 +17,10 @@ def set_encoder_pins():
     entities.PIN(entities.PICO_PIN['PSH'], entities.PIN.IN, entities.PIN.PULL_UP)
 
 def set_switch_pins():
+    '''
+    The physical switch that turns the banks or scenic lighting
+    on or off.
+    '''
 
     entities.PIN(entities.PICO_PIN['BANK0_S'], entities.PIN.OUT)
     entities.PIN(entities.PICO_PIN['BANK1_S'], entities.PIN.OUT)
