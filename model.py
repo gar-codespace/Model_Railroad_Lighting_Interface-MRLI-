@@ -37,18 +37,6 @@ def set_pwm_led_pins():
     entities.PWM(entities.PIN(entities.PICO_PIN['WARM']))
     entities.PWM(entities.PIN(entities.PICO_PIN['COOL']))
 
-def set_button_pins():
-    '''
-    
-    '''
-
-    entities.Button(entities.PICO_PIN['BANK0_B'], True, listeners.bank0_button_listener)
-    entities.Button(entities.PICO_PIN['BANK1_B'], True, listeners.bank1_button_listener)
-    entities.Button(entities.PICO_PIN['BANK2_B'], True, listeners.bank2_button_listener)
-    entities.Button(entities.PICO_PIN['BANK3_B'], True, listeners.bank3_button_listener)
-    entities.Button(entities.PICO_PIN['BANK4_B'], True, listeners.bank4_button_listener)
-    entities.Button(entities.PICO_PIN['SCENIC_B'], True, listeners.scenic_button_listener)
-
 def get_menu_index():
     
     index_list = tuple(range(0, len(entities.EFFECTS)))

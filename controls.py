@@ -1,5 +1,7 @@
 '''
 I'm trying to keep this as simple as possible
+The buttons on the display module are added here as they
+will probably do something that affects the display
 '''
 
 import entities
@@ -29,7 +31,6 @@ class UserInterface():
 
         model.set_encoder_pins()
         model.set_switch_pins()
-        model.set_button_pins()
         
         self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_listener)
         self.display = view.Display(entities.MAIN_DISPLAY).getDisplay()
@@ -54,7 +55,7 @@ class UserInterface():
 
         while(True):
             self.confirm.update()
-            await entities.ASYNCIO.sleep_ms(25)
+            await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
 
     def confirm_button_listener(self, button, event):
         if event == entities.Button.PRESSED:

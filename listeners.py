@@ -1,4 +1,15 @@
+'''
+All the buttons that turn the led banks and layout scenic lighting
+on or off are here.
+'''
+
 import entities
+
+def get_bank0():
+    b = entities.Button(entities.PICO_PIN['BANK0_B'], True, bank0_button_listener)
+    while(True):
+        b.update()
+        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
 
 def bank0_button_listener(button, event):
     if event == entities.Button.PRESSED:
@@ -6,6 +17,13 @@ def bank0_button_listener(button, event):
     if event == entities.Button.RELEASED:
         if entities.SCREEN_MODE == 'MANUAL':
             entities.PIN(entities.PICO_PIN['BANK0_S']).toggle()
+            print('button 0 released')
+
+def get_bank1():
+    b = entities.Button(entities.PICO_PIN['BANK1_B'], True, bank1_button_listener)
+    while(True):
+        b.update()
+        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
 
 def bank1_button_listener(button, event):
     if event == entities.Button.PRESSED:
@@ -13,6 +31,13 @@ def bank1_button_listener(button, event):
     if event == entities.Button.RELEASED:
         if entities.SCREEN_MODE == 'MANUAL':
             entities.PIN(entities.PICO_PIN['BANK1_S']).toggle()
+            print('button 1 released')
+
+def get_bank2():
+    b = entities.Button(entities.PICO_PIN['BANK2_B'], True, bank2_button_listener)
+    while(True):
+        b.update()
+        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
 
 def bank2_button_listener(button, event):
     if event == entities.Button.PRESSED:
@@ -20,6 +45,13 @@ def bank2_button_listener(button, event):
     if event == entities.Button.RELEASED:
         if entities.SCREEN_MODE == 'MANUAL':
             entities.PIN(entities.PICO_PIN['BANK2_S']).toggle()
+            print('button 2 released')
+
+def get_bank3():
+    b = entities.Button(entities.PICO_PIN['BANK3_B'], True, bank3_button_listener)
+    while(True):
+        b.update()
+        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
 
 def bank3_button_listener(button, event):
     if event == entities.Button.PRESSED:
@@ -27,6 +59,13 @@ def bank3_button_listener(button, event):
     if event == entities.Button.RELEASED:
         if entities.SCREEN_MODE == 'MANUAL':
             entities.PIN(entities.PICO_PIN['BANK3_S']).toggle()
+            print('button 3 released')
+
+def get_bank4():
+    b = entities.Button(entities.PICO_PIN['BANK4_B'], True, bank4_button_listener)
+    while(True):
+        b.update()
+        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
 
 def bank4_button_listener(button, event):
     if event == entities.Button.PRESSED:
@@ -34,6 +73,13 @@ def bank4_button_listener(button, event):
     if event == entities.Button.RELEASED:
         if entities.SCREEN_MODE == 'MANUAL':
             entities.PIN(entities.PICO_PIN['BANK4_S']).toggle()
+            print('button 4 released')
+
+def get_scenic():
+    b = entities.Button(entities.PICO_PIN['SCENIC_S'], True, scenic_button_listener)
+    while(True):
+        b.update()
+        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
 
 def scenic_button_listener(button, event):
     if event == entities.Button.PRESSED:
@@ -41,3 +87,4 @@ def scenic_button_listener(button, event):
     if event == entities.Button.RELEASED:
         if entities.SCREEN_MODE == 'MANUAL':
             entities.PIN(entities.PICO_PIN['SCENIC_S']).toggle()
+            print('button scenic released')

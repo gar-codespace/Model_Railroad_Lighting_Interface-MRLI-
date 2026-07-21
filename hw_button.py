@@ -14,7 +14,7 @@ class Button(object):
   PRESSED = 'pressed'
   DEBOUNCE_TIME = 50
 
-  def __init__(self, pin, rest_state = False, callback = None, internal_pullup = False, internal_pulldown = False, debounce_time = None):
+  def __init__(self, pin, rest_state = False, callback = None, internal_pullup = True, internal_pulldown = False, debounce_time = None):
     self.pin_number = pin
     self.rest_state = rest_state
     self.previous_state = rest_state
