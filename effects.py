@@ -77,49 +77,6 @@ class Effect():
 
 
 
-    def make_effect_old(self):        
-
-        self.current_tick = 0
-        
-        if effect_params['duration'] == 0:
-            self.make_static_effect(effect_params)
-            print('Static Effect')
-        elif not effect_params['duration'] == 0:
-            self.make_animated_effect(effect_params)
-            print('Animated Effect')
-
-    def make_static_effect(self, effect_params):
-
-        self.set_pwm_values(effect_params, 0)
-        set_switch_status(effect_params, 0)
-        self.set_led_values()
-
-    def make_animated_effect(self, effect_params):
-
-        self.duration_ticks = get_effect_duration(effect_params)
-        print(self.duration_ticks)
-        self.duration_midpoint = int(self.duration_ticks / 2)
-        self.loop = effect_params['loop']
-        make_animation_matrix(effect_params)
-        set_switch_status(effect_params, 0)
-
-
-
-    def increment_effect(self):
-        #print(self.current_tick)
-        index = 0
-        if self.current_tick > self.duration_midpoint:
-            index = 1
-            print('Midpoint')
-        if self.current_tick > self.duration_ticks and self.loop:
-            index = 0
-            self.current_tick = 0
-            print('loop')
-
-        # set the pwm values here
-
-        self.current_tick += entities.EFFECTS_TICK
-
 # If this gets too big move it to model_effect.py
 
 def make_animation_matrix(effect_params):

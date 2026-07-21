@@ -180,37 +180,3 @@ class UserInterface():
             await entities.ASYNCIO.sleep_ms(delay)
         
         print('blue effect finished')
-
-
-
-
-    # Coroutine: runs the selected effect
-    def run_effect(self):
-
-        #delay = entities.DEFAULT_TICK
-        delay = entities.EFFECTS_TICK
-        r = effects.Effect()
-        
-        while True:
-
-            if not entities.SELECTED_EFFECTS == entities.CURRENT_EFFECTS:
-                entities.CURRENT_EFFECTS = entities.SELECTED_EFFECTS
-                r.make_effect()
-#
-            r.increment_effect()
-            entities.LED.toggle()
-            if entities.SCREEN_MODE == 'MONITOR':
-                view.show_status_screen(self.display)
-
-            await entities.ASYNCIO.sleep_ms(delay)
-
-    # Coroutine: runs the selected effect
-    def run_standin_effect(self):
-        ''' For testing. '''
-       
-        delay = entities.DEFAULT_TICK
-        
-        while True:            
-            entities.LED.toggle()
-
-            await entities.ASYNCIO.sleep_ms(delay)
