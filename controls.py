@@ -111,6 +111,8 @@ class UserInterface():
             entities.ASYNCIO.create_task(self.run_red_effect())
             entities.ASYNCIO.create_task(self.run_green_effect())
             entities.ASYNCIO.create_task(self.run_blue_effect())
+            entities.ASYNCIO.create_task(self.run_warm_effect())
+            entities.ASYNCIO.create_task(self.run_cool_effect())
 
         elif entities.SCREEN_MODE == 'MONITOR':
             entities.SCREEN_MODE = 'AUTOMATIC'
@@ -141,12 +143,6 @@ class UserInterface():
         while entities.RED_CLOCK > 0:
             pass
 
-            # entities.PWM_VALUES['RED'] = entities.RED_CLOCK
-            # entities.RED_CLOCK -= 250
-            # print(entities.RED_CLOCK)
-# 
-            # view.show_status_screen(self.display)
-
             await entities.ASYNCIO.sleep_ms(delay) #10 sec
         
         print('red effect finished')
@@ -156,11 +152,6 @@ class UserInterface():
         delay = entities.DEFAULT_TICK
         while entities.GREEN_CLOCK > 0:
             pass
-
-            # entities.GREEN_CLOCK -= 250
-            # print(entities.GREEN_CLOCK)
-
-            # view.show_status_screen(self.display)
 
             await entities.ASYNCIO.sleep_ms(delay)
         
@@ -172,11 +163,26 @@ class UserInterface():
         while entities.BLUE_CLOCK > 0:
             pass
 
-            # entities.BLUE_CLOCK -= 250
-            # print(entities.BLUE_CLOCK)
-# 
-            # view.show_status_screen(self.display)
-
             await entities.ASYNCIO.sleep_ms(delay)
         
         print('blue effect finished')
+
+    def run_warm_effect(self):
+
+        delay = entities.DEFAULT_TICK
+        while entities.WARM_CLOCK > 0:
+            pass
+
+            await entities.ASYNCIO.sleep_ms(delay) #10 sec
+        
+        print('warm effect finished')
+
+    def run_cool_effect(self):
+
+        delay = entities.DEFAULT_TICK
+        while entities.COOL_CLOCK > 0:
+            pass
+
+            await entities.ASYNCIO.sleep_ms(delay) #10 sec
+        
+        print('cool effect finished')
