@@ -43,7 +43,7 @@ class UserInterface():
 
         return encoder 
     
-    def get_confirm(self):
+    def get_confirm_button(self):
         ''' The confirm button on the display module'''
         self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, listeners.confirm_button_listener)
 
@@ -51,12 +51,34 @@ class UserInterface():
             self.confirm.update()
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
-    def get_back(self):
+    def get_back_button(self):
         ''' The back button on the display module'''
         self.back = entities.Button(entities.PICO_PIN['BACK'], True, listeners.back_button_listener)
 
         while(True):
             self.back.update()
+            await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
+
+    def get_bank_buttons(self):
+        '''
+        Consolidate all the led buttons into one loop.
+        ''' 
+
+        b0 = entities.Button(entities.PICO_PIN['BANK0_B'], True, listeners.bank0_button_listener)
+        b1 = entities.Button(entities.PICO_PIN['BANK1_B'], True, listeners.bank1_button_listener)
+        b2 = entities.Button(entities.PICO_PIN['BANK2_B'], True, listeners.bank2_button_listener)
+        b3 = entities.Button(entities.PICO_PIN['BANK3_B'], True, listeners.bank3_button_listener)
+        b4 = entities.Button(entities.PICO_PIN['BANK4_B'], True, listeners.bank4_button_listener)
+        bs = entities.Button(entities.PICO_PIN['SCENIC_B'], True, listeners.scenic_button_listener)
+
+        while(True):
+            b0.update()
+            b1.update()
+            b2.update()
+            b3.update()
+            b4.update()
+            bs.update()
+
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
     def turn_left_listener(self):
@@ -84,6 +106,7 @@ class UserInterface():
             view.show_status_screen_manual(self.display, 'none')
 
     def single_click_listener(self):
+        # self.get_buttons()
         if entities.SCREEN_MODE == 'AUTOMATIC': # this is where effects get selected
             entities.SCREEN_MODE = 'MONITOR'
             self.effect.run_effect()
@@ -94,9 +117,11 @@ class UserInterface():
             view.show_effects_screen(self.display)
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'ADJUST'
+            
         elif entities.SCREEN_MODE == 'ADJUST':
             entities.SCREEN_MODE = 'MANUAL'
             # update leds with new values here
+        print(entities.SCREEN_MODE)
 
     def multi_click_listener(self, clicks):
         #print(f"Multiply Clicks: {clicks}")

@@ -30,9 +30,7 @@ def bank0_button_listener(button, event):
     if event == entities.Button.PRESSED:
         pass
     if event == entities.Button.RELEASED:
-        if entities.SCREEN_MODE == 'MANUAL' or entities.SCREEN_MODE == 'ADJUST':
-            entities.PIN(entities.PICO_PIN['BANK0_S']).toggle()
-            print('button 0 released')
+        print('button 0 released')
 
 def get_bank1():
     b = entities.Button(entities.PICO_PIN['BANK1_B'], True, bank1_button_listener)
