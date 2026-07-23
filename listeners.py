@@ -1,11 +1,26 @@
 '''
+The confirm and back buttons on the control module.
 All the buttons that turn the led banks and layout scenic lighting
 on or off are here.
+
+Maybe move the get functions to the UI???
 '''
 
 import entities
 
-def get_bank0():
+def confirm_button_listener(button, event):
+   if event == entities.Button.PRESSED:
+       print(button)
+   if event == entities.Button.RELEASED:
+       print(button)
+
+def back_button_listener(button, event):
+   if event == entities.Button.PRESSED:
+       print(button)
+   if event == entities.Button.RELEASED:
+       print(button)
+
+def get_bank0(): 
     b = entities.Button(entities.PICO_PIN['BANK0_B'], True, bank0_button_listener)
     while(True):
         b.update()

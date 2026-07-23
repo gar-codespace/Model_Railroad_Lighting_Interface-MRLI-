@@ -9,6 +9,7 @@ import entities
 import model
 import view
 import effects
+import listeners
 
 
 class UserInterface():
@@ -44,28 +45,19 @@ class UserInterface():
     
     def get_confirm(self):
         ''' The confirm button on the display module'''
-        self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_listener)
+        self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, listeners.confirm_button_listener)
 
         while(True):
             self.confirm.update()
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
-    def confirm_button_listener(self, button, event):
-        if event == entities.Button.PRESSED:
-            print(button)
-        if event == entities.Button.RELEASED:
-            print(button)
-
     def get_back(self):
         ''' The back button on the display module'''
-        self.back = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_listener)
+        self.back = entities.Button(entities.PICO_PIN['BACK'], True, listeners.back_button_listener)
 
         while(True):
             self.back.update()
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
-
-    def back_button_listener(self, button, event):
-        pass
 
     def turn_left_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
