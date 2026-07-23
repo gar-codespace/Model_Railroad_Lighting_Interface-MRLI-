@@ -110,6 +110,8 @@ LED_INDEX_MAP = {0: 'RED',
                  }
 
 # Color Control
+PWM_STEP = 5 # how much to change pwm value for each color loop cycle
+
 PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
               'GREEN':32500,
               'BLUE':32500,

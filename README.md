@@ -5,19 +5,37 @@ This is the Micropython code for my layout lighting automation
 The code runs on a Rasberry Pi Pico  
 
 ## Features
-The following features    
+This program creates lighting effects suitable for a model railroad.  
+It controls 5 banks of rgbwc leds at 12 volts and controls the on or off value of the layouts scenic lights.  
+There is also an audio module that is used for ambient sounds.  
+This is a stand alone project, it does not utilize the WiFi feature of the Pico.  
 
-## Testing
-This plugin has been tested with: 
+## Methodology  
+There are two types of lighting effects: static and animated.  
+For static lighting effects, the asyncio loops run 1 cycle to set the color values and exit.  
+For animated lighting effects, the pwm step increment is held constant
+and the delay value is set for each color, depending upon how much each color changes
+for the duration of the effect. 
+
+## Hardware  
+Raspberry Pi Pico 2  
+Generic display module (Amazon: AITRIP 1PCS 0.96 Inch OLED Display Module with Buttons EC11 Rotary Encoder IIC Interface LCD Screen Compatible with Arduino(White Color))  
+Power Converter (Amazon: DC to DC Power Converter Buck Module 12V 16V (8V to 22V) Buck to 3.3V 2A 3A Max IP67 Waterproof with Overcurrent Overheat Short-Circuit Undervoltage Protection )  
+Adafruit STEMMA Analog SPDT Switch - MAX4544 12V - JST PH 2mm  
+Adafruit Stereo 20W Class D Audio Amplifier - MAX9744  
+Plugs, switches, buttons etc.  
 
 ## Third Party Developers
 Thank you!  
 
-Rotary Encoder:  
+Rotary Encoder Library:  
 https://github.com/TTitanUA/micropython_rotary_encoder/tree/main  
 
-OLED Display:  
+OLED Display Library:  
 https://github.com/stlehmann/micropython-ssd1306/blob/master/ssd1306.py  
+   
+Button library:  
+https://github.com/ubidefeo/MicroPython-Button  
 
 
 ## License

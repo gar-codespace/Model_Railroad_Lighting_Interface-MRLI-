@@ -1,8 +1,8 @@
 '''
-I'm trying to keep this as simple as possible
+I'm trying to keep this as simple as possible.
 The buttons on the display module are added here as they
 will probably do something that affects the display.
-The back button is roughed in but not implemented.
+They are roughed in but not implemented.
 '''
 
 import entities

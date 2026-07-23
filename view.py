@@ -113,7 +113,7 @@ def show_status_screen_manual(display, direction:str):
 def manual_hilight(display, direction: str='None'):
     '''
     Manual hilight is only used when the machine is is manual mode.
-    The min and max values can be hardcoded because there are 5 led colors and that's not changing
+    The min and max values can be hardcoded because there are 5 led colors and that's not changing.
     (famous last words)
     '''
 

@@ -1,5 +1,5 @@
 '''
-Creates and runs both the animated and static effects.
+Creates and runs both animated and static effects.
 '''
 
 import entities
@@ -11,7 +11,7 @@ class Effect():
 
         self.effect_parameters: dict = {}
 
-        self.duration_ticks: int = 100# the length of the effect in ticks
+        self.duration_ticks: int = 100000# the length of the effect in ticks
 
     def run_effect(self):
         self.make_effect()
