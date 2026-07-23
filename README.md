@@ -1,8 +1,8 @@
 ## MUTT Layout Lighting Automation
 MUTT is the name of my model railroad.  
-Metropolitan Union Transfer Terminal  
-This is the Micropython code for my layout lighting automation  
-The code runs on a Rasberry Pi Pico  
+Metropolitan Union Transfer Terminal.  
+This is the Micropython code for my layout lighting automation.  
+The code runs on a Rasberry Pi Pico.  
 
 ## Features
 This program creates lighting effects suitable for a model railroad.  
@@ -14,8 +14,8 @@ This is a stand alone project, it does not utilize the WiFi feature of the Pico.
 There are two types of lighting effects: static and animated.  
 For static lighting effects, the asyncio loops run 1 cycle to set the color values and exit.  
 For animated lighting effects, the pwm step increment is held constant
-and the delay value is set for each color, depending upon how much each color changes
-for the duration of the effect. 
+and the delay value is set for each color. The delay value of the asyncio loop is different for each color and does not change for the duration of the loop.  
+The pwm color change step is constant for all colors.  
 
 ## Hardware  
 Raspberry Pi Pico 2  
