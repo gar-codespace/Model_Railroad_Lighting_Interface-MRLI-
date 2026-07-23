@@ -43,6 +43,7 @@ class Effect():
         else:
             self._set_pwm_values(0)
             self._set_led_values()
+            self.set_led_banks()
 
     def _get_effect_parameters(self):
 
@@ -69,6 +70,15 @@ class Effect():
         entities.PWM(entities.PIN(entities.PICO_PIN['BLUE'])).duty_u16(int(entities.PWM_VALUES['BLUE']))
         entities.PWM(entities.PIN(entities.PICO_PIN['WARM'])).duty_u16(int(entities.PWM_VALUES['WARM']))
         entities.PWM(entities.PIN(entities.PICO_PIN['COOL'])).duty_u16(int(entities.PWM_VALUES['COOL']))
+
+    def set_led_banks(self):
+
+        entities.PIN(entities.PICO_PIN['BANK0_S']).value(self.effect_parameters['bank0'])
+        entities.PIN(entities.PICO_PIN['BANK1_S']).value(self.effect_parameters['bank1'])
+        entities.PIN(entities.PICO_PIN['BANK2_S']).value(self.effect_parameters['bank2'])
+        entities.PIN(entities.PICO_PIN['BANK3_S']).value(self.effect_parameters['bank3'])
+        entities.PIN(entities.PICO_PIN['BANK4_S']).value(self.effect_parameters['bank4'])
+        entities.PIN(entities.PICO_PIN['SCENIC_S']).value(self.effect_parameters['scenic'])
 
     # Color coroutine: runs the selected effect, one for each color
     def run_red_effect(self):
