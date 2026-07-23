@@ -23,35 +23,31 @@ class Effect():
         self.loop: bool = True
         self.animation_matrix: dict = {}
 
+    def run_effect(self):
+        self.make_effect()
+        self.run_red_effect()
+        self.run_green_effect()
+        self.run_blue_effect()
+        self.run_warm_effect()
+        self.run_cool_effect()
+
     def make_effect(self):
 
         model.reset_clocks()
         model.get_highlighted_effect()
         self._get_effect_parameters()
-        self._get_effect_type()
-        print(entities.EFFECT_TYPE)
+        print(self.effect_parameters['type'])
 
-        if entities.EFFECT_TYPE == 'animated':
+        if self.effect_parameters['type'] == 'animated':
             pass
         else:
-            self._set_pwm_values()
+            self._set_pwm_values(0)
             self._set_led_values()
 
     def _get_effect_parameters(self):
 
         effect_name = entities.EFFECTS[entities.SELECTED_EFFECTS] # string, IE OFF or DAY
         self.effect_parameters = getattr(entities, effect_name, 'DAY') # dictionary, 'DAY' is the default
-
-    def _get_effect_type(self):
-        '''
-        An effect is either static or animated
-        '''
-
-        self._get_effect_parameters()
-        if self.effect_parameters['duration'] == 0:
-            entities.EFFECT_TYPE = 'static'
-        else:
-            entities.EFFECT_TYPE = 'animated'
 
     def _set_pwm_values(self, index: int=0):
 
@@ -73,14 +69,6 @@ class Effect():
         entities.PWM(entities.PIN(entities.PICO_PIN['BLUE'])).duty_u16(int(entities.PWM_VALUES['BLUE']))
         entities.PWM(entities.PIN(entities.PICO_PIN['WARM'])).duty_u16(int(entities.PWM_VALUES['WARM']))
         entities.PWM(entities.PIN(entities.PICO_PIN['COOL'])).duty_u16(int(entities.PWM_VALUES['COOL']))
-
-    def run_effect(self):
-        self.make_effect()
-        self.run_red_effect()
-        self.run_green_effect()
-        self.run_blue_effect()
-        self.run_warm_effect()
-        self.run_cool_effect()
 
     # Color coroutine: runs the selected effect, one for each color
     def run_red_effect(self):
