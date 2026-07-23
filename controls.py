@@ -20,13 +20,10 @@ class UserInterface():
     def __init__(self):
 
         entities.SCREEN_MODE = 'AUTOMATIC'
-        self.effect = effects.Effect()
 
-        model.set_encoder_pins()
         model.set_switch_pins() # the switches that turn the led bank on or off
-        # self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_listener)
-        # self.back = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_listener)
         
+        self.effect = effects.Effect()
         self.display = view.Display(entities.MAIN_DISPLAY).getDisplay()
 
         view.show_welcome_screen(self.display)
@@ -47,6 +44,7 @@ class UserInterface():
     
     def get_confirm(self):
         ''' The confirm button on the display module'''
+        self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_listener)
 
         while(True):
             self.confirm.update()
@@ -60,6 +58,7 @@ class UserInterface():
 
     def get_back(self):
         ''' The back button on the display module'''
+        self.back = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_listener)
 
         while(True):
             self.back.update()

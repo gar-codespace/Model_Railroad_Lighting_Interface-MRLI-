@@ -10,12 +10,6 @@ def pwm2percent(pwm):
     x = round(x * 100, 3)
     return x
 
-def set_encoder_pins():
-        
-    entities.PIN(entities.PICO_PIN['TRA'], entities.PIN.IN, entities.PIN.PULL_UP) # Try these w/o pull up
-    entities.PIN(entities.PICO_PIN['TRB'], entities.PIN.IN, entities.PIN.PULL_UP)
-    entities.PIN(entities.PICO_PIN['PSH'], entities.PIN.IN, entities.PIN.PULL_UP)
-
 def set_switch_pins():
     '''
     The physical switch that turns the led banks or scenic lighting on or off.
