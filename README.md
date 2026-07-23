@@ -1,7 +1,6 @@
-## MUTT Layout Lighting Automation
-MUTT is the name of my model railroad.  
-Metropolitan Union Transfer Terminal.  
+## Model Railroad Layout Lighting Automation 
 This is the Micropython code for my layout lighting automation.  
+It's probably suitable for any led application where granular control and multiple settings are required.  
 The code runs on a Rasberry Pi Pico.  
 
 ## Features
@@ -9,6 +8,7 @@ This program creates lighting effects suitable for a model railroad.
 It controls 5 banks of rgbwc leds at 12 volts and controls the on or off value of the layouts scenic lights.  
 There is also an audio module that is used for ambient sounds.  
 This is a stand alone project, it does not utilize the WiFi feature of the Pico.  
+This program controls strip leds, not individually programmible led strips.  
 
 ## Methodology  
 There are two types of lighting effects: static and animated.  
