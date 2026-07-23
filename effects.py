@@ -16,12 +16,7 @@ class Effect():
         self.warm_pwm: int = 10000
         self.white_pwm: int = 10000
 
-        self.color_change_matrix: dict = {}
         self.duration_ticks: int = 100# the length of the effect in ticks
-        self.duration_midpoint: int = 50
-        self.current_tick: int = 0
-        self.loop: bool = True
-        self.animation_matrix: dict = {}
 
     def run_effect(self):
         self.make_effect()

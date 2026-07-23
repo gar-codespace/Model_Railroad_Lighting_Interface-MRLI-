@@ -18,7 +18,7 @@ def set_encoder_pins():
 
 def set_switch_pins():
     '''
-    The physical switch that turns the banks or scenic lighting
+    The physical switch that turns the led banks or scenic lighting
     on or off.
     '''
 

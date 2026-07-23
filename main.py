@@ -11,7 +11,7 @@ async def main():
     while True:
         
         await entities.ASYNCIO.gather(ui.get_encoder().async_tick(),
-                                      ui.get_confirm(),
+                                      # ui.get_confirm(),
                                       # ui.get_back(),
                                       listeners.get_bank0(),
                                       listeners.get_bank1(),

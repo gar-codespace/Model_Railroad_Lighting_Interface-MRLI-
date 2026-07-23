@@ -22,17 +22,11 @@ class UserInterface():
         entities.SCREEN_MODE = 'AUTOMATIC'
         self.effect = effects.Effect()
 
-        self.red_time_delay = 0
-        self.green_time_delay = 0
-        self.blue_time_delay = 0
-        self.warm_time_delay = 0
-        self.cool_time_delay = 0
-
         model.set_encoder_pins()
-        model.set_switch_pins()
-        
-        self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_listener)
+        model.set_switch_pins() # the switches that turn the led bank on or off
+        # self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_listener)
         # self.back = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_listener)
+        
         self.display = view.Display(entities.MAIN_DISPLAY).getDisplay()
 
         view.show_welcome_screen(self.display)
@@ -52,6 +46,7 @@ class UserInterface():
         return encoder 
     
     def get_confirm(self):
+        ''' The confirm button on the display module'''
 
         while(True):
             self.confirm.update()
@@ -63,13 +58,14 @@ class UserInterface():
         if event == entities.Button.RELEASED:
             print(button)
 
-    def get_back(self): # not implemented
+    def get_back(self):
+        ''' The back button on the display module'''
 
         while(True):
             self.back.update()
             await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
 
-    def back_button_listener(self, button, event): # not implemented
+    def back_button_listener(self, button, event):
         pass
 
     def turn_left_listener(self):
