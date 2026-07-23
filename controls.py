@@ -50,7 +50,7 @@ class UserInterface():
 
         while(True):
             self.confirm.update()
-            await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
+            await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
     def confirm_button_listener(self, button, event):
         if event == entities.Button.PRESSED:
@@ -63,7 +63,7 @@ class UserInterface():
 
         while(True):
             self.back.update()
-            await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
+            await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
     def back_button_listener(self, button, event):
         pass
@@ -112,6 +112,9 @@ class UserInterface():
         if entities.SCREEN_MODE == 'AUTOMATIC':
             entities.SCREEN_MODE = 'MANUAL'
             view.show_status_screen_manual(self.display, 'none')
+        elif entities.SCREEN_MODE == 'MONITOR' and entities.EFFECT_TYPE == 'static':
+            # add functionality to edit static routines
+            entities.SCREEN_MODE = 'ADJUST'
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'AUTOMATIC'
             view.show_effects_screen(self.display)

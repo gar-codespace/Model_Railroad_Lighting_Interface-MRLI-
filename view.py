@@ -55,7 +55,7 @@ def effect_screen(display):
     x = entities.MAIN_FORMAT['X_OFFSET']
     y = 1
     index = model.get_menu_index()
-    entities.SCROLL_EFFECTS = index[0]
+    entities.SCROLL_EFFECT = index[0]
     for i in range(0, entities.MAIN_FORMAT['ROWS']):
         effect = entities.EFFECTS[index[i]]
         effect = getattr(entities, effect, 'DAY')['name']

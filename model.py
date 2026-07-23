@@ -18,8 +18,7 @@ def set_encoder_pins():
 
 def set_switch_pins():
     '''
-    The physical switch that turns the led banks or scenic lighting
-    on or off.
+    The physical switch that turns the led banks or scenic lighting on or off.
     '''
 
     entities.PIN(entities.PICO_PIN['BANK0_S'], entities.PIN.OUT)
@@ -42,7 +41,7 @@ def get_menu_index():
     index_list = tuple(range(0, len(entities.EFFECTS)))
     index_list = index_list + index_list
     
-    index_list = index_list[entities.SCROLL_EFFECTS:]
+    index_list = index_list[entities.SCROLL_EFFECT:]
 
     return index_list
 
@@ -51,25 +50,25 @@ def increment_current_effect(direction:str):
     wrap = len(entities.EFFECTS) - 1
 
     if direction == 'right':
-        entities.SCROLL_EFFECTS += 1
+        entities.SCROLL_EFFECT += 1
     elif direction == 'left':
-        entities.SCROLL_EFFECTS -= 1
+        entities.SCROLL_EFFECT -= 1
 
-    if entities.SCROLL_EFFECTS < 0:
-        entities.SCROLL_EFFECTS = wrap
-    elif entities.SCROLL_EFFECTS > wrap:
-        entities.SCROLL_EFFECTS = 0
+    if entities.SCROLL_EFFECT < 0:
+        entities.SCROLL_EFFECT = wrap
+    elif entities.SCROLL_EFFECT > wrap:
+        entities.SCROLL_EFFECT = 0
 
 def get_highlighted_effect(): # list comprehension
     
-    x = entities.SCROLL_EFFECTS + entities.HIGHLIGHT_ROW
+    x = entities.SCROLL_EFFECT + entities.HIGHLIGHT_ROW
 
     if x == len(entities.EFFECTS):
         x = 0
     elif x == len(entities.EFFECTS) + 1:
         x = 1
 
-    entities.SELECTED_EFFECTS = x
+    entities.SELECTED_EFFECT = x
     
 def reset_clocks():
 

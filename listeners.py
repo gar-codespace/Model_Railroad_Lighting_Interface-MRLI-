@@ -9,7 +9,7 @@ def get_bank0():
     b = entities.Button(entities.PICO_PIN['BANK0_B'], True, bank0_button_listener)
     while(True):
         b.update()
-        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
+        await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
 def bank0_button_listener(button, event):
     if event == entities.Button.PRESSED:
@@ -23,7 +23,7 @@ def get_bank1():
     b = entities.Button(entities.PICO_PIN['BANK1_B'], True, bank1_button_listener)
     while(True):
         b.update()
-        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
+        await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
 def bank1_button_listener(button, event):
     if event == entities.Button.PRESSED:
@@ -37,7 +37,7 @@ def get_bank2():
     b = entities.Button(entities.PICO_PIN['BANK2_B'], True, bank2_button_listener)
     while(True):
         b.update()
-        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
+        await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
 def bank2_button_listener(button, event):
     if event == entities.Button.PRESSED:
@@ -51,7 +51,7 @@ def get_bank3():
     b = entities.Button(entities.PICO_PIN['BANK3_B'], True, bank3_button_listener)
     while(True):
         b.update()
-        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
+        await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
 def bank3_button_listener(button, event):
     if event == entities.Button.PRESSED:
@@ -65,7 +65,7 @@ def get_bank4():
     b = entities.Button(entities.PICO_PIN['BANK4_B'], True, bank4_button_listener)
     while(True):
         b.update()
-        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
+        await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
 def bank4_button_listener(button, event):
     if event == entities.Button.PRESSED:
@@ -79,7 +79,7 @@ def get_scenic():
     b = entities.Button(entities.PICO_PIN['SCENIC_S'], True, scenic_button_listener)
     while(True):
         b.update()
-        await entities.ASYNCIO.sleep_ms(entities.EFFECTS_TICK)
+        await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
 def scenic_button_listener(button, event):
     if event == entities.Button.PRESSED:

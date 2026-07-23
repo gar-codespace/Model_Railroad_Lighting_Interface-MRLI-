@@ -125,15 +125,12 @@ WARM_CLOCK = 0
 COOL_CLOCK = 0
 
 # Time Base
-EFFECTS_TICK = 25 # ms. how often the routine is incremented
-DEFAULT_TICK = 250 # ms use this if the routine duration is zero
-CLOCK_RATIO = 6
+DEFAULT_TICK = 25 # milliseconds
+CLOCK_RATIO = 6 # build in some fast time clock compatability
 
 # Effects
-CURRENT_EFFECTS = 0 # the routine that is running
-SELECTED_EFFECTS = 2 # the routine that is selected by the user
-SCROLL_EFFECTS = 0 # the top routine listed in the menu
-HILIGHTED_EFFECTS = 0 # the routine on the hilighted row
+SELECTED_EFFECT = 2 # the effect that is selected by the user
+SCROLL_EFFECT = 0 # the top effect listed in the menu
 
 EFFECTS = {
             0:'OFF',

@@ -10,11 +10,6 @@ class Effect():
     def __init__(self):
 
         self.effect_parameters: dict = {}
-        self.red_pwm: int = 10000
-        self.green_pwm: int = 10000
-        self.blue_pwm: int = 10000
-        self.warm_pwm: int = 10000
-        self.white_pwm: int = 10000
 
         self.duration_ticks: int = 100# the length of the effect in ticks
 
@@ -31,9 +26,10 @@ class Effect():
         model.reset_clocks()
         model.get_highlighted_effect()
         self._get_effect_parameters()
-        print(self.effect_parameters['type'])
+        self._set_effect_type()
+        print(entities.EFFECT_TYPE)
 
-        if self.effect_parameters['type'] == 'animated':
+        if entities.EFFECT_TYPE == 'animated':
             pass
         else:
             self._set_pwm_values(0)
@@ -42,8 +38,12 @@ class Effect():
 
     def _get_effect_parameters(self):
 
-        effect_name = entities.EFFECTS[entities.SELECTED_EFFECTS] # string, IE OFF or DAY
+        effect_name = entities.EFFECTS[entities.SELECTED_EFFECT] # string, IE OFF or DAY
         self.effect_parameters = getattr(entities, effect_name, 'DAY') # dictionary, 'DAY' is the default
+
+    def _set_effect_type(self):
+
+        entities.EFFECT_TYPE = self.effect_parameters['type']
 
     def _set_pwm_values(self, index: int=0):
 
@@ -138,7 +138,7 @@ def make_animation_matrix(effect_params):
 
 def get_effect_duration(effect_params):
 
-    tick = entities.EFFECTS_TICK / 1000 # convert to seconds
+    # tick = entities.EFFECTS_TICK / 1000 # convert to seconds
     duration = effect_params['duration'] * 60 # seconds
     duration = duration / entities.CLOCK_RATIO # fast time in seconds
     random = 1 - effect_params['random'] # need it to be non-zero
