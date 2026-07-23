@@ -74,6 +74,64 @@ class Effect():
         entities.PWM(entities.PIN(entities.PICO_PIN['WARM'])).duty_u16(int(entities.PWM_VALUES['WARM']))
         entities.PWM(entities.PIN(entities.PICO_PIN['COOL'])).duty_u16(int(entities.PWM_VALUES['COOL']))
 
+    def run_effect(self):
+        self.make_effect()
+        self.run_red_effect()
+        self.run_green_effect()
+        self.run_blue_effect()
+        self.run_warm_effect()
+        self.run_cool_effect()
+
+    # Color coroutine: runs the selected effect, one for each color
+    def run_red_effect(self):
+
+        delay = entities.DEFAULT_TICK
+        while entities.RED_CLOCK > 0:
+            pass
+
+            await entities.ASYNCIO.sleep_ms(delay) #10 sec
+        
+        print('red effect finished')
+        
+    def run_green_effect(self):
+
+        delay = entities.DEFAULT_TICK
+        while entities.GREEN_CLOCK > 0:
+            pass
+
+            await entities.ASYNCIO.sleep_ms(delay)
+        
+        print('green effect finished')
+
+    def run_blue_effect(self):
+
+        delay = entities.DEFAULT_TICK
+        while entities.BLUE_CLOCK > 0:
+            pass
+
+            await entities.ASYNCIO.sleep_ms(delay)
+        
+        print('blue effect finished')
+
+    def run_warm_effect(self):
+
+        delay = entities.DEFAULT_TICK
+        while entities.WARM_CLOCK > 0:
+            pass
+
+            await entities.ASYNCIO.sleep_ms(delay) #10 sec
+        
+        print('warm effect finished')
+
+    def run_cool_effect(self):
+
+        delay = entities.DEFAULT_TICK
+        while entities.COOL_CLOCK > 0:
+            pass
+
+            await entities.ASYNCIO.sleep_ms(delay) #10 sec
+        
+        print('cool effect finished')
 
 
 
