@@ -90,15 +90,17 @@ MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
 
 ###### SOFTWARE ######
 
-HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling routines
+# Time Base
+DEFAULT_TICK = 25 # milliseconds
+CLOCK_RATIO = 6 # build in some fast time clock compatability
 
-# Effect parameters
+# Navigation
+HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling routines
 SCREEN_MODE = 'WELCOME' # Can be: WELCOME, AUTOMATIC, MONITOR. MANUAL, ADJUST
 WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
 STATUS_HILIGHT_INDEX = 0
-
-# Color Control
-PWM_TICKS = 100 # how many ticks per indent of the rotary encoder
+PWM_TICKS = 100 # how many ticks per indent of the rotary encoder when changing color values
+SCROLL_EFFECT = 0 # the top effect listed in the menu
 
 LED_INDEX_MAP = {0: 'RED',
                  1: 'GREEN',
@@ -107,6 +109,7 @@ LED_INDEX_MAP = {0: 'RED',
                  4: 'COOL'
                  }
 
+# Color Control
 PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
               'GREEN':32500,
               'BLUE':32500,
@@ -114,25 +117,19 @@ PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
               'COOL':32500
               }
 
-# Effect type
-EFFECT_TYPE = 'static'
+###### EFFECTS ######
 
-# Animated effects countdown
+EFFECT_TYPE = 'static'
+SELECTED_EFFECT = 2 # the effect that is selected by the user
+
+# Animated Effects Countdown
 RED_CLOCK = 0
 GREEN_CLOCK = 0
 BLUE_CLOCK = 0
 WARM_CLOCK = 0
 COOL_CLOCK = 0
 
-# Time Base
-DEFAULT_TICK = 25 # milliseconds
-CLOCK_RATIO = 6 # build in some fast time clock compatability
-
-# Effects
-SELECTED_EFFECT = 2 # the effect that is selected by the user
-SCROLL_EFFECT = 0 # the top effect listed in the menu
-
-EFFECTS = {
+EFFECTS = { # the order they appear on the menu
             0:'OFF',
             1:'MAINTENANCE',
             2:'DAY',
@@ -144,7 +141,7 @@ EFFECTS = {
             8:'STORMY'
             }
 
-# parameters
+# Effect Parameters
 OFF =  {'name':'Off',
         'type': 'static',
         'bank0':0,
