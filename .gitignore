@@ -1,17 +1,9 @@
 **/*.bak
 **/*.csv
 
-**/programmers/
-**/signal/
-**/throttle/
-**/autoBackups/
-**/buildstatus/
-**/csvManifests/
-**/csvSwitchLists/
-**/jsonManifests/
-**/manifests/
-**/patternReports/
-**/switchLists/
-**/logger/
-**/bu/
+
 *.
+.*/
+.gitignore
+.vscode
+originals/
