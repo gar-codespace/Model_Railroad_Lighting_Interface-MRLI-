@@ -23,7 +23,32 @@ Generic display module (Amazon: AITRIP 1PCS 0.96 Inch OLED Display Module with B
 Power Converter (Amazon: DC to DC Power Converter Buck Module 12V 16V (8V to 22V) Buck to 3.3V 2A 3A Max IP67 Waterproof with Overcurrent Overheat Short-Circuit Undervoltage Protection )  
 Adafruit STEMMA Analog SPDT Switch - MAX4544 12V - JST PH 2mm  
 Adafruit Stereo 20W Class D Audio Amplifier - MAX9744  
-Plugs, switches, buttons etc.  
+Plugs, switches, buttons etc. 
+
+## Operation  
+The machine operates in one of 4 modes:  
+AUTOMATIC - The display shows a menu of available lighting effects.  
+MONITOR - The display shows the values of the 5 colors as the effect progresses.  
+MANUAL - The display shows the menu of the 5 colors and their current value.  
+ADJUST - The display shows the value of the selected color as it's being adjusted.  
+
+## Navigation  
+In Automatic mode:  
+    Rotate to scroll through the available lighting effects.  
+    Single click to start the hilighted effect.  
+    Double click to enter manual mode.  
+In Monitor mode:  
+    Rotate does nothing.  
+    Single click to return to Automatic mode.  
+    Double click does nothing. Maybe it should enter Adjust mode for static effects.  
+Manual mode:  
+    Rotate highlights a different color.  
+    Single click selects the hilighted color to adjust.  
+    Double click to return to Automatic mode.    
+Adjust mode:  
+    Rotate to adjust the color value.  
+    Single click to accept the adjusted color and return to Manual mode.  
+    Double click does nothing.  
 
 ## Third Party Developers
 Thank you!  

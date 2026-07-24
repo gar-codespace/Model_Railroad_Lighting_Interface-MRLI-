@@ -81,6 +81,13 @@ class UserInterface():
 
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
+    '''
+    Screen Modes:
+    AUTOMATIC - The display shows a menu of available lighting effects
+    MONITOR - The display shows the values of the 5 colors as the effect progresses
+    MANUAL - The display shows the menu of the 5 colors and their current value
+    ADJUST - The display shows the value of the selected color as it's being adjusted
+    '''
     def turn_left_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
             model.increment_current_effect('left')
