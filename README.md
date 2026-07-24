@@ -34,21 +34,21 @@ ADJUST - The display shows the value of the selected color as it's being adjuste
 
 ## Navigation  
 In Automatic mode:  
-    Rotate to scroll through the available lighting effects.  
-    Single click to start the hilighted effect.  
-    Double click to enter manual mode.  
+  Rotate to scroll through the available lighting effects.  
+  Single click to start the hilighted effect.  
+  Double click to enter manual mode.  
 In Monitor mode:  
-    Rotate does nothing.  
-    Single click to return to Automatic mode.  
-    Double click does nothing. Maybe it should enter Adjust mode for static effects.  
+  Rotate does nothing.  
+  Single click to return to Automatic mode.  
+  Double click does nothing. Maybe it should enter Adjust mode for static effects.  
 Manual mode:  
-    Rotate highlights a different color.  
-    Single click selects the hilighted color to adjust.  
-    Double click to return to Automatic mode.    
+  Rotate highlights a different color.  
+  Single click selects the hilighted color to adjust.  
+  Double click to return to Automatic mode.    
 Adjust mode:  
-    Rotate to adjust the color value.  
-    Single click to accept the adjusted color and return to Manual mode.  
-    Double click does nothing.  
+  Rotate to adjust the color value.  
+  Single click to accept the adjusted color and return to Manual mode.  
+  Double click does nothing.  
 
 ## Third Party Developers
 Thank you!  
