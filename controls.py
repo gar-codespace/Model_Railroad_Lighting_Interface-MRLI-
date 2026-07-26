@@ -59,7 +59,7 @@ class UserInterface():
             self.back.update()
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
-    def get_bank_buttons(self):
+    def get_led_bank_buttons(self):
         '''
         Consolidate all the led buttons into one loop.
         ''' 
@@ -72,12 +72,13 @@ class UserInterface():
         bs = entities.Button(entities.PICO_PIN['SCENIC_B'], True, listeners.scenic_button_listener)
 
         while(True):
-            b0.update()
-            b1.update()
-            b2.update()
-            b3.update()
-            b4.update()
-            bs.update()
+            if entities.SCREEN_MODE == 'MANUAL' or entities.SCREEN_MODE == 'ADJUST':
+                b0.update()
+                b1.update()
+                b2.update()
+                b3.update()
+                b4.update()
+                bs.update()
 
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
@@ -124,7 +125,6 @@ class UserInterface():
             view.show_effects_screen(self.display)
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'ADJUST'
-            
         elif entities.SCREEN_MODE == 'ADJUST':
             entities.SCREEN_MODE = 'MANUAL'
             # update leds with new values here
@@ -135,9 +135,11 @@ class UserInterface():
         if entities.SCREEN_MODE == 'AUTOMATIC':
             entities.SCREEN_MODE = 'MANUAL'
             view.show_status_screen_manual(self.display, 'none')
-        elif entities.SCREEN_MODE == 'MONITOR' and entities.EFFECT_TYPE == 'static':
+        elif entities.SCREEN_MODE == 'MONITOR':
             # add functionality to edit static routines
             entities.SCREEN_MODE = 'ADJUST'
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'AUTOMATIC'
             view.show_effects_screen(self.display)
+        elif entities.SCREEN_MODE == 'ADJUST':
+            pass
