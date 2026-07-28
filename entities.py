@@ -58,9 +58,9 @@ PICO_PIN = {
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
         'LED':'LED',
-        'NA':26,
-        'NA':27,
-        'NA':28
+        'AVAILABLE':26,
+        'AVAILABLE':27,
+        'AVAILABLE':28
         }
 
 # OLED0 specs
@@ -95,11 +95,12 @@ DEFAULT_TICK = 25 # milliseconds
 CLOCK_RATIO = 6 # build in some fast time clock compatability
 
 # Navigation
+MACHINE = True # True is on False is off
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling routines
-SCREEN_MODE = 'WELCOME' # Can be: WELCOME, AUTOMATIC, MONITOR. MANUAL, ADJUST
+SCREEN_MODE = 'WELCOME' # Can be: WELCOME, AUTOMATIC, MONITOR. MANUAL, ADJUST, OFF
 WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
 STATUS_HILIGHT_INDEX = 0
-PWM_TICKS = 100 # how many ticks per indent of the rotary encoder when changing color values
+PWM_TICKS = 1000 # how many ticks per indent of the rotary encoder when changing color values
 SCROLL_EFFECT = 0 # the top effect listed in the menu
 
 LED_INDEX_MAP = {0: 'RED',
@@ -132,15 +133,15 @@ WARM_CLOCK = 0
 COOL_CLOCK = 0
 
 EFFECTS = { # the order they appear on the menu
-            0:'OFF',
-            1:'MAINTENANCE',
-            2:'DAY',
-            3:'TWLIGHT',
-            4:'NIGHT',
-            5:'SUNRISE',
-            6:'CLOUDY',
-            7:'SUNSET',
-            8:'STORMY'
+            #0:'OFF',
+            0:'MAINTENANCE',
+            1:'DAY',
+            2:'TWLIGHT',
+            3:'NIGHT',
+            4:'SUNRISE',
+            5:'CLOUDY',
+            6:'SUNSET',
+            7:'STORMY'
             }
 
 # Effect Parameters

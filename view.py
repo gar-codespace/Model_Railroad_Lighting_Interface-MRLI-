@@ -1,5 +1,6 @@
 '''
 Support methods for the controls library
+Everything is here that involves the OLED display.
 '''
 
 import entities
@@ -26,7 +27,11 @@ class Display():
         
         return entities.SSD1306_I2C(self.width, self.height, i2c, self.addr)
     
+def show_blank_screen(display):
     
+    display.fill(0)
+    display.show()
+
 def welcome_screen(display):
     '''
     Only displayed on start up,

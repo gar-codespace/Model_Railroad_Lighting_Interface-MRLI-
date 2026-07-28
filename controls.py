@@ -1,21 +1,21 @@
 '''
 I'm trying to keep this as simple as possible.
-The buttons on the display module are added here as they
-will probably do something that affects the display.
-They are roughed in but not implemented.
+The Confirm button is used to turn the machine on or off.
+When turning on it will start the last used effect from the beginning.
+The Back button is not used.
 '''
 
 import entities
 import model
 import view
+import audio
 import effects
 import listeners
 
 
 class UserInterface():
     '''
-    The user interface is the display, encoder, and additional
-    buttons associated with the display module
+    The user interface is everything on the front panel of the machine.
     '''
 
     def __init__(self):
@@ -45,7 +45,7 @@ class UserInterface():
     
     def get_confirm_button(self):
         ''' The confirm button on the display module'''
-        self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, listeners.confirm_button_listener)
+        self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_listener)
 
         while(True):
             self.confirm.update()
@@ -59,7 +59,21 @@ class UserInterface():
             self.back.update()
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
-    def get_led_bank_buttons(self):
+    def toggle_machine_state(self):
+        '''
+        Use the confirm button to turn the machine off or on
+        '''
+
+        if entities.MACHINE:
+            view.show_blank_screen(self.display)
+        else:
+            self.effect.run_effect()
+            view.show_effects_screen(self.display)
+
+        entities.MACHINE = not entities.MACHINE
+        print(entities.MACHINE)
+
+    async def get_led_bank_buttons(self):
         '''
         Consolidate all the led buttons into one loop.
         ''' 
@@ -78,16 +92,17 @@ class UserInterface():
                 b2.update()
                 b3.update()
                 b4.update()
-                bs.update()
+                bs.update() # that's an s not a 5
 
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
     '''
     Screen Modes:
-    AUTOMATIC - The display shows a menu of available lighting effects
-    MONITOR - The display shows the values of the 5 colors as the effect progresses
-    MANUAL - The display shows the menu of the 5 colors and their current value
-    ADJUST - The display shows the value of the selected color as it's being adjusted
+    AUTOMATIC - The display shows a menu of available lighting effects.
+    MONITOR - The display shows the values of the 5 colors as the effect progresses.
+    MANUAL - The display shows the menu of the 5 colors and their current value.
+    ADJUST - The display shows the value of the selected color as it's being adjusted.
+    OFF - The display is blank.
     '''
     def turn_left_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
@@ -143,3 +158,19 @@ class UserInterface():
             view.show_effects_screen(self.display)
         elif entities.SCREEN_MODE == 'ADJUST':
             pass
+
+    def confirm_button_listener(self, button, event):
+        '''Used to turn the machine on or off'''
+
+        if event == entities.Button.PRESSED:
+            pass
+        if event == entities.Button.RELEASED:
+            self.toggle_machine_state()
+
+    def back_button_listener(self, button, event):
+        '''Not used.'''
+
+        if event == entities.Button.PRESSED:
+            pass
+        if event == entities.Button.RELEASED:
+            print(button)

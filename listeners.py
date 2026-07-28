@@ -1,22 +1,10 @@
 '''
-The confirm and back buttons are on the control module.
 All the buttons that turn the led banks and layout scenic lighting
 on or off are here.
 '''
 
 import entities
 
-def confirm_button_listener(button, event):
-   if event == entities.Button.PRESSED:
-       print(button)
-   if event == entities.Button.RELEASED:
-       print(button)
-
-def back_button_listener(button, event):
-   if event == entities.Button.PRESSED:
-       print(button)
-   if event == entities.Button.RELEASED:
-       print(button)
 
 def bank0_button_listener(button, event):
     if event == entities.Button.PRESSED:
