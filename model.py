@@ -72,7 +72,7 @@ def reset_clocks():
     entities.WARM_CLOCK = 0
     entities.COOL_CLOCK = 0
 
-def adjust_color_value(direction: str): # move to model?
+def adjust_color_value(direction: str):
     '''
     This method is called when the colors are manually being adjusted.
     '''
@@ -91,6 +91,6 @@ def adjust_color_value(direction: str): # move to model?
         entities.PWM_VALUES[color_being_adjusted] = pwm_color_value
 
 
-    entities.PWM(entities.PIN(entities.PICO_PIN[color_being_adjusted])).duty_u16(int(pwm_color_value))
+    x = entities.PWM(entities.PIN(entities.PICO_PIN[color_being_adjusted])).duty_u16(int(pwm_color_value))
 
   

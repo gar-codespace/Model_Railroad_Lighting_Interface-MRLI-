@@ -13,6 +13,12 @@ class Effect():
 
         self.duration_ticks: int = 100000# the length of the effect in ticks
 
+        self.r = entities.PWM(entities.PIN(entities.PICO_PIN['RED']), freq=entities.PWM_FREQ)
+        self.g = entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']), freq=entities.PWM_FREQ)
+        self.b = entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']), freq=entities.PWM_FREQ)
+        self.w = entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
+        self.c = entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
+
     def shut_off(self):
 
         model.reset_clocks()
@@ -20,7 +26,11 @@ class Effect():
         print(self.effect_parameters)
         entities.EFFECT_TYPE = 'static'
         self.make_effect()
-        self.run_effect()
+        self.run_red_effect()
+        self.run_green_effect()
+        self.run_blue_effect()
+        self.run_warm_effect()
+        self.run_cool_effect()
 
     def run_effect(self):
         self.effect_setup()
@@ -43,7 +53,7 @@ class Effect():
         if entities.EFFECT_TYPE == 'animated':
             pass
         else:
-            self._set_pwm_values(0)
+            self._set_pwm_values()
             self._set_led_values()
             self.set_led_banks()
 
@@ -71,11 +81,11 @@ class Effect():
 
     def _set_led_values(self):
 
-        r = entities.PWM(entities.PIN(entities.PICO_PIN['RED']), freq=entities.PWM_FREQ).duty_u16(int(entities.PWM_VALUES['RED']))
-        g = entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']), freq=entities.PWM_FREQ).duty_u16(int(entities.PWM_VALUES['GREEN']))
-        b = entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']), freq=entities.PWM_FREQ).duty_u16(int(entities.PWM_VALUES['BLUE']))
-        w = entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ).duty_u16(int(entities.PWM_VALUES['WARM']))
-        c = entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ).duty_u16(int(entities.PWM_VALUES['COOL']))
+        self.r.duty_u16(int(entities.PWM_VALUES['RED']))
+        self.g.duty_u16(int(entities.PWM_VALUES['GREEN']))
+        self.b.duty_u16(int(entities.PWM_VALUES['BLUE']))
+        self.w.duty_u16(int(entities.PWM_VALUES['WARM']))
+        self.c.duty_u16(int(entities.PWM_VALUES['COOL']))
 
     def set_led_banks(self):
 

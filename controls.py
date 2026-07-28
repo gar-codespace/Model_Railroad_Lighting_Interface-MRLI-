@@ -67,7 +67,9 @@ class UserInterface():
         if entities.MACHINE:
             self.effect.shut_off()
             view.show_blank_screen(self.display)
+            entities.SCREEN_MODE = 'OFF'
         else:
+            entities.SCREEN_MODE = 'AUTOMATIC'
             self.effect.run_effect()
             view.show_effects_screen(self.display)
 

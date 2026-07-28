@@ -26,7 +26,7 @@ TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
 
 # Raspi Pico parameters
 LED = PIN('LED', PIN.OUT)
-PWM_FREQ = 1000
+PWM_FREQ = 100
 PWM_STEPS = 65535
 
 # Raspi Pico GP pin assignments
@@ -144,7 +144,7 @@ EFFECTS = { # the order they appear on the menu
             7:'STORMY'
             }
 
-# Effect Parameters
+# Machine Control
 OFF =  {'name':'Off',
         'type': 'static',
         'bank0':0,
@@ -163,6 +163,7 @@ OFF =  {'name':'Off',
         'loop':False
         }
 
+# Effect Parameters
 MAINTENANCE =  {'name':'Maintenance',
                 'type': 'static',
                 'bank0':1,
@@ -171,11 +172,11 @@ MAINTENANCE =  {'name':'Maintenance',
                 'bank3':1,
                 'bank4':1,
                 'scenic':1,
-                'red':[.9],
-                'green':[.9],
-                'blue':[.9],
+                'red':[1],
+                'green':[1],
+                'blue':[1],
                 'warm':[1],
-                'cool':[.9],
+                'cool':[1],
                 'duration':0.0,
                 'random':0.0,
                 'loop':False
@@ -189,11 +190,11 @@ DAY =  {'name':'Daytime',
         'bank3':1,
         'bank4':1,
         'scenic':0,
-        'red':[.5],
-        'green':[.5],
-        'blue':[.5],
+        'red':[.75],
+        'green':[.75],
+        'blue':[.75],
         'warm':[.75],
-        'cool':[.5],
+        'cool':[.75],
         'duration':0.0,
         'random':0.0,
         'loop':False
@@ -207,11 +208,11 @@ TWLIGHT = {'name':'Twlight',
            'bank3':1,
            'bank4':1,
            'scenic':1,
-           'red':[.2],
-           'green':[.05],
-           'blue':[.2],
+           'red':[.5],
+           'green':[.5],
+           'blue':[.5],
            'warm':[.5],
-           'cool':[.2],
+           'cool':[.5],
            'duration':0.0,
            'random':0.0,
            'loop':False
@@ -225,11 +226,11 @@ NIGHT =   {'name':'Nightime',
            'bank3':1,
            'bank4':1,
            'scenic':1,
-           'red':[0],
-           'green':[0],
-           'blue':[.2],
-           'warm':[.25],
-           'cool':[.2],
+           'red':[.1],
+           'green':[.1],
+           'blue':[.1],
+           'warm':[.1],
+           'cool':[.1],
            'duration':0.0,
            'random':0.0,
            'loop':False
