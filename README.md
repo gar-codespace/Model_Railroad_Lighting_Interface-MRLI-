@@ -53,6 +53,9 @@ Adjust mode:
 ## Third Party Developers
 Thank you!  
 
+ASYNCIO:  
+https://www.digikey.com/en/maker/projects/getting-started-with-asyncio-in-micropython-raspberry-pi-pico/110b4243a2f544b6af60411a85f0437c  
+
 Rotary Encoder Library:  
 https://github.com/TTitanUA/micropython_rotary_encoder/tree/main  
 
@@ -61,6 +64,9 @@ https://github.com/stlehmann/micropython-ssd1306/blob/master/ssd1306.py
    
 Button library:  
 https://github.com/ubidefeo/MicroPython-Button  
+
+MAX9744 soundcard:  
+https://github.com/adafruit/Adafruit_Python_MAX9744  
 
 
 ## License

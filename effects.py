@@ -17,7 +17,8 @@ class Effect():
 
         model.reset_clocks()
         self.effect_parameters = getattr(entities, 'OFF', 'DAY')
-        entities.EFFECT_TYPE = 'STATIC'
+        print(self.effect_parameters)
+        entities.EFFECT_TYPE = 'static'
         self.make_effect()
         self.run_effect()
 
@@ -70,11 +71,11 @@ class Effect():
 
     def _set_led_values(self):
 
-        entities.PWM(entities.PIN(entities.PICO_PIN['RED'])).duty_u16(int(entities.PWM_VALUES['RED']))
-        entities.PWM(entities.PIN(entities.PICO_PIN['GREEN'])).duty_u16(int(entities.PWM_VALUES['GREEN']))
-        entities.PWM(entities.PIN(entities.PICO_PIN['BLUE'])).duty_u16(int(entities.PWM_VALUES['BLUE']))
-        entities.PWM(entities.PIN(entities.PICO_PIN['WARM'])).duty_u16(int(entities.PWM_VALUES['WARM']))
-        entities.PWM(entities.PIN(entities.PICO_PIN['COOL'])).duty_u16(int(entities.PWM_VALUES['COOL']))
+        r = entities.PWM(entities.PIN(entities.PICO_PIN['RED']), freq=entities.PWM_FREQ).duty_u16(int(entities.PWM_VALUES['RED']))
+        g = entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']), freq=entities.PWM_FREQ).duty_u16(int(entities.PWM_VALUES['GREEN']))
+        b = entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']), freq=entities.PWM_FREQ).duty_u16(int(entities.PWM_VALUES['BLUE']))
+        w = entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ).duty_u16(int(entities.PWM_VALUES['WARM']))
+        c = entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ).duty_u16(int(entities.PWM_VALUES['COOL']))
 
     def set_led_banks(self):
 
