@@ -133,20 +133,18 @@ class UserInterface():
             view.show_status_screen_manual(self.display, 'none')
 
     def single_click_listener(self):
-        # self.get_buttons()
         if entities.SCREEN_MODE == 'AUTOMATIC': # this is where effects get selected
-            entities.SCREEN_MODE = 'MONITOR'
             self.effect.run_effect()
             view.show_status_screen(self.display)
+            entities.SCREEN_MODE = 'MONITOR'
         elif entities.SCREEN_MODE == 'MONITOR':
-            entities.SCREEN_MODE = 'AUTOMATIC'
             model.reset_clocks()
             view.show_effects_screen(self.display)
+            entities.SCREEN_MODE = 'AUTOMATIC'
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'ADJUST'
         elif entities.SCREEN_MODE == 'ADJUST':
             entities.SCREEN_MODE = 'MANUAL'
-            # update leds with new values here
         print(f'Screen Mode: {entities.SCREEN_MODE}')
 
     def multi_click_listener(self, clicks):
@@ -155,7 +153,6 @@ class UserInterface():
             entities.SCREEN_MODE = 'MANUAL'
             view.show_status_screen_manual(self.display, 'none')
         elif entities.SCREEN_MODE == 'MONITOR':
-            # add functionality to edit static routines
             entities.SCREEN_MODE = 'ADJUST'
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'AUTOMATIC'

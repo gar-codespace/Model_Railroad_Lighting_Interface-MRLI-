@@ -102,7 +102,7 @@ class Effect():
 
             await entities.ASYNCIO.sleep_ms(delay) #10 sec
         
-        print('red effect finished')
+        print('red led effect finished')
         
     def run_green_effect(self):
 
@@ -112,7 +112,7 @@ class Effect():
 
             await entities.ASYNCIO.sleep_ms(delay)
         
-        print('green effect finished')
+        print('green led effect finished')
 
     def run_blue_effect(self):
 
@@ -122,7 +122,7 @@ class Effect():
 
             await entities.ASYNCIO.sleep_ms(delay)
         
-        print('blue effect finished')
+        print('blue led effect finished')
 
     def run_warm_effect(self):
 
@@ -132,7 +132,7 @@ class Effect():
 
             await entities.ASYNCIO.sleep_ms(delay) #10 sec
         
-        print('warm effect finished')
+        print('warm led effect finished')
 
     def run_cool_effect(self):
 
@@ -142,7 +142,7 @@ class Effect():
 
             await entities.ASYNCIO.sleep_ms(delay) #10 sec
         
-        print('cool effect finished')
+        print('cool led effect finished')
 
 
 
