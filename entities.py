@@ -123,7 +123,7 @@ PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
 ###### EFFECTS ######
 
 EFFECT_TYPE = 'STATIC'
-SELECTED_EFFECT = 2 # the effect that is selected by the user
+SELECTED_EFFECT = 1 # the effect that is selected by the user
 
 # ANIMATED Effects Countdown
 RED_CLOCK = 0

@@ -24,8 +24,9 @@ class UserInterface():
 
         model.set_switch_pins() # the switches that turn the led bank on or off
         
-        self.effect = effects.Effect()
         self.display = view.Display(entities.MAIN_DISPLAY).getDisplay()
+        self.effect = effects.Effect()
+        self.effect.run_effect()
 
         view.show_welcome_screen(self.display)
 
