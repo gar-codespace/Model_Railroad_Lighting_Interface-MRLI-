@@ -13,7 +13,16 @@ class Effect():
 
         self.duration_ticks: int = 100000# the length of the effect in ticks
 
+    def shut_off(self):
+
+        model.reset_clocks()
+        self.effect_parameters = getattr(entities, 'OFF', 'DAY')
+        entities.EFFECT_TYPE = 'STATIC'
+        self.make_effect()
+        self.run_effect()
+
     def run_effect(self):
+        self.effect_setup()
         self.make_effect()
         self.run_red_effect()
         self.run_green_effect()
@@ -21,7 +30,7 @@ class Effect():
         self.run_warm_effect()
         self.run_cool_effect()
 
-    def make_effect(self):
+    def effect_setup(self):
 
         model.reset_clocks()
         model.get_highlighted_effect()
@@ -29,6 +38,7 @@ class Effect():
         self._set_effect_type()
         print(entities.EFFECT_TYPE)
 
+    def make_effect(self):
         if entities.EFFECT_TYPE == 'animated':
             pass
         else:

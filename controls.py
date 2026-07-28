@@ -8,7 +8,7 @@ The Back button is not used.
 import entities
 import model
 import view
-import audio
+# import audio
 import effects
 import listeners
 
@@ -65,6 +65,7 @@ class UserInterface():
         '''
 
         if entities.MACHINE:
+            self.effect.shut_off()
             view.show_blank_screen(self.display)
         else:
             self.effect.run_effect()
