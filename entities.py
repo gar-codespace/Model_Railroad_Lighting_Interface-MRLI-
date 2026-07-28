@@ -122,10 +122,10 @@ PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
 
 ###### EFFECTS ######
 
-EFFECT_TYPE = 'static'
+EFFECT_TYPE = 'STATIC'
 SELECTED_EFFECT = 2 # the effect that is selected by the user
 
-# Animated Effects Countdown
+# ANIMATED Effects Countdown
 RED_CLOCK = 0
 GREEN_CLOCK = 0
 BLUE_CLOCK = 0
@@ -146,7 +146,7 @@ EFFECTS = { # the order they appear on the menu
 
 # Machine Control
 OFF =  {'name':'Off',
-        'type': 'static',
+        'type': 'STATIC',
         'bank0':0,
         'bank1':0,
         'bank2':0,
@@ -165,7 +165,7 @@ OFF =  {'name':'Off',
 
 # Effect Parameters
 MAINTENANCE =  {'name':'Maintenance',
-                'type': 'static',
+                'type': 'STATIC',
                 'bank0':1,
                 'bank1':1,
                 'bank2':1,
@@ -183,7 +183,7 @@ MAINTENANCE =  {'name':'Maintenance',
                 }
 
 DAY =  {'name':'Daytime',
-        'type': 'static',
+        'type': 'STATIC',
         'bank0':1,
         'bank1':1,
         'bank2':1,
@@ -201,7 +201,7 @@ DAY =  {'name':'Daytime',
         }
 
 TWLIGHT = {'name':'Twlight',
-           'type': 'static',
+           'type': 'STATIC',
            'bank0':1,
            'bank1':1,
            'bank2':1,
@@ -219,7 +219,7 @@ TWLIGHT = {'name':'Twlight',
            }
 
 NIGHT =   {'name':'Nightime',
-           'type': 'static',
+           'type': 'STATIC',
            'bank0':1,
            'bank1':1,
            'bank2':1,
@@ -237,7 +237,7 @@ NIGHT =   {'name':'Nightime',
            }
 
 SUNRISE = {'name':'Sunrise',
-           'type': 'animated',
+           'type': 'ANIMATED',
            'bank0':1,
            'bank1':1,
            'bank2':1,
@@ -255,7 +255,7 @@ SUNRISE = {'name':'Sunrise',
            }
 
 CLOUDY =  {'name':'Cloudy Day',
-           'type': 'animated',
+           'type': 'ANIMATED',
            'bank0':1,
            'bank1':1,
            'bank2':1,
@@ -273,7 +273,7 @@ CLOUDY =  {'name':'Cloudy Day',
            }
 
 SUNSET =  {'name':'Sunset',
-           'type': 'animated',
+           'type': 'ANIMATED',
            'bank0':1,
            'bank1':1,
            'bank2':1,
@@ -291,7 +291,7 @@ SUNSET =  {'name':'Sunset',
            }
 
 STORMY =  {'name':'Stormy Night',
-           'type': 'animated',
+           'type': 'ANIMATED',
            'bank0':1,
            'bank1':1,
            'bank2':1,

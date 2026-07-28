@@ -20,11 +20,9 @@ class Effect():
         self.c = entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
 
     def shut_off(self):
-
         model.reset_clocks()
         self.effect_parameters = getattr(entities, 'OFF', 'DAY')
-        print(self.effect_parameters)
-        entities.EFFECT_TYPE = 'static'
+        entities.EFFECT_TYPE = 'STATIC'
         self.make_effect()
         self.run_red_effect()
         self.run_green_effect()
@@ -47,10 +45,9 @@ class Effect():
         model.get_highlighted_effect()
         self._get_effect_parameters()
         self._set_effect_type()
-        print(entities.EFFECT_TYPE)
 
     def make_effect(self):
-        if entities.EFFECT_TYPE == 'animated':
+        if entities.EFFECT_TYPE == 'ANIMATED':
             pass
         else:
             self._set_pwm_values()

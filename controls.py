@@ -146,7 +146,7 @@ class UserInterface():
         elif entities.SCREEN_MODE == 'ADJUST':
             entities.SCREEN_MODE = 'MANUAL'
             # update leds with new values here
-        print(entities.SCREEN_MODE)
+        print(f'Screen Mode: {entities.SCREEN_MODE}')
 
     def multi_click_listener(self, clicks):
         #print(f"Multiply Clicks: {clicks}")
