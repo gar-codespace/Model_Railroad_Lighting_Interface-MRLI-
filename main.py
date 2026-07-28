@@ -4,8 +4,7 @@ import controls
 async def main():
 
     ui = controls.UserInterface()
-    #pwm = entities.PWM(entities.PIN(15), freq=1000)
-    #pwm.duty_u16(25000)
+    
     # controls.play harbor sounds
 
     while True:

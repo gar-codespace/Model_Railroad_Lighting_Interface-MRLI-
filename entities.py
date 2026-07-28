@@ -123,7 +123,7 @@ PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
 ###### EFFECTS ######
 
 EFFECT_TYPE = 'STATIC'
-SELECTED_EFFECT = 1 # the effect that is selected by the user
+SELECTED_EFFECT = 1 # the effect that is selected by the user and the start up effect
 
 # ANIMATED Effects Countdown
 RED_CLOCK = 0
@@ -144,7 +144,7 @@ EFFECTS = { # the order they appear on the menu
             7:'STORMY'
             }
 
-# Machine Control
+# Machine Control. Triggered by toggling machine state to off
 OFF =  {'name':'Off',
         'type': 'STATIC',
         'bank0':0,
