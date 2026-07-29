@@ -75,7 +75,7 @@ class UserInterface():
             view.show_effects_screen(self.display)
 
         entities.MACHINE = not entities.MACHINE
-        print(entities.MACHINE)
+        print(f'Machine State: {entities.MACHINE}')
 
     async def get_led_bank_buttons(self):
         '''

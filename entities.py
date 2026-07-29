@@ -26,7 +26,7 @@ TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
 
 # Raspi Pico parameters
 LED = PIN('LED', PIN.OUT)
-PWM_FREQ = 100
+PWM_FREQ = 480
 PWM_STEPS = 65535
 
 # Raspi Pico GP pin assignments
@@ -220,7 +220,7 @@ TWLIGHT = {'name':'Twlight',
 
 NIGHT =   {'name':'Nightime',
            'type': 'STATIC',
-           'bank0':1,
+           'bank0':0,
            'bank1':1,
            'bank2':1,
            'bank3':1,
