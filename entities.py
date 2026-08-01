@@ -141,24 +141,24 @@ EFFECTS = { # the order they appear on the menu
             7:'STORMY'
             }
 
-# Machine Control. Triggered by toggling machine state to off
-OFF =  {'name':'Off',
-        'type': 'STATIC',
-        'bank0':0,
-        'bank1':0,
-        'bank2':0,
-        'bank3':0,
-        'bank4':0,
-        'scenic':0,
-        'red':[0], # the specific color value in decimal percentage
-        'green':[0],
-        'blue':[0],
-        'warm':[0],
-        'cool':[0],
-        'duration':0.0, # time in minutes
-        'random':0.0, # factor to randomize the duration. 0 to 1
-        'loop':False
-        }
+# a specialized effect not included in the menu, but it could be
+STANDBY =  {'name':'Standby',
+            'type': 'STATIC',
+            'bank0':0,
+            'bank1':0,
+            'bank2':0,
+            'bank3':0,
+            'bank4':0,
+            'scenic':0,
+            'red':[0], # the specific color value in decimal percentage
+            'green':[0],
+            'blue':[0],
+            'warm':[0],
+            'cool':[0],
+            'duration':0.0, # time in minutes
+            'random':0.0, # factor to randomize the duration. 0 to 1
+            'loop':False
+            }
 
 # Effect Parameters
 MAINTENANCE =  {'name':'Maintenance',

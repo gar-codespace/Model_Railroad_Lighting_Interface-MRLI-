@@ -19,13 +19,13 @@ class Effect():
         self.w = entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
         self.c = entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
 
-    def shut_off(self):
+    def standby(self):
         '''
-        shut_off is a special effect that sets everything to 0.
+        standby is a special effect that sets everything to 0.
         The first 3 lines are a modified self.effect_setup()
         '''
         model.reset_clocks()
-        self.effect_parameters = getattr(entities, 'OFF', 'DAY')
+        self.effect_parameters = getattr(entities, 'STANDBY', 'STANDBY')
         entities.EFFECT_TYPE = 'STATIC'
 
         self.make_effect()
