@@ -88,7 +88,7 @@ MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
 ###### SOFTWARE ######
 
 # Time Base
-DEFAULT_TICK = 25 # milliseconds
+DEFAULT_TICK = 20 # milliseconds
 CLOCK_RATIO = 6 # build in some fast time clock compatability
 
 # Navigation
