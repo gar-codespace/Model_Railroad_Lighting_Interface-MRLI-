@@ -67,7 +67,6 @@ https://github.com/ubidefeo/MicroPython-Button
 
 MAX9744 soundcard:  
 https://github.com/adafruit/Adafruit_Python_MAX9744  
-https://github.com/adafruit/Adafruit_CircuitPython_MAX9744  
 
 
 ## License
