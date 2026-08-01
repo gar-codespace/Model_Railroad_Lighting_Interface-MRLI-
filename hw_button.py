@@ -1,9 +1,9 @@
 '''
 hardware library
 https://github.com/ubidefeo/MicroPython-Button
+Move imports to entities
 '''
 
-#from time import entities.ticks_ms
 import entities
 
 class Button(object):

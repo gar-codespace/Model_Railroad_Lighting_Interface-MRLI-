@@ -51,7 +51,7 @@ def show_welcome_screen(display):
 
 def effect_screen(display):
     '''
-    The effect screen is displayed when the machine is in effect mode.
+    The effect screen is displayed when the machine is in AUTOMATIC mode.
     This is where the user selects which effect to run.
     '''
 

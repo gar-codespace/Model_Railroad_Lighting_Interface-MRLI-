@@ -17,10 +17,7 @@ from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP
 from hw_button import Button
 
 # local libraries
-
-# Boilerplate
-SCRIPT_REV = CONST('20260704')
-TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
+# none so far
 
 ###### HARDWARE ######
 
@@ -98,6 +95,7 @@ CLOCK_RATIO = 6 # build in some fast time clock compatability
 MACHINE = True # True is on False is off
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling routines
 SCREEN_MODE = 'WELCOME' # Can be: WELCOME, AUTOMATIC, MONITOR. MANUAL, ADJUST, OFF
+TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
 WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
 STATUS_HILIGHT_INDEX = 0
 PWM_TICKS = 1000 # how many ticks per indent of the rotary encoder when changing color values
@@ -114,16 +112,13 @@ LED_INDEX_MAP = {0: 'RED',
 PWM_STEP = 5 # how much to change pwm value for each color loop cycle
 
 PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
-              'GREEN':32500,
+              'GREEN':32500, # or set by the program
               'BLUE':32500,
               'WARM':32500,
               'COOL':32500
               }
 
 ###### EFFECTS ######
-
-EFFECT_TYPE = 'STATIC'
-SELECTED_EFFECT = 1 # the effect that is selected by the user and the start up effect
 
 # ANIMATED Effects Countdown
 RED_CLOCK = 0
@@ -132,8 +127,10 @@ BLUE_CLOCK = 0
 WARM_CLOCK = 0
 COOL_CLOCK = 0
 
+EFFECT_TYPE = 'STATIC'
+SELECTED_EFFECT = 1 # the effect that is selected by the user and the start up effect
+
 EFFECTS = { # the order they appear on the menu
-            #0:'OFF',
             0:'MAINTENANCE',
             1:'DAY',
             2:'TWLIGHT',

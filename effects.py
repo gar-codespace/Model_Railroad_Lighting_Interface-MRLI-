@@ -20,19 +20,25 @@ class Effect():
         self.c = entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
 
     def shut_off(self):
+        '''
+        shut_off is a special effect that sets everything to 0.
+        The first 3 lines are a modified self.effect_setup()
+        '''
         model.reset_clocks()
         self.effect_parameters = getattr(entities, 'OFF', 'DAY')
         entities.EFFECT_TYPE = 'STATIC'
+
         self.make_effect()
-        self.run_red_effect()
-        self.run_green_effect()
-        self.run_blue_effect()
-        self.run_warm_effect()
-        self.run_cool_effect()
+        self.run_all_effects()
 
     def run_effect(self):
+
         self.effect_setup()
         self.make_effect()
+        self.run_all_effects()
+
+    def run_all_effects(self):
+
         self.run_red_effect()
         self.run_green_effect()
         self.run_blue_effect()

@@ -2,7 +2,6 @@
 hardware library
 https://github.com/TTitanUA/micropython_rotary_encoder/tree/main
 Move imports to entities
-Added confirm and back buttons marked with a #
 rolled up rotary_encoder_rp2.py into this file
 '''
 
@@ -35,10 +34,6 @@ class RotaryEncoder:
 
     pin_sw: entities.PIN
     "attribute EncoderButton.pin_sw is the pin for the encoder sw"
-
-    pin_con: entities.PIN #
-
-    pin_bak: entities.PIN #
 
     sw_debounce_ms: int = 50
     "attribute EncoderButton.sw_debounce_ms is used to filter out pin jitter"
