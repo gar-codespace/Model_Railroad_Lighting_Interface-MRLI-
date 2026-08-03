@@ -77,7 +77,7 @@ class UserInterface():
         '''
 
         if entities.MACHINE:
-            self.effect.standby()
+            self.effect.run_standby()
             view.show_blank_screen(self.main_display)
             entities.SCREEN_MODE = 'OFF'
         else:

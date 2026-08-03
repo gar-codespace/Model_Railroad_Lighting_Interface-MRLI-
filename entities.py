@@ -87,6 +87,10 @@ MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
 # Adafruit 9744
 SOUND_CARD = {'a':'b', 'c':'d'}
 
+SOUND_CLIPS = {'clip0':'harbor_sounds1.mp3',
+               'clip1':'xyzzy.mp3'
+               }
+
 ###### SOFTWARE ######
 
 # Time Base
@@ -185,7 +189,7 @@ MAINTENANCE =  {'name':'Maintenance',
 
 DAY =  {'name':'Daytime',
         'type': 'STATIC',
-        'audio': 'clip1',
+        'audio': 'clip0',
         'bank0':1,
         'bank1':1,
         'bank2':1,
@@ -204,7 +208,7 @@ DAY =  {'name':'Daytime',
 
 TWLIGHT = {'name':'Twlight',
            'type': 'STATIC',
-           'audio': 'clip1',
+           'audio': 'clip0',
            'bank0':1,
            'bank1':1,
            'bank2':1,
@@ -223,7 +227,7 @@ TWLIGHT = {'name':'Twlight',
 
 NIGHT =   {'name':'Nightime',
            'type': 'STATIC',
-           'audio': 'clip1',
+           'audio': 'clip0',
            'bank0':0,
            'bank1':1,
            'bank2':1,
@@ -242,7 +246,7 @@ NIGHT =   {'name':'Nightime',
 
 SUNRISE = {'name':'Sunrise',
            'type': 'ANIMATED',
-           'audio': 'clip1',
+           'audio': 'clip0',
            'bank0':1,
            'bank1':1,
            'bank2':1,
@@ -261,7 +265,7 @@ SUNRISE = {'name':'Sunrise',
 
 CLOUDY =  {'name':'Cloudy Day',
            'type': 'ANIMATED',
-           'audio': 'clip1',
+           'audio': 'clip0',
            'bank0':1,
            'bank1':1,
            'bank2':1,
@@ -280,7 +284,7 @@ CLOUDY =  {'name':'Cloudy Day',
 
 SUNSET =  {'name':'Sunset',
            'type': 'ANIMATED',
-           'audio': 'clip1',
+           'audio': 'clip0',
            'bank0':1,
            'bank1':1,
            'bank2':1,
@@ -299,7 +303,7 @@ SUNSET =  {'name':'Sunset',
 
 STORMY =  {'name':'Stormy Night',
            'type': 'ANIMATED',
-           'audio': 'clip1',
+           'audio': 'clip0',
            'bank0':1,
            'bank1':1,
            'bank2':1,

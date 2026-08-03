@@ -1,11 +1,33 @@
 '''
-Creates and runs both animated and static effects.
+Creates and runs both animated and static lighting effects.
+Each effect can have its own length or be 0.
+An effect length of 0 is explicitly tagged as STATIC, otherwise the effect is tagged as ANIMATED.
+In the spec for each effect, the length is given in real time minutes, the time the effect
+actually takes in the real world.
+The length is then adjusted for model railroad 'scale' and converted to milliseconds.
+'''
+'''
+Animated lighting effects:
+The magnitude of all five color pwm changes is constant, IE for each cycle of every color,
+that color changes by the same ammount.
+It is the length of the cycle(delay) that is different for each color.
+A small color change has a large delay and a large color change has a short delay.
+All 5 color changes will finish in about the same time depending on how asyncio handles the interupts.
+The value of pwm change is entities.PWM_STEP
+'''
+'''
+TODO:
+Set animated effects up so the effect can have more than one node and loop.
+Find a way to detect when all 5 effect loops have finished.
 '''
 
 import entities
 import model
 
 class Effect():
+    '''
+    Explain what a tick is
+    '''
 
     def __init__(self):
 
@@ -19,7 +41,7 @@ class Effect():
         self.w = entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
         self.c = entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
 
-    def standby(self):
+    def run_standby(self):
         '''
         standby is a special effect that sets everything to 0.
         The first 3 lines are a modified self.effect_setup()
@@ -29,15 +51,15 @@ class Effect():
         entities.EFFECT_TYPE = 'STATIC'
 
         self.make_effect()
-        self.run_all_effects()
+        self.run_color_effects()
 
     def run_effect(self):
 
         self.effect_setup()
         self.make_effect()
-        self.run_all_effects()
+        self.run_color_effects()
 
-    def run_all_effects(self):
+    def run_color_effects(self):
 
         self.run_red_effect()
         self.run_green_effect()
