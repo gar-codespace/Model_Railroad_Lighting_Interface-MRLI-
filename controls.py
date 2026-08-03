@@ -8,7 +8,7 @@ The Back button is not used.
 import entities
 import model
 import view
-# import audio
+import audio
 import effects
 import listeners
 
@@ -21,12 +21,17 @@ class UserInterface():
     def __init__(self):
 
         entities.SCREEN_MODE = 'AUTOMATIC'
+        self.sound_card: object
         self.main_display: object
 
         model.set_switch_pins() # the switches that turn the led bank on or off
         
         self.effect = effects.Effect()
         self.effect.run_effect() # run entities.SELECTED_EFFECT
+
+    def get_sound_card(self):
+
+        self.sound_card = audio.get_sound_card(entities.SOUND_CARD)
 
     def get_main_display(self):
 
@@ -167,7 +172,7 @@ class UserInterface():
             pass
 
     def confirm_button_listener(self, button, event):
-        '''Used to turn the machine on or off'''
+        '''Used to toggle the machine standby'''
 
         if event == entities.Button.PRESSED:
             pass

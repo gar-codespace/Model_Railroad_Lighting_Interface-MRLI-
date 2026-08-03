@@ -51,7 +51,7 @@ Adjust mode:
   Double click does nothing.  
 
 ## Third Party Developers
-Thank you!  
+Thank you for providing these libraries.    
 
 ASYNCIO:  
 https://www.digikey.com/en/maker/projects/getting-started-with-asyncio-in-micropython-raspberry-pi-pico/110b4243a2f544b6af60411a85f0437c  

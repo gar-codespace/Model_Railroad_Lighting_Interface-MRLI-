@@ -1,6 +1,6 @@
 '''
 Model Railroad Lighting Automation
-Code to automate control of 5 banks of RGBWC strip layout lights
+Code to automate control of 5 banks of RGBWC strip led lights
 and toggle a scenic lighting bus.
 Written to run on a Raspi Pico or Pico 2. WiFi not utilized.
 Copyright 2026 Greg Ritacco
@@ -17,8 +17,7 @@ async def main():
     ui = controls.UserInterface()
     ui.get_main_display()
     ui.show_welcome_screen()
-    
-    # controls.play harbor sounds
+    ui.get_sound_card()
 
     while True:
         

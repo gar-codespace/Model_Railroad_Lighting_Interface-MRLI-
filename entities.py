@@ -15,9 +15,7 @@ import random as RANDOM
 from hw_ssd1306 import SSD1306_I2C
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 from hw_button import Button
-
-# local libraries
-# none so far
+from hw_MAX9744 import MAX9744
 
 ###### HARDWARE ######
 
@@ -84,6 +82,10 @@ MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
                 'ROWS': CONST(5),
                 'X_OFFSET': 4
                 }
+
+# Audio
+# Adafruit 9744
+SOUND_CARD = {'a':'b', 'c':'d'}
 
 ###### SOFTWARE ######
 

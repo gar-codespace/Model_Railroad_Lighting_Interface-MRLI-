@@ -7,26 +7,6 @@ import entities
 import model
 
 
-class Display():
-
-    def __init__(self, specs):
-
-        self.bus = specs[0]
-        self.width = specs[1]
-        self.height = specs[2]
-        self.addr = specs[3]
-
-    def getDisplay(self):
-
-        i2c = entities.I2C(
-                        self.bus,
-                        sda = entities.PIN(entities.PICO_PIN['SDA']),
-                        scl = entities.PIN(entities.PICO_PIN['SCL']),
-                        freq = 400000
-                        )
-        
-        return entities.SSD1306_I2C(self.width, self.height, i2c, self.addr)
-
 def get_display(specs):
             
     bus = specs[0]
