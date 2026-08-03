@@ -21,14 +21,20 @@ class UserInterface():
     def __init__(self):
 
         entities.SCREEN_MODE = 'AUTOMATIC'
+        self.main_display: object
 
         model.set_switch_pins() # the switches that turn the led bank on or off
         
-        self.display = view.Display(entities.MAIN_DISPLAY).getDisplay()
         self.effect = effects.Effect()
-        self.effect.run_effect()
+        self.effect.run_effect() # run entities.SELECTED_EFFECT
 
-        view.show_welcome_screen(self.display)
+    def get_main_display(self):
+
+        self.main_display = view.get_display(entities.MAIN_DISPLAY)
+
+    def show_welcome_screen(self):
+
+        view.show_welcome_screen(self.main_display)
 
     def get_encoder(self):
 
@@ -67,12 +73,12 @@ class UserInterface():
 
         if entities.MACHINE:
             self.effect.standby()
-            view.show_blank_screen(self.display)
+            view.show_blank_screen(self.main_display)
             entities.SCREEN_MODE = 'OFF'
         else:
             entities.SCREEN_MODE = 'AUTOMATIC'
             self.effect.run_effect()
-            view.show_effects_screen(self.display)
+            view.show_effects_screen(self.main_display)
 
         entities.MACHINE = not entities.MACHINE
         print(f'Machine State: {entities.MACHINE}')
@@ -111,35 +117,35 @@ class UserInterface():
     def turn_left_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
             model.increment_current_effect('left')
-            view.show_effects_screen(self.display)
+            view.show_effects_screen(self.main_display)
         elif entities.SCREEN_MODE == 'MONITOR':
             pass
         elif entities.SCREEN_MODE == 'MANUAL':
-            view.show_status_screen_manual(self.display, 'left')
+            view.show_status_screen_manual(self.main_display, 'left')
         elif entities.SCREEN_MODE == 'ADJUST':
             model.adjust_color_value('left')
-            view.show_status_screen_manual(self.display, 'none')
+            view.show_status_screen_manual(self.main_display, 'none')
 
     def turn_right_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC':
             model.increment_current_effect('right')
-            view.show_effects_screen(self.display)
+            view.show_effects_screen(self.main_display)
         elif entities.SCREEN_MODE == 'MONITOR':
             pass
         elif entities.SCREEN_MODE == 'MANUAL':
-            view.show_status_screen_manual(self.display, 'right')
+            view.show_status_screen_manual(self.main_display, 'right')
         elif entities.SCREEN_MODE == 'ADJUST':
             model.adjust_color_value('right')
-            view.show_status_screen_manual(self.display, 'none')
+            view.show_status_screen_manual(self.main_display, 'none')
 
     def single_click_listener(self):
         if entities.SCREEN_MODE == 'AUTOMATIC': # this is where effects get selected
             self.effect.run_effect()
-            view.show_status_screen(self.display)
+            view.show_status_screen(self.main_display)
             entities.SCREEN_MODE = 'MONITOR'
         elif entities.SCREEN_MODE == 'MONITOR':
             model.reset_clocks()
-            view.show_effects_screen(self.display)
+            view.show_effects_screen(self.main_display)
             entities.SCREEN_MODE = 'AUTOMATIC'
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'ADJUST'
@@ -151,12 +157,12 @@ class UserInterface():
         #print(f"Multiply Clicks: {clicks}")
         if entities.SCREEN_MODE == 'AUTOMATIC':
             entities.SCREEN_MODE = 'MANUAL'
-            view.show_status_screen_manual(self.display, 'none')
+            view.show_status_screen_manual(self.main_display, 'none')
         elif entities.SCREEN_MODE == 'MONITOR':
             entities.SCREEN_MODE = 'ADJUST'
         elif entities.SCREEN_MODE == 'MANUAL':
             entities.SCREEN_MODE = 'AUTOMATIC'
-            view.show_effects_screen(self.display)
+            view.show_effects_screen(self.main_display)
         elif entities.SCREEN_MODE == 'ADJUST':
             pass
 

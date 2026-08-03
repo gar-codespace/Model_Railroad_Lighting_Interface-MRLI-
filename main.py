@@ -15,6 +15,8 @@ import controls
 async def main():
 
     ui = controls.UserInterface()
+    ui.get_main_display()
+    ui.show_welcome_screen()
     
     # controls.play harbor sounds
 
