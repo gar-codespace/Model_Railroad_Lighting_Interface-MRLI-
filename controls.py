@@ -43,9 +43,13 @@ class UserInterface():
 
     def get_encoder(self):
 
-        encoder = entities.RotaryEncoderRP2(pin_clk=entities.PIN(entities.PICO_PIN['TRB']),
-                                            pin_dt=entities.PIN(entities.PICO_PIN['TRA']),
-                                            pin_sw=entities.PIN(entities.PICO_PIN['PSH'])
+        encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], entities.PIN.IN, entities.PIN.PULL_UP)
+        encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], entities.PIN.IN, entities.PIN.PULL_UP)
+        encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], entities.PIN.IN, entities.PIN.PULL_UP)
+
+        encoder = entities.RotaryEncoderRP2(pin_clk=encoder_trb,
+                                            pin_dt=encoder_tra,
+                                            pin_sw=encoder_psh
                                             )
         # subscribe to events
         encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_listener)
