@@ -102,7 +102,7 @@ MACHINE = True # True is on False is off
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling routines
 SCREEN_MODE = 'WELCOME' # Can be: WELCOME, AUTOMATIC, MONITOR. MANUAL, ADJUST, OFF
 TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
-WELCOME_SCREEN = ['Metropolitan', 'Union', 'Transfer', 'Terminal', 'M.U.T.T.']
+WELCOME_SCREEN = ['   M.U.T.T.', ' Metropolitan', '    Union', '   Transfer', '   Terminal']
 STATUS_HILIGHT_INDEX = 0
 PWM_TICKS = 1000 # how many ticks per indent of the rotary encoder when changing color values
 SCROLL_EFFECT = 0 # the top effect listed in the menu
@@ -319,3 +319,104 @@ STORMY =  {'name':'Stormy Night',
            'random':0.7,
            'loop':True
            }
+
+####### THE NEW WAY OF SCRIPTING EFFECTS ###########
+
+# Menu
+MENU = { # In the order they show on the display
+            0: ('Maintenance', 'MAINTENANCE', 0),
+            1: ('Daytime', 'DAYTIME', 0),
+            2: ('Nightime', 'DAYTIME', 0),
+            3: ('Midnight*', 'ANIMATED_DAY', 0),
+            4: ('Dawn*', 'ANIMATED_DAY', 2),
+            5: ('Morning*', 'ANIMATED_DAY', 4),
+            6: ('Mid Day*', 'ANIMATED_DAY', 6),
+            7: ('Dusk*', 'ANIMATED_DAY', 8),
+            8: ('Evening*', 'ANIMATED_DAY', 10),
+            9: ('A Cloudy Day*', 'CLOUDY_DAY', 0)
+            }
+
+ANIMATED_DAY = {
+'INDEX':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11),
+'TIME':   (   60,   180,   300,   420,   540,   660,   780,   900,  1020,  1140,  1260,  1380), # Time of day in minutes
+'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0),
+'RED':    (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
+'GREEN':  (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
+'BLUE':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
+'WARM':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
+'COOL':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
+'BANK0':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
+'BANK1':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
+'BANK2':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
+'BANK3':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
+'BANK4':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
+'SCENIC': ( True,  True,  True,  True, False, False, False, False,  True,  True,  True,  True),
+}
+
+STANDBY = { # The 'Confirm' button selects this effect
+'INDEX':  (    0),
+'TIME':   (    0), # Time of day in minutes
+'RANDOM': (   .0),
+'RED':    (   .0),
+'GREEN':  (   .0),
+'BLUE':   (   .0),
+'WARM':   (   .0),
+'COOL':   (   .0),
+'BANK0':  (False),
+'BANK1':  (False),
+'BANK2':  (False),
+'BANK3':  (False),
+'BANK4':  (False),
+'SCENIC': (False),
+}
+
+MAINTENANCE = {
+'INDEX':  (    0),
+'TIME':   (    0), # Time of day in minutes
+'RANDOM': (   .0),
+'RED':    (  1.0),
+'GREEN':  (  1.0),
+'BLUE':   (  1.0),
+'WARM':   (  1.0),
+'COOL':   (  1.0),
+'BANK0':  ( True),
+'BANK1':  ( True),
+'BANK2':  ( True),
+'BANK3':  ( True),
+'BANK4':  ( True),
+'SCENIC': ( True),
+}
+
+DAYTIME = {
+'INDEX':  (    0),
+'TIME':   (    0), # Time of day in minutes
+'RANDOM': (   .0),
+'RED':    (  .50),
+'GREEN':  (  .50),
+'BLUE':   (  .50),
+'WARM':   (  .50),
+'COOL':   (  .50),
+'BANK0':  ( True),
+'BANK1':  ( True),
+'BANK2':  ( True),
+'BANK3':  ( True),
+'BANK4':  ( True),
+'SCENIC': (False),
+}
+
+CLOUDY_DAY = {
+'INDEX':  (    0,     1,     2),
+'TIME':   (    0,     8,    16), # Time of day in minutes
+'RANDOM': (   .5,    .5,    .5),
+'RED':    (  .50,    .3,    .5),
+'GREEN':  (  .50,    .3,    .5),
+'BLUE':   (  .50,    .3,    .5),
+'WARM':   (  .50,    .3,    .5),
+'COOL':   (  .50,    .3,    .5),
+'BANK1':  ( True,  True,  True),
+'BANK2':  ( True,  True,  True),
+'BANK0':  ( True,  True,  True),
+'BANK3':  ( True,  True,  True),
+'BANK4':  ( True,  True,  True),
+'SCENIC': (False, False, False),
+}
