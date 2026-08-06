@@ -26,30 +26,33 @@ PWM_STEPS = 65535
 
 # Raspi Pico GP pin assignments
 PICO_PIN = {
-        'BANK0_B':0, # buttons
-        'BANK1_B':1,
-        'BANK2_B':2,
-        'BANK3_B':3,
-        'BANK4_B':4,
-        'SCENIC_B':5,
-        'BANK0_S':6, # switches
-        'BANK1_S':7,
+        'RED':0, # pwm colors
+        'GREEN':1,
+        'BLUE':2,
+        'WARM':3,
+        'COOL':4,
+
+        'SCENIC_S':5, # switches
+        'BANK4_S':6,
+        'BANK3_S':7,
         'BANK2_S':8,
-        'BANK3_S':9,
-        'BANK4_S':10,
-        'SCENIC_S':11,
-        'RED':12, # PWM led
-        'GREEN':13,
-        'BLUE':14,
-        'WARM':15,
-        #
-        'COOL':16, # 
+        'BANK1_S':9,
+        'BANK0_S':10,
+
+        'SCENIC_B':11, # buttons
+        'BANK4_B':12,
+        'BANK3_B':13,
+        'BANK2_B':14,
+        'BANK1_B':15,
+        'BANK0_B':16,
+        
         'PSH':17, # encoder
         'TRA':18, # encoder
         'TRB':19, # encoder
         'SDA':20, # display
         'SCL':21, # display
         'CONFIRM':22, # encoder
+        
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
         'LED':'LED',
@@ -353,7 +356,7 @@ ANIMATED_DAY = {
 'SCENIC': ( True,  True,  True,  True, False, False, False, False,  True,  True,  True,  True),
 }
 
-STANDBY = { # The 'Confirm' button selects this effect
+STANDBYX = { # The 'Confirm' button selects this effect
 'INDEX':  (    0),
 'TIME':   (    0), # Time of day in minutes
 'RANDOM': (   .0),
@@ -370,7 +373,7 @@ STANDBY = { # The 'Confirm' button selects this effect
 'SCENIC': (False),
 }
 
-MAINTENANCE = {
+MAINTENANCEX = {
 'INDEX':  (    0),
 'TIME':   (    0), # Time of day in minutes
 'RANDOM': (   .0),
@@ -387,7 +390,7 @@ MAINTENANCE = {
 'SCENIC': ( True),
 }
 
-DAYTIME = {
+DAYTIMEX = {
 'INDEX':  (    0),
 'TIME':   (    0), # Time of day in minutes
 'RANDOM': (   .0),
@@ -404,7 +407,7 @@ DAYTIME = {
 'SCENIC': (False),
 }
 
-CLOUDY_DAY = {
+CLOUDY_DAYX = {
 'INDEX':  (    0,     1,     2),
 'TIME':   (    0,     8,    16), # Time of day in minutes
 'RANDOM': (   .5,    .5,    .5),
