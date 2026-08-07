@@ -31,7 +31,14 @@ class UserInterface():
 
     def get_sound_card(self):
 
-        self.sound_card = audio.get_sound_card(entities.SOUND_CARD)
+        self.sound_card = audio.get_sound_card()
+        self.sound_card.volume = 22
+        self.sound_card.volume_up()
+        self.sound_card.volume_down()
+
+    def play_welcome_sound(self):
+
+        audio.play_welcome_sound(self.sound_card)
 
     def get_main_display(self):
 

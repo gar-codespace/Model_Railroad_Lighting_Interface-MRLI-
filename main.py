@@ -18,6 +18,7 @@ async def main():
     ui.get_main_display()
     ui.show_welcome_screen()
     ui.get_sound_card()
+    #ui.play_welcome_sound()
 
     while True:
         

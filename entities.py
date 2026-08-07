@@ -52,13 +52,13 @@ PICO_PIN = {
         'SDA':20, # display
         'SCL':21, # display
         'CONFIRM':22, # encoder
-        
+
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
         'LED':'LED',
-        'AVAILABLE':26,
-        'AVAILABLE':27,
-        'AVAILABLE':28
+        'ASDA':26,
+        'ASCL':27,
+        'BACK':28 # encoder
         }
 
 # OLED0 specs
@@ -266,7 +266,7 @@ SUNRISE = {'name':'Sunrise',
            'loop':False
            }
 
-CLOUDY =  {'name':'Cloudy Day',
+CLOUDY =  {'name':'* Cloudy Day',
            'type': 'ANIMATED',
            'audio': 'clip0',
            'bank0':1,

@@ -1,59 +1,78 @@
-# Copyright (c) 2015 Adafruit Industries
-# Author: Tony DiCola
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+__version__ = "0.0.0+auto.0"
+__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MAX9744.git"
+
+import entities
+
+try:
+    import threading
+except ImportError:
+    threading = None
+
+# Internal constants:
+_MAX9744_DEFAULT_ADDRESS = entities.CONST(0b01001011)
+_MAX9744_COMMAND_VOLUME = entities.CONST(0b00000000)
+_MAX9744_COMMAND_FILTERLESS = entities.CONST(0b01000000)
+_MAX9744_COMMAND_CLASSIC_PWM = entities.CONST(0b01000001)
+_MAX9744_COMMAND_VOLUME_UP = entities.CONST(0b11000100)
+_MAX9744_COMMAND_VOLUME_DOWN = entities.CONST(0b11000101)
 
 
-# Default I2C address for device.
-MAX9744_I2CADDR         = 0x4B
+class MAX9744:
+    """MAX9744 20 watt class D amplifier.
 
+    :param i2c: The I2C bus for the device.
 
-class MAX9744(object):
-    """Class to represent an Adafruit MAX9744 20 watt stereo amplifier with
-    digital volume control.
+    :param address: (Optional) The address of the device if it has been overridden from the
+                    default with the AD1, AD2 pins.
     """
 
-    def __init__(self, address=MAX9744_I2CADDR, i2c=None, **kwargs):
-        """Initialize MAX9744 device on the specified I2C address and bus number.
-        Address defaults to 0x4B and bus number defaults to the appropriate bus
-        for the hardware.
-        """
-        # Initialize I2C bus and get a reference to the MAX9744 device.
-        if i2c is None:
-            import Adafruit_GPIO.I2C as I2C
-            i2c = I2C
-        self._device = i2c.get_i2c_device(address, **kwargs)
+    # Global buffer for writing data.  This saves memory use and prevents
+    # heap fragmentation.  However this is not thread-safe or re-entrant by
+    # design!
+    _BUFFER = bytearray(1)
 
-    def set_volume(self, value):
-        """Set volume to the provided value which should be a number from 0 (muted)
-        to 63 (maximum volume).
-        """
-        assert value >= 0 and value <= 63, 'Volume value must be between 0 and 63 inclusive.'
-        # Send the volume set command with the provided value.
-        self._device.writeRaw8(value & 0b111111)
+    def __init__(self, i2c, address: int = _MAX9744_DEFAULT_ADDRESS):
+        # This device doesn't use registers and instead just accepts a single
+        # command string over I2C.  As a result we don't use bus device or
+        # other abstractions and just talk raw I2C protocol.
+        self._i2c = i2c
+        self._address = address
 
-    def increase_volume(self):
-        """Increase the volume by one step."""
-        # Send volume increase command: 0b11000100
-        self._device.writeRaw8(0b11000100)
+    def _write(self, val: int) -> None:
+        # Perform a write to update the amplifier state.
+        try:
+            # Make sure bus is locked before write.
+            while not self._i2c.try_lock():
+                pass
+            # Build bytes to send to device with updated value.
+            print('write')
+            #self._BUFFER[0] = val & 0xFF
+            self._i2c.writeto(self._address, self._BUFFER)
+        except:
+            pass
+        #finally:
+            # Ensure bus is always unlocked.
+            # self._i2c.unlock()
+# 
+    def _set_volume(self, volume: int):
+        # Set the volume to the specified level (0-63).
+        assert 0 <= volume <= 63
+        self._write(_MAX9744_COMMAND_VOLUME | (volume & 0x3F))
 
-    def decrease_volume(self):
-        """Decrease the volume by one step."""
-        # Send volume decrease command: 0b11000101
-        self._device.writeRaw8(0b11000101)
+
+    volume = property(
+        None,
+        _set_volume,
+        None,
+        "Set the volume of the amplifier.  Specify a value from 0-63 where 0 is muted/off and 63 is maximum volume.",  # noqa: E501
+    )
+
+
+# 
+    def volume_up(self) -> None:
+        """Increase the volume by one level."""
+        self._write(_MAX9744_COMMAND_VOLUME_UP)
+
+    def volume_down(self) -> None:
+        """Decrease the volume by one level."""
+        self._write(_MAX9744_COMMAND_VOLUME_DOWN)
