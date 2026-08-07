@@ -43,17 +43,118 @@ class Effect():
 
     def run_standby(self):
         '''
-        standby is a special effect that sets everything to 0.
-        The first 3 lines are a modified self.effect_setup()
+        standby is a special effect that sets everything to 0
         '''
-        model.reset_clocks()
-        self.effect_parameters = getattr(entities, 'STANDBY', 'STANDBY')
-        entities.EFFECT_TYPE = 'STATIC'
+        effect = entities.STANDBY
+        index = 0
 
-        self.make_effect()
-        self.run_color_effects()
+        self._set_pwm_valuesx(index, effect)
+        self._set_led_banks(index, effect)
+        self._set_led_values()
+        self._set_scenic_lights(index, effect)
 
-    def run_effect(self):
+        self.run_effect(index, effect)
+
+    def _set_pwm_valuesx(self, index, effect):
+
+        entities.PWM_VALUES['RED'] = effect.get('RED')[index] * entities.PWM_STEPS
+        entities.PWM_VALUES['GREEN'] = effect.get('GREEN')[index] * entities.PWM_STEPS
+        entities.PWM_VALUES['BLUE'] = effect.get('BLUE')[index] * entities.PWM_STEPS
+        entities.PWM_VALUES['WARM'] = effect.get('WARM')[index] * entities.PWM_STEPS
+        entities.PWM_VALUES['COOL'] = effect.get('COOL')[index] * entities.PWM_STEPS
+
+    def _set_led_values(self):
+
+        self.r.duty_u16(int(entities.PWM_VALUES['RED']))
+        self.g.duty_u16(int(entities.PWM_VALUES['GREEN']))
+        self.b.duty_u16(int(entities.PWM_VALUES['BLUE']))
+        self.w.duty_u16(int(entities.PWM_VALUES['WARM']))
+        self.c.duty_u16(int(entities.PWM_VALUES['COOL']))
+
+    def _set_led_banks(self, index, effect):
+
+        x = effect.get('BANK0')[index]
+        entities.PIN(entities.PICO_PIN['BANK0_S']).value(x)
+        x = effect.get('BANK1')[index]
+        entities.PIN(entities.PICO_PIN['BANK1_S']).value(x)
+        x = effect.get('BANK2')[index]
+        entities.PIN(entities.PICO_PIN['BANK2_S']).value(x)
+        x = effect.get('BANK3')[index]
+        entities.PIN(entities.PICO_PIN['BANK3_S']).value(x)
+        x = effect.get('BANK4')[index]
+        entities.PIN(entities.PICO_PIN['BANK4_S']).value(x)
+
+    def _set_scenic_lights(self, index, effect):
+
+        x = effect.get('SCENIC')[index]
+        entities.PIN(entities.PICO_PIN['SCENIC_S']).value(x)
+
+    def run_effect(self, index, effect):
+
+
+        for i in len(effect.get('INDEX')):
+
+            duration = self._get_duration(i, effect)
+            r_delta = self._get_color_change(i, effect.get('RED'))
+            g_delta = self._get_color_change(i, effect.get('GREEN'))
+            b_delta = self._get_color_change(i, effect.get('BLUE'))
+            w_delta = self._get_color_change(i, effect.get('WARM'))
+            c_delta = self._get_color_change(i, effect.get('COOL'))
+
+            while duration > 0:
+
+                await entities.ASYNCIO.sleep_ms(entities.CLOCK_CYCLE) # 2 seconds
+
+
+
+    def _get_color_change(self, index, effect):
+
+        pass
+
+
+    def _get_duration(self, index, effect):
+
+        start = effect.get('TIME')[index]
+        try:
+            end = effect.get('TIME')[index + 1]
+        except:
+            end = 0
+
+        duration = end - start # minutes
+        duration = duration * 60 * 1000 # milliseconds
+
+        return duration
+
+
+
+    def run_red_effect(self):
+
+        delay = entities.DEFAULT_TICK
+        while entities.RED_CLOCK > 0:
+            pass
+
+            await entities.ASYNCIO.sleep_ms(delay) #10 sec
+        
+        print('red led effect finished')
+
+
+
+
+
+
+
+
+
+
+    def set_led_banks(self):
+
+        entities.PIN(entities.PICO_PIN['BANK0_S']).value(self.effect_parameters['bank0'])
+        entities.PIN(entities.PICO_PIN['BANK1_S']).value(self.effect_parameters['bank1'])
+        entities.PIN(entities.PICO_PIN['BANK2_S']).value(self.effect_parameters['bank2'])
+        entities.PIN(entities.PICO_PIN['BANK3_S']).value(self.effect_parameters['bank3'])
+        entities.PIN(entities.PICO_PIN['BANK4_S']).value(self.effect_parameters['bank4'])
+
+    def run_effectx(self):
 
         self.effect_setup()
         self.make_effect()
@@ -104,13 +205,7 @@ class Effect():
         x = self.effect_parameters['cool'][index] * entities.PWM_STEPS
         entities.PWM_VALUES['COOL'] = x
 
-    def _set_led_values(self):
 
-        self.r.duty_u16(int(entities.PWM_VALUES['RED']))
-        self.g.duty_u16(int(entities.PWM_VALUES['GREEN']))
-        self.b.duty_u16(int(entities.PWM_VALUES['BLUE']))
-        self.w.duty_u16(int(entities.PWM_VALUES['WARM']))
-        self.c.duty_u16(int(entities.PWM_VALUES['COOL']))
 
     def set_led_banks(self):
 

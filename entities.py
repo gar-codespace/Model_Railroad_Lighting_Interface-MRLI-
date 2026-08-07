@@ -99,6 +99,7 @@ SOUND_CLIPS = {'clip0':'harbor_sounds1.mp3',
 # Time Base
 DEFAULT_TICK = 20 # milliseconds
 CLOCK_RATIO = 6 # build in some fast time clock compatability
+CLOCK_CYCLE = 2000 # Milliseconds. The delay the effect awaits.
 
 # Navigation
 MACHINE = True # True is on False is off
@@ -148,26 +149,6 @@ EFFECTS = { # the order they appear on the menu
             5:'CLOUDY',
             6:'SUNSET',
             7:'STORMY'
-            }
-
-# a specialized effect not included in the menu, but it could be
-STANDBY =  {'name':'Standby',
-            'type': 'STATIC',
-            'audio': None,
-            'bank0':0,
-            'bank1':0,
-            'bank2':0,
-            'bank3':0,
-            'bank4':0,
-            'scenic':0,
-            'red':[0], # the specific color value in decimal percentage
-            'green':[0],
-            'blue':[0],
-            'warm':[0],
-            'cool':[0],
-            'duration':0.0, # time in minutes
-            'random':0.0, # factor to randomize the duration. 0 to 1
-            'loop':False
             }
 
 # Effect Parameters
@@ -325,21 +306,44 @@ STORMY =  {'name':'Stormy Night',
 
 ####### THE NEW WAY OF SCRIPTING EFFECTS ###########
 
+DEFAULT_EFFECT = ('STATIC', 1)
+STANDBY_MENU = {0: ('Standby', 'STANDBY', 0)}
+
+STANDBY = { # The 'Confirm' button selects this effect
+'name':   ('Stby'),
+'INDEX':  (    0,),
+'TIME':   (    0,), # Time of day in minutes
+'RANDOM': (    0,),
+'RED':    (    0,),
+'GREEN':  (    0,),
+'BLUE':   (    0,),
+'WARM':   (    0,),
+'COOL':   (    0,),
+'BANK0':  (False,),
+'BANK1':  (False,),
+'BANK2':  (False,),
+'BANK3':  (False,),
+'BANK4':  (False,),
+'SCENIC': (False,),
+}
+
 # Menu
-MENU = { # In the order they show on the display
-            0: ('Maintenance', 'MAINTENANCE', 0),
-            1: ('Daytime', 'DAYTIME', 0),
-            2: ('Nightime', 'DAYTIME', 0),
-            3: ('Midnight*', 'ANIMATED_DAY', 0),
-            4: ('Dawn*', 'ANIMATED_DAY', 2),
-            5: ('Morning*', 'ANIMATED_DAY', 4),
-            6: ('Mid Day*', 'ANIMATED_DAY', 6),
-            7: ('Dusk*', 'ANIMATED_DAY', 8),
-            8: ('Evening*', 'ANIMATED_DAY', 10),
-            9: ('A Cloudy Day*', 'CLOUDY_DAY', 0)
+MAIN_MENU = { # In the order they show on the display
+             0: ('Maintenance',        'STATIC',  0),
+             1: ('Daytime',            'STATIC',  1),
+             2: ('Nightime',           'STATIC',  2),
+             3: ('Twilight',           'STATIC',  3),
+             4: ('* Midnight',       'ANIMATED',  0),
+             5: ('* Dawn',           'ANIMATED',  2),
+             6: ('* Morning',        'ANIMATED',  4),
+             7: ('* Mid Day',        'ANIMATED',  6),
+             8: ('* Dusk',           'ANIMATED',  8),
+             9: ('* Evening',        'ANIMATED', 10),
+            10: ('* A Cloudy Day', 'CLOUDY_DAY',  0)
             }
 
-ANIMATED_DAY = {
+ANIMATED = { # simulates an entire day
+'NAME':   ( '1AM' '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM'),
 'INDEX':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11),
 'TIME':   (   60,   180,   300,   420,   540,   660,   780,   900,  1020,  1140,  1260,  1380), # Time of day in minutes
 'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0),
@@ -356,70 +360,38 @@ ANIMATED_DAY = {
 'SCENIC': ( True,  True,  True,  True, False, False, False, False,  True,  True,  True,  True),
 }
 
-STANDBYX = { # The 'Confirm' button selects this effect
-'INDEX':  (    0),
-'TIME':   (    0), # Time of day in minutes
-'RANDOM': (   .0),
-'RED':    (   .0),
-'GREEN':  (   .0),
-'BLUE':   (   .0),
-'WARM':   (   .0),
-'COOL':   (   .0),
-'BANK0':  (False),
-'BANK1':  (False),
-'BANK2':  (False),
-'BANK3':  (False),
-'BANK4':  (False),
-'SCENIC': (False),
+STATIC = { # 0 duration
+'NAME':   ('Maint',   'Day', 'Night', 'Twili'),
+'INDEX':  (      0,       1,       2,       3),
+'TIME':   (      0,       0,       0,       0), # Time of day in minutes
+'RANDOM': (     .0,      .0,      .0,      .0),
+'RED':    (    1.0,      .7,      .4,      .2),
+'GREEN':  (    1.0,      .7,      .4,      .2),
+'BLUE':   (    1.0,      .7,      .4,      .2),
+'WARM':   (    1.0,      .7,      .4,      .2),
+'COOL':   (    1.0,      .7,      .4,      .2),
+'BANK0':  (   True,    True,    True,   True,),
+'BANK1':  (   True,    True,    True,   True,),
+'BANK2':  (   True,    True,    True,   True,),
+'BANK3':  (   True,    True,    True,   True,),
+'BANK4':  (   True,    True,    True,   True,),
+'SCENIC': (   True,    True,    True,   True,),
 }
 
-MAINTENANCEX = {
-'INDEX':  (    0),
-'TIME':   (    0), # Time of day in minutes
-'RANDOM': (   .0),
-'RED':    (  1.0),
-'GREEN':  (  1.0),
-'BLUE':   (  1.0),
-'WARM':   (  1.0),
-'COOL':   (  1.0),
-'BANK0':  ( True),
-'BANK1':  ( True),
-'BANK2':  ( True),
-'BANK3':  ( True),
-'BANK4':  ( True),
-'SCENIC': ( True),
-}
-
-DAYTIMEX = {
-'INDEX':  (    0),
-'TIME':   (    0), # Time of day in minutes
-'RANDOM': (   .0),
-'RED':    (  .50),
-'GREEN':  (  .50),
-'BLUE':   (  .50),
-'WARM':   (  .50),
-'COOL':   (  .50),
-'BANK0':  ( True),
-'BANK1':  ( True),
-'BANK2':  ( True),
-'BANK3':  ( True),
-'BANK4':  ( True),
-'SCENIC': (False),
-}
-
-CLOUDY_DAYX = {
-'INDEX':  (    0,     1,     2),
-'TIME':   (    0,     8,    16), # Time of day in minutes
-'RANDOM': (   .5,    .5,    .5),
-'RED':    (  .50,    .3,    .5),
-'GREEN':  (  .50,    .3,    .5),
-'BLUE':   (  .50,    .3,    .5),
-'WARM':   (  .50,    .3,    .5),
-'COOL':   (  .50,    .3,    .5),
-'BANK1':  ( True,  True,  True),
-'BANK2':  ( True,  True,  True),
-'BANK0':  ( True,  True,  True),
-'BANK3':  ( True,  True,  True),
-'BANK4':  ( True,  True,  True),
-'SCENIC': (False, False, False),
+CLOUDY_DAY = {
+'NAME':   ( 'Clear', 'Cloudy',  'Clear'),
+'INDEX':  (       0,        1,        2),
+'TIME':   (       0,        8,       16), # Time of day in minutes
+'RANDOM': (      .5,       .5,       .5),
+'RED':    (     .50,       .3,       .5),
+'GREEN':  (     .50,       .3,       .5),
+'BLUE':   (     .50,       .3,       .5),
+'WARM':   (     .50,       .3,       .5),
+'COOL':   (     .50,       .3,       .5),
+'BANK1':  (    True,     True,     True),
+'BANK2':  (    True,     True,     True),
+'BANK0':  (    True,     True,     True),
+'BANK3':  (    True,     True,     True),
+'BANK4':  (    True,     True,     True),
+'SCENIC': (   False,    False,    False),
 }

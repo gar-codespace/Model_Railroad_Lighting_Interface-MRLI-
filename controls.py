@@ -27,7 +27,7 @@ class UserInterface():
         model.set_switch_pins() # the switches that turn the led bank on or off
         
         self.effect = effects.Effect()
-        self.effect.run_effect() # run entities.SELECTED_EFFECT
+        self.effect.run_effectx() # run entities.SELECTED_EFFECT
 
     def get_sound_card(self):
 

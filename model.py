@@ -65,6 +65,9 @@ def get_highlighted_effect(): # list comprehension
     entities.SELECTED_EFFECT = x
     
 def reset_clocks():
+    '''
+    this might be obsolete
+    '''
 
     entities.RED_CLOCK = 0
     entities.GREEN_CLOCK = 0
