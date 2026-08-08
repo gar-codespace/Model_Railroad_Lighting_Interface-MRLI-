@@ -1,33 +1,22 @@
 '''
 Creates and runs both animated and static lighting effects.
-Each effect can have its own length or be 0.
-An effect length of 0 is explicitly tagged as STATIC, otherwise the effect is tagged as ANIMATED.
-In the spec for each effect, the length is given in real time minutes, the time the effect
+Static effects are all grouped together in one dictionary called STATIC.
+'''
+'''
+Write about how animated effects work.
+In the dictionary for each effect, the length is given in real time minutes, the time the effect
 actually takes in the real world.
 The length is then adjusted for model railroad 'scale' and converted to milliseconds.
 '''
 '''
-Animated lighting effects:
-The magnitude of all five color pwm changes is constant, IE for each cycle of every color,
-that color changes by the same ammount.
-It is the length of the cycle(delay) that is different for each color.
-A small color change has a large delay and a large color change has a short delay.
-All 5 color changes will finish in about the same time depending on how asyncio handles the interupts.
-The value of pwm change is entities.PWM_STEP
-'''
-'''
 TODO:
-Set animated effects up so the effect can have more than one node and loop.
-Find a way to detect when all 5 effect loops have finished.
+Explain what a tick is
 '''
 
 import entities
 import model
 
 class Effect():
-    '''
-    Explain what a tick is
-    '''
 
     def __init__(self):
 
@@ -41,21 +30,31 @@ class Effect():
         self.w = entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
         self.c = entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
 
-    def run_standby(self):
+    def run_static_effect(self, index):
         '''
-        standby is a special effect that sets everything to 0
+        Runs any of the effects listed in the STATIC dictionary.
         '''
-        effect = entities.STANDBY
-        index = 0
 
-        self._set_pwm_valuesx(index, effect)
-        self._set_led_banks(index, effect)
+        effect_matrix = entities.STATIC
+        self._set_led_banks(index, effect_matrix)
+        self._set_pwm_values(index, effect_matrix)
         self._set_led_values()
-        self._set_scenic_lights(index, effect)
+        self._set_scenic_lights(index, effect_matrix)
 
-        self.run_effect(index, effect)
+    def _set_led_banks(self, index, effect):
 
-    def _set_pwm_valuesx(self, index, effect):
+        x = effect.get('BANK0')[index]
+        entities.PIN(entities.PICO_PIN['BANK0_S']).value(x)
+        x = effect.get('BANK1')[index]
+        entities.PIN(entities.PICO_PIN['BANK1_S']).value(x)
+        x = effect.get('BANK2')[index]
+        entities.PIN(entities.PICO_PIN['BANK2_S']).value(x)
+        x = effect.get('BANK3')[index]
+        entities.PIN(entities.PICO_PIN['BANK3_S']).value(x)
+        x = effect.get('BANK4')[index]
+        entities.PIN(entities.PICO_PIN['BANK4_S']).value(x)
+
+    def _set_pwm_values(self, index, effect):
 
         entities.PWM_VALUES['RED'] = effect.get('RED')[index] * entities.PWM_STEPS
         entities.PWM_VALUES['GREEN'] = effect.get('GREEN')[index] * entities.PWM_STEPS
@@ -71,28 +70,25 @@ class Effect():
         self.w.duty_u16(int(entities.PWM_VALUES['WARM']))
         self.c.duty_u16(int(entities.PWM_VALUES['COOL']))
 
-    def _set_led_banks(self, index, effect):
-
-        x = effect.get('BANK0')[index]
-        entities.PIN(entities.PICO_PIN['BANK0_S']).value(x)
-        x = effect.get('BANK1')[index]
-        entities.PIN(entities.PICO_PIN['BANK1_S']).value(x)
-        x = effect.get('BANK2')[index]
-        entities.PIN(entities.PICO_PIN['BANK2_S']).value(x)
-        x = effect.get('BANK3')[index]
-        entities.PIN(entities.PICO_PIN['BANK3_S']).value(x)
-        x = effect.get('BANK4')[index]
-        entities.PIN(entities.PICO_PIN['BANK4_S']).value(x)
-
     def _set_scenic_lights(self, index, effect):
 
         x = effect.get('SCENIC')[index]
         entities.PIN(entities.PICO_PIN['SCENIC_S']).value(x)
 
+
+
+
+
+
+
     def run_effect(self, index, effect):
 
+        if effect.get('TIME')[index] == 0:
+            loops = 1
+        else:
+            loops = len(effect.get('INDEX'))
 
-        for i in len(effect.get('INDEX')):
+        for i in range(loops):
 
             duration = self._get_duration(i, effect)
             r_delta = self._get_color_change(i, effect.get('RED'))
@@ -101,9 +97,16 @@ class Effect():
             w_delta = self._get_color_change(i, effect.get('WARM'))
             c_delta = self._get_color_change(i, effect.get('COOL'))
 
-            while duration > 0:
 
-                await entities.ASYNCIO.sleep_ms(entities.CLOCK_CYCLE) # 2 seconds
+        duration = 1000
+        while True:
+
+
+            entities.LED.toggle()
+
+            await entities.ASYNCIO.sleep_ms(100) # 2 seconds
+
+
 
 
 
@@ -192,7 +195,7 @@ class Effect():
 
         entities.EFFECT_TYPE = self.effect_parameters['type']
 
-    def _set_pwm_values(self, index: int=0):
+    def _set_pwm_valuesx(self, index: int=0):
 
         x = self.effect_parameters['red'][index] * entities.PWM_STEPS
         entities.PWM_VALUES['RED'] = x

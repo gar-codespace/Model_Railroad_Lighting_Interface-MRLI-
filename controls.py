@@ -27,7 +27,7 @@ class UserInterface():
         model.set_switch_pins() # the switches that turn the led bank on or off
         
         self.effect = effects.Effect()
-        self.effect.run_effectx() # run entities.SELECTED_EFFECT
+        self.effect.run_static_effect(2) # Upon startup, run the 'Day' static effect
 
     def get_sound_card(self):
 
@@ -88,12 +88,12 @@ class UserInterface():
         '''
 
         if entities.MACHINE:
-            self.effect.run_standby()
+            self.effect.run_static_effect(0)
             view.show_blank_screen(self.main_display)
             entities.SCREEN_MODE = 'OFF'
         else:
             entities.SCREEN_MODE = 'AUTOMATIC'
-            self.effect.run_effect()
+            self.effect.run_static_effect(2) ####################### Fix this !!!!!!!!!!!!!
             view.show_effects_screen(self.main_display)
 
         entities.MACHINE = not entities.MACHINE

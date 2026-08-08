@@ -342,6 +342,24 @@ MAIN_MENU = { # In the order they show on the display
             10: ('* A Cloudy Day', 'CLOUDY_DAY',  0)
             }
 
+STATIC = { # 0 duration
+'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'),
+'INDEX':  (      0,       1,       2,       3,       4),
+'TIME':   (      0,       0,       0,       0,       0), # Time of day in minutes
+'RANDOM': (     .0,      .0,      .0,      .0,      .0),
+'RED':    (      0,     1.0,      .7,      .4,      .2),
+'GREEN':  (      0,     1.0,      .7,      .4,      .2),
+'BLUE':   (      0,     1.0,      .7,      .4,      .2),
+'WARM':   (      0,     1.0,      .7,      .4,      .2),
+'COOL':   (      0,     1.0,      .7,      .4,      .2),
+'BANK0':  (  False,    True,    True,    True,   True,),
+'BANK1':  (  False,    True,    True,    True,   True,),
+'BANK2':  (  False,    True,    True,    True,   True,),
+'BANK3':  (  False,    True,    True,    True,   True,),
+'BANK4':  (  False,    True,    True,    True,   True,),
+'SCENIC': (  False,    True,   False,    True,   True,),
+}
+
 ANIMATED = { # simulates an entire day
 'NAME':   ( '1AM' '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM'),
 'INDEX':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11),
@@ -358,24 +376,6 @@ ANIMATED = { # simulates an entire day
 'BANK3':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
 'BANK4':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
 'SCENIC': ( True,  True,  True,  True, False, False, False, False,  True,  True,  True,  True),
-}
-
-STATIC = { # 0 duration
-'NAME':   ('Maint',   'Day', 'Night', 'Twili'),
-'INDEX':  (      0,       1,       2,       3),
-'TIME':   (      0,       0,       0,       0), # Time of day in minutes
-'RANDOM': (     .0,      .0,      .0,      .0),
-'RED':    (    1.0,      .7,      .4,      .2),
-'GREEN':  (    1.0,      .7,      .4,      .2),
-'BLUE':   (    1.0,      .7,      .4,      .2),
-'WARM':   (    1.0,      .7,      .4,      .2),
-'COOL':   (    1.0,      .7,      .4,      .2),
-'BANK0':  (   True,    True,    True,   True,),
-'BANK1':  (   True,    True,    True,   True,),
-'BANK2':  (   True,    True,    True,   True,),
-'BANK3':  (   True,    True,    True,   True,),
-'BANK4':  (   True,    True,    True,   True,),
-'SCENIC': (   True,    True,    True,   True,),
 }
 
 CLOUDY_DAY = {
