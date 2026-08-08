@@ -32,7 +32,7 @@ class Effect():
 
     def run_static_effect(self, index):
         '''
-        Runs any of the effects listed in the STATIC dictionary.
+        Runs any of the effects listed in the entities.STATIC dictionary.
         '''
 
         effect_matrix = entities.STATIC
@@ -79,7 +79,7 @@ class Effect():
 
 
 
-
+############## THE OLD CODE  ###################
 
     def run_effect(self, index, effect):
 

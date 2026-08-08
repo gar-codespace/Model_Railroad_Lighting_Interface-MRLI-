@@ -309,24 +309,6 @@ STORMY =  {'name':'Stormy Night',
 DEFAULT_EFFECT = ('STATIC', 1)
 STANDBY_MENU = {0: ('Standby', 'STANDBY', 0)}
 
-STANDBY = { # The 'Confirm' button selects this effect
-'name':   ('Stby'),
-'INDEX':  (    0,),
-'TIME':   (    0,), # Time of day in minutes
-'RANDOM': (    0,),
-'RED':    (    0,),
-'GREEN':  (    0,),
-'BLUE':   (    0,),
-'WARM':   (    0,),
-'COOL':   (    0,),
-'BANK0':  (False,),
-'BANK1':  (False,),
-'BANK2':  (False,),
-'BANK3':  (False,),
-'BANK4':  (False,),
-'SCENIC': (False,),
-}
-
 # Menu
 MAIN_MENU = { # In the order they show on the display
              0: ('Maintenance',        'STATIC',  0),
