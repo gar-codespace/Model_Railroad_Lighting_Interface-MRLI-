@@ -25,7 +25,8 @@ class UserInterface():
         self.main_display: object
 
         model.set_switch_pins() # the switches that turn the led bank on or off
-        
+        model.set_pwm_led_pins() # sets pico pins to pwm
+
         self.effect = effects.Effect()
         self.effect.run_static_effect(2) # Upon startup, run the 'Day' static effect
 

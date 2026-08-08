@@ -24,12 +24,17 @@ def set_switch_pins():
 
 def set_pwm_led_pins():
         
-    entities.PWM(entities.PIN(entities.PICO_PIN['RED']))
-    entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']))
-    entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']))
-    entities.PWM(entities.PIN(entities.PICO_PIN['WARM']))
-    entities.PWM(entities.PIN(entities.PICO_PIN['COOL']))
-
+    # entities.PWM(entities.PIN(entities.PICO_PIN['RED']))
+    # entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']))
+    # entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']))
+    # entities.PWM(entities.PIN(entities.PICO_PIN['WARM']))
+    # entities.PWM(entities.PIN(entities.PICO_PIN['COOL']))
+    entities.PWM(entities.PIN(entities.PICO_PIN['RED']), freq=entities.PWM_FREQ)
+    entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']), freq=entities.PWM_FREQ)
+    entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']), freq=entities.PWM_FREQ)
+    entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
+    entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
+    
 def get_menu_index():
     
     index_list = tuple(range(0, len(entities.EFFECTS)))

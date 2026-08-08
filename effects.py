@@ -24,11 +24,11 @@ class Effect():
 
         self.duration_ticks: int = 100000# the length of the effect in ticks
 
-        self.r = entities.PWM(entities.PIN(entities.PICO_PIN['RED']), freq=entities.PWM_FREQ)
-        self.g = entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']), freq=entities.PWM_FREQ)
-        self.b = entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']), freq=entities.PWM_FREQ)
-        self.w = entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
-        self.c = entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
+        self.r = entities.PICO_PIN['RED']
+        self.g = entities.PICO_PIN['GREEN']
+        self.b = entities.PICO_PIN['BLUE']
+        self.w = entities.PICO_PIN['WARM']
+        self.c = entities.PICO_PIN['COOL']
 
     def run_static_effect(self, index):
         '''
@@ -64,11 +64,11 @@ class Effect():
 
     def _set_led_values(self):
 
-        self.r.duty_u16(int(entities.PWM_VALUES['RED']))
-        self.g.duty_u16(int(entities.PWM_VALUES['GREEN']))
-        self.b.duty_u16(int(entities.PWM_VALUES['BLUE']))
-        self.w.duty_u16(int(entities.PWM_VALUES['WARM']))
-        self.c.duty_u16(int(entities.PWM_VALUES['COOL']))
+        entities.PWM(self.r).duty_u16(int(entities.PWM_VALUES['RED']))
+        entities.PWM(self.g).duty_u16(int(entities.PWM_VALUES['GREEN']))
+        entities.PWM(self.b).duty_u16(int(entities.PWM_VALUES['BLUE']))
+        entities.PWM(self.w).duty_u16(int(entities.PWM_VALUES['WARM']))
+        entities.PWM(self.c).duty_u16(int(entities.PWM_VALUES['COOL']))
 
     def _set_scenic_lights(self, index, effect):
 
