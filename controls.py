@@ -20,7 +20,7 @@ class UserInterface():
 
     def __init__(self):
 
-        entities.SCREEN_MODE = 'AUTOMATIC'
+        entities.SCREEN_MODE = 'effects'
         self.sound_card: object
         self.main_display: object
 
@@ -44,10 +44,6 @@ class UserInterface():
     def get_main_display(self):
 
         self.main_display = view.get_display(entities.MAIN_DISPLAY)
-
-    def show_welcome_screen(self):
-
-        view.show_welcome_screen(self.main_display)
 
     def get_encoder(self):
 
@@ -123,65 +119,64 @@ class UserInterface():
 
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
+    def update_display(self, content: list = entities.WELCOME_SCREEN):
+
+        self.main_display.fill(0)
+
+        line_y = 0
+        for i in range(entities.MAIN_FORMAT['ROWS']):
+            self.main_display.text(content[i], entities.MAIN_FORMAT['X_OFFSET'], line_y)
+            line_y += entities.MAIN_FORMAT['LINE_HEIGHT']
+
+        try: # add the hilight rectangle
+            attrib = entities.SCREEN_MODE + '_get_hilight'
+            h = getattr(view, attrib)()
+            self.main_display.rect(0, h, 128, 11, 1)
+        except:
+            pass
+
+        self.main_display.show()
+
     '''
     Screen Modes:
-    AUTOMATIC - The display shows a menu of available lighting effects.
-    MONITOR - The display shows the values of the 5 colors as the effect progresses.
-    MANUAL - The display shows the menu of the 5 colors and their current value.
-    ADJUST - The display shows the value of the selected color as it's being adjusted.
-    OFF - The display is blank.
+    effects - The menu of effects that are available.
+    animated - Values for each color as the animated effect progresses.
+    static - Menu of color values available to edit.
+    edit - One particular color is being edited.
+    standby - Static effect that turns everything 'off'.
     '''
     def turn_left_listener(self):
-        if entities.SCREEN_MODE == 'AUTOMATIC':
-            model.increment_current_effect('left')
-            view.show_effects_screen(self.main_display)
-        elif entities.SCREEN_MODE == 'MONITOR':
+        attrib = entities.SCREEN_MODE + '_turn_left'
+        try:
+            display_content = getattr(view, attrib)()
+            self.update_display(display_content)
+        except:
             pass
-        elif entities.SCREEN_MODE == 'MANUAL':
-            view.show_status_screen_manual(self.main_display, 'left')
-        elif entities.SCREEN_MODE == 'ADJUST':
-            model.adjust_color_value('left')
-            view.show_status_screen_manual(self.main_display, 'none')
 
     def turn_right_listener(self):
-        if entities.SCREEN_MODE == 'AUTOMATIC':
-            model.increment_current_effect('right')
-            view.show_effects_screen(self.main_display)
-        elif entities.SCREEN_MODE == 'MONITOR':
+        attrib = entities.SCREEN_MODE + '_turn_right'
+        try:
+            display_content = getattr(view, attrib)()
+            self.update_display(display_content)
+        except:
             pass
-        elif entities.SCREEN_MODE == 'MANUAL':
-            view.show_status_screen_manual(self.main_display, 'right')
-        elif entities.SCREEN_MODE == 'ADJUST':
-            model.adjust_color_value('right')
-            view.show_status_screen_manual(self.main_display, 'none')
+
+
+
+
 
     def single_click_listener(self):
-        if entities.SCREEN_MODE == 'AUTOMATIC': # this is where effects get selected
-            self.effect.run_effect()
-            view.show_status_screen(self.main_display)
-            entities.SCREEN_MODE = 'MONITOR'
-        elif entities.SCREEN_MODE == 'MONITOR':
-            model.reset_clocks()
-            view.show_effects_screen(self.main_display)
-            entities.SCREEN_MODE = 'AUTOMATIC'
-        elif entities.SCREEN_MODE == 'MANUAL':
-            entities.SCREEN_MODE = 'ADJUST'
-        elif entities.SCREEN_MODE == 'ADJUST':
-            entities.SCREEN_MODE = 'MANUAL'
-        print(f'Screen Mode: {entities.SCREEN_MODE}')
+        pass
+
+
 
     def multi_click_listener(self, clicks):
         #print(f"Multiply Clicks: {clicks}")
-        if entities.SCREEN_MODE == 'AUTOMATIC':
-            entities.SCREEN_MODE = 'MANUAL'
-            view.show_status_screen_manual(self.main_display, 'none')
-        elif entities.SCREEN_MODE == 'MONITOR':
-            entities.SCREEN_MODE = 'ADJUST'
-        elif entities.SCREEN_MODE == 'MANUAL':
-            entities.SCREEN_MODE = 'AUTOMATIC'
-            view.show_effects_screen(self.main_display)
-        elif entities.SCREEN_MODE == 'ADJUST':
-            pass
+        pass
+
+
+
+
 
     def confirm_button_listener(self, button, event):
         '''Used to toggle the machine standby'''

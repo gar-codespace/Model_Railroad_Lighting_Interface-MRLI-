@@ -103,9 +103,9 @@ CLOCK_CYCLE = 2000 # Milliseconds. The delay the effect awaits.
 
 # Navigation
 MACHINE = True # True is on False is off
-HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling routines
-SCREEN_MODE = 'WELCOME' # Can be: WELCOME, AUTOMATIC, MONITOR. MANUAL, ADJUST, OFF
-TEST_MESSAGE = CONST('abcdefghijklmnopqrstuvwxyz')
+HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
+DISPLAY_MODE = 'effects' # Can be: effects, animated, static, edit, standby
+TEST_MESSAGE = 'abcdefghijklmnopqrstuvwxyz'
 WELCOME_SCREEN = ['   M.U.T.T.', ' Metropolitan', '    Union', '   Transfer', '   Terminal']
 STATUS_HILIGHT_INDEX = 0
 PWM_TICKS = 1000 # how many ticks per indent of the rotary encoder when changing color values
@@ -137,8 +137,86 @@ BLUE_CLOCK = 0
 WARM_CLOCK = 0
 COOL_CLOCK = 0
 
-EFFECT_TYPE = 'STATIC'
-SELECTED_EFFECT = 1 # the effect that is selected by the user and the start up effect
+
+####### THE NEW WAY OF SCRIPTING EFFECTS ###########
+
+DEFAULT_EFFECT = ('STATIC', 1)
+CURRENT_EFFECT = ('STATIC', 1)
+HILIGHTED_EFFECT = ('STATIC', 1)
+MENU_FIRST_ITEM = 4 # Index of MAIN_MENU for first item in menu
+
+# Menu
+MAIN_MENU = { # In the order they show on the display
+             0: ('Maintenance',        'STATIC',  0),
+             1: ('Daytime',            'STATIC',  1),
+             2: ('Nightime',           'STATIC',  2),
+             3: ('Twilight',           'STATIC',  3),
+             4: ('* Midnight',       'ANIMATED',  0),
+             5: ('* Dawn',           'ANIMATED',  2),
+             6: ('* Morning',        'ANIMATED',  4),
+             7: ('* Mid Day',        'ANIMATED',  6),
+             8: ('* Dusk',           'ANIMATED',  8),
+             9: ('* Evening',        'ANIMATED', 10),
+            10: ('* A Cloudy Day', 'CLOUDY_DAY',  0)
+            }
+
+STATIC = { # 0 duration
+'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'),
+'INDEX':  (      0,       1,       2,       3,       4),
+'TIME':   (      0,       0,       0,       0,       0), # Time of day in minutes
+'RANDOM': (     .0,      .0,      .0,      .0,      .0),
+'RED':    (      0,     1.0,      .7,      .4,      .2),
+'GREEN':  (      0,     1.0,      .7,      .4,      .2),
+'BLUE':   (      0,     1.0,      .7,      .4,      .2),
+'WARM':   (      0,     1.0,      .7,      .4,      .2),
+'COOL':   (      0,     1.0,      .7,      .4,      .2),
+'BANK0':  (  False,    True,    True,    True,   True,),
+'BANK1':  (  False,    True,    True,    True,   True,),
+'BANK2':  (  False,    True,    True,    True,   True,),
+'BANK3':  (  False,    True,    True,    True,   True,),
+'BANK4':  (  False,    True,    True,    True,   True,),
+'SCENIC': (  False,    True,   False,    True,   True,),
+}
+
+ANIMATED = { # simulates an entire day
+'NAME':   ( '1AM' '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM'),
+'INDEX':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11),
+'TIME':   (   60,   180,   300,   420,   540,   660,   780,   900,  1020,  1140,  1260,  1380), # Time of day in minutes
+'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0),
+'RED':    (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
+'GREEN':  (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
+'BLUE':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
+'WARM':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
+'COOL':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
+'BANK0':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
+'BANK1':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
+'BANK2':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
+'BANK3':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
+'BANK4':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
+'SCENIC': ( True,  True,  True,  True, False, False, False, False,  True,  True,  True,  True),
+}
+
+CLOUDY_DAY = {
+'NAME':   ( 'Clear', 'Cloudy',  'Clear'),
+'INDEX':  (       0,        1,        2),
+'TIME':   (       0,        8,       16), # Time of day in minutes
+'RANDOM': (      .5,       .5,       .5),
+'RED':    (     .50,       .3,       .5),
+'GREEN':  (     .50,       .3,       .5),
+'BLUE':   (     .50,       .3,       .5),
+'WARM':   (     .50,       .3,       .5),
+'COOL':   (     .50,       .3,       .5),
+'BANK1':  (    True,     True,     True),
+'BANK2':  (    True,     True,     True),
+'BANK0':  (    True,     True,     True),
+'BANK3':  (    True,     True,     True),
+'BANK4':  (    True,     True,     True),
+'SCENIC': (   False,    False,    False),
+}
+
+
+
+##############  THE OLD WAY  ###################
 
 EFFECTS = { # the order they appear on the menu
             0:'MAINTENANCE',
@@ -303,77 +381,3 @@ STORMY =  {'name':'Stormy Night',
            'random':0.7,
            'loop':True
            }
-
-####### THE NEW WAY OF SCRIPTING EFFECTS ###########
-
-DEFAULT_EFFECT = ('STATIC', 1)
-STANDBY_MENU = {0: ('Standby', 'STANDBY', 0)}
-
-# Menu
-MAIN_MENU = { # In the order they show on the display
-             0: ('Maintenance',        'STATIC',  0),
-             1: ('Daytime',            'STATIC',  1),
-             2: ('Nightime',           'STATIC',  2),
-             3: ('Twilight',           'STATIC',  3),
-             4: ('* Midnight',       'ANIMATED',  0),
-             5: ('* Dawn',           'ANIMATED',  2),
-             6: ('* Morning',        'ANIMATED',  4),
-             7: ('* Mid Day',        'ANIMATED',  6),
-             8: ('* Dusk',           'ANIMATED',  8),
-             9: ('* Evening',        'ANIMATED', 10),
-            10: ('* A Cloudy Day', 'CLOUDY_DAY',  0)
-            }
-
-STATIC = { # 0 duration
-'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'),
-'INDEX':  (      0,       1,       2,       3,       4),
-'TIME':   (      0,       0,       0,       0,       0), # Time of day in minutes
-'RANDOM': (     .0,      .0,      .0,      .0,      .0),
-'RED':    (      0,     1.0,      .7,      .4,      .2),
-'GREEN':  (      0,     1.0,      .7,      .4,      .2),
-'BLUE':   (      0,     1.0,      .7,      .4,      .2),
-'WARM':   (      0,     1.0,      .7,      .4,      .2),
-'COOL':   (      0,     1.0,      .7,      .4,      .2),
-'BANK0':  (  False,    True,    True,    True,   True,),
-'BANK1':  (  False,    True,    True,    True,   True,),
-'BANK2':  (  False,    True,    True,    True,   True,),
-'BANK3':  (  False,    True,    True,    True,   True,),
-'BANK4':  (  False,    True,    True,    True,   True,),
-'SCENIC': (  False,    True,   False,    True,   True,),
-}
-
-ANIMATED = { # simulates an entire day
-'NAME':   ( '1AM' '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM'),
-'INDEX':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11),
-'TIME':   (   60,   180,   300,   420,   540,   660,   780,   900,  1020,  1140,  1260,  1380), # Time of day in minutes
-'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0),
-'RED':    (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
-'GREEN':  (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
-'BLUE':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
-'WARM':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
-'COOL':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
-'BANK0':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
-'BANK1':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
-'BANK2':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
-'BANK3':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
-'BANK4':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
-'SCENIC': ( True,  True,  True,  True, False, False, False, False,  True,  True,  True,  True),
-}
-
-CLOUDY_DAY = {
-'NAME':   ( 'Clear', 'Cloudy',  'Clear'),
-'INDEX':  (       0,        1,        2),
-'TIME':   (       0,        8,       16), # Time of day in minutes
-'RANDOM': (      .5,       .5,       .5),
-'RED':    (     .50,       .3,       .5),
-'GREEN':  (     .50,       .3,       .5),
-'BLUE':   (     .50,       .3,       .5),
-'WARM':   (     .50,       .3,       .5),
-'COOL':   (     .50,       .3,       .5),
-'BANK1':  (    True,     True,     True),
-'BANK2':  (    True,     True,     True),
-'BANK0':  (    True,     True,     True),
-'BANK3':  (    True,     True,     True),
-'BANK4':  (    True,     True,     True),
-'SCENIC': (   False,    False,    False),
-}

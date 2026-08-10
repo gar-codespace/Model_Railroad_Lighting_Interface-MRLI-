@@ -23,49 +23,96 @@ def get_display(specs):
 
     return entities.SSD1306_I2C(width, height, i2c, addr)
 
-def show_blank_screen(display):
-    
-    display.fill(0)
-    display.show()
+# Encoder Rotation
 
-def welcome_screen(display):
+def get_menu_list() -> list:
+
+    index_double = model.get_index_double()
+    index_subset = index_double[entities.MENU_FIRST_ITEM:]
+    entities.HILIGHTED_EFFECT = index_subset[entities.HIGHLIGHT_ROW]
+
+    menu_list: list = []
+    for i in range(0, entities.MAIN_FORMAT['ROWS']):
+        menu_list.append(entities.MAIN_MENU.get(index_subset[i])[0])
+
+    return menu_list
+
+def effects_turn_left():
     '''
-    Only displayed on start up,
+    This is the menu of available effects.
     '''
+    entities.MENU_FIRST_ITEM -= 1
+    if entities.MENU_FIRST_ITEM < 0:
+        entities.MENU_FIRST_ITEM = len(entities.MAIN_MENU) - 1
 
-    line_y = 0
-    for i in range(entities.MAIN_FORMAT['ROWS']):
-        display.text(entities.WELCOME_SCREEN[i], entities.MAIN_FORMAT['X_OFFSET'], line_y)
-        line_y += entities.MAIN_FORMAT['LINE_HEIGHT']
+    return get_menu_list()
 
-    return
-
-def show_welcome_screen(display):
-    display.fill(0)
-    welcome_screen(display)
-    display.show()
-
-def effect_screen(display):
+def effects_turn_right():
     '''
-    The effect screen is displayed when the machine is in AUTOMATIC mode.
-    This is where the user selects which effect to run.
+    This is the menu of available effects.
     '''
+    entities.MENU_FIRST_ITEM += 1
+    if entities.MENU_FIRST_ITEM > len(entities.MAIN_MENU) - 1:
+        entities.MENU_FIRST_ITEM = 0
 
-    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
+    return get_menu_list()
+
+def effects_get_hilight():
+
+    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
     hilight_row = entities.HIGHLIGHT_ROW * hilight_height
+
+    return hilight_row
+
+
+
+
+def static_turn_left():
+    print('static_turn_left')
+
+def edit_turn_left():
+    print('edit_turn_left')
+
+
+
+def static_turn_right():
+    print('static_turn_right')
+
+def edit_turn_right():
+    print('edit_turn_right')
+
+# Encoder Select
+
+
+
+
+
+
+
+def main_menu() -> list:
+    '''
+    This is the menu of available effects.
+    '''
+    menu_list: list = []
+    #hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
+    #hilight_row = entities.HIGHLIGHT_ROW * hilight_height
     x = entities.MAIN_FORMAT['X_OFFSET']
     y = 1
     index = model.get_menu_index()
     entities.SCROLL_EFFECT = index[0]
     for i in range(0, entities.MAIN_FORMAT['ROWS']):
-        effect = entities.EFFECTS[index[i]]
-        effect = getattr(entities, effect, 'DAY')['name']
-        display.text(effect, x, y)
-        y += entities.MAIN_FORMAT['LINE_HEIGHT']
+        effect_name = entities.MAIN_MENU[index[0]]
+        menu_list.append(effect_name)
+
+        # effect = getattr(entities, effect, 'DAY')['name']
+
+
+        #display.text(effect, x, y)
+        #y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
     display.rect(0, hilight_row, 128, 10, 1)
 
-    return
+    return menu_list
 
 def show_effects_screen(display):
     display.fill(0)

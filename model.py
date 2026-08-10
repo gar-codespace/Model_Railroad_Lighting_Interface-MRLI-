@@ -35,14 +35,15 @@ def set_pwm_led_pins():
     entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
     entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
     
-def get_menu_index():
+def get_index_double():
+    '''
+    IE [0, 1, 2, 3, 4, 0, 1, 2, 3 , 4]
+    '''
     
-    index_list = tuple(range(0, len(entities.EFFECTS)))
-    index_list = index_list + index_list
-    
-    index_list = index_list[entities.SCROLL_EFFECT:]
+    index_double = tuple(range(0, len(entities.MAIN_MENU)))
+    index_double = index_double + index_double
 
-    return index_list
+    return index_double
 
 def increment_current_effect(direction:str):
 
