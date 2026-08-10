@@ -23,9 +23,11 @@ def get_display(specs):
 
     return entities.SSD1306_I2C(width, height, i2c, addr)
 
-# Encoder Rotation
 
 def get_menu_list() -> list:
+    '''
+    Returns a list of main menu items.
+    '''
 
     index_double = model.get_index_double()
     index_subset = index_double[entities.MENU_FIRST_ITEM:]
@@ -36,6 +38,13 @@ def get_menu_list() -> list:
         menu_list.append(entities.MAIN_MENU.get(index_subset[i])[0])
 
     return menu_list
+
+# Encoder Rotation
+def welcome_turn_left():
+    entities.SCREEN_MODE = 'effects'
+
+def welcome_turn_right():
+    entities.SCREEN_MODE = 'effects'
 
 def effects_turn_left():
     '''
@@ -57,6 +66,24 @@ def effects_turn_right():
 
     return get_menu_list()
 
+def static_turn_left():
+    print('static_turn_left')
+
+def static_turn_right():
+    print('static_turn_right')
+
+def edit_turn_left():
+    print('edit_turn_left')
+
+def edit_turn_right():
+    print('edit_turn_right')
+
+# Hilight rectangle
+def welcome_get_hilight():
+    # Move the hilight rectangle off the screen
+
+    return 65
+
 def effects_get_hilight():
 
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
@@ -65,23 +92,9 @@ def effects_get_hilight():
     return hilight_row
 
 
-
-
-def static_turn_left():
-    print('static_turn_left')
-
-def edit_turn_left():
-    print('edit_turn_left')
-
-
-
-def static_turn_right():
-    print('static_turn_right')
-
-def edit_turn_right():
-    print('edit_turn_right')
-
-# Encoder Select
+# Encoder single click
+def welcome_click():
+    entities.SCREEN_MODE = 'effects'
 
 
 
@@ -89,30 +102,11 @@ def edit_turn_right():
 
 
 
-def main_menu() -> list:
-    '''
-    This is the menu of available effects.
-    '''
-    menu_list: list = []
-    #hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
-    #hilight_row = entities.HIGHLIGHT_ROW * hilight_height
-    x = entities.MAIN_FORMAT['X_OFFSET']
-    y = 1
-    index = model.get_menu_index()
-    entities.SCROLL_EFFECT = index[0]
-    for i in range(0, entities.MAIN_FORMAT['ROWS']):
-        effect_name = entities.MAIN_MENU[index[0]]
-        menu_list.append(effect_name)
-
-        # effect = getattr(entities, effect, 'DAY')['name']
 
 
-        #display.text(effect, x, y)
-        #y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
-    display.rect(0, hilight_row, 128, 10, 1)
 
-    return menu_list
+############# OLD STUFF ################
 
 def show_effects_screen(display):
     display.fill(0)

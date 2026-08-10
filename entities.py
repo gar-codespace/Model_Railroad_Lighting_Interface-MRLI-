@@ -23,6 +23,7 @@ from hw_MAX9744 import MAX9744
 LED = PIN('LED', PIN.OUT)
 PWM_FREQ = 480
 PWM_STEPS = 65535
+MACHINE = True # True is on False is off
 
 # Raspi Pico GP pin assignments
 PICO_PIN = {
@@ -101,23 +102,6 @@ DEFAULT_TICK = 20 # milliseconds
 CLOCK_RATIO = 6 # build in some fast time clock compatability
 CLOCK_CYCLE = 2000 # Milliseconds. The delay the effect awaits.
 
-# Navigation
-MACHINE = True # True is on False is off
-HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
-DISPLAY_MODE = 'effects' # Can be: effects, animated, static, edit, standby
-TEST_MESSAGE = 'abcdefghijklmnopqrstuvwxyz'
-WELCOME_SCREEN = ['   M.U.T.T.', ' Metropolitan', '    Union', '   Transfer', '   Terminal']
-STATUS_HILIGHT_INDEX = 0
-PWM_TICKS = 1000 # how many ticks per indent of the rotary encoder when changing color values
-SCROLL_EFFECT = 0 # the top effect listed in the menu
-
-LED_INDEX_MAP = {0: 'RED',
-                 1: 'GREEN',
-                 2: 'BLUE',
-                 3: 'WARM',
-                 4: 'COOL'
-                 }
-
 # Color Control
 PWM_STEP = 5 # how much to change pwm value for each color loop cycle
 
@@ -127,8 +111,6 @@ PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
               'WARM':32500,
               'COOL':32500
               }
-
-###### EFFECTS ######
 
 # ANIMATED Effects Countdown
 RED_CLOCK = 0
@@ -140,11 +122,22 @@ COOL_CLOCK = 0
 
 ####### THE NEW WAY OF SCRIPTING EFFECTS ###########
 
+# Navigation
+WELCOME_SCREEN = ['   M.U.T.T.', ' Metropolitan', '    Union', '   Transfer', '   Terminal']
+HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
+DISPLAY_MODE = 'welcome' # Can be: welcome, effects, animated, static, edit, standby
 DEFAULT_EFFECT = ('STATIC', 1)
 CURRENT_EFFECT = ('STATIC', 1)
 HILIGHTED_EFFECT = ('STATIC', 1)
-MENU_FIRST_ITEM = 4 # Index of MAIN_MENU for first item in menu
-
+MENU_FIRST_ITEM = 2 # Index of MAIN_MENU for first item in menu
+LED_INDEX_MAP = {0: 'RED',
+                 1: 'GREEN',
+                 2: 'BLUE',
+                 3: 'WARM',
+                 4: 'COOL'
+                 }
+PWM_TICKS = 1000 # how many ticks per indent of the rotary encoder when changing color values
+STATUS_HILIGHT_INDEX = 0 # What is this?
 # Menu
 MAIN_MENU = { # In the order they show on the display
              0: ('Maintenance',        'STATIC',  0),

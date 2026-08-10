@@ -20,7 +20,7 @@ class UserInterface():
 
     def __init__(self):
 
-        entities.SCREEN_MODE = 'effects'
+        entities.SCREEN_MODE = 'welcome'
         self.sound_card: object
         self.main_display: object
 
@@ -139,6 +139,7 @@ class UserInterface():
 
     '''
     Screen Modes:
+    welcome - The initial greeting.
     effects - The menu of effects that are available.
     animated - Values for each color as the animated effect progresses.
     static - Menu of color values available to edit.
@@ -166,7 +167,13 @@ class UserInterface():
 
 
     def single_click_listener(self):
-        pass
+
+        attrib = entities.SCREEN_MODE + '_click'
+        try:
+            display_content = getattr(view, attrib)()
+            self.update_display(display_content)
+        except:
+            pass
 
 
 
