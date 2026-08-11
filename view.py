@@ -23,7 +23,6 @@ def get_display(specs):
 
     return entities.SSD1306_I2C(width, height, i2c, addr)
 
-
 def get_menu_list() -> list:
     '''
     Returns a list of main menu items.
@@ -39,16 +38,49 @@ def get_menu_list() -> list:
 
     return menu_list
 
-# Encoder Rotation
-def welcome_turn_left():
-    entities.SCREEN_MODE = 'effects'
-
-def welcome_turn_right():
-    entities.SCREEN_MODE = 'effects'
-
-def effects_turn_left():
+def get_status_screen() -> list:
     '''
-    This is the menu of available effects.
+    The status screen is displayed when the display mode is ANIMATED, STATIC, or EDIT.
+    '''
+    status_screen: list = []
+
+    value = model.pwm2percent(entities.PWM_VALUES['RED'])
+    status_screen.append(f'Red:   {value}%')
+
+    value = model.pwm2percent(entities.PWM_VALUES['GREEN'])
+    status_screen.append(f'Green: {value}%')
+
+    value = model.pwm2percent(entities.PWM_VALUES['BLUE'])
+    status_screen.append(f'Blue:  {value}%')
+
+    value = model.pwm2percent(entities.PWM_VALUES['WARM'])
+    status_screen.append(f'Warm:  {value}%')
+
+    value = model.pwm2percent(entities.PWM_VALUES['COOL'])
+    status_screen.append(f'Cool:  {value}%')
+
+    return status_screen
+
+# DISPLAY_MODE: WELCOME
+def WELCOME_turn_left():
+    entities.DISPLAY_MODE = 'EFFECTS'
+
+def WELCOME_turn_right():
+    entities.DISPLAY_MODE = 'EFFECTS'
+
+def WELCOME_get_hilight():
+    # Move the hilight rectangle off the screen
+
+    return 65
+
+def WELCOME_click():
+    entities.DISPLAY_MODE = 'EFFECTS'
+
+# DISPLAY_MODE: EFFECTS
+
+def EFFECTS_turn_left():
+    '''
+    This is the menu of available EFFECTS.
     '''
     entities.MENU_FIRST_ITEM -= 1
     if entities.MENU_FIRST_ITEM < 0:
@@ -56,9 +88,9 @@ def effects_turn_left():
 
     return get_menu_list()
 
-def effects_turn_right():
+def EFFECTS_turn_right():
     '''
-    This is the menu of available effects.
+    This is the menu of available EFFECTS.
     '''
     entities.MENU_FIRST_ITEM += 1
     if entities.MENU_FIRST_ITEM > len(entities.MAIN_MENU) - 1:
@@ -66,38 +98,92 @@ def effects_turn_right():
 
     return get_menu_list()
 
-def static_turn_left():
-    print('static_turn_left')
-
-def static_turn_right():
-    print('static_turn_right')
-
-def edit_turn_left():
-    print('edit_turn_left')
-
-def edit_turn_right():
-    print('edit_turn_right')
-
-# Hilight rectangle
-def welcome_get_hilight():
-    # Move the hilight rectangle off the screen
-
-    return 65
-
-def effects_get_hilight():
+def EFFECTS_get_hilight():
 
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
     hilight_row = entities.HIGHLIGHT_ROW * hilight_height
 
     return hilight_row
 
+def EFFECTS_click():
 
-# Encoder single click
-def welcome_click():
-    entities.SCREEN_MODE = 'effects'
+    print(entities.HILIGHTED_EFFECT)
+    entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
+    entities.DISPLAY_MODE = entities.CURRENT_EFFECT[1]
+    print(entities.DISPLAY_MODE)
+
+    return get_status_screen()
+
+def EFFECTS_confirm_released():
+
+    entities.DISPLAY_MODE = 'STANDBY'
+    print('EFFECTS_confirm_released')
+
+    return
+
+# DISPLAY_MODE: STATIC
+
+def STATIC_turn_left():
+    print('STATIC_turn_left')
+
+    row = entities.STATIC_SELECT_ROW + 1
+    entities.STATIC_SELECT_ROW = min(row, 4)
+
+def STATIC_turn_right():
+    print('STATIC_turn_right')
+
+    row = entities.STATIC_SELECT_ROW - 1
+    entities.STATIC_SELECT_ROW = max(0, row)
+
+def STATIC_get_hilight():
+
+    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
+    hilight_row = entities.STATIC_SELECT_ROW * hilight_height
+
+    return hilight_row
+
+def STATIC_click():
+    print('STATIC_click')
+
+def STATIC_click2():
+    print('STATIC_click2')
+    entities.DISPLAY_MODE = 'EFFECTS'
+
+    return get_menu_list()
+
+# DISPLAY_MODE: ANIMATED
+
+def ANIMATED_click():
+    print('ANIMATED_click')
+    # pause and play the animated effect
+
+# DISPLAY_MODE: EDIT
+
+def EDIT_turn_left():
+    print('EDIT_turn_left')
+
+def EDIT_turn_right():
+    print('EDIT_turn_right')
+
+def EDIT_click():
+    print('EDIT_click')
+
+# DISPLAY_MODE: STANDBY
+
+def STANDBY_click():
+    print('STANDBY_click')
 
 
 
+
+
+
+
+
+
+
+
+ 
 
 
 
@@ -108,43 +194,7 @@ def welcome_click():
 
 ############# OLD STUFF ################
 
-def show_effects_screen(display):
-    display.fill(0)
-    effect_screen(display)
-    display.show()
 
-def status_screen(display):
-    '''
-    The status screen is displayed when the machine is in monitor or manual mode.
-    '''
-
-    x = entities.MAIN_FORMAT['X_OFFSET']
-    y = 1
-
-    value = model.pwm2percent(entities.PWM_VALUES['RED'])
-    display.text(f'Red:   {value}%', x, y)
-    y += entities.MAIN_FORMAT['LINE_HEIGHT']
-
-    value = model.pwm2percent(entities.PWM_VALUES['GREEN'])
-    display.text(f'Green: {value}%', x, y)
-    y += entities.MAIN_FORMAT['LINE_HEIGHT']
-
-    value = model.pwm2percent(entities.PWM_VALUES['BLUE'])
-    display.text(f'Blue:  {value}%', x, y)
-    y += entities.MAIN_FORMAT['LINE_HEIGHT']
-
-    value = model.pwm2percent(entities.PWM_VALUES['WARM'])
-    display.text(f'Warm:  {value}%', x, y)
-    y += entities.MAIN_FORMAT['LINE_HEIGHT']
-
-    value = model.pwm2percent(entities.PWM_VALUES['COOL'])
-    display.text(f'Cool:  {value}%', x, y)
-    y += entities.MAIN_FORMAT['LINE_HEIGHT']
-
-def show_status_screen(display):
-    display.fill(0)
-    status_screen(display)
-    display.show()
 
 def show_status_screen_manual(display, direction:str):
         display.fill(0)

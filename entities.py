@@ -125,10 +125,11 @@ COOL_CLOCK = 0
 # Navigation
 WELCOME_SCREEN = ['   M.U.T.T.', ' Metropolitan', '    Union', '   Transfer', '   Terminal']
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
-DISPLAY_MODE = 'welcome' # Can be: welcome, effects, animated, static, edit, standby
-DEFAULT_EFFECT = ('STATIC', 1)
-CURRENT_EFFECT = ('STATIC', 1)
-HILIGHTED_EFFECT = ('STATIC', 1)
+STATIC_SELECT_ROW = 2 # In STATIC mode, the encoder moves the rectangle up and down
+DISPLAY_MODE = 'WELCOME' # Can be: welcome, effects, animated, static, edit, standby
+DEFAULT_EFFECT = ('Daytime', 'STATIC', 2)
+CURRENT_EFFECT = ('Daytime', 'STATIC', 2)
+HILIGHTED_EFFECT = 1 # MAIN_MENU key
 MENU_FIRST_ITEM = 2 # Index of MAIN_MENU for first item in menu
 LED_INDEX_MAP = {0: 'RED',
                  1: 'GREEN',

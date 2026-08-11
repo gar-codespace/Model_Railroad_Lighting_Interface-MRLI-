@@ -20,7 +20,7 @@ class UserInterface():
 
     def __init__(self):
 
-        entities.SCREEN_MODE = 'welcome'
+        entities.DISPLAY_MODE = 'WELCOME'
         self.sound_card: object
         self.main_display: object
 
@@ -79,23 +79,6 @@ class UserInterface():
             self.back.update()
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
-    def toggle_machine_state(self):
-        '''
-        Use the confirm button to turn the machine off or on
-        '''
-
-        if entities.MACHINE:
-            self.effect.run_static_effect(0)
-            view.show_blank_screen(self.main_display)
-            entities.SCREEN_MODE = 'OFF'
-        else:
-            entities.SCREEN_MODE = 'AUTOMATIC'
-            self.effect.run_static_effect(2) ####################### Fix this !!!!!!!!!!!!!
-            view.show_effects_screen(self.main_display)
-
-        entities.MACHINE = not entities.MACHINE
-        print(f'Machine State: {entities.MACHINE}')
-
     async def get_led_bank_buttons(self):
         '''
         Consolidate all the led buttons into one loop.
@@ -109,7 +92,7 @@ class UserInterface():
         bs = entities.Button(entities.PICO_PIN['SCENIC_B'], True, listeners.scenic_button_listener)
 
         while(True):
-            if entities.SCREEN_MODE == 'MANUAL' or entities.SCREEN_MODE == 'ADJUST':
+            if entities.DISPLAY_MODE == 'STATIC' or entities.DISPLAY_MODE == 'EDIT':
                 b0.update()
                 b1.update()
                 b2.update()
@@ -129,7 +112,7 @@ class UserInterface():
             line_y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
         try: # add the hilight rectangle
-            attrib = entities.SCREEN_MODE + '_get_hilight'
+            attrib = entities.DISPLAY_MODE + '_get_hilight'
             h = getattr(view, attrib)()
             self.main_display.rect(0, h, 128, 11, 1)
         except:
@@ -138,7 +121,7 @@ class UserInterface():
         self.main_display.show()
 
     '''
-    Screen Modes:
+    Display Modes:
     welcome - The initial greeting.
     effects - The menu of effects that are available.
     animated - Values for each color as the animated effect progresses.
@@ -147,7 +130,8 @@ class UserInterface():
     standby - Static effect that turns everything 'off'.
     '''
     def turn_left_listener(self):
-        attrib = entities.SCREEN_MODE + '_turn_left'
+        attrib = entities.DISPLAY_MODE + '_turn_left'
+        print(attrib)
         try:
             display_content = getattr(view, attrib)()
             self.update_display(display_content)
@@ -155,35 +139,30 @@ class UserInterface():
             pass
 
     def turn_right_listener(self):
-        attrib = entities.SCREEN_MODE + '_turn_right'
+        attrib = entities.DISPLAY_MODE + '_turn_right'
         try:
             display_content = getattr(view, attrib)()
             self.update_display(display_content)
         except:
             pass
-
-
-
-
 
     def single_click_listener(self):
 
-        attrib = entities.SCREEN_MODE + '_click'
+        attrib = entities.DISPLAY_MODE + '_click'
         try:
             display_content = getattr(view, attrib)()
             self.update_display(display_content)
         except:
             pass
 
-
-
     def multi_click_listener(self, clicks):
         #print(f"Multiply Clicks: {clicks}")
-        pass
-
-
-
-
+        attrib = entities.DISPLAY_MODE + '_click2'
+        try:
+            display_content = getattr(view, attrib)()
+            self.update_display(display_content)
+        except:
+            pass
 
     def confirm_button_listener(self, button, event):
         '''Used to toggle the machine standby'''
@@ -191,8 +170,14 @@ class UserInterface():
         if event == entities.Button.PRESSED:
             pass
         if event == entities.Button.RELEASED:
-            self.toggle_machine_state()
-
+            attrib = entities.DISPLAY_MODE + '_confirm_released'
+            try:
+                display_content = getattr(view, attrib)()
+                print(display_content)
+                self.update_display(display_content)
+            except:
+                pass
+            
     def back_button_listener(self, button, event):
         '''Not used.'''
 
