@@ -209,7 +209,6 @@ def EDIT_get_hilight():
 
     return hilight_row
 
-
 def EDIT_click():
 
     entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
@@ -225,7 +224,3 @@ def EDIT_click2():
 
 
 ########### DISPLAY_MODE: STANDBY
-
-
-def STANDBY_click():
-    print('STANDBY_click')

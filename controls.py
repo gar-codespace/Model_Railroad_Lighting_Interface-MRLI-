@@ -30,8 +30,8 @@ class UserInterface():
 
     def run_default_effect(self):
 
-        effect = 'run_' + entities.DEFAULT_EFFECT[1] + '_effect'
-        getattr(self.effect, effect)(entities.DEFAULT_EFFECT[2])
+        effect_method = 'run_' + entities.DEFAULT_EFFECT[1] + '_effect'
+        getattr(self.effect, effect_method)(entities.DEFAULT_EFFECT[2])
 
     def get_sound_card(self):
 
@@ -123,14 +123,30 @@ class UserInterface():
 
         self.main_display.show()
 
+    def clear_display(self):
+
+        self.main_display.fill(0)
+        self.main_display.show()
+
+    def toggle_standby(self):
+
+        if entities.DISPLAY_MODE == 'STANDBY':
+            entities.DISPLAY_MODE = 'EFFECTS'
+            display_content = view.get_menu_list()
+            self.update_display(display_content)
+        else:
+            self.effect.run_STATIC_effect(0)
+            self.clear_display()
+            entities.DISPLAY_MODE = 'STANDBY'
+
     '''
     Display Modes:
-    welcome - The initial greeting.
-    effects - The menu of effects that are available.
-    animated - Values for each color as the animated effect progresses.
-    static - Menu of color values available to edit.
-    edit - One particular color is being edited.
-    standby - Static effect that turns everything 'off'.
+    WELCOME - The initial greeting.
+    EFFECTS - The menu of effects that are available.
+    ANIMATED - Values for each color as the animated effect progresses.
+    STATIC - Menu of color values available to edit.
+    EDIT - One particular color is being edited.
+    STANDBY - Static effect that turns everything 'off'.
     '''
     def turn_left_listener(self):
         attrib = entities.DISPLAY_MODE + '_turn_left'
@@ -161,7 +177,7 @@ class UserInterface():
             pass
 
     def multi_click_listener(self, clicks):
-        #print(f"Multiply Clicks: {clicks}")
+        #print(f"Multiple Clicks: {clicks}")
         attrib = entities.DISPLAY_MODE + '_click2'
         try:
             display_content = getattr(view, attrib)()
@@ -170,18 +186,12 @@ class UserInterface():
             pass
 
     def confirm_button_listener(self, button, event):
-        '''Used to toggle the machine standby'''
+        '''Used to toggle standby mode'''
 
         if event == entities.Button.PRESSED:
             pass
         if event == entities.Button.RELEASED:
-            attrib = entities.DISPLAY_MODE + '_confirm_released'
-            try:
-                display_content = getattr(view, attrib)()
-                print(display_content)
-                self.update_display(display_content)
-            except:
-                pass
+            self.toggle_standby()
             
     def back_button_listener(self, button, event):
         '''Not used.'''
