@@ -19,13 +19,15 @@ from hw_MAX9744 import MAX9744
 
 ###### HARDWARE ######
 
-# Raspi Pico parameters
+########### Raspi Pico parameters
+
 LED = PIN('LED', PIN.OUT)
 PWM_FREQ = 480
 PWM_STEPS = 65535
 MACHINE = True # True is on False is off
 
-# Raspi Pico GP pin assignments
+########### Raspi Pico GP pin assignments
+
 PICO_PIN = {
         'RED':0, # pwm colors
         'GREEN':1,
@@ -88,7 +90,7 @@ MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
                 }
 
 # Audio
-# Adafruit 9744
+# Adafruit MAX9744
 SOUND_CARD = {'a':'b', 'c':'d'}
 
 SOUND_CLIPS = {'clip0':'harbor_sounds1.mp3',
@@ -97,13 +99,13 @@ SOUND_CLIPS = {'clip0':'harbor_sounds1.mp3',
 
 ###### SOFTWARE ######
 
-# Time Base
+########### Time Base
+
 DEFAULT_TICK = 20 # milliseconds
 CLOCK_RATIO = 6 # build in some fast time clock compatability
 CLOCK_CYCLE = 2000 # Milliseconds. The delay the effect awaits.
 
-# Color Control
-PWM_STEP = 5 # how much to change pwm value for each color loop cycle
+########### Color Control
 
 PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
               'GREEN':32500, # or set by the program
@@ -112,17 +114,8 @@ PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
               'COOL':32500
               }
 
-# ANIMATED Effects Countdown
-RED_CLOCK = 0
-GREEN_CLOCK = 0
-BLUE_CLOCK = 0
-WARM_CLOCK = 0
-COOL_CLOCK = 0
+########### Navigation
 
-
-####### THE NEW WAY OF SCRIPTING EFFECTS ###########
-
-# Navigation
 WELCOME_SCREEN = ['   M.U.T.T.', ' Metropolitan', '    Union', '   Transfer', '   Terminal']
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 STATIC_SELECT_ROW = 2 # In STATIC mode, the encoder moves the rectangle up and down
@@ -139,7 +132,7 @@ LED_INDEX_MAP = {0: 'RED',
                  }
 PWM_TICKS = 1000 # how many ticks per indent of the rotary encoder when changing color values
 STATUS_HILIGHT_INDEX = 0 # What is this?
-# Menu
+
 MAIN_MENU = { # In the order they show on the display
              0: ('Maintenance',        'STATIC',  0),
              1: ('Daytime',            'STATIC',  1),
@@ -151,11 +144,12 @@ MAIN_MENU = { # In the order they show on the display
              7: ('* Mid Day',        'ANIMATED',  6),
              8: ('* Dusk',           'ANIMATED',  8),
              9: ('* Evening',        'ANIMATED', 10),
-            10: ('* A Cloudy Day', 'CLOUDY_DAY',  0)
+            10: ('* A Cloudy Day',   'ANIMATED',  0)
             }
 
 STATIC = { # 0 duration
 'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'),
+'GROUP':  (   'A1',    'A2',    'A3',    'A4',    'A5'),
 'INDEX':  (      0,       1,       2,       3,       4),
 'TIME':   (      0,       0,       0,       0,       0), # Time of day in minutes
 'RANDOM': (     .0,      .0,      .0,      .0,      .0),
@@ -173,205 +167,20 @@ STATIC = { # 0 duration
 }
 
 ANIMATED = { # simulates an entire day
-'NAME':   ( '1AM' '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM'),
-'INDEX':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11),
-'TIME':   (   60,   180,   300,   420,   540,   660,   780,   900,  1020,  1140,  1260,  1380), # Time of day in minutes
-'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0),
-'RED':    (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
-'GREEN':  (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
-'BLUE':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
-'WARM':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
-'COOL':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50),
-'BANK0':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
-'BANK1':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
-'BANK2':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
-'BANK3':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
-'BANK4':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True),
-'SCENIC': ( True,  True,  True,  True, False, False, False, False,  True,  True,  True,  True),
+'NAME':   ( '1AM' '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM',   'Clear', 'Cloudy',  'Clear'),
+'GROUP':  ( 'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',      'C2',     'C2',     'C2'),
+'INDEX':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11,         0,        1,        2),
+'TIME':   (   60,   180,   300,   420,   540,   660,   780,   900,  1020,  1140,  1260,  1380,         0,        8,       16), # Time of day in minutes
+'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,        .5,       .5,       .5),
+'RED':    (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,       .50,       .3,       .5),
+'GREEN':  (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,       .50,       .3,       .5),
+'BLUE':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,       .50,       .3,       .5),
+'WARM':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,       .50,       .3,       .5),
+'COOL':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,       .50,       .3,       .5),
+'BANK0':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,      True,     True,     True),
+'BANK1':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,      True,     True,     True),
+'BANK2':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,      True,     True,     True),
+'BANK3':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,      True,     True,     True),
+'BANK4':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,      True,     True,     True),
+'SCENIC': ( True,  True,  True,  True, False, False, False, False,  True,  True,  True,  True,     False,    False,    False),
 }
-
-CLOUDY_DAY = {
-'NAME':   ( 'Clear', 'Cloudy',  'Clear'),
-'INDEX':  (       0,        1,        2),
-'TIME':   (       0,        8,       16), # Time of day in minutes
-'RANDOM': (      .5,       .5,       .5),
-'RED':    (     .50,       .3,       .5),
-'GREEN':  (     .50,       .3,       .5),
-'BLUE':   (     .50,       .3,       .5),
-'WARM':   (     .50,       .3,       .5),
-'COOL':   (     .50,       .3,       .5),
-'BANK1':  (    True,     True,     True),
-'BANK2':  (    True,     True,     True),
-'BANK0':  (    True,     True,     True),
-'BANK3':  (    True,     True,     True),
-'BANK4':  (    True,     True,     True),
-'SCENIC': (   False,    False,    False),
-}
-
-
-
-##############  THE OLD WAY  ###################
-
-EFFECTS = { # the order they appear on the menu
-            0:'MAINTENANCE',
-            1:'DAY',
-            2:'TWLIGHT',
-            3:'NIGHT',
-            4:'SUNRISE',
-            5:'CLOUDY',
-            6:'SUNSET',
-            7:'STORMY'
-            }
-
-# Effect Parameters
-MAINTENANCE =  {'name':'Maintenance',
-                'type': 'STATIC',
-                'audio': None,
-                'bank0':1,
-                'bank1':1,
-                'bank2':1,
-                'bank3':1,
-                'bank4':1,
-                'scenic':1,
-                'red':[1],
-                'green':[1],
-                'blue':[1],
-                'warm':[1],
-                'cool':[1],
-                'duration':0.0,
-                'random':0.0,
-                'loop':False
-                }
-
-DAY =  {'name':'Daytime',
-        'type': 'STATIC',
-        'audio': 'clip0',
-        'bank0':1,
-        'bank1':1,
-        'bank2':1,
-        'bank3':1,
-        'bank4':1,
-        'scenic':0,
-        'red':[.75],
-        'green':[.75],
-        'blue':[.75],
-        'warm':[.75],
-        'cool':[.75],
-        'duration':0.0,
-        'random':0.0,
-        'loop':False
-        }
-
-TWLIGHT = {'name':'Twlight',
-           'type': 'STATIC',
-           'audio': 'clip0',
-           'bank0':1,
-           'bank1':1,
-           'bank2':1,
-           'bank3':1,
-           'bank4':1,
-           'scenic':1,
-           'red':[.5],
-           'green':[.5],
-           'blue':[.5],
-           'warm':[.5],
-           'cool':[.5],
-           'duration':0.0,
-           'random':0.0,
-           'loop':False
-           }
-
-NIGHT =   {'name':'Nightime',
-           'type': 'STATIC',
-           'audio': 'clip0',
-           'bank0':0,
-           'bank1':1,
-           'bank2':1,
-           'bank3':1,
-           'bank4':1,
-           'scenic':1,
-           'red':[.1],
-           'green':[.1],
-           'blue':[.1],
-           'warm':[.1],
-           'cool':[.1],
-           'duration':0.0,
-           'random':0.0,
-           'loop':False
-           }
-
-SUNRISE = {'name':'Sunrise',
-           'type': 'ANIMATED',
-           'audio': 'clip0',
-           'bank0':1,
-           'bank1':1,
-           'bank2':1,
-           'bank3':1,
-           'bank4':1,
-           'scenic':1,
-           'red':(.8, .5),
-           'green':(.8, .5),
-           'blue':(.8, .5),
-           'warm':(.8, .5),
-           'cool':(.8, .5),
-           'duration':180.0,
-           'random':0.0,
-           'loop':False
-           }
-
-CLOUDY =  {'name':'* Cloudy Day',
-           'type': 'ANIMATED',
-           'audio': 'clip0',
-           'bank0':1,
-           'bank1':1,
-           'bank2':1,
-           'bank3':1,
-           'bank4':1,
-           'scenic':0,
-           'red':(.5, 0),
-           'green':(.5, 0),
-           'blue':(.5, 0),
-           'warm':(.5, .8),
-           'cool':(.5, .2),
-           'duration':5.0,
-           'random':0.3,
-           'loop':True
-           }
-
-SUNSET =  {'name':'Sunset',
-           'type': 'ANIMATED',
-           'audio': 'clip0',
-           'bank0':1,
-           'bank1':1,
-           'bank2':1,
-           'bank3':1,
-           'bank4':1,
-           'scenic':1,
-           'red':(0, 1),
-           'green':(0, 1),
-           'blue':(0, 1),
-           'warm':(1, 0),
-           'cool':(1, 0),
-           'duration':1.0,
-           'random':0.0,
-           'loop':False
-           }
-
-STORMY =  {'name':'Stormy Night',
-           'type': 'ANIMATED',
-           'audio': 'clip0',
-           'bank0':1,
-           'bank1':1,
-           'bank2':1,
-           'bank3':1,
-           'bank4':1,
-           'scenic':1,
-           'red':(0, 0),
-           'green':(0, 0),
-           'blue':(0, 0),
-           'warm':(.4, .4),
-           'cool':(0, 0),
-           'duration':5.0,
-           'random':0.7,
-           'loop':True
-           }

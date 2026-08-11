@@ -23,6 +23,7 @@ def get_display(specs):
 
     return entities.SSD1306_I2C(width, height, i2c, addr)
 
+
 def get_menu_list() -> list:
     '''
     Returns a list of main menu items.
@@ -61,7 +62,10 @@ def get_status_screen() -> list:
 
     return status_screen
 
-# DISPLAY_MODE: WELCOME
+
+########### DISPLAY_MODE: WELCOME
+
+
 def WELCOME_turn_left():
     entities.DISPLAY_MODE = 'EFFECTS'
 
@@ -76,7 +80,9 @@ def WELCOME_get_hilight():
 def WELCOME_click():
     entities.DISPLAY_MODE = 'EFFECTS'
 
-# DISPLAY_MODE: EFFECTS
+
+########### DISPLAY_MODE: EFFECTS
+
 
 def EFFECTS_turn_left():
     '''
@@ -119,7 +125,9 @@ def EFFECTS_confirm_released():
 
     return
 
-# DISPLAY_MODE: STATIC
+
+########### DISPLAY_MODE: STATIC
+
 
 def STATIC_turn_left():
 
@@ -152,13 +160,23 @@ def STATIC_click2():
 
     return get_menu_list()
 
-# DISPLAY_MODE: ANIMATED
+
+########### DISPLAY_MODE: ANIMATED
+
 
 def ANIMATED_click():
     print('ANIMATED_click')
     # pause and play the animated effect
 
-# DISPLAY_MODE: EDIT
+def ANIMATED_click2():
+    print('ANIMATED_click2')
+    entities.DISPLAY_MODE = 'EFFECTS'
+
+    return get_menu_list()
+
+
+########### DISPLAY_MODE: EDIT
+
 
 def EDIT_turn_left():
 
@@ -199,7 +217,9 @@ def EDIT_click():
 
     return get_status_screen()
 
-# DISPLAY_MODE: STANDBY
+
+########### DISPLAY_MODE: STANDBY
+
 
 def STANDBY_click():
     print('STANDBY_click')
