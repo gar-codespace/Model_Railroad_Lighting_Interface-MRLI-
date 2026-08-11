@@ -1,7 +1,6 @@
 '''
 I'm trying to keep this as simple as possible.
-The Confirm button is used to turn the machine on or off.
-When turning on it will start the last used effect from the beginning.
+The Confirm button is used to toggle standby mode.
 The Back button is not used.
 '''
 

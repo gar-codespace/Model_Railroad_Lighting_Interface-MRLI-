@@ -107,10 +107,8 @@ def EFFECTS_get_hilight():
 
 def EFFECTS_click():
 
-    print(entities.HILIGHTED_EFFECT)
     entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
     entities.DISPLAY_MODE = entities.CURRENT_EFFECT[1]
-    print(entities.DISPLAY_MODE)
 
     return get_status_screen()
 
@@ -142,12 +140,10 @@ def STATIC_get_hilight():
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
 
-    print(hilight_row)
-
     return hilight_row
 
 def STATIC_click():
-    print('STATIC_click')
+
     entities.DISPLAY_MODE = 'EDIT'
 
 def STATIC_click2():
@@ -165,13 +161,43 @@ def ANIMATED_click():
 # DISPLAY_MODE: EDIT
 
 def EDIT_turn_left():
-    print('EDIT_turn_left')
+
+    color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
+    pwm_value = entities.PWM_VALUES.get(color)
+
+    pwm_value -= entities.PWM_TICKS
+    pwm_value = max(0, pwm_value)
+
+    entities.PWM_VALUES[color] = pwm_value
+
+    return get_status_screen()
 
 def EDIT_turn_right():
-    print('EDIT_turn_right')
+
+    color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
+    pwm_value = entities.PWM_VALUES.get(color)
+
+    pwm_value += entities.PWM_TICKS
+    pwm_value = min(pwm_value, entities.PWM_STEPS)
+
+    entities.PWM_VALUES[color] = pwm_value
+
+    return get_status_screen()
+
+def EDIT_get_hilight():
+
+    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
+    hilight_row = entities.STATIC_SELECT_ROW * hilight_height
+
+    return hilight_row
+
 
 def EDIT_click():
-    print('EDIT_click')
+
+    entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
+    entities.DISPLAY_MODE = entities.CURRENT_EFFECT[1]
+
+    return get_status_screen()
 
 # DISPLAY_MODE: STANDBY
 
