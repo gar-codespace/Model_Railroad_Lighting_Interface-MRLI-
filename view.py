@@ -217,6 +217,12 @@ def EDIT_click():
 
     return get_status_screen()
 
+def EDIT_click2():
+
+    entities.DISPLAY_MODE = 'EFFECTS'
+
+    return get_menu_list()
+
 
 ########### DISPLAY_MODE: STANDBY
 

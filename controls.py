@@ -78,7 +78,7 @@ class UserInterface():
             self.back.update()
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
-    async def get_led_bank_buttons(self):
+    def get_led_bank_buttons(self):
         '''
         Consolidate all the led buttons into one loop.
         ''' 

@@ -24,7 +24,6 @@ from hw_MAX9744 import MAX9744
 LED = PIN('LED', PIN.OUT)
 PWM_FREQ = 480
 PWM_STEPS = 65535
-MACHINE = True # True is on False is off
 
 ########### Raspi Pico GP pin assignments
 
