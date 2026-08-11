@@ -124,26 +124,31 @@ def EFFECTS_confirm_released():
 # DISPLAY_MODE: STATIC
 
 def STATIC_turn_left():
-    print('STATIC_turn_left')
 
     row = entities.STATIC_SELECT_ROW + 1
     entities.STATIC_SELECT_ROW = min(row, 4)
 
+    return get_status_screen()
+
 def STATIC_turn_right():
-    print('STATIC_turn_right')
 
     row = entities.STATIC_SELECT_ROW - 1
     entities.STATIC_SELECT_ROW = max(0, row)
+
+    return get_status_screen()
 
 def STATIC_get_hilight():
 
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
 
+    print(hilight_row)
+
     return hilight_row
 
 def STATIC_click():
     print('STATIC_click')
+    entities.DISPLAY_MODE = 'EDIT'
 
 def STATIC_click2():
     print('STATIC_click2')
@@ -172,52 +177,3 @@ def EDIT_click():
 
 def STANDBY_click():
     print('STANDBY_click')
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-############# OLD STUFF ################
-
-
-
-def show_status_screen_manual(display, direction:str):
-        display.fill(0)
-        status_screen(display)
-        manual_hilight(display, direction)
-        display.show()
-    
-def manual_hilight(display, direction: str='None'):
-    '''
-    Manual hilight is only used when the machine is is manual mode.
-    The min and max values can be hardcoded because there are 5 led colors and that's not changing.
-    (famous last words)
-    '''
-
-    if direction == 'right':
-        entities.STATUS_HILIGHT_INDEX -= 1
-        entities.STATUS_HILIGHT_INDEX = max(0, entities.STATUS_HILIGHT_INDEX)
-
-    elif direction == 'left':
-        entities.STATUS_HILIGHT_INDEX += 1
-        entities.STATUS_HILIGHT_INDEX = min(entities.STATUS_HILIGHT_INDEX, 4)
-
-    x = entities.MAIN_FORMAT['LINE_HEIGHT'] * entities.STATUS_HILIGHT_INDEX
-    hilight = display.rect(0, x, 128, 10, 1)
-
-    return hilight

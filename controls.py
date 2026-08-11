@@ -131,7 +131,6 @@ class UserInterface():
     '''
     def turn_left_listener(self):
         attrib = entities.DISPLAY_MODE + '_turn_left'
-        print(attrib)
         try:
             display_content = getattr(view, attrib)()
             self.update_display(display_content)
