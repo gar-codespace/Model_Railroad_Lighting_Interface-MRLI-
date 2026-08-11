@@ -27,7 +27,11 @@ class UserInterface():
         model.set_pwm_led_pins() # sets pico pins to pwm
 
         self.effect = effects.Effect()
-        self.effect.run_static_effect(2) # Upon startup, run the 'Day' static effect
+
+    def run_default_effect(self):
+
+        effect = 'run_' + entities.DEFAULT_EFFECT[1] + '_effect'
+        getattr(self.effect, effect)(entities.DEFAULT_EFFECT[2])
 
     def get_sound_card(self):
 
@@ -146,8 +150,11 @@ class UserInterface():
 
     def single_click_listener(self):
 
+        entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
+        effect_method = 'run_' + entities.CURRENT_EFFECT[1] + '_effect'
         attrib = entities.DISPLAY_MODE + '_click'
         try:
+            getattr(self.effect, effect_method)(entities.CURRENT_EFFECT[2])
             display_content = getattr(view, attrib)()
             self.update_display(display_content)
         except:

@@ -17,6 +17,7 @@ async def main():
     ui = controls.UserInterface()
     ui.get_main_display()
     ui.update_display(entities.WELCOME_SCREEN)
+    ui.run_default_effect()
     # ui.get_sound_card()
     # ui.play_welcome_sound()
 

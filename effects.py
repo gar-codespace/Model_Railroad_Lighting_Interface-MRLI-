@@ -30,11 +30,11 @@ class Effect():
         self.w = entities.PICO_PIN['WARM']
         self.c = entities.PICO_PIN['COOL']
 
-    def run_static_effect(self, index):
+    def run_STATIC_effect(self, index):
         '''
         Runs any of the effects listed in the entities.STATIC dictionary.
         '''
-
+        
         effect_matrix = entities.STATIC
         self._set_led_banks(index, effect_matrix)
         self._set_pwm_values(index, effect_matrix)

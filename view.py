@@ -155,7 +155,7 @@ def STATIC_click():
     entities.DISPLAY_MODE = 'EDIT'
 
 def STATIC_click2():
-    print('STATIC_click2')
+    
     entities.DISPLAY_MODE = 'EFFECTS'
 
     return get_menu_list()

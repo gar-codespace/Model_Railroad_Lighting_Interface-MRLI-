@@ -133,17 +133,17 @@ PWM_TICKS = 1000 # how many ticks per indent of the rotary encoder when changing
 STATUS_HILIGHT_INDEX = 0 # What is this?
 
 MAIN_MENU = { # In the order they show on the display
-             0: ('Maintenance',        'STATIC',  0),
-             1: ('Daytime',            'STATIC',  1),
-             2: ('Nightime',           'STATIC',  2),
-             3: ('Twilight',           'STATIC',  3),
+             0: ('Maintenance',        'STATIC',  1),
+             1: ('Daytime',            'STATIC',  2),
+             2: ('Nightime',           'STATIC',  3),
+             3: ('Twilight',           'STATIC',  4),
              4: ('* Midnight',       'ANIMATED',  0),
              5: ('* Dawn',           'ANIMATED',  2),
              6: ('* Morning',        'ANIMATED',  4),
              7: ('* Mid Day',        'ANIMATED',  6),
              8: ('* Dusk',           'ANIMATED',  8),
              9: ('* Evening',        'ANIMATED', 10),
-            10: ('* A Cloudy Day',   'ANIMATED',  0)
+            10: ('* A Cloudy Day',   'ANIMATED', 12)
             }
 
 STATIC = { # 0 duration
