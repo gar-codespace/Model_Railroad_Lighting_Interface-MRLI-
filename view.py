@@ -169,7 +169,7 @@ def ANIMATED_click():
     # pause and play the animated effect
 
 def ANIMATED_click2():
-    print('ANIMATED_click2')
+    
     entities.DISPLAY_MODE = 'EFFECTS'
 
     return get_menu_list()

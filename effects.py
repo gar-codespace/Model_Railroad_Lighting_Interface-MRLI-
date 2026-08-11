@@ -41,6 +41,8 @@ class Effect():
 
     def run_ANIMATED_effect(self, index):
 
+        effect = entities.MAIN_MENU.get(index)[0]
+
         print(index)
         
     def _set_led_banks(self, index, effect):
