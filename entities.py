@@ -157,12 +157,12 @@ STATIC = { # 0 duration
 'BLUE':   (      0,     1.0,      .7,      .4,      .2),
 'WARM':   (      0,     1.0,      .7,      .4,      .2),
 'COOL':   (      0,     1.0,      .7,      .4,      .2),
-'BANK0':  (  False,    True,    True,    True,   True,),
-'BANK1':  (  False,    True,    True,    True,   True,),
-'BANK2':  (  False,    True,    True,    True,   True,),
-'BANK3':  (  False,    True,    True,    True,   True,),
-'BANK4':  (  False,    True,    True,    True,   True,),
-'SCENIC': (  False,    True,   False,    True,   True,),
+'BANK0':  (  False,    True,    True,   False,    True,),
+'BANK1':  (  False,    True,   False,    True,   False,),
+'BANK2':  (  False,    True,    True,   False,   False,),
+'BANK3':  (  False,    True,   False,    True,   False,),
+'BANK4':  (  False,    True,    True,   False,   False,),
+'SCENIC': (  False,    True,   False,    True,    True,),
 }
 
 ANIMATED = { # simulates an entire day

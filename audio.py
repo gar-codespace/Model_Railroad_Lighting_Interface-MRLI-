@@ -13,7 +13,7 @@ def get_sound_card():
 
 
 
-def play_welcome_sound(sound_card):
+def play_default_sound(sound_card):
 
     pass
 

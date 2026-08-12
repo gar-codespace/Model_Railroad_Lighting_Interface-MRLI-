@@ -40,9 +40,9 @@ class UserInterface():
         self.sound_card.volume_up()
         self.sound_card.volume_down()
 
-    def play_welcome_sound(self):
+    def play_default_sound(self):
 
-        audio.play_welcome_sound(self.sound_card)
+        audio.play_default_sound(self.sound_card)
 
     def get_main_display(self):
 
@@ -109,7 +109,7 @@ class UserInterface():
 
         self.main_display.fill(0)
 
-        line_y = 0
+        line_y = 1
         for i in range(entities.MAIN_FORMAT['ROWS']):
             self.main_display.text(content[i], entities.MAIN_FORMAT['X_OFFSET'], line_y)
             line_y += entities.MAIN_FORMAT['LINE_HEIGHT']
@@ -117,7 +117,7 @@ class UserInterface():
         try: # add the hilight rectangle
             attrib = entities.DISPLAY_MODE + '_get_hilight'
             h = getattr(view, attrib)()
-            self.main_display.rect(0, h, 128, 11, 1)
+            self.main_display.rect(0, h, 128, 12, 1)
         except:
             pass
 

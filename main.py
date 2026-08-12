@@ -19,7 +19,7 @@ async def main():
     ui.update_display(entities.WELCOME_SCREEN)
     ui.run_default_effect()
     # ui.get_sound_card()
-    # ui.play_welcome_sound()
+    # ui.play_default_sound()
 
     while True:
         

@@ -145,10 +145,10 @@ def STATIC_turn_right():
 
 def STATIC_get_hilight():
 
-    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
+    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
 
-    return hilight_row
+    return hilight_row - 1
 
 def STATIC_click():
 
@@ -204,10 +204,10 @@ def EDIT_turn_right():
 
 def EDIT_get_hilight():
 
-    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
+    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
 
-    return hilight_row
+    return hilight_row - 1
 
 def EDIT_click():
 
