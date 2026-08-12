@@ -12,7 +12,7 @@ def pwm2percent(pwm):
 
 def set_switch_pins():
     '''
-    The physical switch that turns the led banks or scenic lighting on or off.
+    The STEMMA relay from Adafruit that turns the led banks or scenic lighting on or off.
     '''
 
     entities.PIN(entities.PICO_PIN['BANK0_S'], entities.PIN.OUT)
@@ -23,12 +23,10 @@ def set_switch_pins():
     entities.PIN(entities.PICO_PIN['SCENIC_S'], entities.PIN.OUT)
 
 def set_pwm_led_pins():
-        
-    # entities.PWM(entities.PIN(entities.PICO_PIN['RED']))
-    # entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']))
-    # entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']))
-    # entities.PWM(entities.PIN(entities.PICO_PIN['WARM']))
-    # entities.PWM(entities.PIN(entities.PICO_PIN['COOL']))
+    '''
+    Initializes the PWM pins.
+    '''
+
     entities.PWM(entities.PIN(entities.PICO_PIN['RED']), freq=entities.PWM_FREQ)
     entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']), freq=entities.PWM_FREQ)
     entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']), freq=entities.PWM_FREQ)
@@ -45,41 +43,7 @@ def get_index_double():
 
     return index_double
 
-def increment_current_effect(direction:str):
-
-    wrap = len(entities.EFFECTS) - 1
-
-    if direction == 'right':
-        entities.SCROLL_EFFECT += 1
-    elif direction == 'left':
-        entities.SCROLL_EFFECT -= 1
-
-    if entities.SCROLL_EFFECT < 0:
-        entities.SCROLL_EFFECT = wrap
-    elif entities.SCROLL_EFFECT > wrap:
-        entities.SCROLL_EFFECT = 0
-
-def get_highlighted_effect(): # list comprehension
-    
-    x = entities.SCROLL_EFFECT + entities.HIGHLIGHT_ROW
-
-    if x == len(entities.EFFECTS):
-        x = 0
-    elif x == len(entities.EFFECTS) + 1:
-        x = 1
-
-    entities.SELECTED_EFFECT = x
-    
-def reset_clocks():
-    '''
-    this might be obsolete
-    '''
-
-    entities.RED_CLOCK = 0
-    entities.GREEN_CLOCK = 0
-    entities.BLUE_CLOCK = 0
-    entities.WARM_CLOCK = 0
-    entities.COOL_CLOCK = 0
+######## OBSOLETE ########
 
 def adjust_color_value(direction: str):
     '''
