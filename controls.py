@@ -131,9 +131,16 @@ class UserInterface():
     def toggle_standby(self):
 
         if entities.DISPLAY_MODE == 'STANDBY':
+
+
             entities.DISPLAY_MODE = 'EFFECTS'
+            effect_method = 'run_' + entities.CURRENT_EFFECT[1] + '_effect'
+            getattr(self.effect, effect_method)(entities.CURRENT_EFFECT[2])
             display_content = view.get_menu_list()
             self.update_display(display_content)
+
+
+
         else:
             self.effect.run_STATIC_effect(0)
             self.clear_display()
