@@ -46,19 +46,19 @@ def get_status_screen() -> list:
     status_screen: list = []
 
     value = model.pwm2percent(getattr(entities, 'RED')) * 100
-    status_screen.append(f'Red:   {value}%')
+    status_screen.append(f'Red:   {round(value, 2)}%')
 
     value = model.pwm2percent(getattr(entities, 'GREEN')) * 100
-    status_screen.append(f'Green: {value}%')
+    status_screen.append(f'Green: {round(value, 2)}%')
 
     value = model.pwm2percent(getattr(entities, 'BLUE')) * 100
-    status_screen.append(f'Blue:  {value}%')
+    status_screen.append(f'Blue:  {round(value, 2)}%')
 
     value = model.pwm2percent(getattr(entities, 'WARM')) * 100
-    status_screen.append(f'Warm:  {value}%')
+    status_screen.append(f'Warm:  {round(value, 2)}%')
 
     value = model.pwm2percent(getattr(entities, 'COOL')) * 100
-    status_screen.append(f'Cool:  {value}%')
+    status_screen.append(f'Cool:  {round(value, 2)}%')
 
     return status_screen
 
@@ -228,10 +228,6 @@ def EDIT_click():
     return get_status_screen()
 
 def EDIT_click2():
-    '''Save changed value and navigate up one level'''
-
-    color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
-    index = entities.CURRENT_EFFECT[2]
 
     entities.DISPLAY_MODE = 'STATIC'
  
@@ -239,20 +235,14 @@ def EDIT_click2():
 
 def EDIT_update_buffer():
     '''
-    Copies the value in the EFFECT_BUFFER to the static effects matrix
+    Copies the value in the EFFECT_BUFFER to effects.color
     '''
 
     color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW] # PWM expression
     index = entities.CURRENT_EFFECT[2] # Imteger
-    new_value = model.pwm2percent(entities.EFFECT_BUFFER[color]) # Percentage expression
+    new_value = model.pwm2percent(getattr(entities, color)) # Percentage expression
 
-    #print(entities.STATIC[color][1])
-
-    print(getattr(entities, color))
-
-
-
-
+    entities.STATIC[color][index] = new_value
 
     return get_status_screen()
 
