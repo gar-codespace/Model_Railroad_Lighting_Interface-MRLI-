@@ -28,53 +28,51 @@ class Effect():
         self.w = entities.PICO_PIN['WARM']
         self.c = entities.PICO_PIN['COOL']
 
-    def run_STATIC_effect(self, index):
-        '''
-        Runs any of the effects listed in the entities.STATIC dictionary.
-        '''
-
-        effect_matrix = entities.STATIC
-        self._set_led_banks(index, effect_matrix)
-        self._set_pwm_values(index, effect_matrix)
-        self._set_led_values()
-        self._set_scenic_lights(index, effect_matrix)
-
     def run_ANIMATED_effect(self, index):
 
         effect = entities.MAIN_MENU.get(index)[0]
 
         print(index)
         
-    def _set_led_banks(self, index, effect):
+    def run_STATIC_effect(self, index):
+        '''
+        Runs any of the effects listed in the entities.STATIC dictionary.
+        '''
+        static_matrix = entities.STATIC
+        self.update_buffer(index, static_matrix)
+        self._set_led_banks()
+        self._set_led_values()
 
-        x = effect.get('BANK0')[index]
-        entities.PIN(entities.PICO_PIN['BANK0_S']).value(x)
-        x = effect.get('BANK1')[index]
-        entities.PIN(entities.PICO_PIN['BANK1_S']).value(x)
-        x = effect.get('BANK2')[index]
-        entities.PIN(entities.PICO_PIN['BANK2_S']).value(x)
-        x = effect.get('BANK3')[index]
-        entities.PIN(entities.PICO_PIN['BANK3_S']).value(x)
-        x = effect.get('BANK4')[index]
-        entities.PIN(entities.PICO_PIN['BANK4_S']).value(x)
+    def update_buffer(self, index, static_matrix):
+        
+        entities.RED = static_matrix['RED'][index] * entities.PWM_STEPS
+        entities.GREEN = static_matrix['GREEN'][index] * entities.PWM_STEPS
+        entities.BLUE = static_matrix['BLUE'][index] * entities.PWM_STEPS
+        entities.WARM = static_matrix['WARM'][index] * entities.PWM_STEPS
+        entities.COOL = static_matrix['COOL'][index] * entities.PWM_STEPS
 
-    def _set_pwm_values(self, index, effect):
+        entities.BANK0 = static_matrix['BANK0'][index]
+        entities.BANK1 = static_matrix['BANK1'][index]
+        entities.BANK2 = static_matrix['BANK2'][index]
+        entities.BANK3 = static_matrix['BANK3'][index]
+        entities.BANK4 = static_matrix['BANK4'][index]
+        entities.SCENIC = static_matrix['SCENIC'][index]
 
-        entities.PWM_VALUES['RED'] = effect.get('RED')[index] * entities.PWM_STEPS
-        entities.PWM_VALUES['GREEN'] = effect.get('GREEN')[index] * entities.PWM_STEPS
-        entities.PWM_VALUES['BLUE'] = effect.get('BLUE')[index] * entities.PWM_STEPS
-        entities.PWM_VALUES['WARM'] = effect.get('WARM')[index] * entities.PWM_STEPS
-        entities.PWM_VALUES['COOL'] = effect.get('COOL')[index] * entities.PWM_STEPS
+    def _set_led_banks(self):
+        '''Sets the led bank relays from the value in the buffer'''
+
+        entities.PIN(entities.PICO_PIN['BANK0_S']).value(entities.BANK0)
+        entities.PIN(entities.PICO_PIN['BANK1_S']).value(entities.BANK1)
+        entities.PIN(entities.PICO_PIN['BANK2_S']).value(entities.BANK2)
+        entities.PIN(entities.PICO_PIN['BANK3_S']).value(entities.BANK3)
+        entities.PIN(entities.PICO_PIN['BANK4_S']).value(entities.BANK4)
+        entities.PIN(entities.PICO_PIN['SCENIC_S']).value(entities.SCENIC)
 
     def _set_led_values(self):
+        '''Sets the led pwm values from the value in the buffer'''
 
-        entities.PWM(self.r).duty_u16(int(entities.PWM_VALUES['RED']))
-        entities.PWM(self.g).duty_u16(int(entities.PWM_VALUES['GREEN']))
-        entities.PWM(self.b).duty_u16(int(entities.PWM_VALUES['BLUE']))
-        entities.PWM(self.w).duty_u16(int(entities.PWM_VALUES['WARM']))
-        entities.PWM(self.c).duty_u16(int(entities.PWM_VALUES['COOL']))
-
-    def _set_scenic_lights(self, index, effect):
-
-        x = effect.get('SCENIC')[index]
-        entities.PIN(entities.PICO_PIN['SCENIC_S']).value(x)
+        entities.PWM(self.r).duty_u16(int(entities.RED))
+        entities.PWM(self.g).duty_u16(int(entities.GREEN))
+        entities.PWM(self.b).duty_u16(int(entities.BLUE))
+        entities.PWM(self.w).duty_u16(int(entities.WARM))
+        entities.PWM(self.c).duty_u16(int(entities.COOL))

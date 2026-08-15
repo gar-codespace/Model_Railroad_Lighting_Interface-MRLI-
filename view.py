@@ -45,19 +45,19 @@ def get_status_screen() -> list:
     '''
     status_screen: list = []
 
-    value = model.pwm2percent(entities.PWM_VALUES['RED'])
+    value = model.pwm2percent(getattr(entities, 'RED')) * 100
     status_screen.append(f'Red:   {value}%')
 
-    value = model.pwm2percent(entities.PWM_VALUES['GREEN'])
+    value = model.pwm2percent(getattr(entities, 'GREEN')) * 100
     status_screen.append(f'Green: {value}%')
 
-    value = model.pwm2percent(entities.PWM_VALUES['BLUE'])
+    value = model.pwm2percent(getattr(entities, 'BLUE')) * 100
     status_screen.append(f'Blue:  {value}%')
 
-    value = model.pwm2percent(entities.PWM_VALUES['WARM'])
+    value = model.pwm2percent(getattr(entities, 'WARM')) * 100
     status_screen.append(f'Warm:  {value}%')
 
-    value = model.pwm2percent(entities.PWM_VALUES['COOL'])
+    value = model.pwm2percent(getattr(entities, 'COOL')) * 100
     status_screen.append(f'Cool:  {value}%')
 
     return status_screen
@@ -69,8 +69,12 @@ def get_status_screen() -> list:
 def WELCOME_turn_left():
     entities.DISPLAY_MODE = 'EFFECTS'
 
+    return get_menu_list()
+
 def WELCOME_turn_right():
     entities.DISPLAY_MODE = 'EFFECTS'
+
+    return get_menu_list()
 
 def WELCOME_get_hilight():
     # Move the hilight rectangle off the screen
@@ -79,6 +83,8 @@ def WELCOME_get_hilight():
 
 def WELCOME_click():
     entities.DISPLAY_MODE = 'EFFECTS'
+
+    return get_menu_list()
 
 
 ########### DISPLAY_MODE: EFFECTS
@@ -153,10 +159,14 @@ def STATIC_get_hilight():
 def STATIC_click():
 
     entities.DISPLAY_MODE = 'EDIT'
+    print('STATIC_click')
+
+    return get_status_screen()
 
 def STATIC_click2():
     
     entities.DISPLAY_MODE = 'EFFECTS'
+    print('STATIC_click2')
 
     return get_menu_list()
 
@@ -171,6 +181,7 @@ def ANIMATED_click():
 def ANIMATED_click2():
     
     entities.DISPLAY_MODE = 'EFFECTS'
+    print('ANIMATED_click2')
 
     return get_menu_list()
 
@@ -181,24 +192,24 @@ def ANIMATED_click2():
 def EDIT_turn_left():
 
     color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
-    pwm_value = entities.PWM_VALUES.get(color)
 
-    pwm_value -= entities.PWM_TICKS
-    pwm_value = max(0, pwm_value)
+    pwm_color_value = getattr(entities, color) # PWM expression
+    pwm_color_value -= entities.PWM_TICKS # PWM expression
+    pwm_color_value = max(pwm_color_value, 0) # PWM expression
 
-    entities.PWM_VALUES[color] = pwm_value
+    setattr(entities, color, pwm_color_value)
 
     return get_status_screen()
 
 def EDIT_turn_right():
 
     color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
-    pwm_value = entities.PWM_VALUES.get(color)
+    
+    pwm_color_value = getattr(entities, color) # PWM expression
+    pwm_color_value += entities.PWM_TICKS # PWM expression
+    pwm_color_value = min(pwm_color_value, entities.PWM_STEPS) # PWM expression
 
-    pwm_value += entities.PWM_TICKS
-    pwm_value = min(pwm_value, entities.PWM_STEPS)
-
-    entities.PWM_VALUES[color] = pwm_value
+    setattr(entities, color, pwm_color_value)
 
     return get_status_screen()
 
@@ -210,17 +221,38 @@ def EDIT_get_hilight():
     return hilight_row - 1
 
 def EDIT_click():
+    '''Navigate up one level with out saving'''
 
-    entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
-    entities.DISPLAY_MODE = entities.CURRENT_EFFECT[1]
+    entities.DISPLAY_MODE = 'STATIC'
 
     return get_status_screen()
 
 def EDIT_click2():
+    '''Save changed value and navigate up one level'''
 
-    entities.DISPLAY_MODE = 'EFFECTS'
+    color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
+    index = entities.CURRENT_EFFECT[2]
 
-    return get_menu_list()
+    entities.DISPLAY_MODE = 'STATIC'
+ 
+    return get_status_screen()
+
+def EDIT_update_buffer():
+    '''
+    Copies the value in the EFFECT_BUFFER to the static effects matrix
+    '''
+
+    color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW] # PWM expression
+    index = entities.CURRENT_EFFECT[2] # Imteger
+    new_value = model.pwm2percent(entities.EFFECT_BUFFER[color]) # Percentage expression
+
+    #print(entities.STATIC[color][1])
+
+    print(getattr(entities, color))
 
 
-########### DISPLAY_MODE: STANDBY
+
+
+
+    return get_status_screen()
+

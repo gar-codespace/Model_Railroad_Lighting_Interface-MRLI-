@@ -106,16 +106,26 @@ CLOCK_CYCLE = 2000 # Milliseconds. The delay the effect awaits.
 
 ########### Color Control
 
-PWM_VALUES = {'RED':32500, # these may be changed interactively by the user
-              'GREEN':32500, # or set by the program
-              'BLUE':32500,
-              'WARM':32500,
-              'COOL':32500
-              }
+# Effect Buffer
+RED    = 32500 # The running effect writes to and reads from this buffer
+BLUE   = 32500
+WARM   = 32500
+COOL   = 32500
+BANK0  = 1
+BANK1  = 1
+BANK2  = 1
+BANK3  = 1
+BANK4  = 1
+SCENIC = 1
 
 ########### Navigation
 
-WELCOME_SCREEN = ['   M.U.T.T.', ' Metropolitan', '    Union', '   Transfer', '   Terminal']
+WELCOME_SCREEN = ['   M.U.T.T.',
+                  ' Metropolitan',
+                  '    Union',
+                  '   Transfer',
+                  '   Terminal'
+                  ]
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 STATIC_SELECT_ROW = 2 # In STATIC mode, the encoder moves the rectangle up and down
 DISPLAY_MODE = 'WELCOME' # Can be: WELCOME, EFFECTS, ANIMATED, STATIC, EDIT, STANDBY
@@ -157,17 +167,17 @@ STATIC = { # 0 duration
 'BLUE':   (      0,     1.0,      .7,      .4,      .2),
 'WARM':   (      0,     1.0,      .7,      .4,      .2),
 'COOL':   (      0,     1.0,      .7,      .4,      .2),
-'BANK0':  (  False,    True,    True,   False,    True,),
-'BANK1':  (  False,    True,   False,    True,   False,),
-'BANK2':  (  False,    True,    True,   False,   False,),
-'BANK3':  (  False,    True,   False,    True,   False,),
-'BANK4':  (  False,    True,    True,   False,   False,),
-'SCENIC': (  False,    True,   False,    True,    True,),
+'BANK0':  (      0,       1,       1,       0,      1,),
+'BANK1':  (      0,       1,       0,       1,      0,),
+'BANK2':  (      0,       1,       1,       0,      0,),
+'BANK3':  (      0,       1,       0,       1,      0,),
+'BANK4':  (      0,       1,       1,       0,      0,),
+'SCENIC': (      0,       1,       0,       1,      1,),
 }
 
 ANIMATED = { # simulates an entire day
 'NAME':   ( '1AM' '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM',   'Clear', 'Cloudy',  'Clear'),
-'GROUP':  ( 'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',  'C1',      'C2',     'C2',     'C2'),
+'GROUP':  ( 'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',      'C1',     'C1',     'C1'),
 'INDEX':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11,         0,        1,        2),
 'TIME':   (   60,   180,   300,   420,   540,   660,   780,   900,  1020,  1140,  1260,  1380,         0,        8,       16), # Time of day in minutes
 'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,        .5,       .5,       .5),
@@ -176,10 +186,10 @@ ANIMATED = { # simulates an entire day
 'BLUE':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,       .50,       .3,       .5),
 'WARM':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,       .50,       .3,       .5),
 'COOL':   (  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,       .50,       .3,       .5),
-'BANK0':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,      True,     True,     True),
-'BANK1':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,      True,     True,     True),
-'BANK2':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,      True,     True,     True),
-'BANK3':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,      True,     True,     True),
-'BANK4':  ( True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,  True,      True,     True,     True),
-'SCENIC': ( True,  True,  True,  True, False, False, False, False,  True,  True,  True,  True,     False,    False,    False),
+'BANK0':  (    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,         1,        1,        1),
+'BANK1':  (    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,         1,        1,        1),
+'BANK2':  (    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,         1,        1,        1),
+'BANK3':  (    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,         1,        1,        1),
+'BANK4':  (    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,         1,        1,        1),
+'SCENIC': (    1,     1,     1,     1,     0,     0,     0,     0,     1,     1,     1,     1,         0,        0,        0),
 }

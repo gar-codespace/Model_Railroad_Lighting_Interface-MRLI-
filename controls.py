@@ -132,15 +132,11 @@ class UserInterface():
 
         if entities.DISPLAY_MODE == 'STANDBY':
 
-
             entities.DISPLAY_MODE = 'EFFECTS'
             effect_method = 'run_' + entities.CURRENT_EFFECT[1] + '_effect'
             getattr(self.effect, effect_method)(entities.CURRENT_EFFECT[2])
             display_content = view.get_menu_list()
             self.update_display(display_content)
-
-
-
         else:
             self.effect.run_STATIC_effect(0)
             self.clear_display()
@@ -158,7 +154,7 @@ class UserInterface():
     def turn_left_listener(self):
         attrib = entities.DISPLAY_MODE + '_turn_left'
         try:
-            display_content = getattr(view, attrib)()
+            display_content = getattr(view, attrib)() # IE view.WELCOME_turn_left()
             self.update_display(display_content)
         except:
             pass
@@ -166,7 +162,7 @@ class UserInterface():
     def turn_right_listener(self):
         attrib = entities.DISPLAY_MODE + '_turn_right'
         try:
-            display_content = getattr(view, attrib)()
+            display_content = getattr(view, attrib)() # IE view.WELCOME_turn_right()
             self.update_display(display_content)
         except:
             pass
@@ -175,25 +171,34 @@ class UserInterface():
 
         entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
         effect_method = 'run_' + entities.CURRENT_EFFECT[1] + '_effect'
-        attrib = entities.DISPLAY_MODE + '_click'
         try:
             getattr(self.effect, effect_method)(entities.CURRENT_EFFECT[2])
-            display_content = getattr(view, attrib)()
+        except:
+            pass
+
+        attrib = entities.DISPLAY_MODE + '_click'
+        try:
+            display_content = getattr(view, attrib)() # IE WELCOME_click()
             self.update_display(display_content)
         except:
             pass
 
     def multi_click_listener(self, clicks):
         #print(f"Multiple Clicks: {clicks}")
+        update = entities.DISPLAY_MODE + '_update_buffer' # IE view.EDIT_update_buffer()
+        try:
+            getattr(view, update)()
+        except:
+            pass
         attrib = entities.DISPLAY_MODE + '_click2'
         try:
-            display_content = getattr(view, attrib)()
+            display_content = getattr(view, attrib)() # IE WELCOME_click2()
             self.update_display(display_content)
         except:
             pass
 
     def confirm_button_listener(self, button, event):
-        '''Used to toggle standby mode'''
+        '''Toggle standby mode.'''
 
         if event == entities.Button.PRESSED:
             pass
