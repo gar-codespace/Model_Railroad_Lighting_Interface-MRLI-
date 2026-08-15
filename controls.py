@@ -137,10 +137,12 @@ class UserInterface():
             getattr(self.effect, effect_method)(entities.CURRENT_EFFECT[2])
             display_content = view.get_menu_list()
             self.update_display(display_content)
+            # start audio clip
         else:
             self.effect.run_STATIC_effect(0)
             self.clear_display()
             entities.DISPLAY_MODE = 'STANDBY'
+            # stop audio clip
 
     '''
     Display Modes:
