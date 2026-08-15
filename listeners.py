@@ -1,6 +1,5 @@
 '''
-All the buttons that turn the led banks and layout scenic lighting
-on or off are here.
+All the buttons that turn the led banks and layout scenic lighting on or off.
 '''
 
 import entities

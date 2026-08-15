@@ -1,7 +1,7 @@
 ## Model Railroad Layout Lighting Automation 
-This is the Micropython code for my layout lighting automation.  
+This is the Micropython code for my layout lighting automation project.  
 It's probably suitable for any led application where granular control and multiple settings are required.  
-The code runs on a Rasberry Pi Pico.  
+The code runs on a Rasberry Pi Pico or Pico 2.  
 
 ## Features
 This program creates lighting effects suitable for a model railroad.  
@@ -9,46 +9,48 @@ It controls 5 banks of rgbwc leds at 12 volts and controls the on or off value o
 There is also an audio module that is used for ambient sounds.  
 This is a stand alone project, it does not utilize the WiFi feature of the Pico.  
 This program controls strip leds, not individually programmible led strips.  
-
-## Methodology  
 There are two types of lighting effects: static and animated.  
-For static lighting effects, the asyncio loops run 1 cycle to set the color values and exit.  
-For animated lighting effects, the pwm step increment is held constant
-and the delay value is set for each color. The delay value of the asyncio loop is different for each color and does not change for the duration of the loop.  
-The pwm color change step is constant for all colors.  
+
+## Static Lighting Effects  
+For static lighting effects, there is no asyncio loop.  
+The values for the RGBWC colors are constant.  
+The on or off value for each led bank is constant.  
+The values for static lighting effects can be changed by the user.  
+
+## Animated Lighting Effects  
+For animated lighting effects, the asyncio delay value is set as a constant.   
 
 ## Hardware  
 Raspberry Pi Pico 2  
 Generic display module (Amazon: AITRIP 1PCS 0.96 Inch OLED Display Module with Buttons EC11 Rotary Encoder IIC Interface LCD Screen Compatible with Arduino(White Color))  
 Power Converter (Amazon: DC to DC Power Converter Buck Module 12V 16V (8V to 22V) Buck to 3.3V 2A 3A Max IP67 Waterproof with Overcurrent Overheat Short-Circuit Undervoltage Protection )  
-Adafruit STEMMA Analog SPDT Switch - MAX4544 12V - JST PH 2mm  
+Adafruit STEMMA Relay  
 Adafruit Stereo 20W Class D Audio Amplifier - MAX9744  
 Plugs, switches, buttons etc. 
 
 ## Operation  
-The machine operates in one of 4 modes:  
-AUTOMATIC - The display shows a menu of available lighting effects.  
-MONITOR - The display shows the values of the 5 colors as the effect progresses.  
-MANUAL - The display shows the menu of the 5 colors and their current value.  
-ADJUST - The display shows the value of the selected color as it's being adjusted.  
+The machine operates in one of 6 modes:  
+WELCOME - The initial screen presented at startup.  
+EFFECTS - Displays a scrollable list of available lighting effects.  
+ANIMATED - Displays the values of the RGBWC colors as they change.  
+STATIC - Displays a selectable list of the RGBWC colors.  
+EDIT - Changable value of the selected color.  
+STANDBY - Mutes the display, audio, and RGBWC lights.   
 
 ## Navigation  
-In Automatic mode:  
-  Rotate to scroll through the available lighting effects.  
-  Single click to start the hilighted effect.  
-  Double click to enter manual mode.  
-In Monitor mode:  
-  Rotate does nothing.  
-  Single click to return to Automatic mode.  
-  Double click does nothing. Maybe it should enter Adjust mode for static effects.  
-Manual mode:  
-  Rotate highlights a different color.  
-  Single click selects the hilighted color to adjust.  
-  Double click to return to Automatic mode.    
-Adjust mode:  
-  Rotate to adjust the color value.  
-  Single click to accept the adjusted color and return to Manual mode.  
-  Double click does nothing.  
+In Welcome mode:  
+
+In Effects mode:  
+  
+In Animated mode:  
+  
+In Static mode:  
+  
+in Edit mode:  
+  
+In Standby mode:  
+  
+ 
 
 ## Third Party Developers
 Thank you for providing these libraries.    

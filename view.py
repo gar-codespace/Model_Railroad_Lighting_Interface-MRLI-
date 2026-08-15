@@ -1,13 +1,8 @@
-'''
-Support methods for the controls library
-Everything is here that involves the OLED display.
-'''
-
 import entities
 import model
 
 
-def get_display(specs):
+def get_small_display(specs):
             
     bus = specs[0]
     width = specs[1]

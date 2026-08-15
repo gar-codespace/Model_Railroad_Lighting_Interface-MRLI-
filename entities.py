@@ -69,7 +69,7 @@ OLED0 = {'ADDRESS': CONST(0x3C),
          'HEIGHT': CONST(64),
          'LINE_HEIGHT': CONST(14),
         }
-# future capacity maybe fast time display
+# specs for a larger oled display
 OLED1 = {'ADDRESS': CONST(0x3C),
          'WIDTH': CONST(128),
          'HEIGHT': CONST(64),
@@ -77,10 +77,9 @@ OLED1 = {'ADDRESS': CONST(0x3C),
         }
 
 # OLED Configurations (bus, width, height, addr)
-DISPLAY0 = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
-DISPLAY1 = (1, OLED1['WIDTH'], OLED1['HEIGHT'], OLED1['ADDRESS'])
-MAIN_DISPLAY = DISPLAY0
-AUX_DISPLAY = DISPLAY1 # Not used, maybe a fast time clock
+SMALL_DISPLAY = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
+LARGE_DISPLAY = (0, OLED1['WIDTH'], OLED1['HEIGHT'], OLED1['ADDRESS'])
+MAIN_DISPLAY = SMALL_DISPLAY
 
 # Display formatting
 MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),

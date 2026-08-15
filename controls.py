@@ -46,7 +46,7 @@ class UserInterface():
 
     def get_main_display(self):
 
-        self.main_display = view.get_display(entities.MAIN_DISPLAY)
+        self.main_display = view.get_small_display(entities.MAIN_DISPLAY)
 
     def get_encoder(self):
 
