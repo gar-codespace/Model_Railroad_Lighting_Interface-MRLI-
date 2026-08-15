@@ -107,7 +107,8 @@ CLOCK_CYCLE = 2000 # Milliseconds. The delay the effect awaits.
 ########### Color Control
 
 # Effect Buffer
-RED    = 32500 # The running effect writes to and reads from this buffer
+# The running effect writes to and reads from this buffer
+RED    = 32500
 BLUE   = 32500
 WARM   = 32500
 COOL   = 32500
