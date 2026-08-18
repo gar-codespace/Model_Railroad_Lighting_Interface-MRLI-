@@ -7,13 +7,11 @@ import entities
 
 def get_sound_card():
 
-    i2c = entities.I2C(1, sda=26, scl=27, freq=400000)
-
-    return entities.MAX9744(i2c)
+    pass
 
 
 
-def play_default_sound(sound_card):
+def play_default_sound():
 
     pass
 
