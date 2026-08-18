@@ -237,7 +237,8 @@ def EDIT_update_buffer():
     index = entities.CURRENT_EFFECT[2] # Imteger
     new_value = model.pwm2percent(getattr(entities, color)) # Percentage expression
 
-    entities.STATIC[color][index] = new_value
+    # entities.STATIC[color][index] = new_value
+    entities.STATIC_BUFFER[color][index] = new_value
 
     return get_status_screen()
 

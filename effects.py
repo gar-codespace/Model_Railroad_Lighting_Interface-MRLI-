@@ -12,13 +12,13 @@ The duration of STATIC effects is defined as 0, since 'infinately long' seems re
 '''
 
 import entities
-import model
 
 class Effect():
 
     def __init__(self):
 
         self.effect_parameters: dict = {}
+        entities.STATIC_BUFFER = entities.STATIC
 
         self.duration_ticks: int = 100000# the length of the effect in ticks
 
@@ -38,7 +38,8 @@ class Effect():
         '''
         Runs any of the effects listed in the entities.STATIC dictionary.
         '''
-        static_matrix = entities.STATIC
+        # static_matrix = entities.STATIC
+        static_matrix = entities.STATIC_BUFFER
         self.update_buffer(index, static_matrix)
         self._set_led_banks()
         self._set_led_values()

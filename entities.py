@@ -157,7 +157,9 @@ MAIN_MENU = { # In the order they show on the display
             10: ('* A Cloudy Day',   'ANIMATED', 12)
             }
 
-STATIC = { # 0 duration
+STATIC_BUFFER = {}
+
+STATIC = {
 'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'),
 'GROUP':  (   'A1',    'A2',    'A3',    'A4',    'A5'),
 'INDEX':  (      0,       1,       2,       3,       4),
