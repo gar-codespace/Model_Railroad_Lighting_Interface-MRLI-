@@ -52,21 +52,21 @@ class Effect():
         entities.WARM = static_matrix['WARM'][index] * entities.PWM_STEPS
         entities.COOL = static_matrix['COOL'][index] * entities.PWM_STEPS
 
-        entities.BANK0 = static_matrix['BANK0'][index]
-        entities.BANK1 = static_matrix['BANK1'][index]
-        entities.BANK2 = static_matrix['BANK2'][index]
-        entities.BANK3 = static_matrix['BANK3'][index]
-        entities.BANK4 = static_matrix['BANK4'][index]
+        entities.BANK_0 = static_matrix['BANK_0'][index]
+        entities.BANK_1 = static_matrix['BANK_1'][index]
+        entities.BANK_2 = static_matrix['BANK_2'][index]
+        entities.BANK_3 = static_matrix['BANK_3'][index]
+        entities.BANK_4 = static_matrix['BANK_4'][index]
         entities.SCENIC = static_matrix['SCENIC'][index]
 
     def _set_led_banks(self):
         '''Sets the led bank relays from the value in the buffer'''
 
-        entities.PIN(entities.PICO_PIN['BANK0_S']).value(entities.BANK0)
-        entities.PIN(entities.PICO_PIN['BANK1_S']).value(entities.BANK1)
-        entities.PIN(entities.PICO_PIN['BANK2_S']).value(entities.BANK2)
-        entities.PIN(entities.PICO_PIN['BANK3_S']).value(entities.BANK3)
-        entities.PIN(entities.PICO_PIN['BANK4_S']).value(entities.BANK4)
+        entities.PIN(entities.PICO_PIN['BANK_0_S']).value(entities.BANK_0)
+        entities.PIN(entities.PICO_PIN['BANK_1_S']).value(entities.BANK_1)
+        entities.PIN(entities.PICO_PIN['BANK_2_S']).value(entities.BANK_2)
+        entities.PIN(entities.PICO_PIN['BANK_3_S']).value(entities.BANK_3)
+        entities.PIN(entities.PICO_PIN['BANK_4_S']).value(entities.BANK_4)
         entities.PIN(entities.PICO_PIN['SCENIC_S']).value(entities.SCENIC)
 
     def _set_led_values(self):

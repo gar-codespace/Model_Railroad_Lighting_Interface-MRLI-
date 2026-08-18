@@ -96,11 +96,11 @@ def adjust_color_value(direction: str):
 
     def set_led_banks(self):
 
-        entities.PIN(entities.PICO_PIN['BANK0_S']).value(self.effect_parameters['bank0'])
-        entities.PIN(entities.PICO_PIN['BANK1_S']).value(self.effect_parameters['bank1'])
-        entities.PIN(entities.PICO_PIN['BANK2_S']).value(self.effect_parameters['bank2'])
-        entities.PIN(entities.PICO_PIN['BANK3_S']).value(self.effect_parameters['bank3'])
-        entities.PIN(entities.PICO_PIN['BANK4_S']).value(self.effect_parameters['bank4'])
+        entities.PIN(entities.PICO_PIN['BANK_0_S']).value(self.effect_parameters['BANK_0'])
+        entities.PIN(entities.PICO_PIN['BANK_1_S']).value(self.effect_parameters['BANK_1'])
+        entities.PIN(entities.PICO_PIN['BANK_2_S']).value(self.effect_parameters['BANK_2'])
+        entities.PIN(entities.PICO_PIN['BANK_3_S']).value(self.effect_parameters['BANK_3'])
+        entities.PIN(entities.PICO_PIN['BANK_4_S']).value(self.effect_parameters['BANK_4'])
 
     def run_effectx(self):
 
@@ -157,11 +157,11 @@ def adjust_color_value(direction: str):
 
     def set_led_banks(self):
 
-        entities.PIN(entities.PICO_PIN['BANK0_S']).value(self.effect_parameters['bank0'])
-        entities.PIN(entities.PICO_PIN['BANK1_S']).value(self.effect_parameters['bank1'])
-        entities.PIN(entities.PICO_PIN['BANK2_S']).value(self.effect_parameters['bank2'])
-        entities.PIN(entities.PICO_PIN['BANK3_S']).value(self.effect_parameters['bank3'])
-        entities.PIN(entities.PICO_PIN['BANK4_S']).value(self.effect_parameters['bank4'])
+        entities.PIN(entities.PICO_PIN['BANK_0_S']).value(self.effect_parameters['BANK_0'])
+        entities.PIN(entities.PICO_PIN['BANK_1_S']).value(self.effect_parameters['BANK_1'])
+        entities.PIN(entities.PICO_PIN['BANK_2_S']).value(self.effect_parameters['BANK_2'])
+        entities.PIN(entities.PICO_PIN['BANK_3_S']).value(self.effect_parameters['BANK_3'])
+        entities.PIN(entities.PICO_PIN['BANK_4_S']).value(self.effect_parameters['BANK_4'])
         entities.PIN(entities.PICO_PIN['SCENIC_S']).value(self.effect_parameters['scenic'])
 
     # Color coroutine: runs the selected effect, one for each color
@@ -238,9 +238,9 @@ def get_effect_duration(effect_params):
 
 def set_switch_status(effect_params, index=0):
 
-    entities.PIN(entities.PICO_PIN['BANK0_S']).value(effect_params['bank0'][index])
-    entities.PIN(entities.PICO_PIN['BANK1_S']).value(effect_params['bank1'][index])
-    entities.PIN(entities.PICO_PIN['BANK2_S']).value(effect_params['bank2'][index])
-    entities.PIN(entities.PICO_PIN['BANK3_S']).value(effect_params['bank3'][index])
-    entities.PIN(entities.PICO_PIN['BANK4_S']).value(effect_params['bank4'][index])
+    entities.PIN(entities.PICO_PIN['BANK_0_S']).value(effect_params['BANK_0'][index])
+    entities.PIN(entities.PICO_PIN['BANK_1_S']).value(effect_params['BANK_1'][index])
+    entities.PIN(entities.PICO_PIN['BANK_2_S']).value(effect_params['BANK_2'][index])
+    entities.PIN(entities.PICO_PIN['BANK_3_S']).value(effect_params['BANK_3'][index])
+    entities.PIN(entities.PICO_PIN['BANK_4_S']).value(effect_params['BANK_4'][index])
     entities.PIN(entities.PICO_PIN['SCENIC_S']).value(effect_params['scenic'][index])

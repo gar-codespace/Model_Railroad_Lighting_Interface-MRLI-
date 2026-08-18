@@ -16,11 +16,11 @@ def set_switch_pins():
     The STEMMA relay from Adafruit that turns the led banks or scenic lighting on or off.
     '''
 
-    entities.PIN(entities.PICO_PIN['BANK0_S'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['BANK1_S'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['BANK2_S'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['BANK3_S'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['BANK4_S'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK_0_S'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK_1_S'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK_2_S'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK_3_S'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK_4_S'], entities.PIN.OUT)
     entities.PIN(entities.PICO_PIN['SCENIC_S'], entities.PIN.OUT)
 
 def set_pwm_led_pins():

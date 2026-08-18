@@ -87,11 +87,11 @@ class UserInterface():
         Consolidate all the led buttons into one loop.
         ''' 
 
-        b0 = entities.Button(entities.PICO_PIN['BANK0_B'], True, listeners.bank0_button_listener)
-        b1 = entities.Button(entities.PICO_PIN['BANK1_B'], True, listeners.bank1_button_listener)
-        b2 = entities.Button(entities.PICO_PIN['BANK2_B'], True, listeners.bank2_button_listener)
-        b3 = entities.Button(entities.PICO_PIN['BANK3_B'], True, listeners.bank3_button_listener)
-        b4 = entities.Button(entities.PICO_PIN['BANK4_B'], True, listeners.bank4_button_listener)
+        b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, listeners.BANK_0_button_listener)
+        b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, listeners.BANK_1_button_listener)
+        b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, listeners.BANK_2_button_listener)
+        b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, listeners.BANK_3_button_listener)
+        b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, listeners.BANK_4_button_listener)
         bs = entities.Button(entities.PICO_PIN['SCENIC_B'], True, listeners.scenic_button_listener)
 
         while(True):
