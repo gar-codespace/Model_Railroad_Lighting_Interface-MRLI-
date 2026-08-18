@@ -1,6 +1,14 @@
 '''
 I like to keep all the imports in one place
 '''
+###### PICK A DISPLAY DRIVER ######
+
+# Choose this for the 1.3 inch display
+DISPLAY_DRIVER = 'hw_sh1106'
+
+# Choose this for the 0.9 inch display
+# DISPLAY_DRIVER = 'hw_ssd1306'
+
 
 # packaged libraries
 from machine import Pin as PIN, I2C, Timer as TIMER, PWM
@@ -12,9 +20,9 @@ import uasyncio as ASYNCIO
 import random as RANDOM
 
 # hardware libraries (3rd party)
-from hw_ssd1306 import SSD1306_I2C
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 from hw_button import Button
+DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER)
 
 ###### HARDWARE ######
 
@@ -68,17 +76,11 @@ OLED0 = {'ADDRESS': CONST(0x3C),
          'HEIGHT': CONST(64),
          'LINE_HEIGHT': CONST(14),
         }
-# specs for a larger oled display
-OLED1 = {'ADDRESS': CONST(0x3C),
-         'WIDTH': CONST(128),
-         'HEIGHT': CONST(64),
-         'LINE_HEIGHT': CONST(14),
-        }
 
 # OLED Configurations (bus, width, height, addr)
-SMALL_DISPLAY = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
-LARGE_DISPLAY = (0, OLED1['WIDTH'], OLED1['HEIGHT'], OLED1['ADDRESS'])
-MAIN_DISPLAY = SMALL_DISPLAY
+DISPLAY0 = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
+MAIN_DISPLAY = DISPLAY0
+MAIN_DISPLAY_BRIGHTNESS = 70
 
 # Display formatting
 MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),

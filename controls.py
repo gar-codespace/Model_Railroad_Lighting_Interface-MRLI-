@@ -46,7 +46,8 @@ class UserInterface():
 
     def get_main_display(self):
 
-        self.main_display = view.get_small_display(entities.MAIN_DISPLAY)
+        self.main_display = view.get_display(entities.MAIN_DISPLAY)
+        self.main_display.contrast(entities.MAIN_DISPLAY_BRIGHTNESS)
 
     def get_encoder(self):
 

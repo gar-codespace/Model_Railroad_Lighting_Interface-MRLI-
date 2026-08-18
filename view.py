@@ -2,7 +2,7 @@ import entities
 import model
 
 
-def get_small_display(specs):
+def get_display(specs):
             
     bus = specs[0]
     width = specs[1]
@@ -16,8 +16,7 @@ def get_small_display(specs):
                         freq = 400000
                         )
 
-    return entities.SSD1306_I2C(width, height, i2c, addr)
-
+    return entities.DISPLAY_LIBRARY.DRIVER_I2C(width, height, i2c, addr)
 
 def get_menu_list() -> list:
     '''
