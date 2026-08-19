@@ -1,13 +1,14 @@
-## Model Railroad Layout Lighting Automation 
-This is the Micropython code for my layout lighting automation project.  
-It's probably suitable for any led application where granular control and multiple settings are required.  
+## Diorama Lighting Automation 
+This is the Micropython code for my model railroad layout lighting automation project.  
+It's probably suitable for any LED application where granular control and multiple settings are required.  
+I think this project would also be suitable for fish and reptile lighting when the project is synced to a real world clock.  
 The code runs on a Rasberry Pi Pico or Pico 2.  
 
 ## Features
-This program creates lighting effects suitable for a model railroad.  
+This program creates lighting effects suitable for a model railroad or diorama.  
 It controls 5 banks of rgbwc leds at 12 volts and controls the on or off value of the layouts scenic lights.  
 There is also an audio module that is used for ambient sounds.  
-This is a stand alone project, it does not utilize the WiFi feature of the Pico.  
+This is a stand-alone project, it does not utilize the WiFi feature of the Pico.  
 This program controls strip leds, not individually programmible led strips.  
 There are two types of lighting effects: static and animated.  
 
@@ -15,7 +16,9 @@ There are two types of lighting effects: static and animated.
 For static lighting effects, there is no asyncio loop.  
 The values for the RGBWC colors are constant.  
 The on or off value for each led bank is constant.  
-The values for static lighting effects can be changed by the user.  
+The values for static lighting effects can be changed by the user. The changes are stored
+in a buffer and so are good only as long as the power is on. Permanent changes to the lighting
+parameters require editing the dictionaries in the entities file.    
 
 ## Animated Lighting Effects  
 For animated lighting effects, the asyncio delay value is set as a constant.   
@@ -23,6 +26,7 @@ For animated lighting effects, the asyncio delay value is set as a constant.
 ## Hardware  
 Raspberry Pi Pico 2  
 Generic display module (Amazon: AITRIP 1PCS 0.96 Inch OLED Display Module with Buttons EC11 Rotary Encoder IIC Interface LCD Screen Compatible with Arduino(White Color))  
+Generic display module (Amazon: 1.3 inch White OLED Display Screen Combined with EC11 Rotary Encoder Module IIC Interface for arduino)  
 Power Converter (Amazon: DC to DC Power Converter Buck Module 12V 16V (8V to 22V) Buck to 3.3V 2A 3A Max IP67 Waterproof with Overcurrent Overheat Short-Circuit Undervoltage Protection )  
 Adafruit STEMMA Relay  
 Adafruit Stereo 20W Class D Audio Amplifier - MAX9744  
@@ -63,12 +67,12 @@ https://github.com/TTitanUA/micropython_rotary_encoder/tree/main
 
 OLED Display Library:  
 https://github.com/stlehmann/micropython-ssd1306/blob/master/ssd1306.py  
-   
+https://github.com/CrispStrobe/sh1106-py  
+
 Button library:  
 https://github.com/ubidefeo/MicroPython-Button  
 
 MAX9744 soundcard:  
-https://github.com/adafruit/Adafruit_Python_MAX9744  
 
 
 ## License

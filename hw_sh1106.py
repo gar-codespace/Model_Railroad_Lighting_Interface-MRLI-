@@ -29,7 +29,7 @@ SH1106_SET_LOW_COL = entities.CONST(0x00)
 SH1106_SET_HIGH_COL = entities.CONST(0x10)
 
 class DRIVER_I2C(entities.FRAMEBUF.FrameBuffer):
-    """SH1106 OLED driver for I2C interface"""
+    '''SH1106 OLED driver for I2C interface'''
     
     def __init__(self, width, height, i2c, addr=0x3C, external_vcc=False):
         self.i2c = i2c
@@ -43,11 +43,11 @@ class DRIVER_I2C(entities.FRAMEBUF.FrameBuffer):
         self.init_display()
 
     def write_cmd(self, cmd):
-        """Write a single command"""
+        '''Write a single command'''
         self.i2c.writeto(self.addr, bytearray([0x80, cmd]))
 
     def write_data(self, buf):
-        """Write data buffer"""
+        '''Write data buffer'''
         chunk_size = 32  # I2C buffer limit
         for i in range(0, len(buf), chunk_size):
             chunk = buf[i:i+chunk_size]
@@ -55,7 +55,7 @@ class DRIVER_I2C(entities.FRAMEBUF.FrameBuffer):
             self.i2c.writeto(self.addr, data)
 
     def init_display(self):
-        """Initialize the SH1106 display"""
+        '''Initialize the SH1106 display'''
         init_commands = [
             SET_DISP | 0x00,          # Display OFF
             SET_DISP_CLK_DIV, 0x80,   # Set clock divide ratio
@@ -82,7 +82,7 @@ class DRIVER_I2C(entities.FRAMEBUF.FrameBuffer):
         self.show()
 
     def show(self):
-        """Update display - SH1106 uses page-by-page addressing"""
+        '''Update display - SH1106 uses page-by-page addressing'''
         for page in range(self.pages):
             # Set page address
             self.write_cmd(SH1106_SET_PAGE_ADDR | page)
@@ -99,24 +99,24 @@ class DRIVER_I2C(entities.FRAMEBUF.FrameBuffer):
             self.write_data(page_data)
 
     def poweroff(self):
-        """Turn off the display"""
+        '''Turn off the display'''
         self.write_cmd(SET_DISP | 0x00)
 
     def poweron(self):
-        """Turn on the display"""
+        '''Turn on the display'''
         self.write_cmd(SET_DISP | 0x01)
 
     def contrast(self, contrast):
-        """Set display contrast (0-255)"""
+        '''Set display contrast (0-255)'''
         self.write_cmd(SET_CONTRAST)
         self.write_cmd(contrast)
 
     def invert(self, invert):
-        """Invert display colors"""
+        '''Invert display colors'''
         self.write_cmd(SET_NORM_INV | (invert & 1))
 
     def rotate(self, rotate):
-        """Rotate display 180 degrees"""
+        '''Rotate display 180 degrees'''
         if rotate:
             self.write_cmd(SET_COM_OUT_DIR)
             self.write_cmd(SET_SEG_REMAP)

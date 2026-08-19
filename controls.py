@@ -1,5 +1,4 @@
 '''
-I'm trying to keep this as simple as possible.
 The Confirm button is used to toggle standby mode.
 The Back button is not used.
 '''
@@ -162,6 +161,8 @@ class UserInterface():
         except:
             pass
 
+        self.effect._set_led_values() # Real time color adjustment
+
     def turn_right_listener(self):
         attrib = entities.DISPLAY_MODE + '_turn_right'
         try:
@@ -169,6 +170,8 @@ class UserInterface():
             self.update_display(display_content)
         except:
             pass
+
+        self.effect._set_led_values()
 
     def single_click_listener(self):
 
