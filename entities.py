@@ -1,7 +1,7 @@
 '''
 All the settings for the program are here.
 Everything is upper case, even though some settings are constants and some are variables.
-That's what version 2 is for.
+Oh well. That's what version 2 is for.
 Also, I like to keep all the imports in one place.
 '''
 ###### PICK A DISPLAY DRIVER ######
@@ -161,22 +161,22 @@ MAIN_MENU = { # In the order they show on the display
              1: ('Daytime',            'STATIC',  2),
              2: ('Twilight',           'STATIC',  4),
              3: ('Nightime',           'STATIC',  3),
-             4: ('* Midnight',       'ANIMATED',  0),
-             5: ('* Dawn',           'ANIMATED',  2),
-             6: ('* Morning',        'ANIMATED',  4),
-             7: ('* Mid Day',        'ANIMATED',  6),
-             8: ('* Dusk',           'ANIMATED',  8),
-             9: ('* Evening',        'ANIMATED', 10),
-            10: ('* A Cloudy Day',   'ANIMATED', 12)
+             4: ('* Midnight',        'ALL_DAY',  0),
+             5: ('* Dawn',            'ALL_DAY',  2),
+             6: ('* Morning',         'ALL_DAY',  4),
+             7: ('* Mid Day',         'ALL_DAY',  6),
+             8: ('* Dusk',            'ALL_DAY',  8),
+             9: ('* Evening',         'ALL_DAY', 10),
+            10: ('* A Cloudy Day',     'CLOUDY', 12)
             }
 
 STATIC_BUFFER = {}
 
 STATIC = {
-'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'),
-'GROUP':  (   'A1',    'A2',    'A3',    'A4',    'A5'),
-'INDEX':  (      0,       1,       2,       3,       4),
-'TIME':   (      0,       0,       0,       0,       0), # Time of day in minutes
+'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'), # Not used so far
+'GROUP':  (   'A1',    'A2',    'A3',    'A4',    'A5'), # Not used so far
+'FRAME':  (      0,       1,       2,       3,       4), # Not used so far
+'TIME':   (      0,       0,       0,       0,       0), # duration of waypoint
 'RANDOM': (     .0,      .0,      .0,      .0,      .0),
 'RED':    [      0,       0,       0,       0,      .1],
 'GREEN':  [      0,       0,       0,       0,      .1],
@@ -191,24 +191,43 @@ STATIC = {
 'SCENIC': [      0,       0,       0,       0,      0,],
 }
 
-ANIMATED_BUFFER = {}
+ANIMATED_BUFFER = {} # Upon selection, either ALL_DAY or CLOUDY is copied into this
 
-# Each column of an animated effect is being called a way point
-ANIMATED = { # simulates an entire day
-'NAME':   ( '1AM' '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM',   'Clear', 'Cloudy'),
-'GROUP':  ( 'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',      'C1',     'C1'),
-'INDEX':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11,         0,        1),
-'TIME':   (  120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120,         8,        8), # duration of keyframe in minutes
-'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,        .7,       .7), 
-'RED':    [  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,         0,        0],
-'GREEN':  [  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,         0,        0],
-'BLUE':   [  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,         0,        0],
-'WARM':   [  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,        .2,     .063],
-'COOL':   [  .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,   .50,       .05,       .2],
-'BANK_0': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,         1,        1],
-'BANK_1': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,         1,        1],
-'BANK_2': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,         1,        1],
-'BANK_3': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,         0,        0],
-'BANK_4': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,         1,        1],
-'SCENIC': [    1,     1,     1,     1,     0,     0,     0,     0,     1,     1,     1,     1,         0,        0],
+# Each column of an animated effect is being called a waypoint
+ALL_DAY = { # simulates an entire day
+'NAME':   ( '1AM' '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM'), # Not used so far
+'GROUP':  ( 'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1'), # Not used so far
+'FRAME':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11), # Not used so far
+'TIME':   (  120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120), # duration of waypoint in minutes
+'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0), 
+'RED':    [  .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15],
+'GREEN':  [  .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15],
+'BLUE':   [  .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15],
+'WARM':   [  .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15],
+'COOL':   [  .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15],
+'BANK_0': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
+'BANK_1': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
+'BANK_2': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
+'BANK_3': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
+'BANK_4': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
+'SCENIC': [    1,     1,     1,     1,     0,     0,     0,     0,     1,     1,     1,     1],
+}
+
+CLOUDY = { # Simulates a cloudy day
+'NAME':   (  'Clear', 'Cloudy'), # Not used so far
+'GROUP':  (     'C1',     'C1'), # Not used so far
+'FRAME':  (        0,        1), # Not used so far
+'TIME':   (        8,        8),
+'RANDOM': (       .7,       .7),
+'RED':    [        0,        0],
+'GREEN':  [        0,        0],
+'BLUE':   [        0,        0],
+'WARM':   [       .2,     .063],
+'COOL':   [      .05,       .2],
+'BANK_0': [        1,        1],
+'BANK_1': [        1,        1],
+'BANK_2': [        1,        1],
+'BANK_3': [        0,        0],
+'BANK_4': [        1,        1],
+'SCENIC': [        0,        0],
 }

@@ -43,3 +43,19 @@ def get_index_double():
     index_double = index_double + index_double
 
     return index_double
+
+def get_waypoint_duration(index):
+    '''
+    The duration of the waypoint is the number of times the while loop is run.
+    '''
+
+    duration = entities.ANIMATED_BUFFER['TIME'][index] # real time minutes
+    duration = duration * 60 # real time seconds
+    random = 1 - entities.ANIMATED_BUFFER['RANDOM'][index]
+    xmax = duration # seconds
+    xmin = duration * random # seconds
+    duration = entities.RANDOM.randint(int(xmin), int(xmax)) # seconds
+    duration = duration * 1000 # adjusted duration in milliseconds
+    waypoint_duration = int(duration / entities.CLOCK_CYCLE) # 
+
+    return waypoint_duration

@@ -12,6 +12,7 @@ The duration of STATIC effects is defined as 0, since 'infinately long' seems re
 '''
 
 import entities
+import model
 
 class Effect():
 
@@ -19,7 +20,6 @@ class Effect():
 
         self.effect_parameters: dict = {}
         entities.STATIC_BUFFER = entities.STATIC
-        entities.ANIMATED_BUFFER = entities.ANIMATED
 
         self.duration_ticks: int = 100000# the length of the effect in ticks
 
@@ -34,42 +34,31 @@ class Effect():
         With this version the LED banks are not switched during the effect.
         They are set at the begining and that's it.
         '''
-
-        '''
-        
-
-        3. Start the loop:
-            3a. Get the duration until the next index.
-                3a1. If the current index is the last index, use the first index as the next index.
-            3b. Calculate the change (in PWM values) for each color.
-            3c. Run the effect to the next index.
-                3c1. Use the effect buffer to hold the incremental values.
-        '''
+    # Copy the selected effect matrix into ANIMATED_BUFFER
+        entities.ANIMATED_BUFFER = getattr(entities, entities.CURRENT_EFFECT[1])
 
     # Set the LEDs and banks to their initial value.
         self._update_buffer(index, entities.ANIMATED_BUFFER)
         self._set_led_banks()
         self._set_led_values()
-   
+
+    # Get the length of the waypoint
+        #waypoint_duration = model.get_waypoint_duration(index)
+
+    # find the next index
+        # next_index = index + 1
+        # if not entities.ANIMATED_BUFFER['INDEX'][index]:
+        #     next_index = 0
+# 
+        # print(next_index)
+
+        
+
+
 
     # Start the loop:
-        # Get the duration of the way point
-        duration = entities.ANIMATED_BUFFER['TIME'][index] # real time minutes
-        duration = duration * 60 # real time seconds
-        random = 1 - entities.ANIMATED_BUFFER['RANDOM'][index]
-        xmax = duration # seconds
-        xmin = duration * random # seconds
-        duration = entities.RANDOM.randint(int(xmin), int(xmax)) # seconds
-        duration = duration * 1000 # adjusted duration in milliseconds
-        delay_ticks = int(duration / entities.CLOCK_CYCLE) # how long the while loop delays in ms
-        print(delay_ticks)
-
-        # find the next index
-        # If the current index is the last index, use the first index as the next index.
-        group = entities.ANIMATED_BUFFER['GROUP'][index]
-        next_index = index + 1
-        if not entities.ANIMATED_BUFFER['index'][index]:
-            pass
+        # group = entities.ANIMATED_BUFFER['GROUP'][index]
+        #     pass
 
         # get the change for each color
         # current = entities.ANIMATED_BUFFER['RED'][index]
@@ -83,14 +72,6 @@ class Effect():
         #     entities.RED = int(entities.RED + entities.STEP_R)
 
         #     await entities.ASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
-
-
-
-
-
-
-
-
 
 
 

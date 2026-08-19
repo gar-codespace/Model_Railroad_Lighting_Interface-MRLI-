@@ -133,16 +133,19 @@ class UserInterface():
         if entities.DISPLAY_MODE == 'STANDBY':
 
             entities.DISPLAY_MODE = 'EFFECTS'
-            effect_method = 'run_' + entities.CURRENT_EFFECT[1] + '_effect'
+
+            type = 'STATIC'
+            if not entities.CURRENT_EFFECT[1] == 'STATIC':
+                type = 'ANIMATED'
+            effect_method = f'run_{type}_effect'
             getattr(self.effect, effect_method)(entities.CURRENT_EFFECT[2])
-            display_content = view.get_menu_list()
-            self.update_display(display_content)
-            # start audio clip
+            self.update_display(view.get_menu_list())
+            # start audio
         else:
             self.effect.run_STATIC_effect(0)
             self.clear_display()
             entities.DISPLAY_MODE = 'STANDBY'
-            # stop audio clip
+            # stop audio
 
     '''
     Display Modes:
@@ -154,7 +157,7 @@ class UserInterface():
     STANDBY - Static effect that turns everything 'off'.
     '''
     def turn_left_listener(self):
-        attrib = entities.DISPLAY_MODE + '_turn_left'
+        attrib = f'{entities.DISPLAY_MODE}_turn_left'
         try:
             display_content = getattr(view, attrib)() # IE view.WELCOME_turn_left()
             self.update_display(display_content)
@@ -164,7 +167,7 @@ class UserInterface():
         self.effect._set_led_values() # Real time color adjustment
 
     def turn_right_listener(self):
-        attrib = entities.DISPLAY_MODE + '_turn_right'
+        attrib = f'{entities.DISPLAY_MODE}_turn_right'
         try:
             display_content = getattr(view, attrib)() # IE view.WELCOME_turn_right()
             self.update_display(display_content)
@@ -176,13 +179,16 @@ class UserInterface():
     def single_click_listener(self):
 
         entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
-        effect_method = 'run_' + entities.CURRENT_EFFECT[1] + '_effect'
+        type = entities.CURRENT_EFFECT[1]
+        if not type == 'STATIC':
+            type = 'ANIMATED'
+        effect_method = f'run_{type}_effect'
         try:
             getattr(self.effect, effect_method)(entities.CURRENT_EFFECT[2])
         except:
             pass
 
-        attrib = entities.DISPLAY_MODE + '_click'
+        attrib = f'{entities.DISPLAY_MODE}_click'
         try:
             display_content = getattr(view, attrib)() # IE WELCOME_click()
             self.update_display(display_content)
@@ -191,12 +197,12 @@ class UserInterface():
 
     def multi_click_listener(self, clicks):
         #print(f"Multiple Clicks: {clicks}")
-        update = entities.DISPLAY_MODE + '_update_buffer' # IE view.EDIT_update_buffer()
+        update = f'{entities.DISPLAY_MODE}_update_buffer' # IE view.EDIT_update_buffer()
         try:
             getattr(view, update)()
         except:
             pass
-        attrib = entities.DISPLAY_MODE + '_click2'
+        attrib = f'{entities.DISPLAY_MODE}_click2'
         try:
             display_content = getattr(view, attrib)() # IE WELCOME_click2()
             self.update_display(display_content)

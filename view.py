@@ -121,7 +121,6 @@ def EFFECTS_click():
 def EFFECTS_confirm_released():
 
     entities.DISPLAY_MODE = 'STANDBY'
-    print('EFFECTS_confirm_released')
 
     return
 
@@ -153,14 +152,12 @@ def STATIC_get_hilight():
 def STATIC_click():
 
     entities.DISPLAY_MODE = 'EDIT'
-    print('STATIC_click')
 
     return get_status_screen()
 
 def STATIC_click2():
     
     entities.DISPLAY_MODE = 'EFFECTS'
-    print('STATIC_click2')
 
     return get_menu_list()
 
@@ -169,13 +166,12 @@ def STATIC_click2():
 
 
 def ANIMATED_click():
-    print('ANIMATED_click')
+    pass
     # pause and play the animated effect
 
 def ANIMATED_click2():
     
     entities.DISPLAY_MODE = 'EFFECTS'
-    print('ANIMATED_click2')
 
     return get_menu_list()
 
