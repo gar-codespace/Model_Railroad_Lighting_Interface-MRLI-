@@ -7,7 +7,7 @@ Copyright 2026 Greg Ritacco
 '''
 
 __version__ = '20260801.1.1'
-__repo__ = 'https://github.com/gar-codespace/Model_Railroad_Lighting_Automation'
+__repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
 
 import entities
 import controls

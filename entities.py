@@ -1,5 +1,8 @@
 '''
-I like to keep all the imports in one place
+All the settings for the program are here.
+Everything is upper case, even though some settings are constants and some are variables.
+That's what version 2 is for.
+Also, I like to keep all the imports in one place.
 '''
 ###### PICK A DISPLAY DRIVER ######
 
@@ -108,16 +111,16 @@ CLOCK_CYCLE = 2000 # Milliseconds. The delay the effect awaits.
 
 # Effect Buffer
 # The running effect writes to and reads from this buffer
-RED    = 32500
-BLUE   = 32500
-WARM   = 32500
-COOL   = 32500
+RED     = 32500 # PWM value
+BLUE    = 32500
+WARM    = 32500
+COOL    = 32500
 BANK_0  = 1 # 1 is on, 0 is off
 BANK_1  = 1
 BANK_2  = 1
 BANK_3  = 1
 BANK_4  = 1
-SCENIC = 1
+SCENIC  = 1
 
 ########### Navigation
 
@@ -134,6 +137,7 @@ DEFAULT_EFFECT = ('Daytime', 'STATIC', 2)
 CURRENT_EFFECT = ('Daytime', 'STATIC', 2)
 HILIGHTED_EFFECT = 1 # MAIN_MENU key
 # MENU_FIRST_ITEM is hard coded based on 5 menu lines and the highlite on line 2
+# This should be abstracted
 MENU_FIRST_ITEM = 10 # Index of MAIN_MENU for first item in menu
 LED_INDEX_MAP = {0: 'RED',
                  1: 'GREEN',
@@ -141,14 +145,14 @@ LED_INDEX_MAP = {0: 'RED',
                  3: 'WARM',
                  4: 'COOL'
                  }
-PWM_TICKS = 1000 # how many ticks per indent of the rotary encoder when changing color values
+PWM_TICKS = 500 # how many ticks per indent of the rotary encoder when changing color values
 STATUS_HILIGHT_INDEX = 0 # What is this?
 
 MAIN_MENU = { # In the order they show on the display
              0: ('Maintenance',        'STATIC',  1),
              1: ('Daytime',            'STATIC',  2),
-             2: ('Nightime',           'STATIC',  3),
-             3: ('Twilight',           'STATIC',  4),
+             2: ('Twilight',           'STATIC',  4),
+             3: ('Nightime',           'STATIC',  3),
              4: ('* Midnight',       'ANIMATED',  0),
              5: ('* Dawn',           'ANIMATED',  2),
              6: ('* Morning',        'ANIMATED',  4),
