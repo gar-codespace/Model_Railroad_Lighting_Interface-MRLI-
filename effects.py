@@ -19,6 +19,7 @@ class Effect():
 
         self.effect_parameters: dict = {}
         entities.STATIC_BUFFER = entities.STATIC
+        entities.ANIMATED_BUFFER = entities.ANIMATED
 
         self.duration_ticks: int = 100000# the length of the effect in ticks
 
@@ -29,35 +30,94 @@ class Effect():
         self.c = entities.PICO_PIN['COOL']
 
     def run_ANIMATED_effect(self, index):
+        '''
+        With this version the LED banks are not switched during the effect.
+        They are set at the begining and that's it.
+        '''
 
-        effect = entities.MAIN_MENU.get(index)[0]
-
-        print(index)
+        '''
         
+
+        3. Start the loop:
+            3a. Get the duration until the next index.
+                3a1. If the current index is the last index, use the first index as the next index.
+            3b. Calculate the change (in PWM values) for each color.
+            3c. Run the effect to the next index.
+                3c1. Use the effect buffer to hold the incremental values.
+        '''
+
+    # Set the LEDs and banks to their initial value.
+        self._update_buffer(index, entities.ANIMATED_BUFFER)
+        self._set_led_banks()
+        self._set_led_values()
+   
+
+    # Start the loop:
+        # Get the duration of the way point
+        duration = entities.ANIMATED_BUFFER['TIME'][index] # real time minutes
+        duration = duration * 60 # real time seconds
+        random = 1 - entities.ANIMATED_BUFFER['RANDOM'][index]
+        xmax = duration # seconds
+        xmin = duration * random # seconds
+        duration = entities.RANDOM.randint(int(xmin), int(xmax)) # seconds
+        duration = duration * 1000 # adjusted duration in milliseconds
+        delay_ticks = int(duration / entities.CLOCK_CYCLE) # how long the while loop delays in ms
+        print(delay_ticks)
+
+        # find the next index
+        # If the current index is the last index, use the first index as the next index.
+        group = entities.ANIMATED_BUFFER['GROUP'][index]
+        next_index = index + 1
+        if not entities.ANIMATED_BUFFER['index'][index]:
+            pass
+
+        # get the change for each color
+        # current = entities.ANIMATED_BUFFER['RED'][index]
+        # target = entities.ANIMATED_BUFFER['RED'][next_index]
+        # delta = current - target # decimal percentage, pos or neg
+        # delta = delta * entities.PWM_STEPS
+        # entities.STEP_R = delta / delay_ticks
+
+        # while delay_ticks > 0:
+        #     delay_ticks - 1
+        #     entities.RED = int(entities.RED + entities.STEP_R)
+
+        #     await entities.ASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
+
+
+
+
+
+
+
+
+
+
+
+
     def run_STATIC_effect(self, index):
         '''
         Runs any of the effects listed in the entities.STATIC dictionary.
         '''
-        # static_matrix = entities.STATIC
-        static_matrix = entities.STATIC_BUFFER
-        self.update_buffer(index, static_matrix)
+
+        self._update_buffer(index, entities.STATIC_BUFFER)
         self._set_led_banks()
         self._set_led_values()
 
-    def update_buffer(self, index, static_matrix):
+    def _update_buffer(self, index, effect_matrix):
         
-        entities.RED = static_matrix['RED'][index] * entities.PWM_STEPS
-        entities.GREEN = static_matrix['GREEN'][index] * entities.PWM_STEPS
-        entities.BLUE = static_matrix['BLUE'][index] * entities.PWM_STEPS
-        entities.WARM = static_matrix['WARM'][index] * entities.PWM_STEPS
-        entities.COOL = static_matrix['COOL'][index] * entities.PWM_STEPS
+        entities.RED = effect_matrix['RED'][index] * entities.PWM_STEPS
+        entities.GREEN = effect_matrix['GREEN'][index] * entities.PWM_STEPS
+        entities.BLUE = effect_matrix['BLUE'][index] * entities.PWM_STEPS
+        entities.WARM = effect_matrix['WARM'][index] * entities.PWM_STEPS
+        entities.COOL = effect_matrix['COOL'][index] * entities.PWM_STEPS
 
-        entities.BANK_0 = static_matrix['BANK_0'][index]
-        entities.BANK_1 = static_matrix['BANK_1'][index]
-        entities.BANK_2 = static_matrix['BANK_2'][index]
-        entities.BANK_3 = static_matrix['BANK_3'][index]
-        entities.BANK_4 = static_matrix['BANK_4'][index]
-        entities.SCENIC = static_matrix['SCENIC'][index]
+        entities.BANK_0 = effect_matrix['BANK_0'][index]
+        entities.BANK_1 = effect_matrix['BANK_1'][index]
+        entities.BANK_2 = effect_matrix['BANK_2'][index]
+        entities.BANK_3 = effect_matrix['BANK_3'][index]
+        entities.BANK_4 = effect_matrix['BANK_4'][index]
+        entities.SCENIC = effect_matrix['SCENIC'][index]
 
     def _set_led_banks(self):
         '''Sets the led bank relays from the value in the buffer'''
