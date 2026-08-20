@@ -167,7 +167,7 @@ MAIN_MENU = { # In the order they show on the display
              7: ('* Mid Day',         'ALL_DAY',  6),
              8: ('* Dusk',            'ALL_DAY',  8),
              9: ('* Evening',         'ALL_DAY', 10),
-            10: ('* A Cloudy Day',     'CLOUDY', 12)
+            10: ('* A Cloudy Day',     'CLOUDY',  0)
             }
 
 STATIC_BUFFER = {}
@@ -195,7 +195,7 @@ ANIMATED_BUFFER = {} # Upon selection, either ALL_DAY or CLOUDY is copied into t
 
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day
-'NAME':   ( '1AM' '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM'), # Not used so far
+'NAME':   ('1AM', '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM'), # Not used so far
 'GROUP':  ( 'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1'), # Not used so far
 'FRAME':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11), # Not used so far
 'TIME':   (  120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120), # duration of waypoint in minutes
@@ -222,7 +222,7 @@ CLOUDY = { # Simulates a cloudy day
 'RED':    [        0,        0],
 'GREEN':  [        0,        0],
 'BLUE':   [        0,        0],
-'WARM':   [       .2,     .063],
+'WARM':   [       .8,     .063],
 'COOL':   [      .05,       .2],
 'BANK_0': [        1,        1],
 'BANK_1': [        1,        1],

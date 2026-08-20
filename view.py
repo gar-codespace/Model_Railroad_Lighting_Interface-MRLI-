@@ -114,7 +114,9 @@ def EFFECTS_get_hilight():
 def EFFECTS_click():
 
     entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
-    entities.DISPLAY_MODE = entities.CURRENT_EFFECT[1]
+    entities.DISPLAY_MODE = 'STATIC'
+    if not entities.CURRENT_EFFECT[1] == 'STATIC':
+        entities.DISPLAY_MODE = 'ANIMATED'
 
     return get_status_screen()
 

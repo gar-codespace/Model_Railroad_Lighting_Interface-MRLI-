@@ -56,6 +56,6 @@ def get_waypoint_duration(index):
     xmin = duration * random # seconds
     duration = entities.RANDOM.randint(int(xmin), int(xmax)) # seconds
     duration = duration * 1000 # adjusted duration in milliseconds
-    waypoint_duration = int(duration / entities.CLOCK_CYCLE) # 
+    waypoint_duration = int(duration / entities.CLOCK_CYCLE)
 
     return waypoint_duration

@@ -29,6 +29,15 @@ class Effect():
         self.w = entities.PICO_PIN['WARM']
         self.c = entities.PICO_PIN['COOL']
 
+    def run_STATIC_effect(self, index):
+        '''
+        Runs any of the effects listed in the entities.STATIC dictionary.
+        '''
+
+        self._update_buffer(index, entities.STATIC_BUFFER)
+        self._set_led_banks()
+        self._set_led_values()
+
     def run_ANIMATED_effect(self, index):
         '''
         With this version the LED banks are not switched during the effect.
@@ -42,48 +51,46 @@ class Effect():
         self._set_led_banks()
         self._set_led_values()
 
-    # Get the length of the waypoint
-        #waypoint_duration = model.get_waypoint_duration(index)
+    # waypoint_duration is the number of times the effect will loop, given
+    # a delay of entities.CLOCK_CYCLE
+        waypoint_duration = model.get_waypoint_duration(index)
 
-    # find the next index
-        # next_index = index + 1
-        # if not entities.ANIMATED_BUFFER['INDEX'][index]:
-        #     next_index = 0
-# 
-        # print(next_index)
+    # get the change per cycle for each color
+        entities.STEP_R = self.get_color_delta(index, 'RED') / waypoint_duration
+        entities.STEP_G = self.get_color_delta(index, 'GREEN') / waypoint_duration
+        entities.STEP_B = self.get_color_delta(index, 'BLUE') / waypoint_duration
+        entities.STEP_W = self.get_color_delta(index, 'WARM') / waypoint_duration
+        entities.STEP_C = self.get_color_delta(index, 'COOL') / waypoint_duration
 
-        
+        while waypoint_duration > 0:
 
+            waypoint_duration -= 1
+            entities.RED = entities.RED + entities.STEP_R
+            entities.GREEN =entities.GREEN + entities.STEP_G
+            entities.BLUE = entities.BLUE + entities.STEP_B
+            entities.WARM = entities.WARM + entities.STEP_W
+            print(entities.WARM)
+            entities.COOL = entities.COOL + entities.STEP_C
 
+            # self._set_led_values()            
 
-    # Start the loop:
-        # group = entities.ANIMATED_BUFFER['GROUP'][index]
-        #     pass
-
-        # get the change for each color
-        # current = entities.ANIMATED_BUFFER['RED'][index]
-        # target = entities.ANIMATED_BUFFER['RED'][next_index]
-        # delta = current - target # decimal percentage, pos or neg
-        # delta = delta * entities.PWM_STEPS
-        # entities.STEP_R = delta / delay_ticks
-
-        # while delay_ticks > 0:
-        #     delay_ticks - 1
-        #     entities.RED = int(entities.RED + entities.STEP_R)
-
-        #     await entities.ASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
+            entities.UTIME.sleep_ms(entities.CLOCK_CYCLE)
 
 
-
-
-    def run_STATIC_effect(self, index):
+    def get_color_delta(self, index:int, color:str):
         '''
-        Runs any of the effects listed in the entities.STATIC dictionary.
+        Can return a positive or negative value
         '''
 
-        self._update_buffer(index, entities.STATIC_BUFFER)
-        self._set_led_banks()
-        self._set_led_values()
+        next_index = index + 1
+        if next_index == len(entities.ANIMATED_BUFFER[color]):
+            next_index = 0
+
+        color_begin = entities.ANIMATED_BUFFER[color][index]
+        color_end = entities.ANIMATED_BUFFER[color][next_index]
+        color_delta = color_begin - color_end
+
+        return color_delta
 
     def _update_buffer(self, index, effect_matrix):
         
