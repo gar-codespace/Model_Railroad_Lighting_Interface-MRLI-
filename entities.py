@@ -141,7 +141,6 @@ WELCOME_SCREEN = ['   M.U.T.T.',
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 STATIC_SELECT_ROW = 2 # In STATIC mode, the encoder moves the rectangle up and down
 DISPLAY_MODE = 'WELCOME' # Can be: WELCOME, EFFECTS, ANIMATED, STATIC, EDIT, STANDBY
-DEFAULT_EFFECT = ('Daytime', 'STATIC', 2)
 CURRENT_EFFECT = ('Daytime', 'STATIC', 2)
 HILIGHTED_EFFECT = 1 # MAIN_MENU key
 # MENU_FIRST_ITEM is hard coded based on 5 menu lines and the highlite on line 2
@@ -174,7 +173,7 @@ STATIC_BUFFER = {}
 
 STATIC = {
 'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'), # Not used so far
-'GROUP':  (   'A1',    'A2',    'A3',    'A4',    'A5'), # Not used so far
+'GROUP':  (   'A1',    'A2',    'A3',    'A4',    'A5'), # sound effects group
 'FRAME':  (      0,       1,       2,       3,       4), # Not used so far
 'TIME':   (      0,       0,       0,       0,       0), # duration of waypoint
 'RANDOM': (     .0,      .0,      .0,      .0,      .0),
@@ -196,7 +195,7 @@ ANIMATED_BUFFER = {} # Upon selection, either ALL_DAY or CLOUDY is copied into t
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day
 'NAME':   ('1AM', '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM'), # Not used so far
-'GROUP':  ( 'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1'), # Not used so far
+'GROUP':  ( 'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1'), # sound effects group
 'FRAME':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11), # Not used so far
 'TIME':   (  120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120), # duration of waypoint in minutes
 'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0), 
@@ -215,9 +214,28 @@ ALL_DAY = { # simulates an entire day
 
 CLOUDY = { # Simulates a cloudy day
 'NAME':   (  'Clear', 'Cloudy'), # Not used so far
-'GROUP':  (     'C1',     'C1'), # Not used so far
+'GROUP':  (     'C1',     'C1'), # sound effects group
 'FRAME':  (        0,        1), # Not used so far
-'TIME':   (        8,        8),
+'TIME':   (        8,        8), # duration of waypoint in minutes
+'RANDOM': (       .7,       .7),
+'RED':    [        0,        0],
+'GREEN':  [        0,        0],
+'BLUE':   [        0,        0],
+'WARM':   [       .8,     .063],
+'COOL':   [      .05,       .2],
+'BANK_0': [        1,        1],
+'BANK_1': [        1,        1],
+'BANK_2': [        1,        1],
+'BANK_3': [        0,        0],
+'BANK_4': [        1,        1],
+'SCENIC': [        0,        0],
+}
+
+STORMY = { # Simulates a stormy night
+'NAME':   (  'Clear', 'Cloudy'), # Not used so far
+'GROUP':  (     'D1',     'D1'), # sound effects group
+'FRAME':  (        0,        1), # Not used so far
+'TIME':   (        8,        8), # duration of waypoint in minutes
 'RANDOM': (       .7,       .7),
 'RED':    [        0,        0],
 'GREEN':  [        0,        0],

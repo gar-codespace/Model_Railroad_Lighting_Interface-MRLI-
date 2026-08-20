@@ -28,25 +28,24 @@ class UserInterface():
         self.effect = effects.Effect()
 
     def run_default_effect(self):
+        '''The default effect is entities.CURRENT_EFFECT'''
 
-        effect_method = 'run_' + entities.DEFAULT_EFFECT[1] + '_effect'
-        getattr(self.effect, effect_method)(entities.DEFAULT_EFFECT[2])
+        self.run_STATIC_effect()
 
     def get_sound_card(self):
 
-        self.sound_card = audio.get_sound_card()
-        self.sound_card.volume = 22
-        self.sound_card.volume_up()
-        self.sound_card.volume_down()
+        pass
 
     def play_default_sound(self):
 
-        audio.play_default_sound(self.sound_card)
+        pass
 
     def get_main_display(self):
 
         self.main_display = view.get_display(entities.MAIN_DISPLAY)
         self.main_display.contrast(entities.MAIN_DISPLAY_BRIGHTNESS)
+
+################ async is called by main ##################
 
     def get_encoder(self):
 
@@ -105,6 +104,51 @@ class UserInterface():
 
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
+############## end of async section #############
+############## run the effects ##################
+
+    def run_STANDBY_effect(self):
+
+        index = 0
+        buffer = entities.STATIC_BUFFER
+
+        self.effect._update_buffer(index, buffer)
+        self.effect._set_led_banks()
+        self.effect._set_led_values()
+        # stop sound fx group
+
+    def run_STATIC_effect(self):
+        '''
+        Runs any of the effects listed in the entities.STATIC dictionary.
+        '''
+        index = entities.CURRENT_EFFECT[2]
+        buffer = entities.STATIC_BUFFER
+
+        self.effect._update_buffer(index, buffer)
+        self.effect._set_led_banks()
+        self.effect._set_led_values()
+        # play sound fx group
+
+    def run_ANIMATED_effect(self):
+        print('run_ANIMATED_effect')
+
+        index = entities.CURRENT_EFFECT[2]
+    # Copy the selected effect matrix into ANIMATED_BUFFER
+        entities.ANIMATED_BUFFER = getattr(entities, entities.CURRENT_EFFECT[1])
+        buffer = entities.ANIMATED_BUFFER
+    # Set the LEDs and banks to their initial value.
+        self.effect._update_buffer(index, buffer)
+        self.effect._set_led_banks()
+        self.effect._set_led_values()
+    # waypoint_duration is the number of times the effect will loop, given
+    # a delay of entities.CLOCK_CYCLE
+        waypoint_duration = model.get_waypoint_duration(index)
+
+
+
+################ end #################
+
+
     def update_display(self, content: list = entities.WELCOME_SCREEN):
 
         self.main_display.fill(0)
@@ -115,7 +159,7 @@ class UserInterface():
             line_y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
         try: # add the hilight rectangle
-            attrib = entities.DISPLAY_MODE + '_get_hilight'
+            attrib = f'{entities.DISPLAY_MODE}_get_hilight'
             h = getattr(view, attrib)()
             self.main_display.rect(0, h, 128, 12, 1)
         except:
@@ -129,33 +173,28 @@ class UserInterface():
         self.main_display.show()
 
     def toggle_standby(self):
+        '''
+        clean this up
+        '''
 
         if entities.DISPLAY_MODE == 'STANDBY':
-
             entities.DISPLAY_MODE = 'EFFECTS'
 
             type = 'STATIC'
             if not entities.CURRENT_EFFECT[1] == 'STATIC':
                 type = 'ANIMATED'
-            effect_method = f'run_{type}_effect'
-            getattr(self.effect, effect_method)(entities.CURRENT_EFFECT[2])
-            self.update_display(view.get_menu_list())
-            # start audio
-        else:
-            self.effect.run_STATIC_effect(0)
-            self.clear_display()
-            entities.DISPLAY_MODE = 'STANDBY'
-            # stop audio
 
-    '''
-    Display Modes:
-    WELCOME - The initial greeting.
-    EFFECTS - The menu of effects that are available.
-    ANIMATED - Values for each color as the animated effect progresses.
-    STATIC - Menu of color values available to edit.
-    EDIT - One particular color is being edited.
-    STANDBY - Static effect that turns everything 'off'.
-    '''
+            effect_method = f'run_{type}_effect'
+            getattr(self, effect_method)()
+            self.update_display(view.get_menu_list())
+
+        else:
+            entities.DISPLAY_MODE = 'STANDBY'
+            self.run_STANDBY_effect()
+            self.clear_display()
+
+################# listeners ##################
+
     def turn_left_listener(self):
         attrib = f'{entities.DISPLAY_MODE}_turn_left'
         try:
@@ -184,7 +223,7 @@ class UserInterface():
             type = 'ANIMATED'
         effect_method = f'run_{type}_effect'
         try:
-            getattr(self.effect, effect_method)(entities.CURRENT_EFFECT[2])
+            getattr(self, effect_method)()
         except:
             pass
 
