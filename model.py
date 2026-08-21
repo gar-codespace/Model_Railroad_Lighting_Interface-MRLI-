@@ -59,3 +59,20 @@ def get_waypoint_duration(index):
     waypoint_duration = int(duration / entities.CLOCK_CYCLE)
 
     return waypoint_duration
+
+def get_color_delta(index:int, color:str):
+    '''
+    The value each color changes between waypoints expressed im PWM steps.
+    Can return a positive or negative value.
+    '''
+
+    next_index = index + 1
+    if next_index == len(entities.ANIMATED_BUFFER[color]):
+        next_index = 0
+
+    color_begin = entities.ANIMATED_BUFFER[color][index] # decimal percent
+    color_end = entities.ANIMATED_BUFFER[color][next_index] # decimal percent
+    color_delta = color_end - color_begin # decimal percent
+    color_delta = color_delta * entities.PWM_STEPS # pwm steps
+
+    return color_delta

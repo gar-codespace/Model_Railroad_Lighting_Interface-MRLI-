@@ -30,7 +30,7 @@ class UserInterface():
     def run_default_effect(self):
         '''The default effect is entities.CURRENT_EFFECT'''
 
-        self.run_STATIC_effect()
+        self.effect.run_STATIC_effect()
 
     def get_sound_card(self):
 
@@ -45,9 +45,25 @@ class UserInterface():
         self.main_display = view.get_display(entities.MAIN_DISPLAY)
         self.main_display.contrast(entities.MAIN_DISPLAY_BRIGHTNESS)
 
-################ async is called by main ##################
+
+################ methods in main - ASYNCIO.gather ##################
+
+
+    def clock_cycle_pulse(self):
+        '''
+        Sends out a signal to increment an animated effect.
+        This runs even if the effect is static.
+        '''
+
+        while True:
+            a = 1
+
+            await entities.ASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
     def get_encoder(self):
+        '''
+        The await part is in async_tick.
+        '''
 
         encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], entities.PIN.IN, entities.PIN.PULL_UP)
         encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], entities.PIN.IN, entities.PIN.PULL_UP)
@@ -104,49 +120,8 @@ class UserInterface():
 
             await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
 
-############## end of async section #############
-############## run the effects ##################
 
-    def run_STANDBY_effect(self):
-
-        index = 0
-        buffer = entities.STATIC_BUFFER
-
-        self.effect._update_buffer(index, buffer)
-        self.effect._set_led_banks()
-        self.effect._set_led_values()
-        # stop sound fx group
-
-    def run_STATIC_effect(self):
-        '''
-        Runs any of the effects listed in the entities.STATIC dictionary.
-        '''
-        index = entities.CURRENT_EFFECT[2]
-        buffer = entities.STATIC_BUFFER
-
-        self.effect._update_buffer(index, buffer)
-        self.effect._set_led_banks()
-        self.effect._set_led_values()
-        # play sound fx group
-
-    def run_ANIMATED_effect(self):
-        print('run_ANIMATED_effect')
-
-        index = entities.CURRENT_EFFECT[2]
-    # Copy the selected effect matrix into ANIMATED_BUFFER
-        entities.ANIMATED_BUFFER = getattr(entities, entities.CURRENT_EFFECT[1])
-        buffer = entities.ANIMATED_BUFFER
-    # Set the LEDs and banks to their initial value.
-        self.effect._update_buffer(index, buffer)
-        self.effect._set_led_banks()
-        self.effect._set_led_values()
-    # waypoint_duration is the number of times the effect will loop, given
-    # a delay of entities.CLOCK_CYCLE
-        waypoint_duration = model.get_waypoint_duration(index)
-
-
-
-################ end #################
+################ display methods #################
 
 
     def update_display(self, content: list = entities.WELCOME_SCREEN):
@@ -172,28 +147,28 @@ class UserInterface():
         self.main_display.fill(0)
         self.main_display.show()
 
+
+################# standby method ##################
+
+
     def toggle_standby(self):
         '''
-        clean this up
+        The effect is not stopped, the LEDs are turned off.
         '''
 
         if entities.DISPLAY_MODE == 'STANDBY':
             entities.DISPLAY_MODE = 'EFFECTS'
-
-            type = 'STATIC'
-            if not entities.CURRENT_EFFECT[1] == 'STATIC':
-                type = 'ANIMATED'
-
-            effect_method = f'run_{type}_effect'
-            getattr(self, effect_method)()
+            self.effect.set_led_banks()
             self.update_display(view.get_menu_list())
 
         else:
             entities.DISPLAY_MODE = 'STANDBY'
-            self.run_STANDBY_effect()
+            self.effect.shut_off_leds()
             self.clear_display()
 
+
 ################# listeners ##################
+
 
     def turn_left_listener(self):
         attrib = f'{entities.DISPLAY_MODE}_turn_left'
@@ -218,12 +193,14 @@ class UserInterface():
     def single_click_listener(self):
 
         entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
+
         type = entities.CURRENT_EFFECT[1]
         if not type == 'STATIC':
             type = 'ANIMATED'
         effect_method = f'run_{type}_effect'
+
         try:
-            getattr(self, effect_method)()
+            getattr(self.effect, effect_method)()
         except:
             pass
 
@@ -236,7 +213,7 @@ class UserInterface():
 
     def multi_click_listener(self, clicks):
         #print(f"Multiple Clicks: {clicks}")
-        update = f'{entities.DISPLAY_MODE}_update_buffer' # IE view.EDIT_update_buffer()
+        update = f'{entities.DISPLAY_MODE}update_buffer' # IE view.EDITupdate_buffer()
         try:
             getattr(view, update)()
         except:

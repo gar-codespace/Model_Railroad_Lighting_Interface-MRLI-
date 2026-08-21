@@ -225,7 +225,7 @@ def EDIT_click2():
  
     return get_status_screen()
 
-def EDIT_update_buffer():
+def EDITupdate_buffer():
     '''
     Copies the value in the EFFECT_BUFFER to effects.color
     '''

@@ -153,7 +153,6 @@ LED_INDEX_MAP = {0: 'RED',
                  4: 'COOL'
                  }
 PWM_TICKS = 500 # how many ticks per indent of the rotary encoder when changing color values
-STATUS_HILIGHT_INDEX = 0 # What is this?
 
 MAIN_MENU = { # In the order they show on the display
              0: ('Maintenance',        'STATIC',  1),
@@ -169,7 +168,9 @@ MAIN_MENU = { # In the order they show on the display
             10: ('* A Cloudy Day',     'CLOUDY',  0)
             }
 
-STATIC_BUFFER = {}
+################## LIGHTING EFFECT DEFINITIONS ######################
+
+STATIC_BUFFER = {} # Holds the STATIC dictionary
 
 STATIC = {
 'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'), # Not used so far
@@ -180,7 +181,7 @@ STATIC = {
 'RED':    [      0,       0,       0,       0,      .1],
 'GREEN':  [      0,       0,       0,       0,      .1],
 'BLUE':   [      0,       0,       0,    .002,       0],
-'WARM':   [      0,     1.0,     .20,       0,     .05],
+'WARM':   [      0,     1.0,     .22,       0,     .05],
 'COOL':   [      0,     1.0,     .05,    .002,       0],
 'BANK_0': [      0,       1,       1,       0,      0,],
 'BANK_1': [      0,       1,       1,       0,      0,],
@@ -190,7 +191,7 @@ STATIC = {
 'SCENIC': [      0,       0,       0,       0,      0,],
 }
 
-ANIMATED_BUFFER = {} # Upon selection, either ALL_DAY or CLOUDY is copied into this
+ANIMATED_BUFFER = {} # When an animated effect is selected, the corrosponding dictionary is copied into this buffer
 
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day
@@ -216,7 +217,7 @@ CLOUDY = { # Simulates a cloudy day
 'NAME':   (  'Clear', 'Cloudy'), # Not used so far
 'GROUP':  (     'C1',     'C1'), # sound effects group
 'FRAME':  (        0,        1), # Not used so far
-'TIME':   (        8,        8), # duration of waypoint in minutes
+'TIME':   (        3,        3), # duration of waypoint in minutes
 'RANDOM': (       .7,       .7),
 'RED':    [        0,        0],
 'GREEN':  [        0,        0],
