@@ -75,9 +75,9 @@ PICO_PIN = {
 
 # OLED0 specs
 OLED0 = {'ADDRESS': CONST(0x3C),
-         'WIDTH': CONST(128),
-         'HEIGHT': CONST(64),
-         'LINE_HEIGHT': CONST(14),
+         'WIDTH': 128,
+         'HEIGHT': 64,
+         'LINE_HEIGHT': 14,
         }
 
 # OLED Configurations (bus, width, height, addr)
@@ -86,8 +86,8 @@ MAIN_DISPLAY = DISPLAY0
 MAIN_DISPLAY_BRIGHTNESS = 70
 
 # Display formatting
-MAIN_FORMAT =  {'LINE_HEIGHT': CONST(13),
-                'ROWS': CONST(5),
+MAIN_FORMAT =  {'LINE_HEIGHT': 13,
+                'ROWS': 5,
                 'X_OFFSET': 4
                 }
 
@@ -103,14 +103,15 @@ SOUND_CLIPS = {'clip0':'harbor_sounds1.mp3',
 
 ########### Time Base
 
-DEFAULT_TICK = 20 # milliseconds
 CLOCK_RATIO = 6 # build in some fast time clock compatability
 CLOCK_CYCLE = 2000 # Milliseconds. The delay the effect awaits.
+DEFAULT_CYCLE = 20 # milliseconds
 
 ########### Color Control
 
 # Effect Buffer
 # The running effect writes to and reads from this buffer
+# In STATIC mode user inputs are written here. When accepted they are copied to STATIC_BUFFER
 RED     = 32500 # PWM value
 BLUE    = 32500
 WARM    = 32500
@@ -121,14 +122,13 @@ BANK_2  = 1
 BANK_3  = 1
 BANK_4  = 1
 SCENIC  = 1
-
-# Step Buffer
-# how much in pwm steps does each color change per delay cycle. pos or neg
-STEP_R = 0
-STEP_G = 0
-STEP_B = 0
-STEP_W = 0
-STEP_C = 0
+WP_DUR  = 1 # waypoint_duration is the number of times the effect will loop, given a delay of entities.CLOCK_CYCLE
+NEXT_WP = 0 # Index of the next waypoint
+STEP_R  = 0 # how much in pwm steps does each color change per CLOCK_CYCLE. pos or neg
+STEP_G  = 0
+STEP_B  = 0
+STEP_W  = 0
+STEP_C  = 0
 
 ########### Navigation
 
@@ -196,7 +196,7 @@ ANIMATED_BUFFER = {} # When an animated effect is selected, the corrosponding di
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day
 'NAME':   ('1AM', '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM'), # Not used so far
-'GROUP':  ( 'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1'), # sound effects group
+'GROUP':  ( 'B2',  'B2',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B2',  'B2',  'B2'), # sound effects group
 'FRAME':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11), # Not used so far
 'TIME':   (  120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120), # duration of waypoint in minutes
 'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0), 

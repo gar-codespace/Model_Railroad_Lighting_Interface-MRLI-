@@ -49,14 +49,20 @@ class UserInterface():
 ################ methods in main - ASYNCIO.gather ##################
 
 
-    def clock_cycle_pulse(self):
-        '''
-        Sends out a signal to increment an animated effect.
-        This runs even if the effect is static.
+    def run_effect(self):
         '''
 
+        '''
+        self.effect.set_up_effect()
+
         while True:
-            a = 1
+            if entities.WP_DUR == 0:
+                # load the next waypoint
+                pass
+            else:
+                pass
+
+            entities.WP_DUR -= 1
 
             await entities.ASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
@@ -87,7 +93,7 @@ class UserInterface():
 
         while(True):
             self.confirm.update()
-            await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
+            await entities.ASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
 
     def get_back_button(self):
         ''' The back button on the display module'''
@@ -95,11 +101,11 @@ class UserInterface():
 
         while(True):
             self.back.update()
-            await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
+            await entities.ASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
 
     def get_led_bank_buttons(self):
         '''
-        Consolidate all the led buttons into one loop.
+        Consolidate all the front panel led buttons into one loop.
         ''' 
 
         b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, listeners.BANK_0_button_listener)
@@ -118,7 +124,7 @@ class UserInterface():
                 b4.update()
                 bs.update() # that's an s not a 5
 
-            await entities.ASYNCIO.sleep_ms(entities.DEFAULT_TICK)
+            await entities.ASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
 
 
 ################ display methods #################
@@ -178,7 +184,7 @@ class UserInterface():
         except:
             pass
 
-        self.effect._set_led_values() # Real time color adjustment
+        self.effect.set_led_values() # Real time color adjustment
 
     def turn_right_listener(self):
         attrib = f'{entities.DISPLAY_MODE}_turn_right'
@@ -188,21 +194,14 @@ class UserInterface():
         except:
             pass
 
-        self.effect._set_led_values()
+        self.effect.set_led_values()
 
     def single_click_listener(self):
 
-        entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
-
-        type = entities.CURRENT_EFFECT[1]
-        if not type == 'STATIC':
-            type = 'ANIMATED'
-        effect_method = f'run_{type}_effect'
-
-        try:
-            getattr(self.effect, effect_method)()
-        except:
-            pass
+        if entities.DISPLAY_MODE == 'EFFECTS':
+            entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
+            print(entities.CURRENT_EFFECT)
+            self.effect.set_up_effect()
 
         attrib = f'{entities.DISPLAY_MODE}_click'
         try:

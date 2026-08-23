@@ -49,30 +49,45 @@ def get_waypoint_duration(index):
     The duration of the waypoint is the number of times the while loop is run.
     '''
 
-    duration = entities.ANIMATED_BUFFER['TIME'][index] # real time minutes
-    duration = duration * 60 # real time seconds
-    random = 1 - entities.ANIMATED_BUFFER['RANDOM'][index]
-    xmax = duration # seconds
-    xmin = duration * random # seconds
-    duration = entities.RANDOM.randint(int(xmin), int(xmax)) # seconds
-    duration = duration * 1000 # adjusted duration in milliseconds
-    waypoint_duration = int(duration / entities.CLOCK_CYCLE)
+    if entities.CURRENT_EFFECT[1] == 'STATIC':
+        entities.WP_DUR = 1
+    else:
+        duration = entities.ANIMATED_BUFFER['TIME'][index] # real time minutes
+        duration = duration * 60 # real time seconds
+        random = 1 - entities.ANIMATED_BUFFER['RANDOM'][index]
+        xmax = duration # seconds
+        xmin = duration * random # seconds
+        duration = entities.RANDOM.randint(int(xmin), int(xmax)) # seconds
+        duration = duration * 1000 # adjusted duration in milliseconds
+        entities.WP_DUR = int(duration / entities.CLOCK_CYCLE)
 
-    return waypoint_duration
+def get_next_waypoint(index):
+
+    if entities.CURRENT_EFFECT[1] == 'STATIC':
+        entities.NEXT_WP = 0
+
+    else:
+        next_index = index + 1
+        if next_index == len(entities.ANIMATED_BUFFER['TIME']):
+            next_index = 0
+
+        entities.NEXT_WP = next_index
 
 def get_color_delta(index:int, color:str):
     '''
     The value each color changes between waypoints expressed im PWM steps.
-    Can return a positive or negative value.
+    Can return zero, a positive or negative value.
     '''
 
-    next_index = index + 1
-    if next_index == len(entities.ANIMATED_BUFFER[color]):
-        next_index = 0
+    if entities.CURRENT_EFFECT[1] == 'STATIC':
+       color_delta = 0
 
-    color_begin = entities.ANIMATED_BUFFER[color][index] # decimal percent
-    color_end = entities.ANIMATED_BUFFER[color][next_index] # decimal percent
-    color_delta = color_end - color_begin # decimal percent
-    color_delta = color_delta * entities.PWM_STEPS # pwm steps
+    else:
+        color_begin = entities.ANIMATED_BUFFER[color][index] # decimal percent
+        color_end = entities.ANIMATED_BUFFER[color][entities.NEXT_WP] # decimal percent
+        color_delta = color_end - color_begin # decimal percent
+        color_delta = color_delta * entities.PWM_STEPS # pwm steps
 
     return color_delta
+
+    

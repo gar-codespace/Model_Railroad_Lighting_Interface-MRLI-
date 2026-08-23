@@ -17,14 +17,13 @@ async def main():
     ui = controls.UserInterface()
     ui.get_main_display()
     ui.update_display(entities.WELCOME_SCREEN)
-    ui.run_default_effect()
     # ui.get_sound_card()
     # ui.play_default_sound()
 
     while True:
         
         await entities.ASYNCIO.gather(
-                                      ui.clock_cycle_pulse(),
+                                      ui.run_effect(),
                                       ui.get_encoder().async_tick(),
                                       ui.get_confirm_button(),
                                       # ui.get_back_button(),

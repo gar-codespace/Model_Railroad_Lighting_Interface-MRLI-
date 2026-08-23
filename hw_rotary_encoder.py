@@ -3,7 +3,7 @@ hardware library
 https://github.com/TTitanUA/micropython_rotary_encoder/tree/main
 Move imports to entities
 rolled up rotary_encoder_rp2.py into this file
-timeout is now based on entities.DEFAULT_TICK
+timeout is now based on entities.DEFAULT_CYCLE
 '''
 
 import entities
@@ -345,7 +345,7 @@ class RotaryEncoderRP2(RotaryEncoder):
 
     async def async_tick(self, timeout=1):
         """async_tick is used to process the encoder events. It should be run by entities.ASYNCIO."""
-        timeout = entities.DEFAULT_TICK
+        timeout = entities.DEFAULT_CYCLE
         while self.alive:
             self.__tick()
             await entities.ASYNCIO.sleep_ms(timeout)
