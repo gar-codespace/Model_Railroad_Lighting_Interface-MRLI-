@@ -19,6 +19,7 @@ class Effect():
     def __init__(self):
 
         entities.STATIC_BUFFER = entities.STATIC
+        self.effect_dictionary: dict = {}
 
         self.r = entities.PICO_PIN['RED']
         self.g = entities.PICO_PIN['GREEN']
@@ -26,22 +27,22 @@ class Effect():
         self.w = entities.PICO_PIN['WARM']
         self.c = entities.PICO_PIN['COOL']
 
-    def update_colors(self, index, effect_matrix):
+    def set_up_colors(self, index, effect_dictionary):
         
-        entities.RED = effect_matrix['RED'][index] * entities.PWM_STEPS
-        entities.GREEN = effect_matrix['GREEN'][index] * entities.PWM_STEPS
-        entities.BLUE = effect_matrix['BLUE'][index] * entities.PWM_STEPS
-        entities.WARM = effect_matrix['WARM'][index] * entities.PWM_STEPS
-        entities.COOL = effect_matrix['COOL'][index] * entities.PWM_STEPS
+        entities.RED = effect_dictionary['RED'][index] * entities.PWM_STEPS
+        entities.GREEN = effect_dictionary['GREEN'][index] * entities.PWM_STEPS
+        entities.BLUE = effect_dictionary['BLUE'][index] * entities.PWM_STEPS
+        entities.WARM = effect_dictionary['WARM'][index] * entities.PWM_STEPS
+        entities.COOL = effect_dictionary['COOL'][index] * entities.PWM_STEPS
 
-    def update_banks(self, index, effect_matrix):
+    def set_up_banks(self, index, effect_dictionary):
 
-        entities.BANK_0 = effect_matrix['BANK_0'][index]
-        entities.BANK_1 = effect_matrix['BANK_1'][index]
-        entities.BANK_2 = effect_matrix['BANK_2'][index]
-        entities.BANK_3 = effect_matrix['BANK_3'][index]
-        entities.BANK_4 = effect_matrix['BANK_4'][index]
-        entities.SCENIC = effect_matrix['SCENIC'][index]
+        entities.BANK_0 = effect_dictionary['BANK_0'][index]
+        entities.BANK_1 = effect_dictionary['BANK_1'][index]
+        entities.BANK_2 = effect_dictionary['BANK_2'][index]
+        entities.BANK_3 = effect_dictionary['BANK_3'][index]
+        entities.BANK_4 = effect_dictionary['BANK_4'][index]
+        entities.SCENIC = effect_dictionary['SCENIC'][index]
 
     def set_led_banks(self):
         '''Sets the led bank relays from the value in the buffer'''
@@ -71,17 +72,32 @@ class Effect():
         entities.PWM(self.w).duty_u16(int(entities.WARM))
         entities.PWM(self.c).duty_u16(int(entities.COOL))
 
-
     def set_up_effect(self):
         '''
         Load initial values into the Effect Buffer.
         '''
 
+        if entities.CURRENT_EFFECT[1] == 'STATIC':
+            self.effect_dictionary = entities.STATIC_BUFFER
+        else:
+            entities.ANIMATED_BUFFER = getattr(entities, entities.CURRENT_EFFECT[1])
+            self.effect_dictionary = entities.ANIMATED_BUFFER
+
         index = entities.CURRENT_EFFECT[2]
-        dictionary = entities.CURRENT_EFFECT[1]
-        buffer = getattr(entities, dictionary)
-        self.update_colors(index, buffer)
-        self.update_banks(index, buffer)
+        self.effect_boiler_plate(index)
+
+    def set_next_waypoint(self):
+
+        index = entities.NEXT_WP
+        self.effect_boiler_plate(index)
+
+    def effect_boiler_plate(self, index):
+        '''
+        Common to set_up_effect and set_next_waypoint
+        '''
+
+        self.set_up_colors(index, self.effect_dictionary)
+        self.set_up_banks(index, self.effect_dictionary)
         model.get_waypoint_duration(index)
         model.get_next_waypoint(index)
         entities.STEP_R = model.get_color_delta(index, 'RED') / entities.WP_DUR
@@ -92,4 +108,3 @@ class Effect():
 
         self.set_led_banks()
         self.set_led_values()
-

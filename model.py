@@ -71,7 +71,7 @@ def get_next_waypoint(index):
         if next_index == len(entities.ANIMATED_BUFFER['TIME']):
             next_index = 0
 
-        entities.NEXT_WP = next_index
+        entities.NEXT_WP = int(next_index)
 
 def get_color_delta(index:int, color:str):
     '''
@@ -85,9 +85,9 @@ def get_color_delta(index:int, color:str):
     else:
         color_begin = entities.ANIMATED_BUFFER[color][index] # decimal percent
         color_end = entities.ANIMATED_BUFFER[color][entities.NEXT_WP] # decimal percent
-        color_delta = color_end - color_begin # decimal percent
+        color_delta = color_begin - color_end # decimal percent
         color_delta = color_delta * entities.PWM_STEPS # pwm steps
 
-    return color_delta
+    return int(color_delta)
 
     

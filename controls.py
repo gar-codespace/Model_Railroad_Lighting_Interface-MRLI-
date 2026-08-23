@@ -50,19 +50,23 @@ class UserInterface():
 
 
     def run_effect(self):
-        '''
-
-        '''
+        
         self.effect.set_up_effect()
 
         while True:
-            if entities.WP_DUR == 0:
-                # load the next waypoint
-                pass
+            if entities.WP_DUR <= 0:
+                self.effect.set_next_waypoint()
             else:
-                pass
+                entities.RED -= entities.STEP_R
+                entities.GREEN -= entities.STEP_G
+                entities.BLUE -= entities.STEP_B
+                entities.WARM -= entities.STEP_W
+                entities.COOL -= entities.STEP_C
+                self.effect.set_led_values()
 
             entities.WP_DUR -= 1
+            if entities.DISPLAY_MODE == 'ANIMATED':
+                self.update_display(view.get_status_screen())
 
             await entities.ASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
