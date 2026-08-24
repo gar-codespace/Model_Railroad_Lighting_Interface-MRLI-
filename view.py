@@ -190,6 +190,8 @@ def EDIT_turn_left():
     pwm_color_value = max(pwm_color_value, 0) # PWM expression
 
     setattr(entities, color, pwm_color_value)
+    index = entities.CURRENT_EFFECT[2]
+    entities.STATIC_BUFFER[color][index] = pwm_color_value
 
     return get_status_screen()
 

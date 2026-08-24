@@ -19,6 +19,7 @@ class UserInterface():
     def __init__(self):
 
         entities.DISPLAY_MODE = 'WELCOME'
+        self.standby_toggle: str
         self.sound_card: object
         self.main_display: object
 
@@ -50,7 +51,10 @@ class UserInterface():
 
 
     def run_effect(self):
-        
+        '''
+        A lighting effect is always being run.
+        '''
+
         self.effect.set_up_effect()
 
         while True:
@@ -167,11 +171,12 @@ class UserInterface():
         '''
 
         if entities.DISPLAY_MODE == 'STANDBY':
-            entities.DISPLAY_MODE = 'EFFECTS'
+            entities.DISPLAY_MODE = self.standby_toggle
             self.effect.set_led_banks()
             self.update_display(view.get_menu_list())
 
         else:
+            self.standby_toggle = entities.DISPLAY_MODE
             entities.DISPLAY_MODE = 'STANDBY'
             self.effect.shut_off_leds()
             self.clear_display()

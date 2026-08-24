@@ -29,11 +29,11 @@ class Effect():
 
     def set_up_colors(self, index, effect_dictionary):
         
-        entities.RED = effect_dictionary['RED'][index] * entities.PWM_STEPS
-        entities.GREEN = effect_dictionary['GREEN'][index] * entities.PWM_STEPS
-        entities.BLUE = effect_dictionary['BLUE'][index] * entities.PWM_STEPS
-        entities.WARM = effect_dictionary['WARM'][index] * entities.PWM_STEPS
-        entities.COOL = effect_dictionary['COOL'][index] * entities.PWM_STEPS
+        entities.RED   = int(effect_dictionary['RED'][index] * entities.PWM_STEPS)
+        entities.GREEN = int(effect_dictionary['GREEN'][index] * entities.PWM_STEPS)
+        entities.BLUE  = int(effect_dictionary['BLUE'][index] * entities.PWM_STEPS)
+        entities.WARM  = int(effect_dictionary['WARM'][index] * entities.PWM_STEPS)
+        entities.COOL  = int(effect_dictionary['COOL'][index] * entities.PWM_STEPS)
 
     def set_up_banks(self, index, effect_dictionary):
 

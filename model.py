@@ -64,7 +64,7 @@ def get_waypoint_duration(index):
 def get_next_waypoint(index):
 
     if entities.CURRENT_EFFECT[1] == 'STATIC':
-        entities.NEXT_WP = 0
+        entities.NEXT_WP = entities.CURRENT_EFFECT[2]
 
     else:
         next_index = index + 1

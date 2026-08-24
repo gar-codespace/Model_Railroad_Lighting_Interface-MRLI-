@@ -6,7 +6,7 @@ The code runs on a Rasberry Pi Pico or Pico 2.
   
 ## Features
 This program creates lighting effects suitable for a model railroad or diorama.  
-It controls 5 banks of rgbwc leds and controls the on or off value of the layouts scenic lights.  
+It controls 5 banks of rgbwc LEDs and controls the on or off value of the layouts scenic lights.  
 There is also an audio module that is used for ambient sounds.  
 This is a stand-alone project, it does not utilize the WiFi feature of the Pico.  
 This program controls strip leds, not individually programmible led strips.  
@@ -29,7 +29,7 @@ parameters require editing the dictionaries in the entities file.
   
 ## Animated Lighting Effects  
 The values of an animated effect can not be changed by the user at the front panel.  
-Changes to an animated effect are made by editing the appropriate effecf dictionary in the entities file.  
+Changes to an animated effect are made by editing the appropriate effect dictionary in the entities file.  
 As mentioned, an animated effect moves from waypoint to waypoint and at the end loops back to the beginning.  
 There is also a RANDOM value in the effects definition expressed as a decimal percent.  
 This setting will shorten the length of the waypoint by a random ammount. Color cahnges are not effected by the RANDOM value, 
@@ -83,9 +83,6 @@ https://github.com/CrispStrobe/sh1106-py
   
 Button library:  
 https://github.com/ubidefeo/MicroPython-Button  
-  
-MAX9744 soundcard:  
-  
   
 ## License
 The scripts included in this program are © 2026 Greg Ritacco.  
