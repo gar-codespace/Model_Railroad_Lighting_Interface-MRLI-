@@ -344,11 +344,11 @@ class RotaryEncoderRP2(RotaryEncoder):
             self.timer.deinit()
 
     async def async_tick(self, timeout=1):
-        """async_tick is used to process the encoder events. It should be run by entities.ASYNCIO."""
+        """async_tick is used to process the encoder events. It should be run by entities.UASYNCIO."""
         timeout = entities.DEFAULT_CYCLE
         while self.alive:
             self.__tick()
-            await entities.ASYNCIO.sleep_ms(timeout)
+            await entities.UASYNCIO.sleep_ms(timeout)
 
     def timer_tick(self, timeout=1):
         """

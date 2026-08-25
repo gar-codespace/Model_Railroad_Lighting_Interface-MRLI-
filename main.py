@@ -22,7 +22,7 @@ async def main():
 
     while True:
         
-        await entities.ASYNCIO.gather(
+        await entities.UASYNCIO.gather(
                                       ui.run_effect(),
                                       ui.get_encoder().async_tick(),
                                       ui.get_confirm_button(),
@@ -30,4 +30,4 @@ async def main():
                                       ui.get_led_bank_buttons(),
                                       )
 
-entities.ASYNCIO.run(main())
+entities.UASYNCIO.run(main())

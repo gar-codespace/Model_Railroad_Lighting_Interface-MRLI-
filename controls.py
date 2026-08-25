@@ -88,16 +88,16 @@ class UserInterface():
                                             pin_sw=encoder_psh
                                             )
         # subscribe to events
-        encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_listener)
-        encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_listener)
-        encoder.on(entities.RotaryEncoderEvent.CLICK, self.single_click_listener)
-        encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.multi_click_listener)
+        encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_callback)
+        encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_callback)
+        encoder.on(entities.RotaryEncoderEvent.CLICK, self.single_click_callback)
+        encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.multi_click_callback)
 
         return encoder 
     
     def get_confirm_button(self):
         ''' The confirm button on the display module'''
-        self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_listener)
+        self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_callback)
 
         while(True):
             self.confirm.update()
@@ -105,7 +105,7 @@ class UserInterface():
 
     def get_back_button(self):
         ''' The back button on the display module'''
-        self.back = entities.Button(entities.PICO_PIN['BACK'], True, listeners.back_button_listener)
+        self.back = entities.Button(entities.PICO_PIN['BACK'], True, listeners.back_button_callback)
 
         while(True):
             self.back.update()
@@ -116,12 +116,12 @@ class UserInterface():
         Consolidate all the front panel led buttons into one loop.
         ''' 
 
-        b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.BANK_0_button_listener)
-        b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.BANK_1_button_listener)
-        b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.BANK_2_button_listener)
-        b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.BANK_3_button_listener)
-        b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.BANK_4_button_listener)
-        bs = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.scenic_button_listener)
+        b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.BANK_0_button_callback)
+        b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.BANK_1_button_callback)
+        b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.BANK_2_button_callback)
+        b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.BANK_3_button_callback)
+        b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.BANK_4_button_callback)
+        bs = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.scenic_button_callback)
 
         while(True):
             if entities.DISPLAY_MODE == 'STATIC' or entities.DISPLAY_MODE == 'EDIT':
@@ -182,10 +182,10 @@ class UserInterface():
             self.clear_display()
 
 
-################# listeners ##################
+################# callbacks ##################
 
 
-    def turn_left_listener(self):
+    def turn_left_callback(self):
         attrib = f'{entities.DISPLAY_MODE}_turn_left'
         try:
             display_content = getattr(view, attrib)() # IE view.WELCOME_turn_left()
@@ -195,7 +195,7 @@ class UserInterface():
 
         self.effect.set_led_values() # Real time color adjustment
 
-    def turn_right_listener(self):
+    def turn_right_callback(self):
         attrib = f'{entities.DISPLAY_MODE}_turn_right'
         try:
             display_content = getattr(view, attrib)() # IE view.WELCOME_turn_right()
@@ -205,7 +205,7 @@ class UserInterface():
 
         self.effect.set_led_values()
 
-    def single_click_listener(self):
+    def single_click_callback(self):
 
         if entities.DISPLAY_MODE == 'EFFECTS':
             entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
@@ -219,7 +219,7 @@ class UserInterface():
         except:
             pass
 
-    def multi_click_listener(self, clicks):
+    def multi_click_callback(self, clicks):
         #print(f"Multiple Clicks: {clicks}")
         update = f'{entities.DISPLAY_MODE}update_buffer' # IE view.EDITupdate_buffer()
         try:
@@ -233,7 +233,7 @@ class UserInterface():
         except:
             pass
 
-    def confirm_button_listener(self, button, event):
+    def confirm_button_callback(self, button, event):
         '''Toggle standby mode.'''
 
         if event == entities.Button.PRESSED:
@@ -241,7 +241,7 @@ class UserInterface():
         if event == entities.Button.RELEASED:
             self.toggle_standby()
             
-    def back_button_listener(self, button, event):
+    def back_button_callback(self, button, event):
         '''Not used.'''
 
         if event == entities.Button.PRESSED:
@@ -250,7 +250,7 @@ class UserInterface():
             print(button)
 
 
-    def BANK_0_button_listener(self, button, event):
+    def BANK_0_button_callback(self, button, event):
         if event == entities.Button.PRESSED:
             pass
         if event == entities.Button.RELEASED:
@@ -259,7 +259,7 @@ class UserInterface():
             entities.PIN(entities.PICO_PIN['BANK_0_S']).toggle()
             entities.STATIC['BANK_0'][index] = entities.PIN(entities.PICO_PIN['BANK_0_S']).value()
 
-    def BANK_1_button_listener(self, button, event):
+    def BANK_1_button_callback(self, button, event):
         if event == entities.Button.PRESSED:
             pass
         if event == entities.Button.RELEASED:
@@ -268,7 +268,7 @@ class UserInterface():
             entities.PIN(entities.PICO_PIN['BANK_1_S']).toggle()
             entities.STATIC['BANK_1'][index] = entities.PIN(entities.PICO_PIN['BANK_1_S']).value()
 
-    def BANK_2_button_listener(self, button, event):
+    def BANK_2_button_callback(self, button, event):
         if event == entities.Button.PRESSED:
             pass
         if event == entities.Button.RELEASED:
@@ -277,7 +277,7 @@ class UserInterface():
             entities.PIN(entities.PICO_PIN['BANK_2_S']).toggle()
             entities.STATIC['BANK_2'][index] = entities.PIN(entities.PICO_PIN['BANK_2_S']).value()
 
-    def BANK_3_button_listener(self, button, event):
+    def BANK_3_button_callback(self, button, event):
         if event == entities.Button.PRESSED:
             pass
         if event == entities.Button.RELEASED:
@@ -286,7 +286,7 @@ class UserInterface():
             entities.PIN(entities.PICO_PIN['BANK_3_S']).toggle()
             entities.STATIC['BANK_3'][index] = entities.PIN(entities.PICO_PIN['BANK_3_S']).value()
 
-    def BANK_4_button_listener(self, button, event):
+    def BANK_4_button_callback(self, button, event):
         if event == entities.Button.PRESSED:
             pass
         if event == entities.Button.RELEASED:
@@ -295,7 +295,7 @@ class UserInterface():
             entities.PIN(entities.PICO_PIN['BANK_4_S']).toggle()
             entities.STATIC['BANK_4'][index] = entities.PIN(entities.PICO_PIN['BANK_4_S']).value()
 
-    def scenic_button_listener(self, button, event):
+    def scenic_button_callback(self, button, event):
         if event == entities.Button.PRESSED:
             pass
         if event == entities.Button.RELEASED:

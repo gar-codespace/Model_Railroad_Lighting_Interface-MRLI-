@@ -16,11 +16,11 @@ DISPLAY_DRIVER = 'hw_sh1106'
 # packaged libraries
 from machine import Pin as PIN, I2C, Timer as TIMER, PWM
 from micropython import const as CONST
+from random import randint as RANDINT
 from time import ticks_ms
 import utime as UTIME
 import framebuf as FRAMEBUF
-import uasyncio as ASYNCIO
-import random as RANDOM
+import uasyncio as UASYNCIO
 
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2

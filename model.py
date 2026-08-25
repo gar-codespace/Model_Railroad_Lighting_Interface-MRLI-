@@ -57,7 +57,7 @@ def get_waypoint_duration(index):
         random = 1 - entities.ANIMATED_BUFFER['RANDOM'][index]
         xmax = duration # seconds
         xmin = duration * random # seconds
-        duration = entities.RANDOM.randint(int(xmin), int(xmax)) # seconds
+        duration = entities.RANDINT(int(xmin), int(xmax)) # seconds
         duration = duration * 1000 # adjusted duration in milliseconds
         entities.WP_DUR = int(duration / entities.CLOCK_CYCLE)
 
