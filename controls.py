@@ -22,11 +22,6 @@ class UserInterface():
 
         self.effect = effects.Effect()
 
-    def run_default_effect(self):
-        '''The default effect is entities.CURRENT_EFFECT'''
-
-        self.effect.run_STATIC_effect()
-
     def get_sound_card(self):
 
         pass
@@ -44,7 +39,7 @@ class UserInterface():
 ################ methods in main - UASYNCIO.gather ##################
 
 
-    def run_effect(self):
+    def run_lighting_effect(self):
         '''
         A lighting effect is always being run.
         '''
@@ -68,6 +63,12 @@ class UserInterface():
                 self.update_display(view.get_status_screen())
 
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
+
+    def run_sound_effects(self):
+
+        entities.SFX_GRP
+
+        pass
 
     def get_encoder(self):
         '''
