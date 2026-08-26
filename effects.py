@@ -109,11 +109,3 @@ class Effect():
         self.set_led_banks()
         self.set_led_values()
 
-    def EDIT_turn_left(self):
-
-        index = entities.CURRENT_EFFECT[2]
-        color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
-
-        print('EDIT_turn_left')
-
-        entities.STATIC_BUFFER[color][index] = model.pwm2percent(getattr(entities, color))

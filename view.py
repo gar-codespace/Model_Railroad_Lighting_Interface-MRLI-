@@ -182,6 +182,9 @@ def ANIMATED_click2():
 
 
 def EDIT_turn_left():
+    '''
+    Should this be moved to effects?
+    '''
 
     index = entities.CURRENT_EFFECT[2]
     color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
@@ -197,7 +200,10 @@ def EDIT_turn_left():
     return get_status_screen()
 
 def EDIT_turn_right():
-
+    '''
+    Should this be moved to effects?
+    '''
+    
     index = entities.CURRENT_EFFECT[2]
     color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
     
