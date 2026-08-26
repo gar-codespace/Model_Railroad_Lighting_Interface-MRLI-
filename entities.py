@@ -17,7 +17,6 @@ DISPLAY_DRIVER = 'hw_sh1106'
 from machine import Pin as PIN, I2C, Timer as TIMER, PWM
 from micropython import const as CONST
 from random import randint as RANDINT
-from time import ticks_ms
 import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
@@ -202,9 +201,9 @@ ALL_DAY = { # simulates an entire day
 'RANDOM': (    .0,   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0), 
 'RED':    [     0,    0,     0,   .05,    .1,   .05,     0,     0,   0.0,   0.0,   0.0,   0.0],
 'GREEN':  [     0,    0,     0,   .05,    .1,   .05,     0,     0,   0.0,   0.0,   0.0,   0.0],
-'BLUE':   [  .001, .001,  .002,  .001,     0,     0,     0,     0,   0.0,   0.0,   0.0,   0.0],
+'BLUE':   [  .001, .000,  .002,  .001,     0,     0,     0,     0,   0.0,   0.0,  .002,   0.0],
 'WARM':   [     0,    0,     0,  .025,   .05,  .135,   .22,  .187,   .22,   0.0,   0.0,   0.0],
-'COOL':   [  .003, .003,  .002,  .001,   .05,    .1,   .02,   .44,   .02,   0.0,   0.0,   0.0],
+'COOL':   [  .003, .000,  .002,  .001,   .05,    .1,   .02,   .44,   .02,  .001,  .002,   0.0],
 'BANK_0': [     1,    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
 'BANK_1': [     0,    0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0],
 'BANK_2': [     1,    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
