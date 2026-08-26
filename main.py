@@ -17,15 +17,14 @@ async def main():
     ui = controls.UserInterface()
     ui.get_main_display()
     ui.update_display(entities.WELCOME_SCREEN)
-    # ui.get_sound_card()
-    # ui.play_default_sound()
 
     while True:
         
         await entities.UASYNCIO.gather(
-                                      ui.run_effect(),
+                                      ui.run_lighting_effect(),
+                                      # ui.run_sound_effects()
                                       ui.get_encoder().async_tick(),
-                                      ui.get_all_the_buttons()
+                                      ui.get_all_the_buttons(),
                                       )
 
 entities.UASYNCIO.run(main())
