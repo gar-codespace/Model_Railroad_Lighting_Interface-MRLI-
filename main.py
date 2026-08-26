@@ -25,9 +25,7 @@ async def main():
         await entities.UASYNCIO.gather(
                                       ui.run_effect(),
                                       ui.get_encoder().async_tick(),
-                                      ui.get_confirm_button(),
-                                      # ui.get_back_button(),
-                                      ui.get_led_bank_buttons(),
+                                      ui.get_all_the_buttons()
                                       )
 
 entities.UASYNCIO.run(main())

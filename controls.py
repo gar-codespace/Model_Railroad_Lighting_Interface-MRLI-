@@ -94,36 +94,25 @@ class UserInterface():
         encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.multi_click_callback)
 
         return encoder 
-    
-    def get_confirm_button(self):
-        ''' The confirm button on the display module'''
-        self.confirm = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_callback)
 
-        while(True):
-            self.confirm.update()
-            await entities.UASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
-
-    def get_back_button(self):
-        ''' The back button on the display module'''
-        self.back = entities.Button(entities.PICO_PIN['BACK'], True, listeners.back_button_callback)
-
-        while(True):
-            self.back.update()
-            await entities.UASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
-
-    def get_led_bank_buttons(self):
+    def get_all_the_buttons(self):
         '''
         Consolidate all the front panel led buttons into one loop.
-        ''' 
+        '''
 
-        b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.BANK_0_button_callback)
-        b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.BANK_1_button_callback)
-        b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.BANK_2_button_callback)
-        b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.BANK_3_button_callback)
-        b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.BANK_4_button_callback)
-        bs = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.scenic_button_callback)
+        bC = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_callback)
+        bB = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_callback)
+        b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.bank_button_callback, 'BANK_0')
+        b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.bank_button_callback, 'BANK_1')
+        b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.bank_button_callback, 'BANK_2')
+        b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.bank_button_callback, 'BANK_3')
+        b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.bank_button_callback, 'BANK_4')
+        bs = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.bank_button_callback, 'SCENIC')
 
         while(True):
+
+            bC.update()
+            # bB.update()
             if entities.DISPLAY_MODE == 'STATIC' or entities.DISPLAY_MODE == 'EDIT':
                 b0.update()
                 b1.update()
@@ -233,71 +222,70 @@ class UserInterface():
         except:
             pass
 
-    def confirm_button_callback(self, button, event):
+    def confirm_button_callback(self, name, event):
         '''Toggle standby mode.'''
 
-        if event == entities.Button.PRESSED:
-            pass
         if event == entities.Button.RELEASED:
             self.toggle_standby()
             
-    def back_button_callback(self, button, event):
+    def back_button_callback(self, name, event):
         '''Not used.'''
 
-        if event == entities.Button.PRESSED:
-            pass
         if event == entities.Button.RELEASED:
             print(button)
 
+    def bank_button_callback(self, name, event):
+        '''The LED bank and scenic buttons'''
 
-    def BANK_0_button_callback(self, button, event):
-        if event == entities.Button.PRESSED:
-            pass
         if event == entities.Button.RELEASED:
             index = entities.CURRENT_EFFECT[2]
+            switch = f'{name}_S'
 
-            entities.PIN(entities.PICO_PIN['BANK_0_S']).toggle()
-            entities.STATIC['BANK_0'][index] = entities.PIN(entities.PICO_PIN['BANK_0_S']).value()
+            entities.PIN(entities.PICO_PIN[switch]).toggle()
+            entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[switch]).value()
 
-    def BANK_1_button_callback(self, button, event):
-        if event == entities.Button.PRESSED:
-            pass
-        if event == entities.Button.RELEASED:
-            index = entities.CURRENT_EFFECT[2]
+    # def BANK_0_button_callback(self, button, event):
 
-            entities.PIN(entities.PICO_PIN['BANK_1_S']).toggle()
-            entities.STATIC['BANK_1'][index] = entities.PIN(entities.PICO_PIN['BANK_1_S']).value()
+    #     if event == entities.Button.RELEASED:
+    #         index = entities.CURRENT_EFFECT[2]
 
-    def BANK_2_button_callback(self, button, event):
-        if event == entities.Button.PRESSED:
-            pass
-        if event == entities.Button.RELEASED:
-            index = entities.CURRENT_EFFECT[2]
+    #         entities.PIN(entities.PICO_PIN['BANK_0_S']).toggle()
+    #         entities.STATIC['BANK_0'][index] = entities.PIN(entities.PICO_PIN['BANK_0_S']).value()
 
-            entities.PIN(entities.PICO_PIN['BANK_2_S']).toggle()
-            entities.STATIC['BANK_2'][index] = entities.PIN(entities.PICO_PIN['BANK_2_S']).value()
+    # def BANK_1_button_callback(self, button, event):
 
-    def BANK_3_button_callback(self, button, event):
-        if event == entities.Button.PRESSED:
-            pass
-        if event == entities.Button.RELEASED:
-            index = entities.CURRENT_EFFECT[2]
+    #     if event == entities.Button.RELEASED:
+    #         index = entities.CURRENT_EFFECT[2]
 
-            entities.PIN(entities.PICO_PIN['BANK_3_S']).toggle()
-            entities.STATIC['BANK_3'][index] = entities.PIN(entities.PICO_PIN['BANK_3_S']).value()
+    #         entities.PIN(entities.PICO_PIN['BANK_1_S']).toggle()
+    #         entities.STATIC['BANK_1'][index] = entities.PIN(entities.PICO_PIN['BANK_1_S']).value()
 
-    def BANK_4_button_callback(self, button, event):
-        if event == entities.Button.PRESSED:
-            pass
-        if event == entities.Button.RELEASED:
-            index = entities.CURRENT_EFFECT[2]
+    # def BANK_2_button_callback(self, button, event):
 
-            entities.PIN(entities.PICO_PIN['BANK_4_S']).toggle()
-            entities.STATIC['BANK_4'][index] = entities.PIN(entities.PICO_PIN['BANK_4_S']).value()
+    #     if event == entities.Button.RELEASED:
+    #         index = entities.CURRENT_EFFECT[2]
+
+    #         entities.PIN(entities.PICO_PIN['BANK_2_S']).toggle()
+    #         entities.STATIC['BANK_2'][index] = entities.PIN(entities.PICO_PIN['BANK_2_S']).value()
+
+    # def BANK_3_button_callback(self, button, event):
+
+    #     if event == entities.Button.RELEASED:
+    #         index = entities.CURRENT_EFFECT[2]
+
+    #         entities.PIN(entities.PICO_PIN['BANK_3_S']).toggle()
+    #         entities.STATIC['BANK_3'][index] = entities.PIN(entities.PICO_PIN['BANK_3_S']).value()
+
+    # def BANK_4_button_callback(self, button, event):
+
+    #     if event == entities.Button.RELEASED:
+    #         index = entities.CURRENT_EFFECT[2]
+
+    #         entities.PIN(entities.PICO_PIN['BANK_4_S']).toggle()
+    #         entities.STATIC['BANK_4'][index] = entities.PIN(entities.PICO_PIN['BANK_4_S']).value()
 
     def scenic_button_callback(self, button, event):
-        if event == entities.Button.PRESSED:
-            pass
+
         if event == entities.Button.RELEASED:
             index = entities.CURRENT_EFFECT[2]
 
