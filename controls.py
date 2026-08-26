@@ -58,6 +58,7 @@ class UserInterface():
         self.effect.set_up_effect()
 
         while True:
+
             if entities.WP_DUR <= 0:
                 self.effect.set_next_waypoint()
             else:
@@ -175,7 +176,15 @@ class UserInterface():
 
 
     def turn_left_callback(self):
+        
         attrib = f'{entities.DISPLAY_MODE}_turn_left'
+        # print(attrib)
+
+        # try:
+        #     getattr(self.effects, attrib)() # IE self.effects.EDIT_turn_left()
+        # except:
+        #     pass
+
         try:
             display_content = getattr(view, attrib)() # IE view.WELCOME_turn_left()
             self.update_display(display_content)
