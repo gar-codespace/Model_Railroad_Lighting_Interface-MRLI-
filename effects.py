@@ -27,6 +27,14 @@ class Effect():
         self.w = entities.PICO_PIN['WARM']
         self.c = entities.PICO_PIN['COOL']
 
+    def get_waypoint_name(self, index, effect_dictionary):
+
+        entities.WP_NAME = effect_dictionary['NAME'][index]
+
+    def get_sfx_group(self, index, effect_dictionary):
+
+        entities.SFX_GRP = effect_dictionary['GROUP'][index]
+
     def set_up_colors(self, index, effect_dictionary):
         
         entities.RED   = int(effect_dictionary['RED'][index] * entities.PWM_STEPS)
@@ -95,6 +103,17 @@ class Effect():
         '''
         Common to set_up_effect and set_next_waypoint
         '''
+
+        current_waypoint_name = entities.WP_NAME
+        self.get_waypoint_name(index, self.effect_dictionary)
+        if not current_waypoint_name == entities.WP_NAME:
+            print(f'Current effect waypoint: {entities.WP_NAME}')
+
+        current_sfx_group = entities.SFX_GRP
+        self.get_sfx_group(index, self.effect_dictionary)
+        if not current_sfx_group == entities.SFX_GRP:
+            # Play the new sfx group
+            print(f'Current SFX group: {entities.SFX_GRP}')
 
         self.set_up_colors(index, self.effect_dictionary)
         self.set_up_banks(index, self.effect_dictionary)

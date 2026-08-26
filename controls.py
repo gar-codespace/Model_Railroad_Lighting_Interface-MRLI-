@@ -195,7 +195,7 @@ class UserInterface():
 
         if entities.DISPLAY_MODE == 'EFFECTS':
             entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
-            print(entities.CURRENT_EFFECT)
+            # print(entities.CURRENT_EFFECT)
             self.effect.set_up_effect()
 
         attrib = f'{entities.DISPLAY_MODE}_click'

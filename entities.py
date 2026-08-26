@@ -128,6 +128,8 @@ STEP_G  = 0
 STEP_B  = 0
 STEP_W  = 0
 STEP_C  = 0
+WP_NAME = 'name'
+SFX_GRP = None
 
 ########### Navigation
 
@@ -172,7 +174,7 @@ MAIN_MENU = { # In the order they show on the display
 STATIC_BUFFER = {} # Holds the STATIC dictionary
 
 STATIC = {
-'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'), # Not used so far
+'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'), # Waypoint name
 'GROUP':  (   'A1',    'A2',    'A3',    'A4',    'A5'), # sound effects group
 'FRAME':  (      0,       0,       0,       0,       0), # Not used so far
 'TIME':   (      0,       0,       0,       0,       0), # duration of waypoint
@@ -194,7 +196,7 @@ ANIMATED_BUFFER = {} # When an animated effect is selected, the corrosponding di
 
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day
-'NAME':   ('11PM','1AM', '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM'), # Not used so far
+'NAME':   ('11PM','1AM', '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM'), # Waypoint name
 'GROUP':  (  'B2', 'B2',  'B2',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B2',  'B2'), # sound effects group
 'FRAME':  (     0,    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10), # Not used so far
 'TIME':   (   120,  120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120), # duration of waypoint in minutes
@@ -213,26 +215,26 @@ ALL_DAY = { # simulates an entire day
 }
 
 CLOUDY = { # Simulates a cloudy day
-'NAME':   (  'Clear',  'Clear', 'Cloudy', 'Cloudy'), # Not used so far
-'GROUP':  (     'C1',     'C1',     'C1',     'C1'), # sound effects group
-'FRAME':  (        0,        1,        2,        3), # Not used so far
-'TIME':   (        3,      1.5,      1.5,        1), # duration of waypoint in minutes
-'RANDOM': (       .7,       .7,       .7,       .7),
-'RED':    [        0,        0,        0,        0],
-'GREEN':  [        0,        0,        0,        0],
-'BLUE':   [        0,        0,        0,        0],
-'WARM':   [      .22,      .22,     .045,     .045],
-'COOL':   [      .02,      .02,     .026,     .026],
-'BANK_0': [        1,        1,        1,        1],
-'BANK_1': [        0,        0,        0,        0],
-'BANK_2': [        1,        1,        1,        1],
-'BANK_3': [        1,        1,        1,        1],
-'BANK_4': [        1,        1,        1,        1],
-'SCENIC': [        0,        0,        0,        0],
+'NAME':   (  'Clear', 'Roll In', 'Cloudy','Roll Out'), # Waypoint name
+'GROUP':  (     'C1',      'C1',     'C1',      'C1'), # sound effects group
+'FRAME':  (        0,         1,        2,         3), # Not used so far
+'TIME':   (        3,       1.5,      1.5,         1), # duration of waypoint in minutes
+'RANDOM': (       .7,        .7,       .7,        .7),
+'RED':    [        0,         0,        0,         0],
+'GREEN':  [        0,         0,        0,         0],
+'BLUE':   [        0,         0,        0,         0],
+'WARM':   [      .22,       .22,     .045,      .045],
+'COOL':   [      .02,       .02,     .026,      .026],
+'BANK_0': [        1,         1,        1,         1],
+'BANK_1': [        0,         0,        0,         0],
+'BANK_2': [        1,         1,        1,         1],
+'BANK_3': [        1,         1,        1,         1],
+'BANK_4': [        1,         1,        1,         1],
+'SCENIC': [        0,         0,        0,         0],
 }
 
 STORMY = { # Simulates a stormy night
-'NAME':   (  'Clear', 'Cloudy'), # Not used so far
+'NAME':   (  'Clear', 'Cloudy'), # Waypoint name
 'GROUP':  (     'D1',     'D1'), # sound effects group
 'FRAME':  (        0,        1), # Not used so far
 'TIME':   (        8,        8), # duration of waypoint in minutes
