@@ -106,6 +106,7 @@ class Effect():
         entities.STEP_W = model.get_color_delta(index, 'WARM') / entities.WP_DUR
         entities.STEP_C = model.get_color_delta(index, 'COOL') / entities.WP_DUR
 
-        self.set_led_banks()
-        self.set_led_values()
+        if not entities.DISPLAY_MODE == 'STANDBY':
+            self.set_led_banks()
+            self.set_led_values()
 

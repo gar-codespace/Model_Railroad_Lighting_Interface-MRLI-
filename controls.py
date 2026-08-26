@@ -1,14 +1,8 @@
-'''
-The Confirm button is used to toggle standby mode.
-The Back button is not used.
-'''
-
 import entities
 import model
 import view
-import audio
 import effects
-import listeners
+import audio
 
 
 class UserInterface():

@@ -103,8 +103,8 @@ SOUND_CLIPS = {'clip0':'harbor_sounds1.mp3',
 
 ########### Time Base
 
-CLOCK_RATIO = 6 # build in some fast time clock compatability
-CLOCK_CYCLE = 2000 # Milliseconds. The delay the effect awaits.
+CLOCK_RATIO = 180 # build in some fast time clock compatability
+CLOCK_CYCLE = 40 # Milliseconds. The delay the effect awaits.
 DEFAULT_CYCLE = 20 # milliseconds
 
 ########### Color Control
@@ -152,7 +152,7 @@ LED_INDEX_MAP = {0: 'RED',
                  3: 'WARM',
                  4: 'COOL'
                  }
-PWM_TICKS = 500 # how many ticks per indent of the rotary encoder when changing color values
+PWM_TICKS = 200 # how many ticks per indent of the rotary encoder when changing color values
 
 MAIN_MENU = { # In the order they show on the display
              0: ('Maintenance',        'STATIC',  1),
@@ -175,18 +175,18 @@ STATIC_BUFFER = {} # Holds the STATIC dictionary
 STATIC = {
 'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'), # Not used so far
 'GROUP':  (   'A1',    'A2',    'A3',    'A4',    'A5'), # sound effects group
-'FRAME':  (      0,       1,       2,       3,       4), # Not used so far
+'FRAME':  (      0,       0,       0,       0,       0), # Not used so far
 'TIME':   (      0,       0,       0,       0,       0), # duration of waypoint
 'RANDOM': (     .0,      .0,      .0,      .0,      .0),
 'RED':    [      0,       0,       0,       0,      .1],
 'GREEN':  [      0,       0,       0,       0,      .1],
 'BLUE':   [      0,       0,       0,    .002,       0],
-'WARM':   [      0,      .99,     .22,       0,     .05],
-'COOL':   [      0,      .99,     .05,    .002,       0],
+'WARM':   [      0,     .99,     .22,       0,     .05],
+'COOL':   [      0,     .99,     .02,    .002,       0],
 'BANK_0': [      0,       1,       1,       0,      0,],
-'BANK_1': [      0,       1,       1,       0,      0,],
+'BANK_1': [      0,       1,       0,       0,      0,],
 'BANK_2': [      0,       1,       1,       0,      0,],
-'BANK_3': [      0,       0,       0,       0,      0,],
+'BANK_3': [      0,       0,       1,       0,      0,],
 'BANK_4': [      0,       1,       1,       1,      1,],
 'SCENIC': [      0,       0,       0,       0,      0,],
 }
@@ -195,41 +195,41 @@ ANIMATED_BUFFER = {} # When an animated effect is selected, the corrosponding di
 
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day
-'NAME':   ('1AM', '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM','11PM'), # Not used so far
-'GROUP':  ( 'B2',  'B2',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B2',  'B2',  'B2'), # sound effects group
-'FRAME':  (    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10,    11), # Not used so far
-'TIME':   (  120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120), # duration of waypoint in minutes
-'RANDOM': (   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0), 
-'RED':    [  .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15],
-'GREEN':  [  .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15],
-'BLUE':   [  .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15],
-'WARM':   [  .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15],
-'COOL':   [  .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15,   .15],
-'BANK_0': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
-'BANK_1': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
-'BANK_2': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
-'BANK_3': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
-'BANK_4': [    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
-'SCENIC': [    1,     1,     1,     1,     0,     0,     0,     0,     1,     1,     1,     1],
+'NAME':   ('11PM','1AM', '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM'), # Not used so far
+'GROUP':  (  'B2', 'B2',  'B2',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B2',  'B2'), # sound effects group
+'FRAME':  (     0,    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10), # Not used so far
+'TIME':   (   120,  120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120), # duration of waypoint in minutes
+'RANDOM': (    .0,   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0), 
+'RED':    [     0,    0,     0,   .05,    .1,   .05,     0,     0,   0.0,   0.0,   0.0,   0.0],
+'GREEN':  [     0,    0,     0,   .05,    .1,   .05,     0,     0,   0.0,   0.0,   0.0,   0.0],
+'BLUE':   [  .001, .001,  .002,  .001,     0,     0,     0,     0,   0.0,   0.0,   0.0,   0.0],
+'WARM':   [     0,    0,     0,  .025,   .05,  .135,   .22,  .187,   .22,   0.0,   0.0,   0.0],
+'COOL':   [  .003, .003,  .002,  .001,   .05,    .1,   .02,   .44,   .02,   0.0,   0.0,   0.0],
+'BANK_0': [     1,    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
+'BANK_1': [     0,    0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0],
+'BANK_2': [     1,    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
+'BANK_3': [     1,    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
+'BANK_4': [     1,    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
+'SCENIC': [     1,    1,     1,     1,     1,     0,     0,     0,     0,     1,     1,     1],
 }
 
 CLOUDY = { # Simulates a cloudy day
-'NAME':   (  'Clear', 'Cloudy'), # Not used so far
-'GROUP':  (     'C1',     'C1'), # sound effects group
-'FRAME':  (        0,        1), # Not used so far
-'TIME':   (        3,        3), # duration of waypoint in minutes
-'RANDOM': (       .7,       .7),
-'RED':    [        0,        0],
-'GREEN':  [        0,        0],
-'BLUE':   [        0,        0],
-'WARM':   [        0,       .2],
-'COOL':   [        0,       .2],
-'BANK_0': [        1,        1],
-'BANK_1': [        1,        1],
-'BANK_2': [        1,        1],
-'BANK_3': [        0,        0],
-'BANK_4': [        1,        1],
-'SCENIC': [        0,        0],
+'NAME':   (  'Clear',  'Clear', 'Cloudy', 'Cloudy'), # Not used so far
+'GROUP':  (     'C1',     'C1',     'C1',     'C1'), # sound effects group
+'FRAME':  (        0,        1,        2,        3), # Not used so far
+'TIME':   (        3,      1.5,      1.5,        1), # duration of waypoint in minutes
+'RANDOM': (       .7,       .7,       .7,       .7),
+'RED':    [        0,        0,        0,        0],
+'GREEN':  [        0,        0,        0,        0],
+'BLUE':   [        0,        0,        0,        0],
+'WARM':   [      .22,      .22,     .045,     .045],
+'COOL':   [      .02,      .02,     .026,     .026],
+'BANK_0': [        1,        1,        1,        1],
+'BANK_1': [        0,        0,        0,        0],
+'BANK_2': [        1,        1,        1,        1],
+'BANK_3': [        1,        1,        1,        1],
+'BANK_4': [        1,        1,        1,        1],
+'SCENIC': [        0,        0,        0,        0],
 }
 
 STORMY = { # Simulates a stormy night
