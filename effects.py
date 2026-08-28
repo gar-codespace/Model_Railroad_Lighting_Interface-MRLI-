@@ -113,7 +113,8 @@ class Effect():
         self.get_sfx_group(index, self.effect_dictionary)
         if not current_sfx_group == entities.SFX_GRP:
             # Play the new sfx group
-            print(f'Current SFX group: {entities.SFX_GRP}')
+            #print(f'Current SFX group: {entities.SFX_GRP}')
+            pass
 
         self.set_up_colors(index, self.effect_dictionary)
         self.set_up_banks(index, self.effect_dictionary)

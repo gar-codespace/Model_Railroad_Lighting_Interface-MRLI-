@@ -54,13 +54,15 @@ def get_waypoint_duration(index):
     else:
         duration = entities.ANIMATED_BUFFER['TIME'][index] # real time minutes
         duration = duration * 60 # real time seconds
-        random = 1 - entities.ANIMATED_BUFFER['RANDOM'][index]
-        xmax = duration # seconds
-        xmin = duration * (1 - random) # seconds
-        duration = entities.RANDINT(int(xmin), int(xmax)) # seconds
-        duration = duration * 1000 # adjusted duration in milliseconds
-        duration = duration / entities.CLOCK_RATIO
-        entities.WP_DUR = int(duration / entities.CLOCK_CYCLE)
+        duration = duration * 1000 # real time milliseconds
+
+        random = entities.ANIMATED_BUFFER['RANDOM'][index]
+        d_max = duration # milliseconds
+        d_min = duration * (random) # milliseconds
+        duration = entities.RANDINT(int(d_max - d_min), int(d_max)) # milliseconds
+
+        duration = duration / entities.CLOCK_RATIO # milliseconds
+        entities.WP_DUR = int(duration / entities.CLOCK_CYCLE) # milliseconds / ms per cycle = cycles
 
 def get_next_waypoint(index):
 

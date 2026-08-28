@@ -26,15 +26,16 @@ from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP
 from hw_button import Button
 DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER)
 
-###### HARDWARE ######
 
-########### Raspi Pico parameters
+################## HARDWARE ######################
+
+################## RASPI PICO PARAMETERS ######################
 
 LED = PIN('LED', PIN.OUT)
 PWM_FREQ = 480
 PWM_STEPS = 65535
 
-########### Raspi Pico GP pin assignments
+################## RASPI PICO PIN ASSIGNMENTS ######################
 
 PICO_PIN = {
         'RED':0, # pwm colors
@@ -98,15 +99,16 @@ SOUND_CLIPS = {'clip0':'harbor_sounds1.mp3',
                'clip1':'xyzzy.mp3'
                }
 
-###### SOFTWARE ######
 
-########### Time Base
+################## SOFTWARE ######################
 
-CLOCK_RATIO = 180 # build in some fast time clock compatability
-CLOCK_CYCLE = 40 # Milliseconds. The delay the effect awaits.
-DEFAULT_CYCLE = 20 # milliseconds
+################## TIME BASE ######################
 
-########### Color Control
+CLOCK_RATIO = 6 # build in some fast time clock compatability
+CLOCK_CYCLE = 200 # Milliseconds per cycle. The delay the effect awaits.
+DEFAULT_CYCLE = 20 # milliseconds used for other awaits
+
+################## COLOR CONTROL ######################
 
 # Effect Buffer
 # The running effect writes to and reads from this buffer
@@ -131,7 +133,7 @@ STEP_C  = 0
 WP_NAME = 'name'
 SFX_GRP = None
 
-########### Navigation
+################## NAVIGATION ######################
 
 WELCOME_SCREEN = ['   M.U.T.T.',
                   ' Metropolitan',
@@ -146,7 +148,7 @@ CURRENT_EFFECT = ('Daytime', 'STATIC', 2)
 HILIGHTED_EFFECT = 1 # MAIN_MENU key
 # MENU_FIRST_ITEM is hard coded based on 5 menu lines and the highlite on line 2
 # This should be abstracted
-MENU_FIRST_ITEM = 10 # Index of MAIN_MENU for first item in menu
+MENU_FIRST_ITEM = 12 # Index of MAIN_MENU for first item in menu
 LED_INDEX_MAP = {0: 'RED',
                  1: 'GREEN',
                  2: 'BLUE',
@@ -158,96 +160,125 @@ PWM_TICKS = 200 # how many ticks per indent of the rotary encoder when changing 
 MAIN_MENU = { # In the order they show on the display
              0: ('Maintenance',        'STATIC',  1),
              1: ('Daytime',            'STATIC',  2),
-             2: ('Twilight',           'STATIC',  4),
-             3: ('Nightime',           'STATIC',  3),
-             4: ('* Midnight',        'ALL_DAY',  0),
-             5: ('* Dawn',            'ALL_DAY',  2),
-             6: ('* Morning',         'ALL_DAY',  4),
-             7: ('* Mid Day',         'ALL_DAY',  6),
-             8: ('* Dusk',            'ALL_DAY',  8),
-             9: ('* Evening',         'ALL_DAY', 10),
-            10: ('* A Cloudy Day',     'CLOUDY',  0)
+             2: ('A Foggy Day',        'STATIC',  3),
+             3: ('Twilight',           'STATIC',  5),
+             4: ('Nightime',           'STATIC',  4),
+             5: ('* 11PM',            'ALL_DAY',  0),
+             6: ('* 3AM',             'ALL_DAY',  2),
+             7: ('* 7AM',             'ALL_DAY',  4),
+             8: ('* 11AM',            'ALL_DAY',  6),
+             9: ('* 3PM',             'ALL_DAY',  8),
+            10: ('* 7PM',             'ALL_DAY', 10),
+            11: ('* A Cloudy Day',     'CLOUDY',  0),
+            12: ('* Stormy Night',     'STORMY',  0)
             }
 
 ################## LIGHTING EFFECT DEFINITIONS ######################
 
 STATIC_BUFFER = {} # Holds the STATIC dictionary
+'''
+Note:
+The random value is a float between 0 and 1.
+0 is not random, 1 is max randomness.
+'''
 
 STATIC = {
-'NAME':   ( 'Stby', 'Maint',   'Day', 'Night', 'Twili'), # Waypoint name
-'GROUP':  (   'A1',    'A2',    'A3',    'A4',    'A5'), # sound effects group
-'FRAME':  (      0,       0,       0,       0,       0), # Not used so far
-'TIME':   (      0,       0,       0,       0,       0), # duration of waypoint
-'RANDOM': (     .0,      .0,      .0,      .0,      .0),
-'RED':    [      0,       0,       0,       0,      .1],
-'GREEN':  [      0,       0,       0,       0,      .1],
-'BLUE':   [      0,       0,       0,    .002,       0],
-'WARM':   [      0,     .99,     .22,       0,     .05],
-'COOL':   [      0,     .99,     .02,    .002,       0],
-'BANK_0': [      0,       1,       1,       0,      0,],
-'BANK_1': [      0,       1,       0,       0,      0,],
-'BANK_2': [      0,       1,       1,       0,      0,],
-'BANK_3': [      0,       0,       1,       0,      0,],
-'BANK_4': [      0,       1,       1,       1,      1,],
-'SCENIC': [      0,       0,       0,       0,      0,],
+'NAME':   ( 'Stby', 'Maint',   'Day',   'Fog', 'Night', 'Twili'), # Waypoint name
+'GROUP':  (   'A1',    'A2',    'A3',    'A3',    'A4',    'A5'), # sound effects group
+'FRAME':  (      1,       1,       1,       1,       1,       1), # Keyframe marker
+'TIME':   (      0,       0,       0,       0,       0,       0), # duration of waypoint
+'RANDOM': (     .0,      .0,      .0,      .0,      .0,      .0),
+
+'RED':    [      0,       0,       0,       0,       0,      .1],
+'GREEN':  [      0,       0,       0,       0,       0,      .1],
+'BLUE':   [      0,       0,       0,       0,    .002,       0],
+'WARM':   [      0,     .99,     .22,    .002,       0,     .05],
+'COOL':   [      0,     .99,     .02,    .002,    .002,       0],
+
+'BANK_0': [      0,       1,       1,       1,       0,      0,],
+'BANK_1': [      0,       1,       0,       0,       0,      0,],
+'BANK_2': [      0,       1,       1,       0,       0,      0,],
+'BANK_3': [      0,       0,       1,       0,       0,      0,],
+'BANK_4': [      0,       1,       1,       1,       1,      1,],
+'SCENIC': [      0,       0,       0,       0,       0,      0,],
 }
 
 ANIMATED_BUFFER = {} # When an animated effect is selected, the corrosponding dictionary is copied into this buffer
 
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day
-'NAME':   ('11PM','1AM', '3AM', '5AM', '7AM', '9AM','10AM', '1PM', '3PM', '5PM', '7PM', '9PM'), # Waypoint name
-'GROUP':  (  'B2', 'B2',  'B2',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B1',  'B2',  'B2'), # sound effects group
-'FRAME':  (     0,    0,     1,     2,     3,     4,     5,     6,     7,     8,     9,    10), # Not used so far
-'TIME':   (   120,  120,   120,   120,   120,   120,   120,   120,   120,   120,   120,   120), # duration of waypoint in minutes
-'RANDOM': (    .0,   .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0,    .0), 
-'RED':    [     0,    0,     0,   .05,    .1,   .05,     0,     0,   0.0,   0.0,   0.0,   0.0],
-'GREEN':  [     0,    0,     0,   .05,    .1,   .05,     0,     0,   0.0,   0.0,   0.0,   0.0],
-'BLUE':   [  .001, .000,  .002,  .001,     0,     0,     0,     0,   0.0,   0.0,  .002,   0.0],
-'WARM':   [     0,    0,     0,  .025,   .05,  .135,   .22,  .187,   .22,   0.0,   0.0,   0.0],
-'COOL':   [  .003, .000,  .002,  .001,   .05,    .1,   .02,   .44,   .02,  .001,  .002,   0.0],
-'BANK_0': [     1,    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
-'BANK_1': [     0,    0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0],
-'BANK_2': [     1,    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
-'BANK_3': [     1,    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
-'BANK_4': [     1,    1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1],
-'SCENIC': [     1,    1,     1,     1,     1,     0,     0,     0,     0,     1,     1,     1],
+'NAME':   ('11PM',  '1AM',  '3AM',  '5AM',  '7AM',  '9AM', '11AM',  '1PM',  '3PM',  '5PM',  '7PM',  '9PM'), # Waypoint name
+'GROUP':  (  'B2',   'B2',   'B2',   'B1',   'B1',   'B1',   'B1',   'B1',   'B1',   'B1',   'B2',   'B2'), # sound effects group
+'FRAME':  (     1,      0,      1,      0,      1,      0,      1,      0,      1,      0,      1,      0), # Keyframe marker
+'TIME':   (    12,     12,     12,     12,     12,     12,     12,     12,     12,     12,     12,     12), # duration of waypoint in real time minutes
+'RANDOM': (    .0,     .0,     .0,     .0,     .0,     .0,     .0,     .0,     .0,     .0,     .0,     .0), 
+
+'RED':    [     0,      0,      0,   .002,   0.05,    .02,    0.0,      0,    0.0,    0.0,    0.0,    0.0],
+'GREEN':  [     0,      0,      0,    .00,   0.05,    .02,    0.0,      0,    0.0,    0.0,    0.0,    0.0],
+'BLUE':   [  .001,  .0005,    0.0,    .00,    0.0,      0,      0,      0,    0.0,    0.0,   .002,    0.0],
+'WARM':   [     0,      0,      0,   .001,   0.05,    .12,    .22,    .18,    .22,    0.0,    0.0,    0.0],
+'COOL':   [  .003,   .001,    0.0,    0.0,    0.0,    .01,    .02,    .03,    .02,   .001,   .002,    0.0],
+
+'BANK_0': [     1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1],
+'BANK_1': [     0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0],
+'BANK_2': [     1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1],
+'BANK_3': [     1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1],
+'BANK_4': [     1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1,      1],
+'SCENIC': [     1,      1,      1,      1,      1,      0,      0,      0,      0,      1,      1,      1],
 }
 
 CLOUDY = { # Simulates a cloudy day
-'NAME':   (  'Clear', 'Roll In', 'Cloudy','Roll Out'), # Waypoint name
-'GROUP':  (     'C1',      'C1',     'C1',      'C1'), # sound effects group
-'FRAME':  (        0,         1,        2,         3), # Not used so far
-'TIME':   (        3,       1.5,      1.5,         1), # duration of waypoint in minutes
-'RANDOM': (       .7,        .7,       .7,        .7),
-'RED':    [        0,         0,        0,         0],
-'GREEN':  [        0,         0,        0,         0],
-'BLUE':   [        0,         0,        0,         0],
-'WARM':   [      .22,       .22,     .045,      .045],
-'COOL':   [      .02,       .02,     .026,      .026],
-'BANK_0': [        1,         1,        1,         1],
-'BANK_1': [        0,         0,        0,         0],
-'BANK_2': [        1,         1,        1,         1],
-'BANK_3': [        1,         1,        1,         1],
-'BANK_4': [        1,         1,        1,         1],
-'SCENIC': [        0,         0,        0,         0],
+'NAME':   (  'Clear', 'Roll In',  'Cloudy','Roll Out'), # Waypoint name
+'GROUP':  (     'C1',      'C1',      'C1',      'C1'), # sound effects group
+'FRAME':  (        1,         1,         1,         1), # Keyframe marker
+'TIME':   (        3,       1.5,       1.5,         1), # duration of waypoint in real time minutes
+'RANDOM': (       .7,        .7,        .7,        .7),
+ 
+'RED':    [        0,         0,         0,         0],
+'GREEN':  [        0,         0,         0,         0],
+'BLUE':   [        0,         0,         0,         0],
+'WARM':   [      .22,       .22,      .045,      .045],
+'COOL':   [      .02,       .02,      .026,      .026],
+ 
+'BANK_0': [        1,         1,         1,         1],
+'BANK_1': [        0,         0,         0,         0],
+'BANK_2': [        1,         1,         1,         1],
+'BANK_3': [        1,         1,         1,         1],
+'BANK_4': [        1,         1,         1,         1],
+'SCENIC': [        0,         0,         0,         0],
 }
 
 STORMY = { # Simulates a stormy night
-'NAME':   (  'Clear', 'Cloudy'), # Waypoint name
-'GROUP':  (     'D1',     'D1'), # sound effects group
-'FRAME':  (        0,        1), # Not used so far
-'TIME':   (        8,        8), # duration of waypoint in minutes
-'RANDOM': (       .7,       .7),
-'RED':    [        0,        0],
-'GREEN':  [        0,        0],
-'BLUE':   [        0,        0],
-'WARM':   [       .8,     .063],
-'COOL':   [      .05,       .2],
-'BANK_0': [        1,        1],
-'BANK_1': [        1,        1],
-'BANK_2': [        1,        1],
-'BANK_3': [        0,        0],
-'BANK_4': [        1,        1],
-'SCENIC': [        0,        0],
+'NAME':   (  'Clear',   'Cloudy'), # Waypoint name
+'GROUP':  (     'D1',       'D1'), # sound effects group
+'FRAME':  (        1,          1), # Keyframe marker
+'TIME':   (        8,          8), # duration of waypoint in minutes
+'RANDOM': (       .7,         .7),
+'RED':    [        0,          0],
+'GREEN':  [        0,          0],
+'BLUE':   [        0,          0],
+'WARM':   [       .8,       .063],
+'COOL':   [      .05,         .2],
+'BANK_0': [        1,          1],
+'BANK_1': [        1,          1],
+'BANK_2': [        1,          1],
+'BANK_3': [        0,          0],
+'BANK_4': [        1,          1],
+'SCENIC': [        0,          0],
 }
+
+
+################## SOUND EFFECTS DEFINITIONS ######################
+
+# SFX Library
+SFX = {
+    'name': ('filename', 'duration float'),
+    'name': ('filename', 'duration float')
+}
+
+# SFX Groups
+A3 = (
+    'name',
+    'name',
+    'ETX'
+)

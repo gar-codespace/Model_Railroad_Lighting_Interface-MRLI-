@@ -45,11 +45,15 @@ class UserInterface():
         '''
 
         self.effect.set_up_effect()
+        start_time = entities.UTIME.time()
 
         while True:
 
-            if entities.WP_DUR <= 0:
+            if entities.WP_DUR == 0:
+                end_time = entities.UTIME.time()
+                print(f'Waypoint duration: {end_time - start_time}')
                 self.effect.set_next_waypoint()
+                start_time = entities.UTIME.time()
             else:
                 entities.RED -= entities.STEP_R
                 entities.GREEN -= entities.STEP_G
@@ -65,6 +69,20 @@ class UserInterface():
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
     def run_sound_effects(self):
+
+        '''
+        while True:
+            if not entities.DISPLAY_MODE == 'STANDBY':
+                unmute the soundcard
+                get the current sfx group
+                randomly select a SFX from the group
+                get a random interval
+                play the SFX
+                
+                await (SFX duration + random interval)
+            else if STANDBY:
+                mute the soundcard
+                '''
 
         entities.SFX_GRP
 
