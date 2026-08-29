@@ -17,6 +17,7 @@ DISPLAY_DRIVER = 'hw_sh1106'
 from machine import Pin as PIN, I2C, Timer as TIMER, PWM
 from micropython import const as CONST
 from random import randint as RANDINT
+import os as OS
 import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
@@ -26,6 +27,7 @@ from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP
 from hw_button import Button
 DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER)
 
+SFX_PATH = f'{OS.getcwd()}/sfx'
 
 ################## HARDWARE ######################
 

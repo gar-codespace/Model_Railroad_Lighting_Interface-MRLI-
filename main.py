@@ -12,6 +12,7 @@ __repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
 import entities
 import controls
 
+
 async def main():
 
     ui = controls.UserInterface()
