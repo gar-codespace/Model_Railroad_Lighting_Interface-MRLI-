@@ -83,7 +83,7 @@ class UserInterface:
                 sfx_interval = 500
                 sfx_duration = 500
 
-            await (sfx_duration + sfx_interval)
+            await entities.UASYNCIO.sleep_ms(sfx_duration + sfx_interval)
 
     def get_encoder(self):
         '''
