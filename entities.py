@@ -106,8 +106,8 @@ SOUND_CLIPS = {'clip0':'harbor_sounds1.mp3',
 
 ################## TIME BASE ######################
 
-CLOCK_RATIO = 6 # build in some fast time clock compatability
-CLOCK_CYCLE = 100 # Milliseconds per cycle. The delay the effect awaits.
+CLOCK_RATIO = 8 # build in some fast time clock compatability
+CLOCK_CYCLE = 25 # Milliseconds per cycle. The delay the effect awaits.
 DEFAULT_CYCLE = 20 # milliseconds used for other awaits
 
 ################## COLOR CONTROL ######################
@@ -216,11 +216,11 @@ ALL_DAY = { # simulates an entire day
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
 
-'RED':    [    0.00,    0.00,    0.00,    .002,    .005,    0.02,    0.00,    0.00,    0.00,    0.00,    .002,    0.00],
-'GREEN':  [    0.00,    0.00,    0.00,    0.00,    .005,    0.02,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00],
+'RED':    [    0.00,    0.00,    0.00,    .002,    .005,    0.02,    0.00,    0.00,    0.00,    .003,    .006,    .003],
+'GREEN':  [    0.00,    0.00,    0.00,    0.00,    .005,    0.02,    0.00,    0.00,    0.00,    .002,    .004,    0.00],
 'BLUE':   [    .001,   .0005,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00],
-'WARM':   [    0.00,    0.00,    0.00,    .001,    .005,    0.12,    0.22,    0.18,    0.22,    0.00,    .001,    0.00],
-'COOL':   [    .003,    .001,    0.00,    0.00,    0.00,    0.01,    0.02,    0.03,    0.02,    .001,    0.00,    0.00],
+'WARM':   [    0.00,    0.00,    0.00,    .001,    .005,    0.12,    0.18,    0.18,    0.22,    0.10,    .005,    0.00],
+'COOL':   [    .001,    .001,    0.00,    0.00,    0.00,    0.01,    0.02,    0.03,    0.02,    .001,    0.00,    .000],
 
 'BANK_0': [       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1],
 'BANK_1': [       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0],
@@ -228,6 +228,27 @@ ALL_DAY = { # simulates an entire day
 'BANK_3': [       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1],
 'BANK_4': [       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1],
 'SCENIC': [       1,       1,       1,       1,       1,       0,       0,       0,       0,       1,       1,       1],
+}
+
+STORMY = { # Simulates a stormy night
+'NAME':   ( 'Clear','Roll In',  'STORMY','Roll Out'), # Waypoint name
+'GROUP':  (    'D1',     'D1',      'C1',      'C1'), # sound effects group
+'FRAME':  (       1,        1,         1,         1), # Keyframe marker
+'TIME':   (       3,        2,         2,         1), # duration of waypoint in minutes
+'RANDOM': (      .7,       .7,        .7,        .7),
+
+'RED':    [    0.00,     0.00,      0.00,      0.00],
+'GREEN':  [    0.00,     0.00,      0.00,      0.00],
+'BLUE':   [    .001,     .001,      .000,     .0005],
+'WARM':   [    0.00,     0.00,      0.00,      0.00],
+'COOL':   [    .001,     .001,     .0005,      .001],
+
+'BANK_0': [       1,        1,         1,         1],
+'BANK_1': [       0,        0,         0,         0],
+'BANK_2': [       0,        0,         0,         0],
+'BANK_3': [       0,        0,         0,         0],
+'BANK_4': [       1,        1,         1,         1],
+'SCENIC': [       1,        1,         1,         1],
 }
 
 CLOUDY = { # Simulates a cloudy day
@@ -249,27 +270,6 @@ CLOUDY = { # Simulates a cloudy day
 'BANK_3': [       1,        1,        1,         1],
 'BANK_4': [       1,        1,        1,         1],
 'SCENIC': [       0,        0,        0,         0],
-}
-
-STORMY = { # Simulates a stormy night
-'NAME':   ( 'Clear','Roll In',  'STORMY','Roll Out'), # Waypoint name
-'GROUP':  (    'D1',     'D1',      'C1',      'C1'), # sound effects group
-'FRAME':  (       1,        1,         1,         1), # Keyframe marker
-'TIME':   (       8,        8,       2.5,         2), # duration of waypoint in minutes
-'RANDOM': (      .7,       .7,        .7,        .7),
-
-'RED':    [    0.00,     0.00,      0.00,      0.00],
-'GREEN':  [    0.00,     0.00,      0.00,      0.00],
-'BLUE':   [    0.00,     0.00,      0.00,      0.00],
-'WARM':   [      .8,     .063,      .045,      .045],
-'COOL':   [     .05,       .2,      .026,      .026],
-
-'BANK_0': [       1,        1,         1,         1],
-'BANK_1': [       0,        0,         0,         0],
-'BANK_2': [       0,        0,         0,         0],
-'BANK_3': [       0,        0,         0,         0],
-'BANK_4': [       1,        1,         1,         1],
-'SCENIC': [       1,        1,         1,         1],
 }
 
 
