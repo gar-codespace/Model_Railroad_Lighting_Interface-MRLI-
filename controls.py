@@ -5,7 +5,7 @@ import effects
 import audio
 
 
-class UserInterface():
+class UserInterface:
     '''
     The user interface is everything on the front panel of the machine.
     '''
@@ -21,14 +21,7 @@ class UserInterface():
         model.set_pwm_led_pins() # sets pico pins to pwm
 
         self.effect = effects.Effect()
-
-    def get_sound_card(self):
-
-        pass
-
-    def play_default_sound(self):
-
-        pass
+        self.sfx = audio.SFX()
 
     def get_main_display(self):
 
@@ -51,7 +44,7 @@ class UserInterface():
 
             if entities.WP_DUR == 0:
                 end_time = entities.UTIME.time()
-                print(f'Waypoint duration: {end_time - start_time}')
+                # print(f'Waypoint duration: {end_time - start_time}')
                 self.effect.set_next_waypoint()
                 start_time = entities.UTIME.time()
             else:
@@ -69,24 +62,28 @@ class UserInterface():
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
     def run_sound_effects(self):
-
         '''
+        Picks a random SFX from the SFX group.
+        Adds a random ammount of time till the next SFX is played.
+        '''
+
         while True:
             if not entities.DISPLAY_MODE == 'STANDBY':
-                unmute the soundcard
-                get the current sfx group
-                randomly select a SFX from the group
-                get a random interval
-                play the SFX
-                
-                await (SFX duration + random interval)
-            else if STANDBY:
-                mute the soundcard
-                '''
 
-        entities.SFX_GRP
+                self.sfx.get_sfx()
+                sfx_interval = entities.SFX_INTERVAL * 1000 # milliseconds
+                sfx_interval = entities.RANDINT(100, sfx_interval)
+                sfx_duration = entities.SFX_NAME[1] * 1000 # milliseconds
 
-        pass
+                self.sfx.unmute()
+                self.sfx.play_sfx()
+
+            else:
+                self.sfx.mute()
+                sfx_interval = 500
+                sfx_duration = 500
+
+            await (sfx_duration + sfx_interval)
 
     def get_encoder(self):
         '''
