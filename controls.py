@@ -44,26 +44,25 @@ class UserInterface:
 
             if entities.WP_DUR == 0:
                 end_time = entities.UTIME.time()
-                # print(f'Waypoint duration: {end_time - start_time}')
+                print(f'Waypoint duration: {end_time - start_time}')
                 self.effect.set_next_waypoint()
                 start_time = entities.UTIME.time()
-            else:
+
+            entities.WP_DUR -= 1
+            if entities.DISPLAY_MODE == 'ANIMATED':
                 entities.RED -= entities.STEP_R
                 entities.GREEN -= entities.STEP_G
                 entities.BLUE -= entities.STEP_B
                 entities.WARM -= entities.STEP_W
                 entities.COOL -= entities.STEP_C
                 self.effect.set_led_values()
-
-            entities.WP_DUR -= 1
-            if entities.DISPLAY_MODE == 'ANIMATED':
                 self.update_display(view.get_status_screen())
 
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
     def run_sound_effects(self):
         '''
-        Picks a random SFX from the SFX group.
+        Randomly picks a SFX from the SFX group.
         Adds a random ammount of time till the next SFX is played.
         '''
 
@@ -108,7 +107,7 @@ class UserInterface:
 
     def get_all_the_buttons(self):
         '''
-        Consolidate all the front panel led buttons into one loop.
+        Consolidate all the front panel buttons into one loop.
         '''
 
         bC = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_callback)
@@ -118,7 +117,7 @@ class UserInterface:
         b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.bank_button_callback, 'BANK_2')
         b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.bank_button_callback, 'BANK_3')
         b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.bank_button_callback, 'BANK_4')
-        bs = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.bank_button_callback, 'SCENIC')
+        bS = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.bank_button_callback, 'SCENIC')
 
         while(True):
 
@@ -130,7 +129,7 @@ class UserInterface:
                 b2.update()
                 b3.update()
                 b4.update()
-                bs.update() # that's an s not a 5
+                bS.update() # that's an s not a 5
 
             await entities.UASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
 
@@ -167,19 +166,21 @@ class UserInterface:
 
     def toggle_standby(self):
         '''
-        The effect is not stopped, the LEDs are turned off.
+        The effect is not stopped, the LEDs and SFX are turned off.
         '''
 
         if entities.DISPLAY_MODE == 'STANDBY':
             entities.DISPLAY_MODE = self.standby_toggle
             self.effect.set_led_banks()
             self.update_display(view.get_menu_list())
+            # Turn on SFX
 
         else:
             self.standby_toggle = entities.DISPLAY_MODE
             entities.DISPLAY_MODE = 'STANDBY'
             self.effect.shut_off_leds()
             self.clear_display()
+            # Turn off SFX
 
 
 ################# callbacks ##################
@@ -248,7 +249,7 @@ class UserInterface:
             print(name)
 
     def bank_button_callback(self, name, event):
-        '''The LED bank and scenic buttons'''
+        '''The 6 LED bank and scenic buttons.'''
 
         if event == entities.Button.RELEASED:
             index = entities.CURRENT_EFFECT[2]

@@ -47,21 +47,30 @@ def get_index_double():
 def get_waypoint_duration(index):
     '''
     The duration of the waypoint is the number of times the while loop is run.
+    When tested, the Picos clock was consistantly way off from real time,
+    so the CLOCK_OFFSET adjusts for that.
     '''
 
     if entities.CURRENT_EFFECT[1] == 'STATIC':
         entities.WP_DUR = 1
-    else:
+    else: # Convert duration to milliseconds
         duration = entities.ANIMATED_BUFFER['TIME'][index] # real time minutes
-        duration = duration * 60 # real time seconds
-        duration = duration * 1000 # real time milliseconds
+        duration *= 60 # real time seconds
+        duration *= 1000 # real time milliseconds
 
+        # Adjustment for asyncio overhead
+        duration *= entities.CLOCK_OFFSET 
+
+        # Apply the random factor
         random = entities.ANIMATED_BUFFER['RANDOM'][index]
         d_max = duration # milliseconds
         d_min = duration * (random) # milliseconds
         duration = entities.RANDINT(int(d_max - d_min), int(d_max)) # milliseconds
 
-        duration = duration / entities.CLOCK_RATIO # milliseconds
+        # Scale the duration for model railroads
+        duration /= entities.FAST_TIME_CLOCK # milliseconds
+
+        # The waypoint duration expressed in cycles
         entities.WP_DUR = int(duration / entities.CLOCK_CYCLE) # milliseconds / ms per cycle = cycles
 
 def get_next_waypoint(index):

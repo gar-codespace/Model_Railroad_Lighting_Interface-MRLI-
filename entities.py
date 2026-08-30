@@ -106,9 +106,11 @@ SOUND_CLIPS = {'clip0':'harbor_sounds1.mp3',
 
 ################## TIME BASE ######################
 
-CLOCK_RATIO = 8 # build in some fast time clock compatability
-CLOCK_CYCLE = 25 # Milliseconds per cycle. The delay the effect awaits.
+FAST_TIME_CLOCK = 8 # build in some fast time clock compatability
+CLOCK_CYCLE = 250 # Milliseconds per cycle. The delay the effect awaits.
 DEFAULT_CYCLE = 20 # milliseconds used for other awaits
+CLOCK_OFFSET = .87 # Adjustment to keep the effect times closer to what they should be.
+
 
 ################## COLOR CONTROL ######################
 
@@ -158,12 +160,13 @@ LED_INDEX_MAP = {0: 'RED',
                  3: 'WARM',
                  4: 'COOL'
                  }
-PWM_TICKS = 200 # how many ticks per indent of the rotary encoder when changing color values
+PWM_TICKS = 200 # How many ticks per indent of the rotary encoder when changing color values.
+                # Smaller is finer control.
 
 MAIN_MENU = { # In the order they show on the display
              0: ('Maintenance',        'STATIC',  1),
              1: ('Daytime',            'STATIC',  2),
-             2: ('A Foggy Day',        'STATIC',  3),
+             2: ('Overcast',           'STATIC',  3),
              3: ('Twilight',           'STATIC',  5),
              4: ('Nightime',           'STATIC',  4),
              5: ('* 11PM',            'ALL_DAY',  0),

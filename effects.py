@@ -1,7 +1,7 @@
 '''
 This library creates and runs both animated and static lighting effects.
 Static effects are all grouped together in one dictionary called entities.STATIC.
-Animated effects are all grouped together in one dictionary called entities.ANIMATED.
+Each animated effect gets its own dictionary.
 
 In the dictionary for each effect, the duration of the effect is given in real time minutes,
 the time the effect actually takes in the real world.
@@ -72,7 +72,7 @@ class Effect():
         entities.PIN(entities.PICO_PIN['SCENIC_S']).value(0)
 
     def set_led_values(self):
-        '''Sets the led pwm values from the value in the buffer'''
+        '''Sets the led pwm values from the value in the Effect Buffer'''
 
         entities.PWM(self.r).duty_u16(int(entities.RED))
         entities.PWM(self.g).duty_u16(int(entities.GREEN))
@@ -109,13 +109,6 @@ class Effect():
         if not current_waypoint_name == entities.WP_NAME:
             print(f'Current effect waypoint: {entities.WP_NAME}')
 
-        current_sfx_group = entities.SFX_GRP
-        self.get_sfx_group(index, self.effect_dictionary)
-        if not current_sfx_group == entities.SFX_GRP:
-            # Play the new sfx group
-            #print(f'Current SFX group: {entities.SFX_GRP}')
-            pass
-
         self.set_up_colors(index, self.effect_dictionary)
         self.set_up_banks(index, self.effect_dictionary)
         model.get_waypoint_duration(index)
@@ -129,4 +122,3 @@ class Effect():
         if not entities.DISPLAY_MODE == 'STANDBY':
             self.set_led_banks()
             self.set_led_values()
-
