@@ -12,7 +12,7 @@ class UserInterface:
 
     def __init__(self):
 
-        entities.DISPLAY_MODE = 'WELCOME'
+        entities.DISPLAY_STATE = 'WELCOME'
         self.standby_toggle: str
         self.sound_card: object
         self.main_display: object
@@ -49,7 +49,7 @@ class UserInterface:
                 start_time = entities.UTIME.time()
 
             entities.WP_DUR -= 1
-            if entities.DISPLAY_MODE == 'ANIMATED':
+            if entities.DISPLAY_STATE == 'ANIMATED':
                 entities.RED -= entities.STEP_R
                 entities.GREEN -= entities.STEP_G
                 entities.BLUE -= entities.STEP_B
@@ -67,7 +67,7 @@ class UserInterface:
         '''
 
         while True:
-            if not entities.DISPLAY_MODE == 'STANDBY':
+            if not entities.DISPLAY_STATE == 'STANDBY':
 
                 self.sfx.get_sfx()
                 sfx_interval = entities.SFX_INTERVAL * 1000 # milliseconds
@@ -123,7 +123,7 @@ class UserInterface:
 
             bC.update()
             # bB.update()
-            if entities.DISPLAY_MODE == 'STATIC' or entities.DISPLAY_MODE == 'EDIT':
+            if entities.DISPLAY_STATE == 'STATIC' or entities.DISPLAY_STATE == 'EDIT':
                 b0.update()
                 b1.update()
                 b2.update()
@@ -147,7 +147,7 @@ class UserInterface:
             line_y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
         try: # add the hilight rectangle
-            attrib = f'{entities.DISPLAY_MODE}_get_hilight'
+            attrib = f'{entities.DISPLAY_STATE}_get_hilight'
             h = getattr(view, attrib)()
             self.main_display.rect(0, h, 128, 12, 1)
         except:
@@ -169,15 +169,15 @@ class UserInterface:
         The effect is not stopped, the LEDs and SFX are turned off.
         '''
 
-        if entities.DISPLAY_MODE == 'STANDBY':
-            entities.DISPLAY_MODE = self.standby_toggle
+        if entities.DISPLAY_STATE == 'STANDBY':
+            entities.DISPLAY_STATE = self.standby_toggle
             self.effect.set_led_banks()
             self.update_display(view.get_menu_list())
             # Turn on SFX
 
         else:
-            self.standby_toggle = entities.DISPLAY_MODE
-            entities.DISPLAY_MODE = 'STANDBY'
+            self.standby_toggle = entities.DISPLAY_STATE
+            entities.DISPLAY_STATE = 'STANDBY'
             self.effect.shut_off_leds()
             self.clear_display()
             # Turn off SFX
@@ -188,7 +188,7 @@ class UserInterface:
 
     def turn_left_callback(self):
         
-        attrib = f'{entities.DISPLAY_MODE}_turn_left'
+        attrib = f'{entities.DISPLAY_STATE}_turn_left'
 
         try:
             display_content = getattr(view, attrib)() # IE view.WELCOME_turn_left()
@@ -199,7 +199,7 @@ class UserInterface:
         self.effect.set_led_values() # Real time color adjustment
 
     def turn_right_callback(self):
-        attrib = f'{entities.DISPLAY_MODE}_turn_right'
+        attrib = f'{entities.DISPLAY_STATE}_turn_right'
         try:
             display_content = getattr(view, attrib)() # IE view.WELCOME_turn_right()
             self.update_display(display_content)
@@ -210,12 +210,12 @@ class UserInterface:
 
     def single_click_callback(self):
 
-        if entities.DISPLAY_MODE == 'EFFECTS':
+        if entities.DISPLAY_STATE == 'EFFECTS':
             entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
             # print(entities.CURRENT_EFFECT)
             self.effect.set_up_effect()
 
-        attrib = f'{entities.DISPLAY_MODE}_click'
+        attrib = f'{entities.DISPLAY_STATE}_click'
         try:
             display_content = getattr(view, attrib)() # IE WELCOME_click()
             self.update_display(display_content)
@@ -224,12 +224,12 @@ class UserInterface:
 
     def multi_click_callback(self, clicks):
         #print(f"Multiple Clicks: {clicks}")
-        update = f'{entities.DISPLAY_MODE}update_buffer' # IE view.EDITupdate_buffer()
+        update = f'{entities.DISPLAY_STATE}update_buffer' # IE view.EDITupdate_buffer()
         try:
             getattr(view, update)()
         except:
             pass
-        attrib = f'{entities.DISPLAY_MODE}_click2'
+        attrib = f'{entities.DISPLAY_STATE}_click2'
         try:
             display_content = getattr(view, attrib)() # IE WELCOME_click2()
             self.update_display(display_content)

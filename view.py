@@ -57,16 +57,16 @@ def get_status_screen() -> list:
     return status_screen
 
 
-########### DISPLAY_MODE: WELCOME
+########### DISPLAY_STATE: WELCOME
 
 
 def WELCOME_turn_left():
-    entities.DISPLAY_MODE = 'EFFECTS'
+    entities.DISPLAY_STATE = 'EFFECTS'
 
     return get_menu_list()
 
 def WELCOME_turn_right():
-    entities.DISPLAY_MODE = 'EFFECTS'
+    entities.DISPLAY_STATE = 'EFFECTS'
 
     return get_menu_list()
 
@@ -76,12 +76,12 @@ def WELCOME_get_hilight():
     return 65
 
 def WELCOME_click():
-    entities.DISPLAY_MODE = 'EFFECTS'
+    entities.DISPLAY_STATE = 'EFFECTS'
 
     return get_menu_list()
 
 
-########### DISPLAY_MODE: EFFECTS
+########### DISPLAY_STATE: EFFECTS
 
 
 def EFFECTS_turn_left():
@@ -114,20 +114,20 @@ def EFFECTS_get_hilight():
 def EFFECTS_click():
 
     entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
-    entities.DISPLAY_MODE = 'STATIC'
+    entities.DISPLAY_STATE = 'STATIC'
     if not entities.CURRENT_EFFECT[1] == 'STATIC':
-        entities.DISPLAY_MODE = 'ANIMATED'
+        entities.DISPLAY_STATE = 'ANIMATED'
 
     return get_status_screen()
 
 def EFFECTS_confirm_released():
 
-    entities.DISPLAY_MODE = 'STANDBY'
+    entities.DISPLAY_STATE = 'STANDBY'
 
     return
 
 
-########### DISPLAY_MODE: STATIC
+########### DISPLAY_STATE: STATIC
 
 
 def STATIC_turn_left():
@@ -153,18 +153,18 @@ def STATIC_get_hilight():
 
 def STATIC_click():
 
-    entities.DISPLAY_MODE = 'EDIT'
+    entities.DISPLAY_STATE = 'EDIT'
 
     return get_status_screen()
 
 def STATIC_click2():
     
-    entities.DISPLAY_MODE = 'EFFECTS'
+    entities.DISPLAY_STATE = 'EFFECTS'
 
     return get_menu_list()
 
 
-########### DISPLAY_MODE: ANIMATED
+########### DISPLAY_STATE: ANIMATED
 
 
 def ANIMATED_click():
@@ -173,12 +173,12 @@ def ANIMATED_click():
 
 def ANIMATED_click2():
     
-    entities.DISPLAY_MODE = 'EFFECTS'
+    entities.DISPLAY_STATE = 'EFFECTS'
 
     return get_menu_list()
 
 
-########### DISPLAY_MODE: EDIT
+########### DISPLAY_STATE: EDIT
 
 
 def EDIT_turn_left():
@@ -226,13 +226,13 @@ def EDIT_get_hilight():
 def EDIT_click():
     '''Navigate up one level with out saving'''
 
-    entities.DISPLAY_MODE = 'STATIC'
+    entities.DISPLAY_STATE = 'STATIC'
 
     return get_status_screen()
 
 def EDIT_click2():
 
-    entities.DISPLAY_MODE = 'STATIC'
+    entities.DISPLAY_STATE = 'STATIC'
  
     return get_status_screen()
 
