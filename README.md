@@ -54,17 +54,49 @@ EDIT - Changable value of the selected color.
 STANDBY - Mutes the display, audio, and RGBWC lights.  The effect is not paused.  
 
 ## Navigation  
-In Welcome mode:  
+In display state WELCOME:  
+  Rotate encoder: display state EFFECTS  
+  Single press encoder: display state EFFECTS  
+  Double press encoder: None  
+  LED bank buttons: None  
   
-In Effects mode:  
+In display state EFFECTS:  
+  Rotate encoder: scroll available effects  
+  Single press encoder: select hilighted effect  
+  Double press encoder: None  
+  LED bank buttons: None  
   
-In Animated mode:  
+In display state ANIMATED:  
+  Rotate encoder: None  
+  Single press encoder: display state PAUSED  
+  Double press encoder: return to display state EFFECTS  
+  LED bank buttons: None  
+
+In display state STATIC:  
+  Rotate encoder: scroll colors  
+  Single press encoder: display state EDIT  
+  Double press encoder: return to display state EFFECTS  
+  LED bank buttons: toggle LEDs  
+
+In display state EDIT:  
+  Rotate encoder: change color value  
+  Single press encoder: return to display state STATIC   
+  Double press encoder: None  
+  LED bank buttons: toggle LEDs  
   
-In Static mode:  
-  
-in Edit mode:  
-  
-In Standby mode:  
+In display state STANDBY:  
+  Rotate encoder: None  
+  Single press encoder: None   
+  Double press encoder: None  
+  LED bank buttons: None  
+    
+In display state PAUSED:  
+  Rotate encoder: None  
+  Single press encoder: display state ANIMATED   
+  Double press encoder: None  
+  LED bank buttons: None  
+
+In any state the standby button will toggle STANDBY  
   
  
 ## Third Party Developers

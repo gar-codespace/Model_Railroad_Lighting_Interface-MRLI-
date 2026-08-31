@@ -70,15 +70,15 @@ def WELCOME_turn_right():
 
     return get_menu_list()
 
-def WELCOME_get_hilight():
-    # Move the hilight rectangle off the screen
-
-    return 65
-
 def WELCOME_click():
     entities.DISPLAY_STATE = 'EFFECTS'
 
     return get_menu_list()
+
+def WELCOME_get_hilight():
+    # Move the hilight rectangle off the screen
+
+    return 65
 
 
 ########### DISPLAY_STATE: EFFECTS
@@ -104,13 +104,6 @@ def EFFECTS_turn_right():
 
     return get_menu_list()
 
-def EFFECTS_get_hilight():
-
-    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
-    hilight_row = entities.HIGHLIGHT_ROW * hilight_height
-
-    return hilight_row + 1
-
 def EFFECTS_click():
 
     entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
@@ -120,11 +113,31 @@ def EFFECTS_click():
 
     return get_status_screen()
 
-def EFFECTS_confirm_released():
+def EFFECTS_get_hilight():
 
-    entities.DISPLAY_STATE = 'STANDBY'
+    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
+    hilight_row = entities.HIGHLIGHT_ROW * hilight_height
 
-    return
+    return hilight_row + 1
+
+
+########### DISPLAY_STATE: ANIMATED
+
+
+def ANIMATED_click():
+
+    if entities.DISPLAY_STATE == 'PAUSED':
+        entities.DISPLAY_STATE = 'ANIMATED'
+    else:
+        entities.DISPLAY_STATE = 'PAUSED'
+
+    return get_menu_list()
+
+def ANIMATED_click2():
+    
+    entities.DISPLAY_STATE = 'EFFECTS'
+
+    return get_menu_list()
 
 
 ########### DISPLAY_STATE: STATIC
@@ -144,13 +157,6 @@ def STATIC_turn_right():
 
     return get_status_screen()
 
-def STATIC_get_hilight():
-
-    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
-    hilight_row = entities.STATIC_SELECT_ROW * hilight_height
-
-    return hilight_row - 1
-
 def STATIC_click():
 
     entities.DISPLAY_STATE = 'EDIT'
@@ -163,28 +169,19 @@ def STATIC_click2():
 
     return get_menu_list()
 
+def STATIC_get_hilight():
 
-########### DISPLAY_STATE: ANIMATED
+    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
+    hilight_row = entities.STATIC_SELECT_ROW * hilight_height
 
+    return hilight_row - 1
 
-def ANIMATED_click():
-    pass
-    # pause and play the animated effect
-
-def ANIMATED_click2():
-    
-    entities.DISPLAY_STATE = 'EFFECTS'
-
-    return get_menu_list()
 
 
 ########### DISPLAY_STATE: EDIT
 
 
 def EDIT_turn_left():
-    '''
-    Should this be moved to effects?
-    '''
 
     index = entities.CURRENT_EFFECT[2]
     color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
@@ -200,9 +197,6 @@ def EDIT_turn_left():
     return get_status_screen()
 
 def EDIT_turn_right():
-    '''
-    Should this be moved to effects?
-    '''
     
     index = entities.CURRENT_EFFECT[2]
     color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
@@ -216,37 +210,15 @@ def EDIT_turn_right():
 
     return get_status_screen()
 
+def EDIT_click():
+
+    entities.DISPLAY_STATE = 'STATIC'
+
+    return get_status_screen()
+
 def EDIT_get_hilight():
 
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
 
     return hilight_row - 1
-
-def EDIT_click():
-    '''Navigate up one level with out saving'''
-
-    entities.DISPLAY_STATE = 'STATIC'
-
-    return get_status_screen()
-
-def EDIT_click2():
-
-    entities.DISPLAY_STATE = 'STATIC'
- 
-    return get_status_screen()
-
-def EDITupdate_buffer():
-    '''
-    Copies the value in the EFFECT_BUFFER to effects.color
-    '''
-
-    color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW] # PWM expression
-    index = entities.CURRENT_EFFECT[2] # Imteger
-    new_value = model.pwm2percent(getattr(entities, color)) # Percentage expression
-
-    # entities.STATIC[color][index] = new_value
-    entities.STATIC_BUFFER[color][index] = new_value
-
-    return get_status_screen()
-

@@ -85,7 +85,9 @@ OLED0 = {'ADDRESS': CONST(0x3C),
 # OLED Configurations (bus, width, height, addr)
 DISPLAY0 = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
 MAIN_DISPLAY = DISPLAY0
-MAIN_DISPLAY_BRIGHTNESS = 70
+MAIN_DISPLAY_BRIGHT = 70
+MAIN_DISPLAY_DIM = 20
+MAIN_DISPLAY_BRIGHTNESS = MAIN_DISPLAY_BRIGHT
 
 # Display formatting
 MAIN_FORMAT =  {'LINE_HEIGHT': 13,
@@ -148,7 +150,7 @@ WELCOME_SCREEN = ['   M.U.T.T.',
                   ]
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 STATIC_SELECT_ROW = 2 # In STATIC mode, the encoder moves the rectangle up and down
-DISPLAY_STATE = 'WELCOME' # Can be: WELCOME, EFFECTS, ANIMATED, STATIC, EDIT, STANDBY
+DISPLAY_STATE = 'WELCOME' # Can be: WELCOME, EFFECTS, ANIMATED, STATIC, EDIT, PAUSED, STANDBY
 CURRENT_EFFECT = ('Daytime', 'STATIC', 2)
 HILIGHTED_EFFECT = 1 # MAIN_MENU key
 # MENU_FIRST_ITEM is hard coded based on 5 menu lines and the highlite on line 2

@@ -26,7 +26,6 @@ class UserInterface:
     def get_main_display(self):
 
         self.main_display = view.get_display(entities.MAIN_DISPLAY)
-        self.main_display.contrast(entities.MAIN_DISPLAY_BRIGHTNESS)
 
 
 ################ methods in main - UASYNCIO.gather ##################
@@ -153,6 +152,7 @@ class UserInterface:
         except:
             pass
 
+        self.main_display.contrast(entities.MAIN_DISPLAY_BRIGHTNESS)
         self.main_display.show()
 
     def clear_display(self):
@@ -224,11 +224,7 @@ class UserInterface:
 
     def multi_click_callback(self, clicks):
         #print(f"Multiple Clicks: {clicks}")
-        update = f'{entities.DISPLAY_STATE}update_buffer' # IE view.EDITupdate_buffer()
-        try:
-            getattr(view, update)()
-        except:
-            pass
+ 
         attrib = f'{entities.DISPLAY_STATE}_click2'
         try:
             display_content = getattr(view, attrib)() # IE WELCOME_click2()
