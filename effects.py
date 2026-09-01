@@ -6,7 +6,6 @@ Each animated effect gets its own dictionary.
 In the dictionary for each effect, the duration of the effect is given in real time minutes,
 the time the effect actually takes in the real world.
 The duration is then adjusted for model railroad 'scale' and converted to milliseconds.
-The adjusted duration in milliseconds is expressed as ticks.
 
 The duration of STATIC effects is defined as 0, since 'infinately long' seems rediculous.
 '''

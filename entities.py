@@ -118,9 +118,9 @@ CLOCK_OFFSET = .87 # Adjustment to keep the effect times closer to what they sho
 
 ################## COLOR CONTROL ######################
 
-# Effect Buffer
-# The running effect writes to and reads from this buffer
-# In STATIC mode user inputs are written here.
+################## EFFECT BUFFER ######################
+# The running effect writes to and reads from this buffer.
+# In STATIC mode user inputs are written here and the STATIC_BUFFER.
 RED     = 32500 # PWM value
 BLUE    = 32500
 WARM    = 32500
@@ -131,7 +131,7 @@ BANK_2  = 1
 BANK_3  = 1
 BANK_4  = 1
 SCENIC  = 1
-WP_DUR  = 1 # waypoint_duration is the number of times the effect will loop, given a delay of entities.CLOCK_CYCLE
+WP_DUR  = 1 # waypoint_duration is the number of times the effect will await, given a delay of entities.CLOCK_CYCLE
 NEXT_WP = 0 # Index of the next waypoint
 STEP_R  = 0 # how much in pwm steps does each color change per CLOCK_CYCLE. pos or neg
 STEP_G  = 0
@@ -141,6 +141,7 @@ STEP_C  = 0
 WP_NAME = 'name'
 SFX_GRP = None
 SFX_NAME= 'name'
+################## EFFECT BUFFER ######################
 
 ################## NAVIGATION ######################
 
