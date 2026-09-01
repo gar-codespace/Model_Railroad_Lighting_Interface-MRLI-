@@ -33,7 +33,7 @@ def get_menu_list() -> list:
 
     return menu_list
 
-def get_status_screen() -> list:
+def get_status_list() -> list:
     '''
     The status screen is displayed when the display mode is ANIMATED, STATIC, or EDIT.
     '''
@@ -111,7 +111,7 @@ def EFFECTS_click():
     if not entities.CURRENT_EFFECT[1] == 'STATIC':
         entities.DISPLAY_STATE = 'ANIMATED'
 
-    return get_status_screen()
+    return get_status_list()
 
 def EFFECTS_get_hilight():
 
@@ -126,18 +126,31 @@ def EFFECTS_get_hilight():
 
 def ANIMATED_click():
 
-    if entities.DISPLAY_STATE == 'PAUSED':
-        entities.DISPLAY_STATE = 'ANIMATED'
-    else:
-        entities.DISPLAY_STATE = 'PAUSED'
+    entities.DISPLAY_STATE = 'PAUSED'
+    entities.MAIN_DISPLAY_BRIGHTNESS = entities.MAIN_DISPLAY_DIM
 
-    return get_menu_list()
+
+    print(entities.DISPLAY_STATE)
+
+
+    return get_status_list()
 
 def ANIMATED_click2():
     
     entities.DISPLAY_STATE = 'EFFECTS'
 
     return get_menu_list()
+
+
+########### DISPLAY_STATE: PAUSED
+
+
+def PAUSED_click():
+    entities.DISPLAY_STATE = 'ANIMATED'
+    entities.MAIN_DISPLAY_BRIGHTNESS = entities.MAIN_DISPLAY_BRIGHT
+    print(entities.DISPLAY_STATE)
+
+    return get_status_list()
 
 
 ########### DISPLAY_STATE: STATIC
@@ -148,20 +161,20 @@ def STATIC_turn_left():
     row = entities.STATIC_SELECT_ROW + 1
     entities.STATIC_SELECT_ROW = min(row, 4)
 
-    return get_status_screen()
+    return get_status_list()
 
 def STATIC_turn_right():
 
     row = entities.STATIC_SELECT_ROW - 1
     entities.STATIC_SELECT_ROW = max(0, row)
 
-    return get_status_screen()
+    return get_status_list()
 
 def STATIC_click():
 
     entities.DISPLAY_STATE = 'EDIT'
 
-    return get_status_screen()
+    return get_status_list()
 
 def STATIC_click2():
     
@@ -194,7 +207,7 @@ def EDIT_turn_left():
     entities.STATIC_BUFFER[color][index] = model.pwm2percent(pwm_color_value) # writes the new value into the STATIC_BUFFER
 
 
-    return get_status_screen()
+    return get_status_list()
 
 def EDIT_turn_right():
     
@@ -208,13 +221,13 @@ def EDIT_turn_right():
     setattr(entities, color, pwm_color_value) # writes the new value to entities.<color>
     entities.STATIC_BUFFER[color][index] = model.pwm2percent(pwm_color_value) # writes the new value into the STATIC_BUFFER
 
-    return get_status_screen()
+    return get_status_list()
 
 def EDIT_click():
 
     entities.DISPLAY_STATE = 'STATIC'
 
-    return get_status_screen()
+    return get_status_list()
 
 def EDIT_get_hilight():
 

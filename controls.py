@@ -47,15 +47,14 @@ class UserInterface:
                 self.effect.set_next_waypoint()
                 start_time = entities.UTIME.time()
 
-            entities.WP_DUR -= 1
-            if entities.DISPLAY_STATE == 'ANIMATED':
-                entities.RED -= entities.STEP_R
-                entities.GREEN -= entities.STEP_G
-                entities.BLUE -= entities.STEP_B
-                entities.WARM -= entities.STEP_W
-                entities.COOL -= entities.STEP_C
+            try: # only update colors when an animated effect is running
+                attrib = f'{entities.DISPLAY_STATE}_apply_color_step'
+                getattr(model, attrib)() # IE ANIMATED_apply_color_step()
+
                 self.effect.set_led_values()
-                self.update_display(view.get_status_screen())
+                self.update_display(view.get_status_list())
+            except:
+                pass
 
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
