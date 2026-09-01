@@ -122,13 +122,12 @@ class UserInterface:
 
             bC.update()
             # bB.update()
-            if entities.DISPLAY_STATE == 'STATIC' or entities.DISPLAY_STATE == 'EDIT':
-                b0.update()
-                b1.update()
-                b2.update()
-                b3.update()
-                b4.update()
-                bS.update() # that's an s not a 5
+            b0.update()
+            b1.update()
+            b2.update()
+            b3.update()
+            b4.update()
+            bS.update() # that's an s not a 5
 
             await entities.UASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
 
@@ -210,10 +209,11 @@ class UserInterface:
 
     def single_click_callback(self):
 
-        if entities.DISPLAY_STATE == 'EFFECTS':
-            entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
-            # print(entities.CURRENT_EFFECT)
-            self.effect.set_up_effect()
+        attrib = f'{entities.DISPLAY_STATE}_select_sffect'
+        try:
+            getattr(self.effect, attrib)() # IE self.effect._select_sffect()
+        except:
+            pass
 
         attrib = f'{entities.DISPLAY_STATE}_click'
         try:
@@ -235,21 +235,18 @@ class UserInterface:
     def confirm_button_callback(self, name, event):
         '''Toggle standby mode.'''
 
-        if event == entities.Button.RELEASED:
-            self.toggle_standby()
+        self.toggle_standby()
             
     def back_button_callback(self, name, event):
         '''Not used.'''
 
-        if event == entities.Button.RELEASED:
-            print(name)
+        pass
 
     def bank_button_callback(self, name, event):
         '''The 6 LED bank and scenic buttons.'''
 
-        if event == entities.Button.RELEASED:
-            index = entities.CURRENT_EFFECT[2]
-            switch = f'{name}_S'
+        index = entities.CURRENT_EFFECT[2]
+        switch = f'{name}_S'
 
-            entities.PIN(entities.PICO_PIN[switch]).toggle()
-            entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[switch]).value()
+        entities.PIN(entities.PICO_PIN[switch]).toggle()
+        entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[switch]).value()

@@ -79,6 +79,12 @@ class Effect():
         entities.PWM(self.w).duty_u16(int(entities.WARM))
         entities.PWM(self.c).duty_u16(int(entities.COOL))
 
+    def EFFECTS_select_sffect(self):
+        '''Called when a new effect is selected from the main menu.'''
+
+        entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
+        self.set_up_effect()
+
     def set_up_effect(self):
         '''
         Load initial values into the Effect Buffer.
