@@ -9,18 +9,18 @@ This program creates lighting effects suitable for a model railroad or diorama.
 It controls 5 banks of rgbwc LEDs and controls the on or off value of the layouts scenic lights.  
 There is also an audio module that is used for ambient sounds.  
 This is a stand-alone project, it does not utilize the WiFi feature of the Pico.  
-This program controls strip leds, not individually programmible led strips.  
+This program controls strip LEDs, not individually programmible LED strips.  
 
 ## Lighting Effects  
-Different types of animated lighting effects can be defined.  
-When run, the effect moves from waypoint to waypoint.  
+Different types of animated lighting effects can be defined by the user.  
+Conceptually all effects are the same, they just have different values.  
+Programatically the code conceptualizes two kinds of lighting effects, STATIC and ANIMATED.  
+Animated effects move from what's being called a waypoint to the next sequential waypoint.  
 At the last waypoint, the effect loops and begins again at the first waypoint.  
 A waypoint is similar to what a keyframe is in cartoon animation.  
 Each color changes from waypoint to waypoint in a linear manner, there is no 
 'ease in' or 'ease out' like there is in cartoon animation.  
-Even though all effects are animated, some have only one waypoint and thus 
-their values do not change over time. This type of effect is considered 
-a STATIC effect. Effects with more than one waypoint are considered ANIMATED effects.  
+Static effects have only one waypoint and thus their values do not change over time.   
 
 ## Static Lighting Effects  
 The values for static lighting effects can be changed by the user. The changes are stored
@@ -31,9 +31,11 @@ parameters require editing the dictionaries in the entities file.
 The values of an animated effect can not be changed by the user at the front panel.  
 Changes to an animated effect are made by editing the appropriate effect dictionary in the entities file.  
 As mentioned, an animated effect moves from waypoint to waypoint and at the end loops back to the beginning.  
-There is also a RANDOM value in the effects definition expressed as a decimal percent.  
-This setting will shorten the length of the waypoint by a random ammount. Color cahnges are not effected by the RANDOM value, 
-only the waypoint length.   
+There is also a RANDOM value in the effects definition expressed as a decimal percent. This setting will shorten the length of 
+the waypoint by a random ammount. Color cahnges are not effected by the RANDOM value, only the waypoint length.   
+  
+## Sound Effects  
+Talk about sfx.  
   
 ## Hardware  
 Raspberry Pi Pico or Pico 2  
@@ -45,10 +47,15 @@ Adafruit Stereo 20W Class D Audio Amplifier - MAX9744
 Plugs, switches, buttons etc. 
   
 ## Operation  
-The machine operates in one of 6 modes:  
+This project is not really a state machine because it is always running a lighting and sound effect, so it never really changes state, even
+though an effect may change.  
+The states that do change regard the display, so I guess this project is a modified State Machine pattern, with a bit of MVC mixed in.  
+  
+The display operates in one of 7 states:  
 WELCOME - The initial screen presented at startup.  
-EFFECTS - Displays a scrollable list of available lighting effects.  
+EFFECTS - A scrollable list of available lighting effects.  
 ANIMATED - Displays the values of the RGBWC colors as they change.  
+PAUSED - The animated effect is paused.  
 STATIC - Displays a selectable list of the RGBWC colors.  
 EDIT - Changable value of the selected color.  
 STANDBY - Mutes the display, audio, and RGBWC lights.  The effect is not paused.  

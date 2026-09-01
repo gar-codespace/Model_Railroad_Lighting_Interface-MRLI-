@@ -75,6 +75,11 @@ PICO_PIN = {
         'BACK':28 # encoder
         }
 
+'''
+There seems to be a lot of hard coding around the display having 5 lines of text.
+Look into abstracting this.
+'''
+
 # OLED0 specs
 OLED0 = {'ADDRESS': CONST(0x3C),
          'WIDTH': 128,
@@ -95,30 +100,27 @@ MAIN_FORMAT =  {'LINE_HEIGHT': 13,
                 'X_OFFSET': 4
                 }
 
-# Audio
+# Audio Hardware
 
 SOUND_CARD = {'a':'b', 'c':'d'}
-
-SOUND_CLIPS = {'clip0':'harbor_sounds1.mp3',
-               'clip1':'xyzzy.mp3'
-               }
 
 
 ################## SOFTWARE ######################
 
 ################## TIME BASE ######################
 
-FAST_TIME_CLOCK = 8 # build in some fast time clock compatability
+FAST_TIME_CLOCK = 8 # used in model railroading to compress time.
 CLOCK_CYCLE = 250 # Milliseconds per cycle. The delay the effect awaits.
 DEFAULT_CYCLE = 20 # milliseconds used for other awaits
 CLOCK_OFFSET = .87 # Adjustment to keep the effect times closer to what they should be.
+                   # Adjusts for asyncio overhead slowing down the effects.
 
 
 ################## COLOR CONTROL ######################
 
 # Effect Buffer
 # The running effect writes to and reads from this buffer
-# In STATIC mode user inputs are written here. When accepted they are copied to STATIC_BUFFER
+# In STATIC mode user inputs are written here.
 RED     = 32500 # PWM value
 BLUE    = 32500
 WARM    = 32500
@@ -192,7 +194,7 @@ The random value is a float between 0 and 1.
 
 STATIC = {
 'NAME':   ( 'Stby', 'Maint',   'Day',   'Fog', 'Night', 'Twili'), # Waypoint name
-'GROUP':  (   'A1',    'A2',    'A3',    'A3',    'A4',    'A5'), # sound effects group
+'GROUP':  (   'A1',    'A1',    'A3',    'A3',    'A4',    'A5'), # sound effects group
 'FRAME':  (      1,       1,       1,       1,       1,       1), # Keyframe marker
 'TIME':   (      0,       0,       0,       0,       0,       0), # duration of waypoint
 'RANDOM': (     .0,      .0,      .0,      .0,      .0,      .0),
@@ -237,7 +239,7 @@ ALL_DAY = { # simulates an entire day
 
 STORMY = { # Simulates a stormy night
 'NAME':   ( 'Clear','Roll In',  'STORMY','Roll Out'), # Waypoint name
-'GROUP':  (    'D1',     'D1',      'C1',      'C1'), # sound effects group
+'GROUP':  (    'D1',     'D1',      'D1',      'D1'), # sound effects group
 'FRAME':  (       1,        1,         1,         1), # Keyframe marker
 'TIME':   (       3,        2,         2,         1), # duration of waypoint in minutes
 'RANDOM': (      .7,       .7,        .7,        .7),
@@ -280,16 +282,16 @@ CLOUDY = { # Simulates a cloudy day
 
 ################## SOUND EFFECTS DEFINITIONS ######################
 
-SFX_INTERVAL = 0.5 # maximum time between sfx (minutes)
+SFX_INTERVAL = 0.4 # maximum time between sfx (minutes)
 # SFX Library
-SFX = {
-    'name': ('filename', 'duration float'),
-    'name': ('filename', 'duration float')
-}
+SOUND_CLIPS = {
+                'clip00':('silence.wav', 2.0),
+                'clip01':('harbor_sounds1.wav', 1.111),
+               }
 
 # SFX Groups
-A3 = (
-    'name',
-    'name',
-    'ETX'
-)
+A1 = ('clip00') # silence
+
+A3 = ('clip01',
+      'clip02',
+      'ETC')
