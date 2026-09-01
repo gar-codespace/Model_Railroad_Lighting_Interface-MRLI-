@@ -41,15 +41,15 @@ class UserInterface:
 
         while True:
 
-            if entities.WP_DUR == 0:
+            if entities.WP_DUR <= 1:
                 end_time = entities.UTIME.time()
-                print(f'Waypoint duration: {end_time - start_time}')
+                print(f'Measured duration: {end_time - start_time} seconds')
                 self.effect.set_next_waypoint()
                 start_time = entities.UTIME.time()
 
             try: # only update colors when an animated effect is running
-                attrib = f'{entities.DISPLAY_STATE}_apply_color_step'
-                getattr(model, attrib)() # IE ANIMATED_apply_color_step()
+                attrib = f'{entities.DISPLAY_STATE}_increment_waypoint'
+                getattr(model, attrib)() # IE ANIMATED_increment_waypoint()
 
                 self.effect.set_led_values()
                 self.update_display(view.get_status_list())
@@ -68,9 +68,9 @@ class UserInterface:
             if not entities.DISPLAY_STATE == 'STANDBY':
 
                 self.sfx.get_sfx()
-                sfx_interval = entities.SFX_INTERVAL * 1000 # milliseconds
-                sfx_interval = entities.RANDINT(100, sfx_interval)
-                sfx_duration = entities.SFX_NAME[1] * 1000 # milliseconds
+                # sfx_interval = entities.SFX_INTERVAL * 1000 # milliseconds
+                # sfx_interval = entities.RANDINT(100, sfx_interval)
+                # sfx_duration = entities.SFX_NAME[1] * 1000 # milliseconds
 
                 self.sfx.unmute()
                 self.sfx.play_sfx()
@@ -80,7 +80,8 @@ class UserInterface:
                 sfx_interval = 500
                 sfx_duration = 500
 
-            await entities.UASYNCIO.sleep_ms(sfx_duration + sfx_interval)
+            # await entities.UASYNCIO.sleep_ms(sfx_duration + sfx_interval)
+            await entities.UASYNCIO.sleep_ms(40000)
 
     def get_encoder(self):
         '''

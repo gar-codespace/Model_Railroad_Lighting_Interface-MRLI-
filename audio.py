@@ -18,10 +18,12 @@ class SFX:
 
     def get_sfx(self):
 
-        sfx_group = entities.SFX_GRP
-        sfx_count = len(sfx_group)
-        select_sfx_index = entities.RANDINT(0, sfx_count - 1)
-        entities.SFX_NAME = entities.SFX_GRP[select_sfx_index]
+        pass
+
+        # sfx_group = entities.SFX_GRP
+        # sfx_count = len(sfx_group)
+        # select_sfx_index = entities.RANDINT(0, sfx_count - 1)
+        # entities.SFX_NAME = entities.SFX_GRP[select_sfx_index]
 
     def play_sfx(self):
         pass

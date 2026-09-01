@@ -101,7 +101,7 @@ def get_color_delta(index:int, color:str):
 
     return int(color_delta)
 
-def ANIMATED_apply_color_step():
+def ANIMATED_increment_waypoint():
 
     entities.RED -= entities.STEP_R
     entities.GREEN -= entities.STEP_G
