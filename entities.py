@@ -119,8 +119,8 @@ DEFAULT_CYCLE = 20 # milliseconds used for other awaits
 # The running effect writes to and reads from this buffer.
 # In STATIC mode user inputs are written here and the STATIC_BUFFER.
 # The slower the clock cycle, the more accurate the delay.
-CLOCK_CYCLE = 250 # Milliseconds per cycle. The delay the effect awaits.
-CLOCK_OFFSET = .868 # Adjustment to keep the effect times closer to what they should be.
+CLOCK_CYCLE = 500 # Milliseconds per cycle. The delay the effect awaits.
+CLOCK_OFFSET = 1 # Adjustment to keep the effect times closer to what they should be.
 RED     = 32500 # PWM value
 BLUE    = 32500
 WARM    = 32500
@@ -241,7 +241,7 @@ ALL_DAY = { # simulates an entire day
 }
 
 STORMY = { # Simulates a stormy night
-'CLOCK':  (250, .868),
+'CLOCK':  (25, .4),
 'NAME':   ( 'Clear','Roll In',  'STORMY','Roll Out'), # Waypoint name
 'GROUP':  (    'D1',     'D1',      'D1',      'D1'), # sound effects group
 'FRAME':  (       1,        1,         1,         1), # Keyframe marker
@@ -263,7 +263,7 @@ STORMY = { # Simulates a stormy night
 }
 
 CLOUDY = { # Simulates a cloudy day
-'CLOCK':  (25, .5),
+'CLOCK':  (25, .4),
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name
 'GROUP':  (    'C1',     'C1',     'C1',      'C1'), # sound effects group
 'FRAME':  (       1,        1,        1,         1), # Keyframe marker
