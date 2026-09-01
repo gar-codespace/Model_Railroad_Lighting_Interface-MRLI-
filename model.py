@@ -3,12 +3,11 @@ import entities
 
 def pwm2percent(pwm):
     '''
-    Convert a pwm value to decimal percentage rounded to 3 places.
+    Convert a pwm value to decimal percentage rounded to 4 places.
     '''
 
     x = pwm / entities.PWM_STEPS
-    y = round(x * 100, 3) # percentage
-    x = round(x, 3) # decimal percentage
+    y = x * 100
     return x
 
 def set_switch_pins():

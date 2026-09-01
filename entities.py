@@ -110,9 +110,9 @@ SOUND_CARD = {'a':'b', 'c':'d'}
 ################## TIME BASE ######################
 
 FAST_TIME_CLOCK = 8 # used in model railroading to compress time.
-CLOCK_CYCLE = 250 # Milliseconds per cycle. The delay the effect awaits.
+CLOCK_CYCLE = 25 # Milliseconds per cycle. The delay the effect awaits.
 DEFAULT_CYCLE = 20 # milliseconds used for other awaits
-CLOCK_OFFSET = .87 # Adjustment to keep the effect times closer to what they should be.
+CLOCK_OFFSET = .868 # Adjustment to keep the effect times closer to what they should be.
                    # Adjusts for asyncio overhead slowing down the effects.
 
 
@@ -224,8 +224,8 @@ ALL_DAY = { # simulates an entire day
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
 
-'RED':    [    0.00,    0.00,    0.00,    .002,    .005,    0.02,    0.00,    0.00,    0.00,    .003,    .006,    .003],
-'GREEN':  [    0.00,    0.00,    0.00,    0.00,    .005,    0.02,    0.00,    0.00,    0.00,    .002,    .004,    0.00],
+'RED':    [    0.00,    0.00,    0.00,    .002,    .004,    0.02,    0.00,    0.00,    0.00,    .003,    .006,    .003],
+'GREEN':  [    0.00,    0.00,    0.00,    0.00,    .006,    0.02,    0.00,    0.00,    0.00,    .002,    .004,    0.00],
 'BLUE':   [    .001,   .0005,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00],
 'WARM':   [    0.00,    0.00,    0.00,    .001,    .005,    0.12,    0.18,    0.18,    0.22,    0.10,    .005,    0.00],
 'COOL':   [    .001,    .001,    0.00,    0.00,    0.00,    0.01,    0.02,    0.03,    0.02,    .001,    0.00,    .000],
@@ -263,7 +263,7 @@ CLOUDY = { # Simulates a cloudy day
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name
 'GROUP':  (    'C1',     'C1',     'C1',      'C1'), # sound effects group
 'FRAME':  (       1,        1,        1,         1), # Keyframe marker
-'TIME':   (       4,      2.5,      2.5,         2), # duration of waypoint in real time minutes
+'TIME':   (       8,        5,        5,         4), # duration of waypoint in real time minutes
 'RANDOM': (      .7,       .7,       .7,        .7),
 
 'RED':    [    0.00,     0.00,     0.00,      0.00],

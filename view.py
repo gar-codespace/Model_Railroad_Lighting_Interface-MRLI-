@@ -40,19 +40,19 @@ def get_status_list() -> list:
     status_screen: list = []
 
     value = model.pwm2percent(getattr(entities, 'RED')) * 100
-    status_screen.append(f'Red:   {round(value, 2)}%')
+    status_screen.append(f'Red:   {round(value, 4)}%')
 
     value = model.pwm2percent(getattr(entities, 'GREEN')) * 100
-    status_screen.append(f'Green: {round(value, 2)}%')
+    status_screen.append(f'Green: {round(value, 4)}%')
 
     value = model.pwm2percent(getattr(entities, 'BLUE')) * 100
-    status_screen.append(f'Blue:  {round(value, 2)}%')
+    status_screen.append(f'Blue:  {round(value, 4)}%')
 
     value = model.pwm2percent(getattr(entities, 'WARM')) * 100
-    status_screen.append(f'Warm:  {round(value, 2)}%')
+    status_screen.append(f'Warm:  {round(value, 4)}%')
 
     value = model.pwm2percent(getattr(entities, 'COOL')) * 100
-    status_screen.append(f'Cool:  {round(value, 2)}%')
+    status_screen.append(f'Cool:  {round(value, 4)}%')
 
     return status_screen
 

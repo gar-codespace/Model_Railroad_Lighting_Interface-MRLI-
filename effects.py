@@ -118,6 +118,6 @@ class Effect():
         entities.STEP_W = model.get_color_delta(index, 'WARM') / entities.WP_DUR
         entities.STEP_C = model.get_color_delta(index, 'COOL') / entities.WP_DUR
 
-        if not entities.DISPLAY_STATE == 'STANDBY':
+        if not entities.DISPLAY_STATE == 'STANDBY': # Oops, no if statements
             self.set_led_banks()
             self.set_led_values()
