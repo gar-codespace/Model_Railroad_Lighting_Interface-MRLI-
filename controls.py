@@ -109,14 +109,14 @@ class UserInterface:
         Consolidate all the front panel buttons into one loop.
         '''
 
-        bC = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_callback)
-        bB = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_callback)
-        b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.bank_button_callback, 'BANK_0')
-        b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.bank_button_callback, 'BANK_1')
-        b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.bank_button_callback, 'BANK_2')
-        b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.bank_button_callback, 'BANK_3')
-        b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.bank_button_callback, 'BANK_4')
-        bS = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.bank_button_callback, 'SCENIC')
+        bC = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_r_callback)
+        # bB = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_r_callback)
+        b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.bank_button_r_callback, 'BANK_0')
+        b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.bank_button_r_callback, 'BANK_1')
+        b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.bank_button_r_callback, 'BANK_2')
+        b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.bank_button_r_callback, 'BANK_3')
+        b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.bank_button_r_callback, 'BANK_4')
+        bS = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.bank_button_r_callback, 'SCENIC')
 
         while(True):
 
@@ -232,17 +232,17 @@ class UserInterface:
         except:
             pass
 
-    def confirm_button_callback(self, name, event):
+    def confirm_button_r_callback(self, name, event):
         '''Toggle standby mode.'''
 
         self.toggle_standby()
             
-    def back_button_callback(self, name, event):
+    def back_button_r_callback(self, name, event):
         '''Not used.'''
 
         pass
 
-    def bank_button_callback(self, name, event):
+    def bank_button_r_callback(self, name, event):
         '''The 6 LED bank and scenic buttons.'''
 
         index = entities.CURRENT_EFFECT[2]
