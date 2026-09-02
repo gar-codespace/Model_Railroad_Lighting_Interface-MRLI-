@@ -223,7 +223,7 @@ ALL_DAY = { # simulates an entire day
 'NAME':   (  '11PM',   '1AM',   '3AM',   '5AM',   '7AM',   '9AM',  '11AM',   '1PM',   '3PM',   '5PM',   '7PM',   '9PM'), # Waypoint name
 'GROUP':  (    'B2',    'B2',    'B2',    'B1',    'B1',    'B1',    'B1',    'B1',    'B1',    'B1',    'B2',    'B2'), # sound effects group
 'FRAME':  (       1,       0,       1,       0,       1,       0,       1,       0,       1,       0,       1,       0), # Keyframe marker
-'TIME':   (     2,     120,     120,     120,     120,     120,     120,     120,     120,     120,     2,     2), # duration of waypoint in real time minutes
+'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
 
 'RED':    [    0.00,    0.00,    0.00,    .002,    .004,    0.02,    0.00,    0.00,    0.00,    .003,    .006,    .003],
