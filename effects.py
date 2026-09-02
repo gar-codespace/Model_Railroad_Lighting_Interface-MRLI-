@@ -95,8 +95,8 @@ class Effect():
         else:
             entities.ANIMATED_BUFFER = getattr(entities, entities.CURRENT_EFFECT[1])
             self.effect_dictionary = entities.ANIMATED_BUFFER
-            entities.CLOCK_CYCLE = entities.ANIMATED_BUFFER['CLOCK'][0]
-            entities.CLOCK_OFFSET = entities.ANIMATED_BUFFER['CLOCK'][1]
+            entities.CLOCK_CYCLE = entities.ANIMATED_BUFFER['CLOCK_CYCLE']
+            entities.CLOCK_OFFSET = entities.ANIMATED_BUFFER['CLOCK_OFFSET']
 
         index = entities.CURRENT_EFFECT[2]
         self.effect_boiler_plate(index)

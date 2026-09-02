@@ -194,7 +194,8 @@ The random value is a float between 0 and 1.
 '''
 
 STATIC = {
-'CLOCK':  (250, 1),
+'CLOCK_CYCLE'  : 250,
+'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Stby', 'Maint',   'Day',   'Fog', 'Night', 'Twili'), # Waypoint name
 'GROUP':  (   'A1',    'A1',    'A3',    'A3',    'A4',    'A5'), # sound effects group
 'FRAME':  (      1,       1,       1,       1,       1,       1), # Keyframe marker
@@ -219,7 +220,8 @@ ANIMATED_BUFFER = {} # When an animated effect is selected, the corrosponding di
 
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day
-'CLOCK':  (250, .868),
+'CLOCK_CYCLE'  : 250,
+'CLOCK_OFFSET' : .86,
 'NAME':   (  '11PM',   '1AM',   '3AM',   '5AM',   '7AM',   '9AM',  '11AM',   '1PM',   '3PM',   '5PM',   '7PM',   '9PM'), # Waypoint name
 'GROUP':  (    'B2',    'B2',    'B2',    'B1',    'B1',    'B1',    'B1',    'B1',    'B1',    'B1',    'B2',    'B2'), # sound effects group
 'FRAME':  (       1,       0,       1,       0,       1,       0,       1,       0,       1,       0,       1,       0), # Keyframe marker
@@ -241,7 +243,8 @@ ALL_DAY = { # simulates an entire day
 }
 
 STORMY = { # Simulates a stormy night
-'CLOCK':  (25, .4),
+'CLOCK_CYCLE'  : 25,
+'CLOCK_OFFSET' : .4,
 'NAME':   ( 'Clear','Roll In',  'STORMY','Roll Out'), # Waypoint name
 'GROUP':  (    'D1',     'D1',      'D1',      'D1'), # sound effects group
 'FRAME':  (       1,        1,         1,         1), # Keyframe marker
@@ -263,7 +266,8 @@ STORMY = { # Simulates a stormy night
 }
 
 CLOUDY = { # Simulates a cloudy day
-'CLOCK':  (25, .4),
+'CLOCK_CYCLE'  : 25,
+'CLOCK_OFFSET' : .4,
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name
 'GROUP':  (    'C1',     'C1',     'C1',      'C1'), # sound effects group
 'FRAME':  (       1,        1,        1,         1), # Keyframe marker
