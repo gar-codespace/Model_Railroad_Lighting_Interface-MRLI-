@@ -6,7 +6,7 @@ Written to run on a Raspi Pico or Pico 2. WiFi not utilized.
 Copyright 2026 Greg Ritacco
 '''
 
-__version__ = '20260801.1.1'
+__version__ = '20260901.1.1'
 __repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
 
 import entities

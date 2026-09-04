@@ -32,6 +32,16 @@ def WELCOME_get_hilight():
 
     return 65
 
+def WELCOME_toggle():
+    '''Puts machine in standby.'''
+
+    entities.STANDBY_TOGGLE = 'EFFECTS'
+    entities.MACHINE_STATE = 'STANDBY'
+    lighting.shut_off_leds()
+    # sound.stop_sfx
+
+    return view.get_empty_list()
+
 
 ########### MACHINE_STATE: EFFECTS
 
@@ -47,7 +57,7 @@ def EFFECTS_turn_left():
 
 def EFFECTS_turn_right():
     '''Scrolls the effects menu.'''
-    
+
     entities.MENU_FIRST_ITEM += 1
     if entities.MENU_FIRST_ITEM > len(entities.MAIN_MENU) - 1:
         entities.MENU_FIRST_ITEM = 0
@@ -73,6 +83,16 @@ def EFFECTS_get_hilight():
     hilight_row = entities.HIGHLIGHT_ROW * hilight_height
 
     return hilight_row + 1
+
+def EFFECTS_toggle():
+    '''Puts machine in standby.'''
+
+    entities.STANDBY_TOGGLE = 'EFFECTS'
+    entities.MACHINE_STATE = 'STANDBY'
+    lighting.shut_off_leds()
+    # sound.stop_sfx
+
+    return view.get_empty_list()
 
 
 ########### MACHINE_STATE: ANIMATED
@@ -117,6 +137,16 @@ def ANIMATED_set_next_waypoint():
 
         entities.START_TIME = entities.UTIME.time()
   
+def ANIMATED_toggle():
+    '''Puts machine in standby.'''
+
+    entities.STANDBY_TOGGLE = 'ANIMATED'
+    entities.MACHINE_STATE = 'STANDBY'
+    lighting.shut_off_leds()
+    # sound.stop_sfx
+
+    return view.get_empty_list()
+
 
 ########### MACHINE_STATE: STATIC
 
@@ -158,6 +188,16 @@ def STATIC_get_hilight():
 
     return hilight_row - 1
 
+def STATIC_toggle():
+    '''Puts machine in standby.'''
+
+    entities.STANDBY_TOGGLE = 'STATIC'
+    entities.MACHINE_STATE = 'STANDBY'
+    lighting.shut_off_leds()
+    # sound.stop_sfx
+
+    return view.get_empty_list()
+
 
 ########### MACHINE_STATE: EDIT
 
@@ -175,6 +215,7 @@ def EDIT_turn_left():
     setattr(entities, color, pwm_color_value) # writes the new value to entities.<color>
     entities.STATIC_BUFFER[color][index] = model.pwm2percent(pwm_color_value) # writes the new value into the STATIC_BUFFER
 
+    lighting.set_led_values()
 
     return view.get_status_list()
 
@@ -190,6 +231,8 @@ def EDIT_turn_right():
 
     setattr(entities, color, pwm_color_value) # writes the new value to entities.<color>
     entities.STATIC_BUFFER[color][index] = model.pwm2percent(pwm_color_value) # writes the new value into the STATIC_BUFFER
+
+    lighting.set_led_values()
 
     return view.get_status_list()
 
@@ -207,9 +250,15 @@ def EDIT_get_hilight():
 
     return hilight_row - 1
 
-def EDIT_set_led_values():
+def EDIT_toggle():
+    '''Puts machine in standby.'''
 
-    lighting.set_led_values()
+    entities.STANDBY_TOGGLE = 'EDIT'
+    entities.MACHINE_STATE = 'STANDBY'
+    lighting.shut_off_leds()
+    # sound.stop_sfx
+
+    return view.get_empty_list()
 
 
 ########### MACHINE_STATE: PAUSED
@@ -227,3 +276,12 @@ def PAUSED_click():
 
 ########### MACHINE_STATE: STANDBY
 
+
+def STANDBY_toggle():
+    '''Takes the machine out of standby.'''
+
+    entities.MACHINE_STATE = entities.STANDBY_TOGGLE
+    lighting.set_led_banks()
+    # Turn on SFX
+    
+    return view.get_menu_list()

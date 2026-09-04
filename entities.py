@@ -46,12 +46,12 @@ PICO_PIN = {
         'WARM':3,
         'COOL':4,
 
-        'SCENIC_S':5, # switches
-        'BANK_4_S':6,
-        'BANK_3_S':7,
-        'BANK_2_S':8,
-        'BANK_1_S':9,
-        'BANK_0_S':10,
+        'SCENIC_R':5, # relays
+        'BANK_4_R':6,
+        'BANK_3_R':7,
+        'BANK_2_R':8,
+        'BANK_1_R':9,
+        'BANK_0_R':10,
 
         'SCENIC_B':11, # buttons
         'BANK_4_B':12,
@@ -59,20 +59,21 @@ PICO_PIN = {
         'BANK_2_B':14,
         'BANK_1_B':15,
         'BANK_0_B':16,
+        'CONFIRM' :22, # encoder
         
         'PSH':17, # encoder
         'TRA':18, # encoder
         'TRB':19, # encoder
+
         'SDA':20, # display
         'SCL':21, # display
-        'CONFIRM':22, # encoder
 
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
         'LED':'LED',
-        'ASDA':26,
-        'ASCL':27,
-        'BACK':28 # encoder
+        'Available':26,
+        'Available':27,
+        'Available':28 # encoder
         }
 
 '''
@@ -100,7 +101,7 @@ MAIN_FORMAT =  {'LINE_HEIGHT': 13,
                 'X_OFFSET': 4
                 }
 
-# Audio Hardware
+# Sound Hardware
 
 SOUND_CARD = {'a':'b', 'c':'d'}
 
@@ -112,7 +113,7 @@ SOUND_CARD = {'a':'b', 'c':'d'}
 FAST_TIME_CLOCK = 8 # used in model railroading to compress time.
 DEFAULT_CYCLE = 20 # milliseconds used for other awaits
                    # Adjusts for asyncio overhead slowing down the effects.
-START_TIME = 0
+START_TIME = 0 # Used for the waypoint duration measurement.
 END_TIME = 0
 
 ################## COLOR CONTROL ######################
@@ -147,6 +148,9 @@ SFX_NAME= 'name'
 
 ################## NAVIGATION ######################
 
+MACHINE_STATE = 'WELCOME' # Can be: WELCOME, EFFECTS, ANIMATED, STATIC, EDIT, PAUSED, STANDBY
+STANDBY_TOGGLE = 'WELCOME'
+
 WELCOME_SCREEN = ['   M.U.T.T.',
                   ' Metropolitan',
                   '    Union',
@@ -155,8 +159,7 @@ WELCOME_SCREEN = ['   M.U.T.T.',
                   ]
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 STATIC_SELECT_ROW = 2 # In STATIC mode, the encoder moves the rectangle up and down
-MACHINE_STATE = 'WELCOME' # Can be: WELCOME, EFFECTS, ANIMATED, STATIC, EDIT, PAUSED, STANDBY
-CURRENT_EFFECT = ('Daytime', 'STATIC', 2)
+CURRENT_EFFECT = ('Daytime', 'STATIC', 2) # Also used as the default effect
 HILIGHTED_EFFECT = 1 # MAIN_MENU key
 # MENU_FIRST_ITEM is hard coded based on 5 menu lines and the highlite on line 2
 # This should be abstracted
@@ -223,7 +226,7 @@ STATIC = {
 ALL_DAY = { # simulates an entire day
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : .864,
-'NAME':   (  '11PM',   '1AM',   '3AM',   '5AM',   '7AM',   '9AM',  '11AM',   '1PM',   '3PM',   '5PM',   '7PM',   '9PM'), # Waypoint name
+'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
 'GROUP':  (    'B2',    'B2',    'B2',    'B1',    'B1',    'B1',    'B1',    'B1',    'B1',    'B1',    'B2',    'B2'), # sound effects group
 'FRAME':  (       1,       0,       1,       0,       1,       0,       1,       0,       1,       0,       1,       0), # Keyframe marker
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes

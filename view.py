@@ -1,3 +1,8 @@
+'''
+There is a lot of hard coding of the display to have 5 lines.
+Maybe not so much.
+'''
+
 import entities
 import model
 
@@ -19,9 +24,7 @@ def get_display(specs):
     return entities.DISPLAY_LIBRARY.DRIVER_I2C(width, height, i2c, addr)
 
 def get_menu_list() -> list:
-    '''
-    Returns a list of main menu items.
-    '''
+    '''Returns a list of main menu items.'''
 
     index_double = model.get_index_double()
     index_subset = index_double[entities.MENU_FIRST_ITEM:]
@@ -34,9 +37,8 @@ def get_menu_list() -> list:
     return menu_list
 
 def get_status_list() -> list:
-    '''
-    The status screen is displayed when the display mode is ANIMATED, STATIC, or EDIT.
-    '''
+    '''The status screen is displayed when the display mode is ANIMATED, STATIC, or EDIT.'''
+
     status_screen: list = []
 
     value = model.pwm2percent(getattr(entities, 'RED')) * 100
@@ -55,3 +57,7 @@ def get_status_list() -> list:
     status_screen.append(f'Cool:  {round(value, 4)}%')
 
     return status_screen
+
+def get_empty_list() -> list:
+
+    return ['','','','','']

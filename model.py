@@ -1,6 +1,25 @@
 import entities
 
 
+def set_relay_pins():
+    '''The STEMMA relay from Adafruit that turns the led banks or scenic lighting on or off.'''
+
+    entities.PIN(entities.PICO_PIN['BANK_0_R'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK_1_R'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK_2_R'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK_3_R'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['BANK_4_R'], entities.PIN.OUT)
+    entities.PIN(entities.PICO_PIN['SCENIC_R'], entities.PIN.OUT)
+
+def set_pwm_led_pins():
+    '''Initializes the PWM pins.'''
+
+    entities.PWM(entities.PIN(entities.PICO_PIN['RED']), freq=entities.PWM_FREQ)
+    entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']), freq=entities.PWM_FREQ)
+    entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']), freq=entities.PWM_FREQ)
+    entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
+    entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
+
 def pwm2percent(pwm):
     '''
     Convert a pwm value to decimal percentage rounded to 4 places.
@@ -9,34 +28,8 @@ def pwm2percent(pwm):
     x = pwm / entities.PWM_STEPS
     y = x * 100
     return x
-
-def set_switch_pins():
-    '''
-    The STEMMA relay from Adafruit that turns the led banks or scenic lighting on or off.
-    '''
-
-    entities.PIN(entities.PICO_PIN['BANK_0_S'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['BANK_1_S'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['BANK_2_S'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['BANK_3_S'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['BANK_4_S'], entities.PIN.OUT)
-    entities.PIN(entities.PICO_PIN['SCENIC_S'], entities.PIN.OUT)
-
-def set_pwm_led_pins():
-    '''
-    Initializes the PWM pins.
-    '''
-
-    entities.PWM(entities.PIN(entities.PICO_PIN['RED']), freq=entities.PWM_FREQ)
-    entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']), freq=entities.PWM_FREQ)
-    entities.PWM(entities.PIN(entities.PICO_PIN['BLUE']), freq=entities.PWM_FREQ)
-    entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
-    entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
-    
 def get_index_double():
-    '''
-    IE [0, 1, 2, 3, 4, 0, 1, 2, 3 , 4]
-    '''
+    '''IE [0, 1, 2, 3, 4, 0, 1, 2, 3 , 4]'''
     
     index_double = tuple(range(0, len(entities.MAIN_MENU)))
     index_double = index_double + index_double
@@ -83,6 +76,13 @@ def get_next_waypoint(index):
             next_index = 0
 
         entities.NEXT_WP = int(next_index)
+
+def get_color_steps(index):
+    entities.STEP_R = get_color_delta(index, 'RED') / entities.WP_DUR
+    entities.STEP_G = get_color_delta(index, 'GREEN') / entities.WP_DUR
+    entities.STEP_B = get_color_delta(index, 'BLUE') / entities.WP_DUR
+    entities.STEP_W = get_color_delta(index, 'WARM') / entities.WP_DUR
+    entities.STEP_C = get_color_delta(index, 'COOL') / entities.WP_DUR
 
 def get_color_delta(index:int, color:str):
     '''

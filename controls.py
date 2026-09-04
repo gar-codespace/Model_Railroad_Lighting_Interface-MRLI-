@@ -7,32 +7,26 @@ import sound
 
 
 class UserInterface:
-    '''
-    The user interface is everything on the front panel of the machine.
-    '''
+    '''The user interface is everything on the front panel of the machine.'''
 
     def __init__(self):
 
-        self.main_display = view.get_display(entities.MAIN_DISPLAY)
         entities.MACHINE_STATE = 'WELCOME'
-        self.standby_toggle: str
+        entities.WORKING_BUFFER = entities.STATIC
+        self.main_display = view.get_display(entities.MAIN_DISPLAY)
         self.sound_card: object
-        entities.STATIC_BUFFER = entities.STATIC
+        self.standby_toggle: str
 
-        model.set_switch_pins() # the switches that turn the led bank on or off
+        model.set_relay_pins() # the relays that turn the led bank on or off
         model.set_pwm_led_pins() # sets pico pins to pwm
-
-        # self.effect = lighting.Effect()
-        # self.sfx = audio.SFX()
+        # The buttons are initialized with get_all_the_buttons()
 
 
 ################ methods in main - UASYNCIO.gather ##################
 
 
     def run_lighting_effect(self):
-        '''
-        A lighting effect is always being run.
-        '''
+        '''A lighting effect is always being run.'''
 
         lighting.set_up_effect()
 
@@ -62,21 +56,14 @@ class UserInterface:
         '''
 
         while True:
-            if not entities.MACHINE_STATE == 'STANDBY':
-                pass
-
-
-            else:
-                pass
+            pass
 
 
             # await entities.UASYNCIO.sleep_ms(sfx_duration + sfx_interval)
             await entities.UASYNCIO.sleep_ms(40000)
 
     def get_encoder(self):
-        '''
-        The await part is in async_tick.
-        '''
+        '''The await part is in async_tick.'''
 
         encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], entities.PIN.IN, entities.PIN.PULL_UP)
         encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], entities.PIN.IN, entities.PIN.PULL_UP)
@@ -95,11 +82,9 @@ class UserInterface:
         return encoder 
 
     def get_all_the_buttons(self):
-        '''
-        Consolidate all the front panel buttons into one loop.
-        '''
+        '''Consolidate all the front panel buttons into one loop.'''
 
-        bC = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_r_callback)
+        bC = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_r_callback, 'STANDBY')
         # bB = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_r_callback)
         b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.bank_button_r_callback, 'BANK_0')
         b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.bank_button_r_callback, 'BANK_1')
@@ -184,12 +169,6 @@ class UserInterface:
         except:
             pass
 
-        try:
-            attrib = f'{entities.MACHINE_STATE}_set_led_values' # IE EDIT_set_led_values()
-            getattr(states, attrib)()
-        except:
-            pass
-
     def turn_right_callback(self):
 
         try:
@@ -197,22 +176,9 @@ class UserInterface:
             display_content = getattr(states, attrib)() # IE states.WELCOME_turn_right()
             self.update_display(display_content)
         except:
-            pass
-
-        try:
-            attrib = f'{entities.MACHINE_STATE}_set_led_values' # IE EDIT_set_led_values()
-            getattr(states, attrib)()
-        except:
-            pass
-        
+            pass        
 
     def single_click_callback(self):
-
-        try:
-            attrib = f'{entities.MACHINE_STATE}_select_sffect'
-            getattr(states, attrib)() # IE states.EDIT_select_sffect()
-        except:
-            pass
 
         try:
             attrib = f'{entities.MACHINE_STATE}_click'
@@ -234,8 +200,14 @@ class UserInterface:
     def confirm_button_r_callback(self, name, event):
         '''Toggle standby mode.'''
 
-        self.toggle_standby()
-            
+        # self.toggle_standby()
+        try:
+            attrib = f'{entities.MACHINE_STATE}_toggle' # IE states.STANDBY_toggle()
+            display_content = getattr(states, attrib)()
+            self.update_display(display_content)
+        except:
+            pass
+
     def back_button_r_callback(self, name, event):
         '''Not used.'''
 
@@ -245,7 +217,7 @@ class UserInterface:
         '''The 6 LED bank and scenic buttons.'''
 
         index = entities.CURRENT_EFFECT[2]
-        switch = f'{name}_S'
+        relay = f'{name}_R'
 
-        entities.PIN(entities.PICO_PIN[switch]).toggle()
-        entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[switch]).value()
+        entities.PIN(entities.PICO_PIN[relay]).toggle()
+        entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[relay]).value()

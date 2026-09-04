@@ -14,7 +14,7 @@ import entities
 import model
 
 def set_up_effect():
-    '''Load initial values into the Effect Buffer.'''
+    '''Load initial values into the Working Buffer.'''
 
     if entities.CURRENT_EFFECT[1] == 'STATIC':
         entities.WORKING_BUFFER = entities.STATIC
@@ -44,11 +44,7 @@ def lighting_effect_boiler_plate(index):
 
     model.get_waypoint_duration(index)
     model.get_next_waypoint(index)
-    entities.STEP_R = model.get_color_delta(index, 'RED') / entities.WP_DUR
-    entities.STEP_G = model.get_color_delta(index, 'GREEN') / entities.WP_DUR
-    entities.STEP_B = model.get_color_delta(index, 'BLUE') / entities.WP_DUR
-    entities.STEP_W = model.get_color_delta(index, 'WARM') / entities.WP_DUR
-    entities.STEP_C = model.get_color_delta(index, 'COOL') / entities.WP_DUR
+    model.get_color_steps(index)
 
     set_led_banks()
     set_led_values()
@@ -81,12 +77,12 @@ def set_up_banks(index):
 def set_led_banks():
     '''Sets the led bank relays from the value in the buffer'''
 
-    entities.PIN(entities.PICO_PIN['BANK_0_S']).value(entities.BANK_0)
-    entities.PIN(entities.PICO_PIN['BANK_1_S']).value(entities.BANK_1)
-    entities.PIN(entities.PICO_PIN['BANK_2_S']).value(entities.BANK_2)
-    entities.PIN(entities.PICO_PIN['BANK_3_S']).value(entities.BANK_3)
-    entities.PIN(entities.PICO_PIN['BANK_4_S']).value(entities.BANK_4)
-    entities.PIN(entities.PICO_PIN['SCENIC_S']).value(entities.SCENIC)
+    entities.PIN(entities.PICO_PIN['BANK_0_R']).value(entities.BANK_0)
+    entities.PIN(entities.PICO_PIN['BANK_1_R']).value(entities.BANK_1)
+    entities.PIN(entities.PICO_PIN['BANK_2_R']).value(entities.BANK_2)
+    entities.PIN(entities.PICO_PIN['BANK_3_R']).value(entities.BANK_3)
+    entities.PIN(entities.PICO_PIN['BANK_4_R']).value(entities.BANK_4)
+    entities.PIN(entities.PICO_PIN['SCENIC_R']).value(entities.SCENIC)
 
 def set_led_values():
     '''Sets the led pwm values from the value in the Effect Buffer'''
@@ -105,10 +101,10 @@ def set_led_values():
 
 def shut_off_leds():
 
-    entities.PIN(entities.PICO_PIN['BANK_0_S']).value(0)
-    entities.PIN(entities.PICO_PIN['BANK_1_S']).value(0)
-    entities.PIN(entities.PICO_PIN['BANK_2_S']).value(0)
-    entities.PIN(entities.PICO_PIN['BANK_3_S']).value(0)
-    entities.PIN(entities.PICO_PIN['BANK_4_S']).value(0)
-    entities.PIN(entities.PICO_PIN['SCENIC_S']).value(0)
+    entities.PIN(entities.PICO_PIN['BANK_0_R']).value(0)
+    entities.PIN(entities.PICO_PIN['BANK_1_R']).value(0)
+    entities.PIN(entities.PICO_PIN['BANK_2_R']).value(0)
+    entities.PIN(entities.PICO_PIN['BANK_3_R']).value(0)
+    entities.PIN(entities.PICO_PIN['BANK_4_R']).value(0)
+    entities.PIN(entities.PICO_PIN['SCENIC_R']).value(0)
 
