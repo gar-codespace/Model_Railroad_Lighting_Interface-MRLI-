@@ -25,8 +25,6 @@ class UserInterface:
         self.sfx = audio.SFX()
 
 
-
-
 ################ methods in main - UASYNCIO.gather ##################
 
 
