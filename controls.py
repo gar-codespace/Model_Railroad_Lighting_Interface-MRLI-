@@ -38,6 +38,11 @@ class UserInterface:
 
         while True:
 
+            # try:
+            #     states.ANIMATED_increment_waypoint()
+            # except:
+            #     pass
+
             if entities.WP_DUR <= 1:
                 entities.END_TIME = entities.UTIME.time()
                 print(f'Measured duration: {entities.END_TIME - entities.START_TIME} seconds')
@@ -46,7 +51,7 @@ class UserInterface:
 
             try: # only update colors when an animated effect is running
                 attrib = f'{entities.MACHINE_STATE}_increment_waypoint'
-                getattr(model, attrib)() # IE ANIMATED_increment_waypoint()
+                getattr(states, attrib)() # IE ANIMATED_increment_waypoint()
 
                 self.effect.set_led_values()
                 self.update_display(view.get_status_list())
@@ -168,7 +173,7 @@ class UserInterface:
         if entities.MACHINE_STATE == 'STANDBY':
             entities.MACHINE_STATE = self.standby_toggle
             self.effect.set_led_banks()
-            self.update_display(states.get_menu_list())
+            self.update_display(view.get_menu_list())
             # Turn on SFX
 
         else:

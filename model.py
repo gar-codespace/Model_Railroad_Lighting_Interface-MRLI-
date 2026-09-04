@@ -101,12 +101,12 @@ def get_color_delta(index:int, color:str):
 
     return int(color_delta)
 
-def ANIMATED_increment_waypoint():
+# def ANIMATED_increment_waypoint():
 
-    entities.RED -= entities.STEP_R
-    entities.GREEN -= entities.STEP_G
-    entities.BLUE -= entities.STEP_B
-    entities.WARM -= entities.STEP_W
-    entities.COOL -= entities.STEP_C
+#     entities.RED -= entities.STEP_R
+#     entities.GREEN -= entities.STEP_G
+#     entities.BLUE -= entities.STEP_B
+#     entities.WARM -= entities.STEP_W
+#     entities.COOL -= entities.STEP_C
 
-    entities.WP_DUR -= 1
+#     entities.WP_DUR -= 1

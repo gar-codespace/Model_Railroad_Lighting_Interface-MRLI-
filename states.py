@@ -90,6 +90,16 @@ def ANIMATED_click2():
 
     return view.get_menu_list()
 
+def ANIMATED_increment_waypoint():
+
+    entities.RED -= entities.STEP_R
+    entities.GREEN -= entities.STEP_G
+    entities.BLUE -= entities.STEP_B
+    entities.WARM -= entities.STEP_W
+    entities.COOL -= entities.STEP_C
+
+    entities.WP_DUR -= 1
+  
 
 ########### MACHINE_STATE: PAUSED
 
