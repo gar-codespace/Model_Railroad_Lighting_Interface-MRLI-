@@ -4,6 +4,10 @@ Everything is upper case, even though some settings are constants and some are v
 Oh well. That's what version 2 is for.
 Also, I like to keep all the imports in one place.
 '''
+
+__version__ = '20260901.1.1'
+__repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
+
 ###### PICK A DISPLAY DRIVER ######
 
 # Choose this for the 1.3 inch display

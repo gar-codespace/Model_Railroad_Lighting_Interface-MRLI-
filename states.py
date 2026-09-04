@@ -37,7 +37,7 @@ def WELCOME_toggle():
 
     entities.STANDBY_TOGGLE = 'EFFECTS'
     entities.MACHINE_STATE = 'STANDBY'
-    lighting.shut_off_leds()
+    lighting.shut_off_led_banks()
     # sound.stop_sfx
 
     return view.get_empty_list()
@@ -89,7 +89,7 @@ def EFFECTS_toggle():
 
     entities.STANDBY_TOGGLE = 'EFFECTS'
     entities.MACHINE_STATE = 'STANDBY'
-    lighting.shut_off_leds()
+    lighting.shut_off_led_banks()
     # sound.stop_sfx
 
     return view.get_empty_list()
@@ -142,7 +142,7 @@ def ANIMATED_toggle():
 
     entities.STANDBY_TOGGLE = 'ANIMATED'
     entities.MACHINE_STATE = 'STANDBY'
-    lighting.shut_off_leds()
+    lighting.shut_off_led_banks()
     # sound.stop_sfx
 
     return view.get_empty_list()
@@ -193,13 +193,13 @@ def STATIC_toggle():
 
     entities.STANDBY_TOGGLE = 'STATIC'
     entities.MACHINE_STATE = 'STANDBY'
-    lighting.shut_off_leds()
+    lighting.shut_off_led_banks()
     # sound.stop_sfx
 
     return view.get_empty_list()
 
 def STATIC_bank(name, index):
-    '''Toggles one of the LED banks on or off.'''
+    '''Toggles the named LED bank on or off.'''
 
     relay = f'{name}_R'
 
@@ -264,7 +264,7 @@ def EDIT_toggle():
 
     entities.STANDBY_TOGGLE = 'EDIT'
     entities.MACHINE_STATE = 'STANDBY'
-    lighting.shut_off_leds()
+    lighting.shut_off_led_banks()
     # sound.stop_sfx
 
     return view.get_empty_list()

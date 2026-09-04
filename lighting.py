@@ -99,7 +99,7 @@ def set_led_values():
     entities.PWM(w).duty_u16(int(entities.WARM))
     entities.PWM(c).duty_u16(int(entities.COOL))
 
-def shut_off_leds():
+def shut_off_led_banks():
 
     entities.PIN(entities.PICO_PIN['BANK_0_R']).value(0)
     entities.PIN(entities.PICO_PIN['BANK_1_R']).value(0)
@@ -107,4 +107,3 @@ def shut_off_leds():
     entities.PIN(entities.PICO_PIN['BANK_3_R']).value(0)
     entities.PIN(entities.PICO_PIN['BANK_4_R']).value(0)
     entities.PIN(entities.PICO_PIN['SCENIC_R']).value(0)
-

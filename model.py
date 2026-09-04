@@ -21,9 +21,7 @@ def set_pwm_led_pins():
     entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
 
 def pwm2percent(pwm):
-    '''
-    Convert a pwm value to decimal percentage rounded to 4 places.
-    '''
+    '''Convert a pwm value to decimal percentage rounded to 4 places.'''
 
     x = pwm / entities.PWM_STEPS
     y = x * 100
@@ -78,6 +76,7 @@ def get_next_waypoint(index):
         entities.NEXT_WP = int(next_index)
 
 def get_color_steps(index):
+    
     entities.STEP_R = get_color_delta(index, 'RED') / entities.WP_DUR
     entities.STEP_G = get_color_delta(index, 'GREEN') / entities.WP_DUR
     entities.STEP_B = get_color_delta(index, 'BLUE') / entities.WP_DUR

@@ -129,33 +129,6 @@ class UserInterface:
         self.main_display.contrast(entities.MAIN_DISPLAY_BRIGHTNESS)
         self.main_display.show()
 
-    def clear_display(self):
-
-        self.main_display.fill(0)
-        self.main_display.show()
-
-
-################# standby method ##################
-
-
-    def toggle_standby(self):
-        '''
-        The effect is not stopped, the LEDs and SFX are turned off.
-        '''
-
-        if entities.MACHINE_STATE == 'STANDBY':
-            entities.MACHINE_STATE = self.standby_toggle
-            lighting.set_led_banks()
-            self.update_display(view.get_menu_list())
-            # Turn on SFX
-
-        else:
-            self.standby_toggle = entities.MACHINE_STATE
-            entities.MACHINE_STATE = 'STANDBY'
-            lighting.shut_off_leds()
-            self.clear_display()
-            # Turn off SFX
-
 
 ################# callbacks ##################
 
@@ -198,7 +171,7 @@ class UserInterface:
             pass
 
     def confirm_button_r_callback(self, name, event):
-        '''Toggle standby mode.'''
+        '''Toggle standby.'''
 
         # self.toggle_standby()
         try:
@@ -223,5 +196,3 @@ class UserInterface:
             getattr(states, attrib)(name, index)
         except:
             pass
-
-
