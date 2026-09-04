@@ -35,7 +35,7 @@ def get_menu_list() -> list:
 
 def get_status_list() -> list:
     '''
-    The status screen is displayed when the display mode is ANIMATED, STATIC, or EDIT.
+    The status screen is displayed when the machine state is ANIMATED, STATIC, or EDIT.
     '''
     status_screen: list = []
 
@@ -57,21 +57,21 @@ def get_status_list() -> list:
     return status_screen
 
 
-########### DISPLAY_STATE: WELCOME
+########### MACHINE_STATE: WELCOME
 
 
 def WELCOME_turn_left():
-    entities.DISPLAY_STATE = 'EFFECTS'
+    entities.MACHINE_STATE = 'EFFECTS'
 
     return get_menu_list()
 
 def WELCOME_turn_right():
-    entities.DISPLAY_STATE = 'EFFECTS'
+    entities.MACHINE_STATE = 'EFFECTS'
 
     return get_menu_list()
 
 def WELCOME_click():
-    entities.DISPLAY_STATE = 'EFFECTS'
+    entities.MACHINE_STATE = 'EFFECTS'
 
     return get_menu_list()
 
@@ -81,7 +81,7 @@ def WELCOME_get_hilight():
     return 65
 
 
-########### DISPLAY_STATE: EFFECTS
+########### MACHINE_STATE: EFFECTS
 
 
 def EFFECTS_turn_left():
@@ -107,9 +107,9 @@ def EFFECTS_turn_right():
 def EFFECTS_click():
 
     entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
-    entities.DISPLAY_STATE = 'STATIC'
+    entities.MACHINE_STATE = 'STATIC'
     if not entities.CURRENT_EFFECT[1] == 'STATIC':
-        entities.DISPLAY_STATE = 'ANIMATED'
+        entities.MACHINE_STATE = 'ANIMATED'
 
     return get_status_list()
 
@@ -121,39 +121,39 @@ def EFFECTS_get_hilight():
     return hilight_row + 1
 
 
-########### DISPLAY_STATE: ANIMATED
+########### MACHINE_STATE: ANIMATED
 
 
 def ANIMATED_click():
 
-    entities.DISPLAY_STATE = 'PAUSED'
+    entities.MACHINE_STATE = 'PAUSED'
     entities.MAIN_DISPLAY_BRIGHTNESS = entities.MAIN_DISPLAY_DIM
 
 
-    print(entities.DISPLAY_STATE)
+    print(entities.MACHINE_STATE)
 
 
     return get_status_list()
 
 def ANIMATED_click2():
     
-    entities.DISPLAY_STATE = 'EFFECTS'
+    entities.MACHINE_STATE = 'EFFECTS'
 
     return get_menu_list()
 
 
-########### DISPLAY_STATE: PAUSED
+########### MACHINE_STATE: PAUSED
 
 
 def PAUSED_click():
-    entities.DISPLAY_STATE = 'ANIMATED'
+    entities.MACHINE_STATE = 'ANIMATED'
     entities.MAIN_DISPLAY_BRIGHTNESS = entities.MAIN_DISPLAY_BRIGHT
-    print(entities.DISPLAY_STATE)
+    print(entities.MACHINE_STATE)
 
     return get_status_list()
 
 
-########### DISPLAY_STATE: STATIC
+########### MACHINE_STATE: STATIC
 
 
 def STATIC_turn_left():
@@ -172,13 +172,13 @@ def STATIC_turn_right():
 
 def STATIC_click():
 
-    entities.DISPLAY_STATE = 'EDIT'
+    entities.MACHINE_STATE = 'EDIT'
 
     return get_status_list()
 
 def STATIC_click2():
     
-    entities.DISPLAY_STATE = 'EFFECTS'
+    entities.MACHINE_STATE = 'EFFECTS'
 
     return get_menu_list()
 
@@ -191,7 +191,7 @@ def STATIC_get_hilight():
 
 
 
-########### DISPLAY_STATE: EDIT
+########### MACHINE_STATE: EDIT
 
 
 def EDIT_turn_left():
@@ -225,7 +225,7 @@ def EDIT_turn_right():
 
 def EDIT_click():
 
-    entities.DISPLAY_STATE = 'STATIC'
+    entities.MACHINE_STATE = 'STATIC'
 
     return get_status_list()
 

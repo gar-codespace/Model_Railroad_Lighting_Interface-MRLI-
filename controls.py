@@ -14,7 +14,7 @@ class UserInterface:
     def __init__(self):
 
         self.main_display = view.get_display(entities.MAIN_DISPLAY)
-        entities.DISPLAY_STATE = 'WELCOME'
+        entities.MACHINE_STATE = 'WELCOME'
         self.standby_toggle: str
         self.sound_card: object
 
@@ -47,7 +47,7 @@ class UserInterface:
                 entities.START_TIME = entities.UTIME.time()
 
             try: # only update colors when an animated effect is running
-                attrib = f'{entities.DISPLAY_STATE}_increment_waypoint'
+                attrib = f'{entities.MACHINE_STATE}_increment_waypoint'
                 getattr(model, attrib)() # IE ANIMATED_increment_waypoint()
 
                 self.effect.set_led_values()
@@ -64,7 +64,7 @@ class UserInterface:
         '''
 
         while True:
-            if not entities.DISPLAY_STATE == 'STANDBY':
+            if not entities.MACHINE_STATE == 'STANDBY':
 
                 self.sfx.get_sfx()
                 # sfx_interval = entities.SFX_INTERVAL * 1000 # milliseconds
@@ -144,7 +144,7 @@ class UserInterface:
             line_y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
         try: # add the hilight rectangle
-            attrib = f'{entities.DISPLAY_STATE}_get_hilight'
+            attrib = f'{entities.MACHINE_STATE}_get_hilight'
             h = getattr(states, attrib)()
             self.main_display.rect(0, h, 128, 12, 1)
         except:
@@ -167,15 +167,15 @@ class UserInterface:
         The effect is not stopped, the LEDs and SFX are turned off.
         '''
 
-        if entities.DISPLAY_STATE == 'STANDBY':
-            entities.DISPLAY_STATE = self.standby_toggle
+        if entities.MACHINE_STATE == 'STANDBY':
+            entities.MACHINE_STATE = self.standby_toggle
             self.effect.set_led_banks()
             self.update_display(states.get_menu_list())
             # Turn on SFX
 
         else:
-            self.standby_toggle = entities.DISPLAY_STATE
-            entities.DISPLAY_STATE = 'STANDBY'
+            self.standby_toggle = entities.MACHINE_STATE
+            entities.MACHINE_STATE = 'STANDBY'
             self.effect.shut_off_leds()
             self.clear_display()
             # Turn off SFX
@@ -186,7 +186,7 @@ class UserInterface:
 
     def turn_left_callback(self):
         
-        attrib = f'{entities.DISPLAY_STATE}_turn_left'
+        attrib = f'{entities.MACHINE_STATE}_turn_left'
 
         try:
             display_content = getattr(states, attrib)() # IE states.WELCOME_turn_left()
@@ -197,7 +197,7 @@ class UserInterface:
         self.effect.set_led_values() # Real time color adjustment
 
     def turn_right_callback(self):
-        attrib = f'{entities.DISPLAY_STATE}_turn_right'
+        attrib = f'{entities.MACHINE_STATE}_turn_right'
         try:
             display_content = getattr(states, attrib)() # IE states.WELCOME_turn_right()
             self.update_display(display_content)
@@ -208,13 +208,13 @@ class UserInterface:
 
     def single_click_callback(self):
 
-        attrib = f'{entities.DISPLAY_STATE}_select_sffect'
+        attrib = f'{entities.MACHINE_STATE}_select_sffect'
         try:
             getattr(self.effect, attrib)() # IE self.effect._select_sffect()
         except:
             pass
 
-        attrib = f'{entities.DISPLAY_STATE}_click'
+        attrib = f'{entities.MACHINE_STATE}_click'
         try:
             display_content = getattr(states, attrib)() # IE WELCOME_click()
             self.update_display(display_content)
@@ -224,7 +224,7 @@ class UserInterface:
     def multi_click_callback(self, clicks):
         #print(f"Multiple Clicks: {clicks}")
  
-        attrib = f'{entities.DISPLAY_STATE}_click2'
+        attrib = f'{entities.MACHINE_STATE}_click2'
         try:
             display_content = getattr(states, attrib)() # IE WELCOME_click2()
             self.update_display(display_content)

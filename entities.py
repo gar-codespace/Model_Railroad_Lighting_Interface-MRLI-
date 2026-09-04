@@ -155,7 +155,7 @@ WELCOME_SCREEN = ['   M.U.T.T.',
                   ]
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 STATIC_SELECT_ROW = 2 # In STATIC mode, the encoder moves the rectangle up and down
-DISPLAY_STATE = 'WELCOME' # Can be: WELCOME, EFFECTS, ANIMATED, STATIC, EDIT, PAUSED, STANDBY
+MACHINE_STATE = 'WELCOME' # Can be: WELCOME, EFFECTS, ANIMATED, STATIC, EDIT, PAUSED, STANDBY
 CURRENT_EFFECT = ('Daytime', 'STATIC', 2)
 HILIGHTED_EFFECT = 1 # MAIN_MENU key
 # MENU_FIRST_ITEM is hard coded based on 5 menu lines and the highlite on line 2
