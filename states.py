@@ -198,6 +198,14 @@ def STATIC_toggle():
 
     return view.get_empty_list()
 
+def STATIC_bank(name, index):
+    '''Toggles one of the LED banks on or off.'''
+
+    relay = f'{name}_R'
+
+    entities.PIN(entities.PICO_PIN[relay]).toggle()
+    entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[relay]).value()
+
 
 ########### MACHINE_STATE: EDIT
 
@@ -213,7 +221,7 @@ def EDIT_turn_left():
     pwm_color_value = max(pwm_color_value, 0) # PWM expression
 
     setattr(entities, color, pwm_color_value) # writes the new value to entities.<color>
-    entities.STATIC_BUFFER[color][index] = model.pwm2percent(pwm_color_value) # writes the new value into the STATIC_BUFFER
+    entities.WORKING_BUFFER[color][index] = model.pwm2percent(pwm_color_value) # writes the new value into the STATIC_BUFFER
 
     lighting.set_led_values()
 
@@ -224,13 +232,14 @@ def EDIT_turn_right():
     
     index = entities.CURRENT_EFFECT[2]
     color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
+
     
     pwm_color_value = getattr(entities, color) # PWM expression
     pwm_color_value += entities.PWM_TICKS # PWM expression
     pwm_color_value = min(pwm_color_value, entities.PWM_STEPS) # PWM expression
 
     setattr(entities, color, pwm_color_value) # writes the new value to entities.<color>
-    entities.STATIC_BUFFER[color][index] = model.pwm2percent(pwm_color_value) # writes the new value into the STATIC_BUFFER
+    entities.WORKING_BUFFER[color][index] = model.pwm2percent(pwm_color_value) # writes the new value into the STATIC_BUFFER
 
     lighting.set_led_values()
 
@@ -259,6 +268,14 @@ def EDIT_toggle():
     # sound.stop_sfx
 
     return view.get_empty_list()
+
+def EDIT_bank(name, index):
+    '''Toggles one of the LED banks on or off.'''
+
+    relay = f'{name}_R'
+
+    entities.PIN(entities.PICO_PIN[relay]).toggle()
+    entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[relay]).value()
 
 
 ########### MACHINE_STATE: PAUSED

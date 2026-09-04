@@ -217,7 +217,11 @@ class UserInterface:
         '''The 6 LED bank and scenic buttons.'''
 
         index = entities.CURRENT_EFFECT[2]
-        relay = f'{name}_R'
 
-        entities.PIN(entities.PICO_PIN[relay]).toggle()
-        entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[relay]).value()
+        try:
+            attrib = f'{entities.MACHINE_STATE}_bank' # IE states.EDIT_bank()
+            getattr(states, attrib)(name, index)
+        except:
+            pass
+
+
