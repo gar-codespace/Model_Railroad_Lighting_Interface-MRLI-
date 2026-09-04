@@ -17,12 +17,11 @@ def set_up_effect():
     '''Load initial values into the Effect Buffer.'''
 
     if entities.CURRENT_EFFECT[1] == 'STATIC':
-        entities.WORKING_BUFFER = entities.STATIC_BUFFER
+        entities.WORKING_BUFFER = entities.STATIC
     else:
-        entities.ANIMATED_BUFFER = getattr(entities, entities.CURRENT_EFFECT[1])
-        entities.WORKING_BUFFER = entities.ANIMATED_BUFFER
-        entities.CLOCK_CYCLE = entities.ANIMATED_BUFFER['CLOCK_CYCLE']
-        entities.CLOCK_OFFSET = entities.ANIMATED_BUFFER['CLOCK_OFFSET']
+        entities.WORKING_BUFFER = getattr(entities, entities.CURRENT_EFFECT[1])
+        entities.CLOCK_CYCLE = entities.WORKING_BUFFER['CLOCK_CYCLE']
+        entities.CLOCK_OFFSET = entities.WORKING_BUFFER['CLOCK_OFFSET']
 
     index = entities.CURRENT_EFFECT[2]
     lighting_effect_boiler_plate(index)
@@ -51,9 +50,8 @@ def lighting_effect_boiler_plate(index):
     entities.STEP_W = model.get_color_delta(index, 'WARM') / entities.WP_DUR
     entities.STEP_C = model.get_color_delta(index, 'COOL') / entities.WP_DUR
 
-    if not entities.MACHINE_STATE == 'STANDBY': # Oops, no if statements
-        set_led_banks()
-        set_led_values()
+    set_led_banks()
+    set_led_values()
 
 def get_waypoint_name(index):
 

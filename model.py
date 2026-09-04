@@ -53,7 +53,7 @@ def get_waypoint_duration(index):
     if entities.CURRENT_EFFECT[1] == 'STATIC':
         entities.WP_DUR = 1
     else: # Convert duration to milliseconds
-        duration = entities.ANIMATED_BUFFER['TIME'][index] # real time minutes
+        duration = entities.WORKING_BUFFER['TIME'][index] # real time minutes
         duration *= 60 # real time seconds
         duration *= 1000 # real time milliseconds
 
@@ -61,7 +61,7 @@ def get_waypoint_duration(index):
         duration *= entities.CLOCK_OFFSET 
 
         # Apply the random factor
-        random = entities.ANIMATED_BUFFER['RANDOM'][index]
+        random = entities.WORKING_BUFFER['RANDOM'][index]
         d_max = duration # milliseconds
         d_min = duration * (random) # milliseconds
         duration = entities.RANDINT(int(d_max - d_min), int(d_max)) # milliseconds
@@ -79,7 +79,7 @@ def get_next_waypoint(index):
 
     else:
         next_index = index + 1
-        if next_index == len(entities.ANIMATED_BUFFER['TIME']):
+        if next_index == len(entities.WORKING_BUFFER['TIME']):
             next_index = 0
 
         entities.NEXT_WP = int(next_index)
@@ -94,8 +94,8 @@ def get_color_delta(index:int, color:str):
        color_delta = 0
 
     else:
-        color_begin = entities.ANIMATED_BUFFER[color][index] # decimal percent
-        color_end = entities.ANIMATED_BUFFER[color][entities.NEXT_WP] # decimal percent
+        color_begin = entities.WORKING_BUFFER[color][index] # decimal percent
+        color_end = entities.WORKING_BUFFER[color][entities.NEXT_WP] # decimal percent
         color_delta = color_begin - color_end # decimal percent
         color_delta = color_delta * entities.PWM_STEPS # pwm steps
 
