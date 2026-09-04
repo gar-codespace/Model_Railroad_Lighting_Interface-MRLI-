@@ -1,6 +1,12 @@
+'''
+The machine operates in one of seven ststes:
+WELCOME, EFFECTS, ANIMATED, STATIC, EDIT, PAUSED, STANDBY
+'''
+
 import entities
 import model
 import view
+import lighting
 
 
 ########### MACHINE_STATE: WELCOME
@@ -31,9 +37,8 @@ def WELCOME_get_hilight():
 
 
 def EFFECTS_turn_left():
-    '''
-    Scrolls the effects menu.
-    '''
+    '''Scrolls the effects menu.'''
+
     entities.MENU_FIRST_ITEM -= 1
     if entities.MENU_FIRST_ITEM < 0:
         entities.MENU_FIRST_ITEM = len(entities.MAIN_MENU) - 1
@@ -41,9 +46,8 @@ def EFFECTS_turn_left():
     return view.get_menu_list()
 
 def EFFECTS_turn_right():
-    '''
-    Scrolls the effects menu.
-    '''
+    '''Scrolls the effects menu.'''
+    
     entities.MENU_FIRST_ITEM += 1
     if entities.MENU_FIRST_ITEM > len(entities.MAIN_MENU) - 1:
         entities.MENU_FIRST_ITEM = 0
@@ -57,6 +61,9 @@ def EFFECTS_click():
     entities.MACHINE_STATE = 'STATIC'
     if not entities.CURRENT_EFFECT[1] == 'STATIC':
         entities.MACHINE_STATE = 'ANIMATED'
+
+    lighting.set_up_effect()
+    entities.START_TIME = entities.UTIME.time()
 
     return view.get_status_list()
 
@@ -77,9 +84,7 @@ def ANIMATED_click():
     entities.MACHINE_STATE = 'PAUSED'
     entities.MAIN_DISPLAY_BRIGHTNESS = entities.MAIN_DISPLAY_DIM
 
-
     print(entities.MACHINE_STATE)
-
 
     return view.get_status_list()
 
@@ -99,19 +104,19 @@ def ANIMATED_increment_waypoint():
     entities.COOL -= entities.STEP_C
 
     entities.WP_DUR -= 1
+
+def ANIMATED_set_next_waypoint():
+
+    if entities.WP_DUR <= 1:
+            
+        entities.END_TIME = entities.UTIME.time()
+        measured_time = entities.END_TIME - entities.START_TIME
+        print(f'Measured duration: {measured_time} seconds')
+
+        lighting.set_next_waypoint()
+
+        entities.START_TIME = entities.UTIME.time()
   
-
-########### MACHINE_STATE: PAUSED
-
-
-def PAUSED_click():
-    '''Unpause animated effect.'''
-    entities.MACHINE_STATE = 'ANIMATED'
-    entities.MAIN_DISPLAY_BRIGHTNESS = entities.MAIN_DISPLAY_BRIGHT
-    print(entities.MACHINE_STATE)
-
-    return view.get_status_list()
-
 
 ########### MACHINE_STATE: STATIC
 
@@ -201,3 +206,24 @@ def EDIT_get_hilight():
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
 
     return hilight_row - 1
+
+def EDIT_set_led_values():
+
+    lighting.set_led_values()
+
+
+########### MACHINE_STATE: PAUSED
+
+
+def PAUSED_click():
+    '''Unpause animated effect.'''
+
+    entities.MACHINE_STATE = 'ANIMATED'
+    entities.MAIN_DISPLAY_BRIGHTNESS = entities.MAIN_DISPLAY_BRIGHT
+    print(entities.MACHINE_STATE)
+
+    return view.get_status_list()
+
+
+########### MACHINE_STATE: STANDBY
+

@@ -13,119 +13,104 @@ The duration of STATIC effects is defined as 0, since 'infinately long' seems re
 import entities
 import model
 
-class Effect():
+def set_up_effect():
+    '''Load initial values into the Effect Buffer.'''
 
-    def __init__(self):
+    if entities.CURRENT_EFFECT[1] == 'STATIC':
+        entities.WORKING_BUFFER = entities.STATIC_BUFFER
+    else:
+        entities.ANIMATED_BUFFER = getattr(entities, entities.CURRENT_EFFECT[1])
+        entities.WORKING_BUFFER = entities.ANIMATED_BUFFER
+        entities.CLOCK_CYCLE = entities.ANIMATED_BUFFER['CLOCK_CYCLE']
+        entities.CLOCK_OFFSET = entities.ANIMATED_BUFFER['CLOCK_OFFSET']
 
-        entities.STATIC_BUFFER = entities.STATIC
-        self.effect_dictionary: dict = {}
+    index = entities.CURRENT_EFFECT[2]
+    lighting_effect_boiler_plate(index)
 
-        self.r = entities.PICO_PIN['RED']
-        self.g = entities.PICO_PIN['GREEN']
-        self.b = entities.PICO_PIN['BLUE']
-        self.w = entities.PICO_PIN['WARM']
-        self.c = entities.PICO_PIN['COOL']
+def set_next_waypoint():
 
-    def get_waypoint_name(self, index, effect_dictionary):
+    index = entities.NEXT_WP
+    lighting_effect_boiler_plate(index)
 
-        entities.WP_NAME = effect_dictionary['NAME'][index]
+def lighting_effect_boiler_plate(index):
+    '''Common to set_up_effect and set_next_waypoint.'''
 
-    def get_sfx_group(self, index, effect_dictionary):
+    current_waypoint_name = entities.WP_NAME
+    get_waypoint_name(index)
+    if not current_waypoint_name == entities.WP_NAME:
+        print(f'Current effect waypoint: {entities.WP_NAME}')
 
-        entities.SFX_GRP = effect_dictionary['GROUP'][index]
+    set_up_colors(index)
+    set_up_banks(index)
 
-    def set_up_colors(self, index, effect_dictionary):
-        
-        entities.RED   = int(effect_dictionary['RED'][index] * entities.PWM_STEPS)
-        entities.GREEN = int(effect_dictionary['GREEN'][index] * entities.PWM_STEPS)
-        entities.BLUE  = int(effect_dictionary['BLUE'][index] * entities.PWM_STEPS)
-        entities.WARM  = int(effect_dictionary['WARM'][index] * entities.PWM_STEPS)
-        entities.COOL  = int(effect_dictionary['COOL'][index] * entities.PWM_STEPS)
+    model.get_waypoint_duration(index)
+    model.get_next_waypoint(index)
+    entities.STEP_R = model.get_color_delta(index, 'RED') / entities.WP_DUR
+    entities.STEP_G = model.get_color_delta(index, 'GREEN') / entities.WP_DUR
+    entities.STEP_B = model.get_color_delta(index, 'BLUE') / entities.WP_DUR
+    entities.STEP_W = model.get_color_delta(index, 'WARM') / entities.WP_DUR
+    entities.STEP_C = model.get_color_delta(index, 'COOL') / entities.WP_DUR
 
-    def set_up_banks(self, index, effect_dictionary):
+    if not entities.MACHINE_STATE == 'STANDBY': # Oops, no if statements
+        set_led_banks()
+        set_led_values()
 
-        entities.BANK_0 = effect_dictionary['BANK_0'][index]
-        entities.BANK_1 = effect_dictionary['BANK_1'][index]
-        entities.BANK_2 = effect_dictionary['BANK_2'][index]
-        entities.BANK_3 = effect_dictionary['BANK_3'][index]
-        entities.BANK_4 = effect_dictionary['BANK_4'][index]
-        entities.SCENIC = effect_dictionary['SCENIC'][index]
+def get_waypoint_name(index):
 
-    def set_led_banks(self):
-        '''Sets the led bank relays from the value in the buffer'''
+    entities.WP_NAME = entities.WORKING_BUFFER['NAME'][index]
 
-        entities.PIN(entities.PICO_PIN['BANK_0_S']).value(entities.BANK_0)
-        entities.PIN(entities.PICO_PIN['BANK_1_S']).value(entities.BANK_1)
-        entities.PIN(entities.PICO_PIN['BANK_2_S']).value(entities.BANK_2)
-        entities.PIN(entities.PICO_PIN['BANK_3_S']).value(entities.BANK_3)
-        entities.PIN(entities.PICO_PIN['BANK_4_S']).value(entities.BANK_4)
-        entities.PIN(entities.PICO_PIN['SCENIC_S']).value(entities.SCENIC)
+def get_sfx_group(index):
 
-    def shut_off_leds(self):
+    entities.SFX_GRP = entities.WORKING_BUFFER['GROUP'][index]
 
-        entities.PIN(entities.PICO_PIN['BANK_0_S']).value(0)
-        entities.PIN(entities.PICO_PIN['BANK_1_S']).value(0)
-        entities.PIN(entities.PICO_PIN['BANK_2_S']).value(0)
-        entities.PIN(entities.PICO_PIN['BANK_3_S']).value(0)
-        entities.PIN(entities.PICO_PIN['BANK_4_S']).value(0)
-        entities.PIN(entities.PICO_PIN['SCENIC_S']).value(0)
+def set_up_colors(index):
+    
+    entities.RED   = int(entities.WORKING_BUFFER['RED'][index] * entities.PWM_STEPS)
+    entities.GREEN = int(entities.WORKING_BUFFER['GREEN'][index] * entities.PWM_STEPS)
+    entities.BLUE  = int(entities.WORKING_BUFFER['BLUE'][index] * entities.PWM_STEPS)
+    entities.WARM  = int(entities.WORKING_BUFFER['WARM'][index] * entities.PWM_STEPS)
+    entities.COOL  = int(entities.WORKING_BUFFER['COOL'][index] * entities.PWM_STEPS)
 
-    def set_led_values(self):
-        '''Sets the led pwm values from the value in the Effect Buffer'''
+def set_up_banks(index):
 
-        entities.PWM(self.r).duty_u16(int(entities.RED))
-        entities.PWM(self.g).duty_u16(int(entities.GREEN))
-        entities.PWM(self.b).duty_u16(int(entities.BLUE))
-        entities.PWM(self.w).duty_u16(int(entities.WARM))
-        entities.PWM(self.c).duty_u16(int(entities.COOL))
+    entities.BANK_0 = entities.WORKING_BUFFER['BANK_0'][index]
+    entities.BANK_1 = entities.WORKING_BUFFER['BANK_1'][index]
+    entities.BANK_2 = entities.WORKING_BUFFER['BANK_2'][index]
+    entities.BANK_3 = entities.WORKING_BUFFER['BANK_3'][index]
+    entities.BANK_4 = entities.WORKING_BUFFER['BANK_4'][index]
+    entities.SCENIC = entities.WORKING_BUFFER['SCENIC'][index]
 
-    def EFFECTS_select_sffect(self):
-        '''Called when a new effect is selected from the main menu.'''
+def set_led_banks():
+    '''Sets the led bank relays from the value in the buffer'''
 
-        entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
-        self.set_up_effect()
+    entities.PIN(entities.PICO_PIN['BANK_0_S']).value(entities.BANK_0)
+    entities.PIN(entities.PICO_PIN['BANK_1_S']).value(entities.BANK_1)
+    entities.PIN(entities.PICO_PIN['BANK_2_S']).value(entities.BANK_2)
+    entities.PIN(entities.PICO_PIN['BANK_3_S']).value(entities.BANK_3)
+    entities.PIN(entities.PICO_PIN['BANK_4_S']).value(entities.BANK_4)
+    entities.PIN(entities.PICO_PIN['SCENIC_S']).value(entities.SCENIC)
 
-    def set_up_effect(self):
-        '''
-        Load initial values into the Effect Buffer.
-        '''
+def set_led_values():
+    '''Sets the led pwm values from the value in the Effect Buffer'''
 
-        if entities.CURRENT_EFFECT[1] == 'STATIC':
-            self.effect_dictionary = entities.STATIC_BUFFER
-        else:
-            entities.ANIMATED_BUFFER = getattr(entities, entities.CURRENT_EFFECT[1])
-            self.effect_dictionary = entities.ANIMATED_BUFFER
-            entities.CLOCK_CYCLE = entities.ANIMATED_BUFFER['CLOCK_CYCLE']
-            entities.CLOCK_OFFSET = entities.ANIMATED_BUFFER['CLOCK_OFFSET']
+    r = entities.PICO_PIN['RED']
+    g = entities.PICO_PIN['GREEN']
+    b = entities.PICO_PIN['BLUE']
+    w = entities.PICO_PIN['WARM']
+    c = entities.PICO_PIN['COOL']
 
-        index = entities.CURRENT_EFFECT[2]
-        self.effect_boiler_plate(index)
+    entities.PWM(r).duty_u16(int(entities.RED))
+    entities.PWM(g).duty_u16(int(entities.GREEN))
+    entities.PWM(b).duty_u16(int(entities.BLUE))
+    entities.PWM(w).duty_u16(int(entities.WARM))
+    entities.PWM(c).duty_u16(int(entities.COOL))
 
-    def set_next_waypoint(self):
+def shut_off_leds():
 
-        index = entities.NEXT_WP
-        self.effect_boiler_plate(index)
+    entities.PIN(entities.PICO_PIN['BANK_0_S']).value(0)
+    entities.PIN(entities.PICO_PIN['BANK_1_S']).value(0)
+    entities.PIN(entities.PICO_PIN['BANK_2_S']).value(0)
+    entities.PIN(entities.PICO_PIN['BANK_3_S']).value(0)
+    entities.PIN(entities.PICO_PIN['BANK_4_S']).value(0)
+    entities.PIN(entities.PICO_PIN['SCENIC_S']).value(0)
 
-    def effect_boiler_plate(self, index):
-        '''
-        Common to set_up_effect and set_next_waypoint
-        '''
-
-        current_waypoint_name = entities.WP_NAME
-        self.get_waypoint_name(index, self.effect_dictionary)
-        if not current_waypoint_name == entities.WP_NAME:
-            print(f'Current effect waypoint: {entities.WP_NAME}')
-
-        self.set_up_colors(index, self.effect_dictionary)
-        self.set_up_banks(index, self.effect_dictionary)
-        model.get_waypoint_duration(index)
-        model.get_next_waypoint(index)
-        entities.STEP_R = model.get_color_delta(index, 'RED') / entities.WP_DUR
-        entities.STEP_G = model.get_color_delta(index, 'GREEN') / entities.WP_DUR
-        entities.STEP_B = model.get_color_delta(index, 'BLUE') / entities.WP_DUR
-        entities.STEP_W = model.get_color_delta(index, 'WARM') / entities.WP_DUR
-        entities.STEP_C = model.get_color_delta(index, 'COOL') / entities.WP_DUR
-
-        if not entities.MACHINE_STATE == 'STANDBY': # Oops, no if statements
-            self.set_led_banks()
-            self.set_led_values()

@@ -17,12 +17,13 @@ class UserInterface:
         entities.MACHINE_STATE = 'WELCOME'
         self.standby_toggle: str
         self.sound_card: object
+        entities.STATIC_BUFFER = entities.STATIC
 
         model.set_switch_pins() # the switches that turn the led bank on or off
         model.set_pwm_led_pins() # sets pico pins to pwm
 
-        self.effect = lighting.Effect()
-        self.sfx = audio.SFX()
+        # self.effect = lighting.Effect()
+        # self.sfx = audio.SFX()
 
 
 ################ methods in main - UASYNCIO.gather ##################
@@ -33,27 +34,21 @@ class UserInterface:
         A lighting effect is always being run.
         '''
 
-        self.effect.set_up_effect()
-        entities.START_TIME = entities.UTIME.time()
+        lighting.set_up_effect()
 
         while True:
 
-            # try:
-            #     states.ANIMATED_increment_waypoint()
-            # except:
-            #     pass
-
-            if entities.WP_DUR <= 1:
-                entities.END_TIME = entities.UTIME.time()
-                print(f'Measured duration: {entities.END_TIME - entities.START_TIME} seconds')
-                self.effect.set_next_waypoint()
-                entities.START_TIME = entities.UTIME.time()
+            try:
+                attrib = f'{entities.MACHINE_STATE}_set_next_waypoint'
+                getattr(states, attrib)() # IE ANIMATED_set_next_waypoint()
+            except:
+                pass
 
             try: # only update colors when an animated effect is running
                 attrib = f'{entities.MACHINE_STATE}_increment_waypoint'
                 getattr(states, attrib)() # IE ANIMATED_increment_waypoint()
 
-                self.effect.set_led_values()
+                lighting.set_led_values()
                 self.update_display(view.get_status_list())
             except:
                 pass
@@ -68,19 +63,12 @@ class UserInterface:
 
         while True:
             if not entities.MACHINE_STATE == 'STANDBY':
+                pass
 
-                self.sfx.get_sfx()
-                # sfx_interval = entities.SFX_INTERVAL * 1000 # milliseconds
-                # sfx_interval = entities.RANDINT(100, sfx_interval)
-                # sfx_duration = entities.SFX_NAME[1] * 1000 # milliseconds
-
-                self.sfx.unmute()
-                self.sfx.play_sfx()
 
             else:
-                self.sfx.mute()
-                sfx_interval = 500
-                sfx_duration = 500
+                pass
+
 
             # await entities.UASYNCIO.sleep_ms(sfx_duration + sfx_interval)
             await entities.UASYNCIO.sleep_ms(40000)
@@ -172,14 +160,14 @@ class UserInterface:
 
         if entities.MACHINE_STATE == 'STANDBY':
             entities.MACHINE_STATE = self.standby_toggle
-            self.effect.set_led_banks()
+            lighting.set_led_banks()
             self.update_display(view.get_menu_list())
             # Turn on SFX
 
         else:
             self.standby_toggle = entities.MACHINE_STATE
             entities.MACHINE_STATE = 'STANDBY'
-            self.effect.shut_off_leds()
+            lighting.shut_off_leds()
             self.clear_display()
             # Turn off SFX
 
@@ -189,36 +177,45 @@ class UserInterface:
 
     def turn_left_callback(self):
         
-        attrib = f'{entities.MACHINE_STATE}_turn_left'
-
         try:
+            attrib = f'{entities.MACHINE_STATE}_turn_left'
             display_content = getattr(states, attrib)() # IE states.WELCOME_turn_left()
             self.update_display(display_content)
         except:
             pass
 
-        self.effect.set_led_values() # Real time color adjustment
+        try:
+            attrib = f'{entities.MACHINE_STATE}_set_led_values' # IE EDIT_set_led_values()
+            getattr(states, attrib)()
+        except:
+            pass
 
     def turn_right_callback(self):
-        attrib = f'{entities.MACHINE_STATE}_turn_right'
+
         try:
+            attrib = f'{entities.MACHINE_STATE}_turn_right'
             display_content = getattr(states, attrib)() # IE states.WELCOME_turn_right()
             self.update_display(display_content)
         except:
             pass
 
-        self.effect.set_led_values()
+        try:
+            attrib = f'{entities.MACHINE_STATE}_set_led_values' # IE EDIT_set_led_values()
+            getattr(states, attrib)()
+        except:
+            pass
+        
 
     def single_click_callback(self):
 
-        attrib = f'{entities.MACHINE_STATE}_select_sffect'
         try:
-            getattr(self.effect, attrib)() # IE self.effect._select_sffect()
+            attrib = f'{entities.MACHINE_STATE}_select_sffect'
+            getattr(states, attrib)() # IE states.EDIT_select_sffect()
         except:
             pass
 
-        attrib = f'{entities.MACHINE_STATE}_click'
         try:
+            attrib = f'{entities.MACHINE_STATE}_click'
             display_content = getattr(states, attrib)() # IE WELCOME_click()
             self.update_display(display_content)
         except:
@@ -227,8 +224,8 @@ class UserInterface:
     def multi_click_callback(self, clicks):
         #print(f"Multiple Clicks: {clicks}")
  
-        attrib = f'{entities.MACHINE_STATE}_click2'
         try:
+            attrib = f'{entities.MACHINE_STATE}_click2'
             display_content = getattr(states, attrib)() # IE WELCOME_click2()
             self.update_display(display_content)
         except:

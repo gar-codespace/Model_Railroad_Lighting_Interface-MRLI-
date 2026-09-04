@@ -100,13 +100,3 @@ def get_color_delta(index:int, color:str):
         color_delta = color_delta * entities.PWM_STEPS # pwm steps
 
     return int(color_delta)
-
-# def ANIMATED_increment_waypoint():
-
-#     entities.RED -= entities.STEP_R
-#     entities.GREEN -= entities.STEP_G
-#     entities.BLUE -= entities.STEP_B
-#     entities.WARM -= entities.STEP_W
-#     entities.COOL -= entities.STEP_C
-
-#     entities.WP_DUR -= 1

@@ -188,6 +188,8 @@ MAIN_MENU = { # In the order they show on the display
 
 ################## LIGHTING EFFECT DEFINITIONS ######################
 
+WORKING_BUFFER = {} # Either the static buffer or one of the animated buffers is copied into this.
+
 STATIC_BUFFER = {} # Holds the STATIC dictionary
 '''
 Note:
