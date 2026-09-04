@@ -112,6 +112,8 @@ SOUND_CARD = {'a':'b', 'c':'d'}
 FAST_TIME_CLOCK = 8 # used in model railroading to compress time.
 DEFAULT_CYCLE = 20 # milliseconds used for other awaits
                    # Adjusts for asyncio overhead slowing down the effects.
+START_TIME = 0
+END_TIME = 0
 
 ################## COLOR CONTROL ######################
 
@@ -165,7 +167,7 @@ LED_INDEX_MAP = {0: 'RED',
                  3: 'WARM',
                  4: 'COOL'
                  }
-PWM_TICKS = 200 # How many ticks per indent of the rotary encoder when changing color values.
+PWM_TICKS = 100 # How many ticks per indent of the rotary encoder when changing color values.
                 # Smaller is finer control.
 
 MAIN_MENU = { # In the order they show on the display
@@ -221,7 +223,7 @@ ANIMATED_BUFFER = {} # When an animated effect is selected, the corrosponding di
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day
 'CLOCK_CYCLE'  : 250,
-'CLOCK_OFFSET' : .86,
+'CLOCK_OFFSET' : .864,
 'NAME':   (  '11PM',   '1AM',   '3AM',   '5AM',   '7AM',   '9AM',  '11AM',   '1PM',   '3PM',   '5PM',   '7PM',   '9PM'), # Waypoint name
 'GROUP':  (    'B2',    'B2',    'B2',    'B1',    'B1',    'B1',    'B1',    'B1',    'B1',    'B1',    'B2',    'B2'), # sound effects group
 'FRAME':  (       1,       0,       1,       0,       1,       0,       1,       0,       1,       0,       1,       0), # Keyframe marker
@@ -267,7 +269,7 @@ STORMY = { # Simulates a stormy night
 
 CLOUDY = { # Simulates a cloudy day
 'CLOCK_CYCLE'  : 25,
-'CLOCK_OFFSET' : .4,
+'CLOCK_OFFSET' : .6,
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name
 'GROUP':  (    'C1',     'C1',     'C1',      'C1'), # sound effects group
 'FRAME':  (       1,        1,        1,         1), # Keyframe marker

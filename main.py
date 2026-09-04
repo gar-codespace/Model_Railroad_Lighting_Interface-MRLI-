@@ -16,7 +16,6 @@ import controls
 async def main():
 
     ui = controls.UserInterface()
-    ui.get_main_display()
     ui.update_display(entities.WELCOME_SCREEN)
 
     while True:

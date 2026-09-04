@@ -1,4 +1,5 @@
 import entities
+import states
 import model
 import view
 import effects
@@ -12,10 +13,10 @@ class UserInterface:
 
     def __init__(self):
 
+        self.main_display = view.get_display(entities.MAIN_DISPLAY)
         entities.DISPLAY_STATE = 'WELCOME'
         self.standby_toggle: str
         self.sound_card: object
-        self.main_display: object
 
         model.set_switch_pins() # the switches that turn the led bank on or off
         model.set_pwm_led_pins() # sets pico pins to pwm
@@ -23,9 +24,7 @@ class UserInterface:
         self.effect = effects.Effect()
         self.sfx = audio.SFX()
 
-    def get_main_display(self):
 
-        self.main_display = view.get_display(entities.MAIN_DISPLAY)
 
 
 ################ methods in main - UASYNCIO.gather ##################
@@ -37,15 +36,15 @@ class UserInterface:
         '''
 
         self.effect.set_up_effect()
-        start_time = entities.UTIME.time()
+        entities.START_TIME = entities.UTIME.time()
 
         while True:
 
             if entities.WP_DUR <= 1:
-                end_time = entities.UTIME.time()
-                print(f'Measured duration: {end_time - start_time} seconds')
+                entities.END_TIME = entities.UTIME.time()
+                print(f'Measured duration: {entities.END_TIME - entities.START_TIME} seconds')
                 self.effect.set_next_waypoint()
-                start_time = entities.UTIME.time()
+                entities.START_TIME = entities.UTIME.time()
 
             try: # only update colors when an animated effect is running
                 attrib = f'{entities.DISPLAY_STATE}_increment_waypoint'
@@ -146,7 +145,7 @@ class UserInterface:
 
         try: # add the hilight rectangle
             attrib = f'{entities.DISPLAY_STATE}_get_hilight'
-            h = getattr(view, attrib)()
+            h = getattr(states, attrib)()
             self.main_display.rect(0, h, 128, 12, 1)
         except:
             pass
@@ -171,7 +170,7 @@ class UserInterface:
         if entities.DISPLAY_STATE == 'STANDBY':
             entities.DISPLAY_STATE = self.standby_toggle
             self.effect.set_led_banks()
-            self.update_display(view.get_menu_list())
+            self.update_display(states.get_menu_list())
             # Turn on SFX
 
         else:
@@ -190,7 +189,7 @@ class UserInterface:
         attrib = f'{entities.DISPLAY_STATE}_turn_left'
 
         try:
-            display_content = getattr(view, attrib)() # IE view.WELCOME_turn_left()
+            display_content = getattr(states, attrib)() # IE states.WELCOME_turn_left()
             self.update_display(display_content)
         except:
             pass
@@ -200,7 +199,7 @@ class UserInterface:
     def turn_right_callback(self):
         attrib = f'{entities.DISPLAY_STATE}_turn_right'
         try:
-            display_content = getattr(view, attrib)() # IE view.WELCOME_turn_right()
+            display_content = getattr(states, attrib)() # IE states.WELCOME_turn_right()
             self.update_display(display_content)
         except:
             pass
@@ -217,7 +216,7 @@ class UserInterface:
 
         attrib = f'{entities.DISPLAY_STATE}_click'
         try:
-            display_content = getattr(view, attrib)() # IE WELCOME_click()
+            display_content = getattr(states, attrib)() # IE WELCOME_click()
             self.update_display(display_content)
         except:
             pass
@@ -227,7 +226,7 @@ class UserInterface:
  
         attrib = f'{entities.DISPLAY_STATE}_click2'
         try:
-            display_content = getattr(view, attrib)() # IE WELCOME_click2()
+            display_content = getattr(states, attrib)() # IE WELCOME_click2()
             self.update_display(display_content)
         except:
             pass
