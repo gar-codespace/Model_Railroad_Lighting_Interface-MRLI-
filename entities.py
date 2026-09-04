@@ -190,7 +190,6 @@ MAIN_MENU = { # In the order they show on the display
 
 WORKING_BUFFER = {} # Either the static buffer or one of the animated buffers is copied into this.
 
-
 '''
 Note:
 The random value is a float between 0 and 1.
@@ -219,8 +218,6 @@ STATIC = {
 'BANK_4': [      0,       1,       1,       1,       1,      1,],
 'SCENIC': [      0,       0,       0,       0,       0,      0,],
 }
-
-
 
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day

@@ -3,7 +3,7 @@ import states
 import model
 import view
 import lighting
-import audio
+import sound
 
 
 class UserInterface:

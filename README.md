@@ -47,18 +47,16 @@ Adafruit Stereo 20W Class D Audio Amplifier - MAX9744
 Plugs, switches, buttons etc. 
   
 ## Operation  
-This project is not really a state machine because it is always running a lighting and sound effect, so it never really changes state, even
-though an effect may change.  
-The states that do change regard the display, so I guess this project is a modified State Machine pattern, with a bit of MVC mixed in.  
+This project is built upon a modified state machine pattern, with a bit of MVC mixed in. It is always running a lighting and sound effect, even when ste in standby.  
   
-The display operates in one of 7 states:  
+The mavhine operates in one of 7 states:  
 WELCOME - The initial screen presented at startup.  
 EFFECTS - A scrollable list of available lighting effects.  
 ANIMATED - Displays the values of the RGBWC colors as they change.  
 PAUSED - The animated effect is paused.  
 STATIC - Displays a selectable list of the RGBWC colors.  
 EDIT - Changable value of the selected color.  
-STANDBY - Mutes the display, audio, and RGBWC lights.  The effect is not paused.  
+STANDBY - Mutes the display, sound, and RGBWC lights.  The effect is not paused.  
 
 ## Navigation  
 In display state WELCOME:  
