@@ -37,7 +37,7 @@ def get_menu_list() -> list:
     return menu_list
 
 def get_status_list() -> list:
-    '''The status screen is displayed when the display mode is ANIMATED, STATIC, or EDIT.'''
+    '''The status screen is displayed when the machine state is ANIMATED, STATIC, or EDIT.'''
 
     status_screen: list = []
 
@@ -59,5 +59,6 @@ def get_status_list() -> list:
     return status_screen
 
 def get_empty_list() -> list:
+    '''Abstract this.'''
 
     return ['','','','','']

@@ -116,39 +116,8 @@ SOUND_CARD = {'a':'b', 'c':'d'}
 
 FAST_TIME_CLOCK = 8 # used in model railroading to compress time.
 DEFAULT_CYCLE = 20 # milliseconds used for other awaits
-                   # Adjusts for asyncio overhead slowing down the effects.
 START_TIME = 0 # Used for the waypoint duration measurement.
 END_TIME = 0
-
-################## COLOR CONTROL ######################
-
-################## EFFECT BUFFER ######################
-# The running effect writes to and reads from this buffer.
-# In STATIC mode user inputs are written here and the STATIC_BUFFER.
-# The slower the clock cycle, the more accurate the delay.
-CLOCK_CYCLE = 500 # Milliseconds per cycle. The delay the effect awaits.
-CLOCK_OFFSET = 1 # Adjustment to keep the effect times closer to what they should be.
-RED     = 32500 # PWM value
-BLUE    = 32500
-WARM    = 32500
-COOL    = 32500
-BANK_0  = 1 # 1 is on, 0 is off
-BANK_1  = 1
-BANK_2  = 1
-BANK_3  = 1
-BANK_4  = 1
-SCENIC  = 1
-WP_DUR  = 1 # waypoint_duration is the number of times the effect will await, given a delay of entities.CLOCK_CYCLE
-NEXT_WP = 0 # Index of the next waypoint
-STEP_R  = 0 # how much in pwm steps does each color change per CLOCK_CYCLE. pos or neg
-STEP_G  = 0
-STEP_B  = 0
-STEP_W  = 0
-STEP_C  = 0
-WP_NAME = 'name'
-SFX_GRP = None
-SFX_NAME= 'name'
-################## EFFECT BUFFER ######################
 
 ################## NAVIGATION ######################
 
@@ -193,14 +162,49 @@ MAIN_MENU = { # In the order they show on the display
             12: ('* Stormy Night',     'STORMY',  0)
             }
 
+
+################## BUFFERS ######################
+
+WORKING_BUFFER = {} # Either the static dictionary or one of the animated dictionaries is copied into this.
+
+################## EFFECT BUFFER ######################
+# The running effect writes to and reads from this buffer.
+# In STATIC mode user inputs are written here.
+# The slower the clock cycle, the more accurate the delay.
+CLOCK_CYCLE = 500 # Milliseconds per cycle. The delay the lighting effect awaits.
+CLOCK_OFFSET = 1 # Adjustment to keep the effect times closer to what they should be.
+                 # Adjusts for asyncio overhead slowing down the effects.
+RED     = 32500 # PWM value
+BLUE    = 32500
+WARM    = 32500
+COOL    = 32500
+BANK_0  = 1 # 1 is on, 0 is off
+BANK_1  = 1
+BANK_2  = 1
+BANK_3  = 1
+BANK_4  = 1
+SCENIC  = 1
+WP_DUR  = 1 # waypoint_duration is the number of times the effect will await, given a delay of entities.CLOCK_CYCLE
+NEXT_WP = 0 # Index of the next waypoint
+STEP_R  = 0 # how much in pwm steps does each color change per CLOCK_CYCLE. pos or neg
+STEP_G  = 0
+STEP_B  = 0
+STEP_W  = 0
+STEP_C  = 0
+WP_NAME = 'name'
+SFX_GRP = None
+################## EFFECT BUFFER ######################
+
+
 ################## LIGHTING EFFECT DEFINITIONS ######################
 
-WORKING_BUFFER = {} # Either the static buffer or one of the animated buffers is copied into this.
-
 '''
-Note:
-The random value is a float between 0 and 1.
-0 is not random, 1 is max randomness.
+In the dictionary for each effect, the duration of the effect is given in real time minutes,
+the time the effect actually takes in the real world.
+The duration is then adjusted for model railroad 'scale' and converted to milliseconds.
+
+The duration of STATIC effects is defined as 0, since 'infinately long' seems rediculous.
+The random value is a float between 0 and 1. 0 is not random, 1 is max randomness.
 '''
 
 STATIC = {
@@ -236,11 +240,11 @@ ALL_DAY = { # simulates an entire day
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
 
-'RED':    [    0.00,    0.00,    0.00,    .002,    .004,    0.02,    0.00,    0.00,    0.00,    .003,    .006,    .003],
+'RED':    [    0.00,    0.00,    0.00,    .000,    .004,    0.02,    0.00,    0.00,    0.00,    .003,    .006,    .003],
 'GREEN':  [    0.00,    0.00,    0.00,    0.00,    .006,    0.02,    0.00,    0.00,    0.00,    .002,    .004,    0.00],
 'BLUE':   [    .001,   .0005,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00],
-'WARM':   [    0.00,    0.00,    0.00,    .001,    .005,    0.12,    0.18,    0.18,    0.22,    0.10,    .005,    0.00],
-'COOL':   [    .001,    .001,    0.00,    0.00,    0.00,    0.01,    0.02,    0.03,    0.02,    .001,    0.00,    .000],
+'WARM':   [    0.00,    0.00,    0.00,    .000,    .005,    0.12,    0.18,    0.18,    0.22,    0.10,    .005,    0.00],
+'COOL':   [    .001,    .001,    .001,    0.00,    0.00,    0.01,    0.02,    0.03,    0.02,    .001,    0.00,    .000],
 
 'BANK_0': [       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1],
 'BANK_1': [       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0],

@@ -26,6 +26,7 @@ def pwm2percent(pwm):
     x = pwm / entities.PWM_STEPS
     y = x * 100
     return x
+
 def get_index_double():
     '''IE [0, 1, 2, 3, 4, 0, 1, 2, 3 , 4]'''
     
@@ -38,7 +39,7 @@ def get_waypoint_duration(index):
     '''
     The duration of the waypoint is the number of times the while loop is run.
     When tested, the Picos clock was consistantly way off from real time,
-    so the CLOCK_OFFSET adjusts for that.
+    due to the overhead from asyncio, so the CLOCK_OFFSET adjusts for that.
     '''
 
     if entities.CURRENT_EFFECT[1] == 'STATIC':
@@ -96,6 +97,6 @@ def get_color_delta(index:int, color:str):
         color_begin = entities.WORKING_BUFFER[color][index] # decimal percent
         color_end = entities.WORKING_BUFFER[color][entities.NEXT_WP] # decimal percent
         color_delta = color_begin - color_end # decimal percent
-        color_delta = color_delta * entities.PWM_STEPS # pwm steps
+        color_delta *= entities.PWM_STEPS # pwm steps
 
     return int(color_delta)
