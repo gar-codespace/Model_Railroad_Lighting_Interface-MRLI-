@@ -80,34 +80,43 @@ PICO_PIN = {
         'Available':28 # encoder
         }
 
-'''
-There seems to be a lot of hard coding around the display having 5 lines of text.
-Look into abstracting this.
-'''
+################## SERIAL COMMUNICATION PROTOCOLS ######################
 
-# OLED0 specs
+I2C0 = I2C(
+          id = 0,
+          sda = PIN(PICO_PIN['SDA']),
+          scl = PIN(PICO_PIN['SCL']),
+          freq = 400000
+          )
+
+UART0 = None
+
+################## OLED CONFIGURATIONS ######################
+
 OLED0 = {'ADDRESS': CONST(0x3C),
          'WIDTH': 128,
          'HEIGHT': 64,
-         'LINE_HEIGHT': 14,
         }
 
-# OLED Configurations (bus, width, height, addr)
-DISPLAY0 = (0, OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
+DISPLAY0 = (OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
+
+################## DISPLAYS ######################
+
 MAIN_DISPLAY = DISPLAY0
 MAIN_DISPLAY_BRIGHT = 70
 MAIN_DISPLAY_DIM = 1
 MAIN_DISPLAY_BRIGHTNESS = MAIN_DISPLAY_BRIGHT
 
-# Display formatting
 MAIN_FORMAT =  {'LINE_HEIGHT': 13,
                 'ROWS': 5,
                 'X_OFFSET': 4
                 }
 
-# Sound Hardware
+################## SOUND HARDWARE ######################
 
 SOUND_CARD = {'a':'b', 'c':'d'}
+
+
 
 
 ################## SOFTWARE ######################

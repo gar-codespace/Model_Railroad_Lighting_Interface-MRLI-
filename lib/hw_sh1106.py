@@ -28,7 +28,7 @@ SH1106_SET_PAGE_ADDR = entities.CONST(0xB0)
 SH1106_SET_LOW_COL = entities.CONST(0x00)
 SH1106_SET_HIGH_COL = entities.CONST(0x10)
 
-class DRIVER_I2C(entities.FRAMEBUF.FrameBuffer):
+class Driver_I2C(entities.FRAMEBUF.FrameBuffer):
     '''SH1106 OLED driver for I2C interface'''
     
     def __init__(self, width, height, i2c, addr=0x3C, external_vcc=False):

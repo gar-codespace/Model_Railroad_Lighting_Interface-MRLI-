@@ -8,20 +8,13 @@ import model
 
 
 def get_display(specs):
-            
-    bus = specs[0]
-    width = specs[1]
-    height = specs[2]
-    addr = specs[3]
 
-    i2c = entities.I2C(
-                        bus,
-                        sda = entities.PIN(entities.PICO_PIN['SDA']),
-                        scl = entities.PIN(entities.PICO_PIN['SCL']),
-                        freq = 400000
-                        )
+    width = specs[0]
+    height = specs[1]
+    addr = specs[2]
+    i2c = entities.I2C0
 
-    return entities.DISPLAY_LIBRARY.DRIVER_I2C(width, height, i2c, addr)
+    return entities.DISPLAY_LIBRARY.Driver_I2C(width, height, i2c, addr)
 
 def get_menu_list() -> list:
     '''Returns a list of main menu items.'''

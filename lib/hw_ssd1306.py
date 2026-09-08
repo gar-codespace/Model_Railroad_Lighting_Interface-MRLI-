@@ -104,7 +104,7 @@ class SSD1306(entities.FRAMEBUF.FrameBuffer):
         self.write_data(self.buffer)
 
 
-class DRIVER_I2C(SSD1306):
+class Driver_I2C(SSD1306):
     def __init__(self, width, height, i2c, addr, external_vcc=False):
         self.i2c = i2c
         self.addr = addr
