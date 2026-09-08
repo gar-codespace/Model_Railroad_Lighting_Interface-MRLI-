@@ -121,8 +121,8 @@ END_TIME = 0
 
 ################## NAVIGATION ######################
 
-MACHINE_STATE = 'WELCOME' # Can be: WELCOME, EFFECTS, ANIMATED, STATIC, EDIT, PAUSED, STANDBY
-STANDBY_TOGGLE = 'WELCOME'
+MACHINE_STATE = None
+STANDBY_TOGGLE = None
 
 WELCOME_SCREEN = ['   M.U.T.T.',
                   ' Metropolitan',

@@ -1,42 +1,53 @@
-'''
-The machine operates in one of seven ststes:
-WELCOME, EFFECTS, ANIMATED, STATIC, EDIT, PAUSED, STANDBY
-'''
-
 import entities
 import model
 import view
 import lighting
 
 
+class States:
+
+    WELCOME = 'welcome'
+    EFFECTS = 'effects'
+    ANIMATED = 'animated'
+    STATIC = 'static'
+    EDIT = 'edit'
+    PAUSED = 'paused'
+    STANDBY = 'standby'
+
+
+entities.MACHINE_STATE = States.WELCOME
+entities.STANDBY_TOGGLE = States.WELCOME
+
+
 ########### MACHINE_STATE: WELCOME
 
 
-def WELCOME_turn_left():
-    entities.MACHINE_STATE = 'EFFECTS'
+def welcome_turn_left():
+    entities.MACHINE_STATE = States.EFFECTS
 
     return view.get_menu_list()
 
-def WELCOME_turn_right():
-    entities.MACHINE_STATE = 'EFFECTS'
+def welcome_turn_right():
+    entities.MACHINE_STATE = States.EFFECTS
 
     return view.get_menu_list()
 
-def WELCOME_click():
-    entities.MACHINE_STATE = 'EFFECTS'
+def welcome_click():
+    entities.MACHINE_STATE = States.EFFECTS
+    print(entities.MACHINE_STATE)
 
     return view.get_menu_list()
 
-def WELCOME_get_hilight():
+def welcome_get_hilight():
     # Move the hilight rectangle off the screen
 
     return 65
 
-def WELCOME_toggle():
+def welcome_toggle():
     '''Puts machine in standby.'''
 
-    entities.STANDBY_TOGGLE = 'EFFECTS'
-    entities.MACHINE_STATE = 'STANDBY'
+    entities.STANDBY_TOGGLE = States.EFFECTS
+    entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
     # sound.stop_sfx
 
@@ -46,7 +57,7 @@ def WELCOME_toggle():
 ########### MACHINE_STATE: EFFECTS
 
 
-def EFFECTS_turn_left():
+def effects_turn_left():
     '''Scrolls the effects menu.'''
 
     entities.MENU_FIRST_ITEM -= 1
@@ -55,7 +66,7 @@ def EFFECTS_turn_left():
 
     return view.get_menu_list()
 
-def EFFECTS_turn_right():
+def effects_turn_right():
     '''Scrolls the effects menu.'''
 
     entities.MENU_FIRST_ITEM += 1
@@ -64,31 +75,31 @@ def EFFECTS_turn_right():
 
     return view.get_menu_list()
 
-def EFFECTS_click():
+def effects_click():
     '''Select an effect.'''
 
     entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
-    entities.MACHINE_STATE = 'STATIC'
+    entities.MACHINE_STATE = States.STATIC
     if not entities.CURRENT_EFFECT[1] == 'STATIC':
-        entities.MACHINE_STATE = 'ANIMATED'
+        entities.MACHINE_STATE = States.ANIMATED
 
     lighting.set_up_effect()
     entities.START_TIME = entities.UTIME.time()
 
     return view.get_status_list()
 
-def EFFECTS_get_hilight():
+def effects_get_hilight():
 
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
     hilight_row = entities.HIGHLIGHT_ROW * hilight_height
 
     return hilight_row + 1
 
-def EFFECTS_toggle():
+def effects_toggle():
     '''Puts machine in standby.'''
 
-    entities.STANDBY_TOGGLE = 'EFFECTS'
-    entities.MACHINE_STATE = 'STANDBY'
+    entities.STANDBY_TOGGLE = States.EFFECTS
+    entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
     # sound.stop_sfx
 
@@ -98,24 +109,22 @@ def EFFECTS_toggle():
 ########### MACHINE_STATE: ANIMATED
 
 
-def ANIMATED_click():
+def animated_click():
     '''Pause effect.'''
 
-    entities.MACHINE_STATE = 'PAUSED'
+    entities.MACHINE_STATE = States.PAUSED
     entities.MAIN_DISPLAY_BRIGHTNESS = entities.MAIN_DISPLAY_DIM
-
-    print(entities.MACHINE_STATE)
 
     return view.get_status_list()
 
-def ANIMATED_click2():
+def animated_click2():
     '''Return to the effects menu.'''
     
-    entities.MACHINE_STATE = 'EFFECTS'
+    entities.MACHINE_STATE = States.EFFECTS
 
     return view.get_menu_list()
 
-def ANIMATED_increment_waypoint():
+def animated_increment_waypoint():
 
     entities.RED -= entities.STEP_R
     entities.GREEN -= entities.STEP_G
@@ -125,7 +134,7 @@ def ANIMATED_increment_waypoint():
 
     entities.WP_DUR -= 1
 
-def ANIMATED_set_next_waypoint():
+def animated_set_next_waypoint():
 
     if entities.WP_DUR <= 1:
             
@@ -137,11 +146,11 @@ def ANIMATED_set_next_waypoint():
 
         entities.START_TIME = entities.UTIME.time()
   
-def ANIMATED_toggle():
+def animated_toggle():
     '''Puts machine in standby.'''
 
-    entities.STANDBY_TOGGLE = 'ANIMATED'
-    entities.MACHINE_STATE = 'STANDBY'
+    entities.STANDBY_TOGGLE = States.ANIMATED
+    entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
     # sound.stop_sfx
 
@@ -151,7 +160,7 @@ def ANIMATED_toggle():
 ########### MACHINE_STATE: STATIC
 
 
-def STATIC_turn_left():
+def static_turn_left():
     '''Scroll a color to edit.'''
 
     row = entities.STATIC_SELECT_ROW + 1
@@ -159,7 +168,7 @@ def STATIC_turn_left():
 
     return view.get_status_list()
 
-def STATIC_turn_right():
+def static_turn_right():
     '''Scroll a color to edit.'''
 
     row = entities.STATIC_SELECT_ROW - 1
@@ -167,38 +176,38 @@ def STATIC_turn_right():
 
     return view.get_status_list()
 
-def STATIC_click():
+def static_click():
     '''Select a color to edit.'''
 
-    entities.MACHINE_STATE = 'EDIT'
+    entities.MACHINE_STATE = States.EDIT
 
     return view.get_status_list()
 
-def STATIC_click2():
+def static_click2():
     '''Return to the effects menu.'''
     
-    entities.MACHINE_STATE = 'EFFECTS'
+    entities.MACHINE_STATE = States.EFFECTS
 
     return view.get_menu_list()
 
-def STATIC_get_hilight():
+def static_get_hilight():
 
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
 
     return hilight_row - 1
 
-def STATIC_toggle():
+def static_toggle():
     '''Puts machine in standby.'''
 
-    entities.STANDBY_TOGGLE = 'STATIC'
-    entities.MACHINE_STATE = 'STANDBY'
+    entities.STANDBY_TOGGLE = States.STATIC
+    entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
     # sound.stop_sfx
 
     return view.get_empty_list()
 
-def STATIC_bank(name, index):
+def static_bank(name, index):
     '''Toggles the named LED bank on or off.'''
 
     relay = f'{name}_R'
@@ -210,7 +219,7 @@ def STATIC_bank(name, index):
 ########### MACHINE_STATE: EDIT
 
 
-def EDIT_turn_left():
+def edit_turn_left():
     '''Reduce the selected colors brightness.'''
 
     index = entities.CURRENT_EFFECT[2]
@@ -226,7 +235,7 @@ def EDIT_turn_left():
 
     return view.get_status_list()
 
-def EDIT_turn_right():
+def edit_turn_right():
     '''Increase the selected colors brightness.'''
     
     index = entities.CURRENT_EFFECT[2]
@@ -242,31 +251,31 @@ def EDIT_turn_right():
 
     return view.get_status_list()
 
-def EDIT_click():
+def edit_click():
     '''Return to the static menu.'''
 
-    entities.MACHINE_STATE = 'STATIC'
+    entities.MACHINE_STATE = States.STATIC
 
     return view.get_status_list()
 
-def EDIT_get_hilight():
+def edit_get_hilight():
 
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
 
     return hilight_row - 1
 
-def EDIT_toggle():
+def edit_toggle():
     '''Puts machine in standby.'''
 
-    entities.STANDBY_TOGGLE = 'EDIT'
-    entities.MACHINE_STATE = 'STANDBY'
+    entities.STANDBY_TOGGLE = States.EDIT
+    entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
     # sound.stop_sfx
 
     return view.get_empty_list()
 
-def EDIT_bank(name, index):
+def edit_bank(name, index):
     '''Toggles the named LED bank on or off.'''
 
     relay = f'{name}_R'
@@ -278,12 +287,11 @@ def EDIT_bank(name, index):
 ########### MACHINE_STATE: PAUSED
 
 
-def PAUSED_click():
+def paused_click():
     '''Unpause animated effect.'''
 
-    entities.MACHINE_STATE = 'ANIMATED'
+    entities.MACHINE_STATE = States.ANIMATED
     entities.MAIN_DISPLAY_BRIGHTNESS = entities.MAIN_DISPLAY_BRIGHT
-    print(entities.MACHINE_STATE)
 
     return view.get_status_list()
 
@@ -291,7 +299,7 @@ def PAUSED_click():
 ########### MACHINE_STATE: STANDBY
 
 
-def STANDBY_toggle():
+def standby_toggle():
     '''Takes the machine out of standby.'''
 
     entities.MACHINE_STATE = entities.STANDBY_TOGGLE

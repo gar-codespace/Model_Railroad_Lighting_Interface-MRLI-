@@ -11,7 +11,6 @@ class UserInterface:
 
     def __init__(self):
 
-        entities.MACHINE_STATE = 'WELCOME'
         entities.WORKING_BUFFER = entities.STATIC
         self.main_display = view.get_display(entities.MAIN_DISPLAY)
         self.sound_card: object
