@@ -263,7 +263,7 @@ def edit_get_hilight():
 def edit_toggle():
     '''Puts machine in standby.'''
 
-    entities.STANDBY_TOGGLE = States.EDIT
+    entities.STANDBY_TOGGLE = States.EFFECTS
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
     # sound.stop_sfx
