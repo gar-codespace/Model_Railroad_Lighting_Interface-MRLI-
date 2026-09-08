@@ -38,11 +38,6 @@ def welcome_click():
 
     return view.get_menu_list()
 
-def welcome_get_hilight():
-    # Move the hilight rectangle off the screen
-
-    return 65
-
 def welcome_toggle():
     '''Puts machine in standby.'''
 
