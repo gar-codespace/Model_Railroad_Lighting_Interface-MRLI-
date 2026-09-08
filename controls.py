@@ -113,7 +113,7 @@ class UserInterface:
 
         self.main_display.fill(0)
 
-        line_y = 1
+        line_y = 3 # center the text in the display
         for i in range(entities.MAIN_FORMAT['ROWS']):
             self.main_display.text(content[i], entities.MAIN_FORMAT['X_OFFSET'], line_y)
             line_y += entities.MAIN_FORMAT['LINE_HEIGHT']

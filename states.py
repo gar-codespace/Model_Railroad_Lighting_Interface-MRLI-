@@ -85,10 +85,10 @@ def effects_click():
 
 def effects_get_hilight():
 
-    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT'] - 1
+    hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.HIGHLIGHT_ROW * hilight_height
 
-    return hilight_row + 1
+    return hilight_row
 
 def effects_toggle():
     '''Puts machine in standby.'''
@@ -159,7 +159,7 @@ def static_turn_left():
     '''Scroll a color to edit.'''
 
     row = entities.STATIC_SELECT_ROW + 1
-    entities.STATIC_SELECT_ROW = min(row, 4)
+    entities.STATIC_SELECT_ROW = min(row, 5)
 
     return view.get_status_list()
 
@@ -167,7 +167,7 @@ def static_turn_right():
     '''Scroll a color to edit.'''
 
     row = entities.STATIC_SELECT_ROW - 1
-    entities.STATIC_SELECT_ROW = max(0, row)
+    entities.STATIC_SELECT_ROW = max(1, row)
 
     return view.get_status_list()
 
@@ -190,7 +190,7 @@ def static_get_hilight():
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
 
-    return hilight_row - 1
+    return hilight_row
 
 def static_toggle():
     '''Puts machine in standby.'''
@@ -258,7 +258,7 @@ def edit_get_hilight():
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
 
-    return hilight_row - 1
+    return hilight_row
 
 def edit_toggle():
     '''Puts machine in standby.'''

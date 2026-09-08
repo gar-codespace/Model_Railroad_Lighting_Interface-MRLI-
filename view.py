@@ -16,6 +16,9 @@ def get_display(specs):
 
     return entities.DISPLAY_LIBRARY.Driver_I2C(width, height, i2c, addr)
 
+def get_welcome_list() -> list:
+     pass
+
 def get_menu_list() -> list:
     '''Returns a list of main menu items.'''
 
@@ -33,6 +36,8 @@ def get_status_list() -> list:
     '''The status screen is displayed when the machine state is ANIMATED, STATIC, or EDIT.'''
 
     status_screen: list = []
+
+    status_screen.append(f'WP: {entities.WP_NAME}')
 
     value = model.pwm2percent(getattr(entities, 'RED')) * 100
     status_screen.append(f'Red:   {round(value, 4)}%')
@@ -52,6 +57,10 @@ def get_status_list() -> list:
     return status_screen
 
 def get_empty_list() -> list:
-    '''Abstract this.'''
 
-    return ['','','','','']
+    menu_list: list = []
+
+    for _ in range(0, entities.MAIN_FORMAT['ROWS']):
+            menu_list.append('')
+
+    return menu_list

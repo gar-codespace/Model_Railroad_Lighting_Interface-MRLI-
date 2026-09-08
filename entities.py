@@ -21,7 +21,6 @@ DISPLAY_DRIVER = 'hw_sh1106'
 from machine import Pin as PIN, I2C, Timer as TIMER, PWM
 from micropython import const as CONST
 from random import randint as RANDINT
-import os as OS
 import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
@@ -30,8 +29,6 @@ import uasyncio as UASYNCIO
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 from hw_button import Button
 DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER)
-
-SFX_PATH = f'{OS.getcwd()}/sfx'
 
 ################## HARDWARE ######################
 
@@ -69,8 +66,8 @@ PICO_PIN = {
         'TRA':18, # encoder
         'TRB':19, # encoder
 
-        'SDA':20, # display
-        'SCL':21, # display
+        'SDA':20, # i2c
+        'SCL':21, # i2c
 
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
@@ -107,8 +104,8 @@ MAIN_DISPLAY_BRIGHT = 70
 MAIN_DISPLAY_DIM = 1
 MAIN_DISPLAY_BRIGHTNESS = MAIN_DISPLAY_BRIGHT
 
-MAIN_FORMAT =  {'LINE_HEIGHT': 13,
-                'ROWS': 5,
+MAIN_FORMAT =  {'LINE_HEIGHT': 10,
+                'ROWS': 6,
                 'X_OFFSET': 4
                 }
 
@@ -137,20 +134,23 @@ WELCOME_SCREEN = ['   M.U.T.T.',
                   ' Metropolitan',
                   '    Union',
                   '   Transfer',
-                  '   Terminal'
+                  '   Terminal',
+                  ''
                   ]
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
-STATIC_SELECT_ROW = 2 # In STATIC mode, the encoder moves the rectangle up and down
+STATIC_SELECT_ROW = 3 # In STATIC mode, the encoder moves the rectangle up and down
 CURRENT_EFFECT = ('Daytime', 'STATIC', 2) # Also used as the default effect
 HILIGHTED_EFFECT = 1 # MAIN_MENU key
 # MENU_FIRST_ITEM is hard coded based on 5 menu lines and the highlite on line 2
 # This should be abstracted
 MENU_FIRST_ITEM = 12 # Index of MAIN_MENU for first item in menu
-LED_INDEX_MAP = {0: 'RED',
-                 1: 'GREEN',
-                 2: 'BLUE',
-                 3: 'WARM',
-                 4: 'COOL'
+LED_INDEX_MAP = {
+                 0: '',
+                 1: 'RED',
+                 2: 'GREEN',
+                 3: 'BLUE',
+                 4: 'WARM',
+                 5: 'COOL'
                  }
 PWM_TICKS = 100 # How many ticks per indent of the rotary encoder when changing color values.
                 # Smaller is finer control.
@@ -236,7 +236,7 @@ STATIC = {
 'BANK_2': [      0,       1,       1,       0,       0,      0,],
 'BANK_3': [      0,       0,       1,       0,       0,      0,],
 'BANK_4': [      0,       1,       1,       1,       1,      1,],
-'SCENIC': [      0,       0,       0,       0,       0,      0,],
+'SCENIC': [      0,       1,       0,       1,       1,      1,],
 }
 
 # Each column of an animated effect is being called a waypoint
