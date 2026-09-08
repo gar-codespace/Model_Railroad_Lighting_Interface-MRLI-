@@ -17,7 +17,16 @@ def get_display(specs):
     return entities.DISPLAY_LIBRARY.Driver_I2C(width, height, i2c, addr)
 
 def get_welcome_list() -> list:
-     pass
+
+    welcome_list: list = []
+
+    for i in range(0, entities.MAIN_FORMAT['ROWS']):
+        try:
+            welcome_list.append(entities.WELCOME_SCREEN[i])
+        except:
+            welcome_list.append('')
+
+    return welcome_list
 
 def get_menu_list() -> list:
     '''Returns a list of main menu items.'''
@@ -33,11 +42,13 @@ def get_menu_list() -> list:
     return menu_list
 
 def get_status_list() -> list:
-    '''The status screen is displayed when the machine state is ANIMATED, STATIC, or EDIT.'''
+    '''The status screen is displayed when the machine state is ANIMATED, STATIC, or EDIT.
+    TODO Hardcoding??? Yikes!!
+    '''
 
     status_screen: list = []
 
-    status_screen.append(f'WP: {entities.WP_NAME}')
+    status_screen.append(f'Waypoint:{entities.WP_NAME}')
 
     value = model.pwm2percent(getattr(entities, 'RED')) * 100
     status_screen.append(f'Red:   {round(value, 4)}%')

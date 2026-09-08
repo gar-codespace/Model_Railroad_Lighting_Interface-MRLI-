@@ -7,18 +7,21 @@ import sound
 
 
 class UserInterface:
-    '''The user interface is everything on the front panel of the machine.'''
+    '''The user interface initializes with the welcome screen displayed.'''
 
     def __init__(self):
 
         entities.WORKING_BUFFER = entities.STATIC
+        self.standby_toggle: str
+        self.welcome_list = view.get_welcome_list()
+
         self.main_display = view.get_display(entities.MAIN_DISPLAY)
         self.sound_card: object
-        self.standby_toggle: str
 
-        model.set_relay_pins() # the relays that turn the led bank on or off
+        model.set_relay_pins() # the relays that turn the led banks on or off
         model.set_pwm_led_pins() # sets pico pins to pwm
         # The buttons are initialized with get_all_the_buttons()
+        self.update_display(self.welcome_list)
 
 
 ################ methods in main - UASYNCIO.gather ##################
@@ -110,10 +113,11 @@ class UserInterface:
 
 
     def update_display(self, content: list = entities.WELCOME_SCREEN):
+        '''One method to rule them all...'''
 
         self.main_display.fill(0)
 
-        line_y = 3 # center the text in the display
+        line_y = 3 # vertically center the text in the display
         for i in range(entities.MAIN_FORMAT['ROWS']):
             self.main_display.text(content[i], entities.MAIN_FORMAT['X_OFFSET'], line_y)
             line_y += entities.MAIN_FORMAT['LINE_HEIGHT']
@@ -136,7 +140,7 @@ class UserInterface:
         
         try:
             attrib = f'{entities.MACHINE_STATE}_turn_left'
-            display_content = getattr(states, attrib)() # IE states.WELCOME_turn_left()
+            display_content = getattr(states, attrib)() # IE states.welcome_turn_left()
             self.update_display(display_content)
         except:
             pass
@@ -145,7 +149,7 @@ class UserInterface:
 
         try:
             attrib = f'{entities.MACHINE_STATE}_turn_right'
-            display_content = getattr(states, attrib)() # IE states.WELCOME_turn_right()
+            display_content = getattr(states, attrib)() # IE states.welcome_turn_right()
             self.update_display(display_content)
         except:
             pass        
@@ -154,7 +158,7 @@ class UserInterface:
 
         try:
             attrib = f'{entities.MACHINE_STATE}_click'
-            display_content = getattr(states, attrib)() # IE WELCOME_click()
+            display_content = getattr(states, attrib)() # IE states.welcome_click()
             self.update_display(display_content)
         except:
             pass
@@ -164,7 +168,7 @@ class UserInterface:
  
         try:
             attrib = f'{entities.MACHINE_STATE}_click2'
-            display_content = getattr(states, attrib)() # IE WELCOME_click2()
+            display_content = getattr(states, attrib)() # IE states.welcome_click2()
             self.update_display(display_content)
         except:
             pass
@@ -172,9 +176,8 @@ class UserInterface:
     def confirm_button_r_callback(self, name, event):
         '''Toggle standby.'''
 
-        # self.toggle_standby()
         try:
-            attrib = f'{entities.MACHINE_STATE}_toggle' # IE states.STANDBY_toggle()
+            attrib = f'{entities.MACHINE_STATE}_toggle' # IE states.standby_toggle()
             display_content = getattr(states, attrib)()
             self.update_display(display_content)
         except:
@@ -186,12 +189,12 @@ class UserInterface:
         pass
 
     def bank_button_r_callback(self, name, event):
-        '''The 6 LED bank and scenic buttons.'''
+        '''The 5 LED bank and scenic buttons.'''
 
         index = entities.CURRENT_EFFECT[2]
 
         try:
-            attrib = f'{entities.MACHINE_STATE}_bank' # IE states.EDIT_bank()
+            attrib = f'{entities.MACHINE_STATE}_bank' # IE states.edit_bank(name, index)
             getattr(states, attrib)(name, index)
         except:
             pass

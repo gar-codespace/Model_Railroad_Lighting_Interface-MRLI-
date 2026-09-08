@@ -97,7 +97,7 @@ OLED0 = {'ADDRESS': CONST(0x3C),
 
 DISPLAY0 = (OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
 
-################## DISPLAYS ######################
+################## MAIN DISPLAY ######################
 
 MAIN_DISPLAY = DISPLAY0
 MAIN_DISPLAY_BRIGHT = 70
@@ -134,18 +134,21 @@ WELCOME_SCREEN = ['   M.U.T.T.',
                   ' Metropolitan',
                   '    Union',
                   '   Transfer',
-                  '   Terminal',
-                  ''
-                  ]
+                  '   Terminal'
+                  ] # 6 lines maximum, 15 char per line
+
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 STATIC_SELECT_ROW = 3 # In STATIC mode, the encoder moves the rectangle up and down
 CURRENT_EFFECT = ('Daytime', 'STATIC', 2) # Also used as the default effect
 HILIGHTED_EFFECT = 1 # MAIN_MENU key
-# MENU_FIRST_ITEM is hard coded based on 5 menu lines and the highlite on line 2
+# TODO MENU_FIRST_ITEM is hard coded based on 6 menu lines and the highlite on line 2
 # This should be abstracted
 MENU_FIRST_ITEM = 12 # Index of MAIN_MENU for first item in menu
+
+# TODO change the name of LED_INDEX_MAP to reflect what it is and make it a list
+ 
 LED_INDEX_MAP = {
-                 0: '',
+                 0: 'WP_NAME',
                  1: 'RED',
                  2: 'GREEN',
                  3: 'BLUE',

@@ -38,7 +38,7 @@ def get_index_double():
 def get_waypoint_duration(index):
     '''
     The duration of the waypoint is the number of times the while loop is run.
-    When tested, the Picos clock was consistantly way off from real time,
+    When tested, the Picos clock was consistantly off from real time,
     due to the overhead from asyncio, so the CLOCK_OFFSET adjusts for that.
     '''
 

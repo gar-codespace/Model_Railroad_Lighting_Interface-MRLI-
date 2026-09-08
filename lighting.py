@@ -73,7 +73,7 @@ def set_up_banks(index):
     entities.SCENIC = entities.WORKING_BUFFER['SCENIC'][index]
 
 def set_led_banks():
-    '''Sets the led bank relays from the value in the buffer'''
+    '''Sets the led bank relays from the value in the buffer.'''
 
     entities.PIN(entities.PICO_PIN['BANK_0_R']).value(entities.BANK_0)
     entities.PIN(entities.PICO_PIN['BANK_1_R']).value(entities.BANK_1)
@@ -83,7 +83,7 @@ def set_led_banks():
     entities.PIN(entities.PICO_PIN['SCENIC_R']).value(entities.SCENIC)
 
 def set_led_values():
-    '''Sets the led pwm values from the value in the Effect Buffer'''
+    '''Sets the led pwm values from the value in the Effect Buffer.'''
 
     r = entities.PICO_PIN['RED']
     g = entities.PICO_PIN['GREEN']
