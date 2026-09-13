@@ -18,7 +18,7 @@ DISPLAY_DRIVER = 'hw_sh1106'
 
 
 # packaged libraries
-from machine import Pin as PIN, I2C, Timer as TIMER, PWM
+from machine import Pin as PIN, I2C, Timer as TIMER, PWM, UART
 from micropython import const as CONST
 from random import randint as RANDINT
 import utime as UTIME
@@ -26,9 +26,10 @@ import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
 
 # hardware libraries (3rd party)
-from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
-from hw_button import Button
-DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER)
+#from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
+#from hw_button import Button
+#DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER)
+from hw_sfx_board import SoundFX
 
 ################## HARDWARE ######################
 
@@ -41,8 +42,8 @@ PWM_STEPS = 65535
 ################## RASPI PICO PIN ASSIGNMENTS ######################
 
 PICO_PIN = {
-        'RED':0, # pwm colors
-        'GREEN':1,
+        'RED':99, # pwm colors
+        'GREEN':99,
         'BLUE':2,
         'WARM':3,
         'COOL':4,
@@ -69,6 +70,9 @@ PICO_PIN = {
         'SDA':20, # i2c
         'SCL':21, # i2c
 
+        'TX0':0, # UART0
+        'RX0':1, # UART0
+
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
         'LED':'LED',
@@ -86,7 +90,11 @@ I2C0 = I2C(
           freq = 400000
           )
 
-UART0 = None
+UART0 = {
+          'ID':0,
+          'TX':PIN(PICO_PIN['TX0']),
+          'RX':PIN(PICO_PIN['RX0']),
+        }
 
 ################## OLED CONFIGURATIONS ######################
 
@@ -111,10 +119,17 @@ MAIN_FORMAT =  {'LINE_HEIGHT': 10,
 
 ################## SOUND HARDWARE ######################
 
-SOUND_CARD = {'a':'b', 'c':'d'}
-
-
-
+# Adafruit sound FX board
+SB0 = {
+        'BAUD_RATE':9600,  # Baud rate of the sound boards
+        'VOLUME':None,
+        'MIN_VOL':0,
+        'MAX_VOL':204,
+        'MAX_FILES':25,
+        'DEBUG':False,
+        'RESET_PIN':None,
+        'ALT_GET_FILES':False
+        }
 
 ################## SOFTWARE ######################
 
@@ -247,7 +262,7 @@ ALL_DAY = { # simulates an entire day
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : .864,
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
-'GROUP':  (    'B2',    'B2',    'B2',    'B1',    'B1',    'B1',    'B1',    'B1',    'B1',    'B1',    'B2',    'B2'), # sound effects group
+'GROUP':  (    'B2',    'B2',    'B2',    'B1',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'B2',    'B2'), # sound effects group
 'FRAME':  (       1,       0,       1,       0,       1,       0,       1,       0,       1,       0,       1,       0), # Keyframe marker
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
@@ -317,14 +332,29 @@ CLOUDY = { # Simulates a cloudy day
 
 SFX_INTERVAL = 0.4 # maximum time between sfx (minutes)
 # SFX Library
-SOUND_CLIPS = {
-                'clip00':('silence.wav', 2.0),
-                'clip01':('harbor_sounds1.wav', 1.111),
+SFX_LIBRARY = {  # File    Name,       Duration, ID
+                'clip00':('SILENCE0.OGG', 10, 'Silence01'),
+                'clip01':('GULLS001.OGG', 16, 'Seagulls01'),
+                'clip02':('GULLS002.OGG', 9, 'Seagulls02'),
+                'clip03':('GULLS003.OGG', 8, 'Seagulls03'),
+                'clip04':('GULLS004.OGG', 13, 'Seagulls04'),
+                'clip05':('GULLS005.OGG', 20, 'Seagulls05'),
+                'clip06':('BELL0001.OGG', 6, 'Bells01'),
+                'clip07':('BELL0001.OGG', 5, 'Bells02'),
+                'clip08':('BELL0001.OGG', 3, 'Bells03'),
+                'clip09':('WHISTLE1.OGG', 3, 'Whistle01'),
                }
 
 # SFX Groups
-A1 = ('clip00') # silence
+A1 = ['clip00'] # silence
 
-A3 = ('clip01',
+A3 = ['clip01',
       'clip02',
-      'ETC')
+      'clip03',
+      'clip04',
+      'clip05',
+      'clip06',
+      'clip07',
+      'clip08',
+      'clip09',
+      ]

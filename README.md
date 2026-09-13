@@ -121,6 +121,10 @@ https://github.com/CrispStrobe/sh1106-py
 Button library:  
 https://github.com/ubidefeo/MicroPython-Button  
   
+Adafruit Sound FX Card:  
+https://github.com/mmabey/Adafruit_Soundboard
+https://github.com/mmabey/Adafruit_Soundboard_uPy
+
 ## License
 The scripts included in this program are © 2026 Greg Ritacco.  
 Other then that, there are no restrictions on use.  
