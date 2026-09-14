@@ -127,8 +127,7 @@ SB0 = {
         'MAX_VOL':204,
         'MAX_FILES':25,
         'DEBUG':False,
-        'RESET_PIN':None,
-        'ALT_GET_FILES':False
+        'RESET_PIN':None
         }
 
 ################## SOFTWARE ######################
