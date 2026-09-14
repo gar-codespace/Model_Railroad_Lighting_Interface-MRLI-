@@ -1,96 +1,95 @@
 import entities
 
 
+class CMD:
+
+    NUMBER = '#' # Play a file by number
+    NAME = 'P' # Play a file by name
+    UP = '+' # Volume up
+    DOWN = '-' # Volume down
+    PAUSE = '='
+    UNPAUSE = '>'
+    STOP = 'q'
+    POSITION = 't' # Give current time of playback and total time of track
+    SIZE = 's' # Current track size and total size
+    LIST = 'L'
+
+
 class SoundFX:
 
     def __init__(self, uart: object, board: object):
 
-        self._uart = entities.UART(uart['ID'], baudrate=board['BAUD_RATE'], tx=uart['TX'], rx=uart['RX'])
+        self.uart = entities.UART(uart['ID'], baudrate=board['BAUD_RATE'], tx=uart['TX'], rx=uart['RX'])
         self.board = board
 
-        self._sb_rst = board['RESET_PIN']
+        self._sb_reset_pin = board['RESET_PIN']
         if board['RESET_PIN']:
-            self._sb_rst = entities.PIN(board['RESET_PIN'], mode=entities.PIN.IN)
+            self._sb_reset_pin = entities.PIN(board['RESET_PIN'], entities.PIN.IN)
 
-        self.vol = board['VOLUME']
+        self.volume: float
+        self.current_volume: float
 
         self._cur_vol = None
         self._cur_track = None
         self._reset_attempted = False
 
+    def initialize_board(self):
+
+        # self.uart.init()
         self._flush_uart_input()
+        self.volume = entities.SOUND_LEVEL
+        self.current_volume = entities.SOUND_LEVEL
 
     def _flush_uart_input(self):
-
         '''Read any available data from the UART bus until none is left.'''
 
-        while self._uart.any():
-            self._uart.read()
+        while self.uart.any():
+            self.uart.read()
         
-    def _send_simple(self, command, check=None, strip=True):
-        '''Send the command, optionally do a check on the output.'''
+    def _send_simple(self, command):
 
         self._flush_uart_input()
-        command = command.strip()  # Make sure there's not more than one newline
-        self._uart.write(b'{}\n'.format(command))
-        if len(command) > 1:
-            # We need to gobble the return when there's more than one character in the command
-            self._uart.readline()
-        try:
-            msg = self._uart.readline()
-            if strip:
-                msg = msg.strip()
-            assert isinstance(msg, bytes)
 
-        except (AttributeError, AssertionError):
-            if self._reset_attempted:
-                # Only try resetting once
-                return False  # TODO: Better way to handle failed commands? Too broad?
-
-            self._reset_attempted = True
-            self.reset()
-            return self._send_simple(command, check)
-
-        if check is None:
-            return msg
-        else:
-            self._reset_attempted = True  # We already sent a command successfully
-
-        if isinstance(check, str):
-            return msg.startswith(check.encode())
-        elif isinstance(check, bytes):
-            return msg.startswith(check)
-        elif check:
-            return msg.startswith(command[0].encode())
+        self.uart.write(f'{command}\n'.encode('utf-8'))
 
     def play(self, track=None):
 
-        '''Play a track on the board.'''
-
         if isinstance(track, int):
-            command = '#'
-            num = track
-        elif isinstance(track, str):
-            command = 'P'
-            num = self.track_num(track)
-        else:
-            raise TypeError('You must specify a track by its number (int) or its name (str)')
-        
-        if self._send_simple('{}{}'.format(command, track), 'play'):
-            self._cur_track = num
-            return True
-        return False
+            command = CMD.NUMBER
+
+        if isinstance(track, str):
+            command = CMD.NAME
+
+        self._send_simple(f'{command}{track}')
 
     def play_now(self, track):
 
-        '''Play a track on the board now, stopping current track if necessary.'''
-
         self.stop()
-        if not self.play(track):
-            # Playing the specified track failed, so just return False
-            return False
-        return True
+        entities.UTIME.sleep_ms(50)
+        self.play(track)          
 
+    def increment_up(self):
+
+        self._send_simple(CMD.UP)
+
+    def increment_down(self):
+
+        self._send_simple(CMD.DOWN)
+
+    def pause(self):
+
+        self._send_simple(CMD.PAUSE)
+
+    def unpause(self):
+
+        self._send_simple(CMD.UNPAUSE)
+
+    def stop(self):
+
+        self._send_simple(CMD.STOP)
+
+
+    
     @property
     def vol(self):
         '''Current volume.
@@ -104,7 +103,7 @@ class SoundFX:
         :rtype: int
         '''
         if self._cur_vol is None:
-            self.vol_down()
+            self.volume_down()
         return self._cur_vol
 
     @vol.setter
@@ -116,10 +115,11 @@ class SoundFX:
         if not isinstance(new_vol, int):
 
             return
-        elif new_vol > self.vol:
-            self.vol_up(new_vol)
-        elif new_vol < self.vol:
-            self.vol_down(new_vol)
+        elif new_vol > self.volume:
+            self.volume_up(new_vol)
+        elif new_vol < self.volume:
+            self.volume_down(new_vol)
+
 
     def vol_up(self, vol=None):
         '''Turn volume up by 2 points, return current volume level [0-204].'''
@@ -157,75 +157,31 @@ class SoundFX:
 
         return self._cur_vol
 
-    def pause(self):
 
-        '''Pause playback, return if the command was successful.'''
-
-        return self._send_simple('=', True)
-
-    def unpause(self):
-
-        '''Continue playback, return if the command was successful.'''
-
-        return self._send_simple('>', True)
-
-    def stop(self):
-
-        '''Stop playback, return if the command was successful.'''
-
-        return self._send_simple('q', True)
 
     def reset(self):
-        '''Reset the sound board.
+        '''Reset the sound board.'''
 
-        Soft reset the board by bringing the ``RST`` pin low momentarily (10
-        ms). This only has effect if the reset pin has been initialized in the
-        constructor.
-
-        Doing a soft reset on the board before doing any other actions can help
-        ensure that it has been started in UART control mode, rather than GPIO
-        trigger mode.
-
-        .. seealso::
-
-            `Soundboard Pinout <https://learn.adafruit.com/adafruit-audio-fx-sound-board/pinouts#uart-pins>`_
-                Documentation on the sound boards' pinouts.
+        if self._sb_reset_pin is None:
+            return
 
 
-        :return: Whether the reset was successful. If the reset pin was not
-            initialized in the constructor, this will always return ``False``.
-        :rtype: bool
-        '''
-        if self._sb_rst is None:
-            # Don't attempt to restart the board if the reset pin wasn't initialized
-            return False
-
-
-        self._sb_rst(0)
-        self._sb_rst.mode(entities.PIN.OUT)
+        self._sb_reset_pin(0)
+        self._sb_reset_pin(entities.PIN.OUT)
         entities.UTIME.sleep_ms(10)
-        self._sb_rst.mode(entities.PIN.IN)
+        self._sb_reset_pin(entities.PIN.IN)
 
         entities.UTIME.sleep_ms(1000)  # Give the board some time to boot
-        msg = self._uart.readline().strip()
 
 
-        msg = self._uart.readline().strip()
 
 
-        if not msg.startswith('Adafruit FX Sound Board'):
-            return False
-
-        entities.UTIME.sleep_ms(250)
-
-        msg = self._uart.readline().strip()
 
 
-        msg = self._uart.readline().strip()
 
 
         # Reset volume level and current track
-        self.vol = self._cur_vol
+        self.volume = self._cur_vol
         self._cur_track = None
 
         return True

@@ -44,7 +44,7 @@ PWM_STEPS = 65535
 PICO_PIN = {
         'RED':99, # pwm colors
         'GREEN':99,
-        'BLUE':2,
+        'BLUE':99,
         'WARM':3,
         'COOL':4,
 
@@ -72,6 +72,7 @@ PICO_PIN = {
 
         'TX0':0, # UART0
         'RX0':1, # UART0
+        'RST':2,
 
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
@@ -127,7 +128,7 @@ SB0 = {
         'MAX_VOL':204,
         'MAX_FILES':25,
         'DEBUG':False,
-        'RESET_PIN':None
+        'RESET_PIN':PICO_PIN['RST']
         }
 
 ################## SOFTWARE ######################
@@ -329,20 +330,21 @@ CLOUDY = { # Simulates a cloudy day
 
 ################## SOUND EFFECTS DEFINITIONS ######################
 
-SFX_INTERVAL = 0.4 # maximum time between sfx (minutes)
-# SFX Library
-SFX_LIBRARY = {  # File    Name,       Duration, ID
-                'clip00':('SILENCE0.OGG', 10, 'Silence01'),
-                'clip01':('GULLS001.OGG', 16, 'Seagulls01'),
-                'clip02':('GULLS002.OGG', 9, 'Seagulls02'),
-                'clip03':('GULLS003.OGG', 8, 'Seagulls03'),
-                'clip04':('GULLS004.OGG', 13, 'Seagulls04'),
-                'clip05':('GULLS005.OGG', 20, 'Seagulls05'),
-                'clip06':('BELL0001.OGG', 6, 'Bells01'),
-                'clip07':('BELL0001.OGG', 5, 'Bells02'),
-                'clip08':('BELL0001.OGG', 3, 'Bells03'),
-                'clip09':('WHISTLE1.OGG', 3, 'Whistle01'),
-               }
+SOUND_LEVEL = .2 # Decimal percentage
+SFX_INTERVAL = 0.3 # maximum time between sfx (minutes)
+
+SFX_LIBRARY = {  # File    Name,       Duration, Description
+                'clip00':('SILENCE0OGG', 10, 'Silence01'),
+                'clip01':('GULLS001OGG', 16, 'Seagulls 1'),
+                'clip02':('GULLS002OGG', 9, 'Seagulls 2'),
+                'clip03':('GULLS003OGG', 8, 'Seagulls 3'),
+                'clip04':('GULLS004OGG', 13, 'Seagulls 4'),
+                'clip05':('GULLS005OGG', 20, 'Seagulls 5'),
+                'clip06':('BELL0001OGG', 6, 'Bells 1'),
+                'clip07':('BELL0001OGG', 5, 'Bells 2'),
+                'clip08':('BELL0001OGG', 3, 'Bells 3'),
+                'clip09':('WHISTLE1OGG', 3, 'Whistle 1'),
+               } # The name is conformed to the soundboard specification
 
 # SFX Groups
 A1 = ['clip00'] # silence
