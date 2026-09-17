@@ -5,9 +5,9 @@ Everything is here that involves the sound card.
 
 import entities
 
-def get_sound_card(uart, board):
+def get_sound_card(specs):
 
-    return entities.SoundFX(uart=uart,board=board)
+    return entities.SOUND_FX_LIBRARY(board=specs[0], protocol=specs[1])
 
 
 

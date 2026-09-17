@@ -22,6 +22,7 @@ from machine import Pin as PIN, I2C, Timer as TIMER, PWM, UART
 from micropython import const as CONST
 from random import randint as RANDINT
 import utime as UTIME
+from utime import sleep_ms as SLEEP_MS
 import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
 
@@ -29,7 +30,7 @@ import uasyncio as UASYNCIO
 #from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 #from hw_button import Button
 #DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER)
-from hw_sfx_board import SoundFX
+SOUND_FX_LIBRARY = __import__('hw_adafruit_audio_fx').SoundFX
 
 ################## HARDWARE ######################
 
@@ -42,9 +43,9 @@ PWM_STEPS = 65535
 ################## RASPI PICO PIN ASSIGNMENTS ######################
 
 PICO_PIN = {
-        'RED':99, # pwm colors
-        'GREEN':99,
-        'BLUE':99,
+        'RED':26, # pwm colors
+        'GREEN':27,
+        'BLUE':28,
         'WARM':3,
         'COOL':4,
 
@@ -67,19 +68,17 @@ PICO_PIN = {
         'TRA':18, # encoder
         'TRB':19, # encoder
 
-        'SDA':20, # i2c
-        'SCL':21, # i2c
+        'SDA':20, # i2c0
+        'SCL':21, # i2c0
 
         'TX0':0, # UART0
-        'RX0':1, # UART0
+        'AVAILABLE':1,
         'RST':2,
 
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
         'LED':'LED',
-        'Available':26,
-        'Available':27,
-        'Available':28 # encoder
+
         }
 
 ################## SERIAL COMMUNICATION PROTOCOLS ######################
@@ -91,17 +90,25 @@ I2C0 = I2C(
           freq = 400000
           )
 
-UART0 = {
+# I2C0 = {
+#           'ID':0,
+#           'SDA':PIN(PICO_PIN['SDA']),
+#           'SCL':PIN(PICO_PIN['SCL']),
+#           'FREQ':400000
+#         }
+
+UART0 = { # RX not used
           'ID':0,
           'TX':PIN(PICO_PIN['TX0']),
-          'RX':PIN(PICO_PIN['RX0']),
+          'RX':None
         }
 
 ################## OLED CONFIGURATIONS ######################
 
-OLED0 = {'ADDRESS': CONST(0x3C),
-         'WIDTH': 128,
-         'HEIGHT': 64,
+OLED0 = {
+        'ADDRESS': CONST(0x3C),
+        'WIDTH': 128,
+        'HEIGHT': 64,
         }
 
 DISPLAY0 = (OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
@@ -109,6 +116,7 @@ DISPLAY0 = (OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
 ################## MAIN DISPLAY ######################
 
 MAIN_DISPLAY = DISPLAY0
+# MAIN_DISPLAY = (DISPLAY0, I2C0)
 MAIN_DISPLAY_BRIGHT = 70
 MAIN_DISPLAY_DIM = 1
 MAIN_DISPLAY_BRIGHTNESS = MAIN_DISPLAY_BRIGHT
@@ -128,8 +136,11 @@ SB0 = {
         'MAX_VOL':204,
         'MAX_FILES':25,
         'DEBUG':False,
-        'RESET_PIN':PICO_PIN['RST']
+        'RESET_PIN':PICO_PIN['RST'],
+        'MIN_WAIT':30 # milleseconds
         }
+
+MAIN_SOUND_CARD = (SB0, UART0)
 
 ################## SOFTWARE ######################
 
@@ -202,6 +213,7 @@ CLOCK_CYCLE = 500 # Milliseconds per cycle. The delay the lighting effect awaits
 CLOCK_OFFSET = 1 # Adjustment to keep the effect times closer to what they should be.
                  # Adjusts for asyncio overhead slowing down the effects.
 RED     = 32500 # PWM value
+GREEN   = 32500
 BLUE    = 32500
 WARM    = 32500
 COOL    = 32500
