@@ -327,6 +327,7 @@ CLOUDY = { # Simulates a cloudy day
 
 ################## SOUND EFFECTS DEFINITIONS ######################
 
+MIN_PAD = 2 # seconds
 SFX_PAD = 20 # maximum time between sfx (SECONDS)
 
 SFX_LIBRARY = {  # File    Name,       Duration, Description
@@ -337,8 +338,8 @@ SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip04':('GULLS004OGG', 13, 'Seagulls 4'),
                 'clip05':('GULLS005OGG', 20, 'Seagulls 5'),
                 'clip06':('BELL0001OGG', 6, 'Bells 1'),
-                'clip07':('BELL0001OGG', 5, 'Bells 2'),
-                'clip08':('BELL0001OGG', 3, 'Bells 3'),
+                'clip07':('BELL0002OGG', 5, 'Bells 2'),
+                'clip08':('BELL0003OGG', 3, 'Bells 3'),
                 'clip09':('WHISTLE1OGG', 3, 'Whistle 1'),
                } # The name is conformed to the soundboard specification
 

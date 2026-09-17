@@ -1,8 +1,3 @@
-'''
-Support methods for the controls library
-Everything is here that involves the sound card.
-'''
-
 import entities
 
 def get_sound_card(specs:tuple) -> object:
@@ -11,7 +6,6 @@ def get_sound_card(specs:tuple) -> object:
     protocol=specs[1]
 
     return entities.SOUND_FX_LIBRARY(board, protocol)
-
 
 def get_sound_clip():
 
@@ -25,17 +19,8 @@ def get_sound_clip():
     return sound_clip
 
 def get_pad():
+    '''A random ammount of time between sound clips (seconds).'''
 
-    MIN_PAD = 2 # SECONDS
-    MAX_PAD = entities.SFX_PAD
-
-    pad = entities.RANDINT(MIN_PAD, MAX_PAD)
+    pad = entities.RANDINT(entities.MIN_PAD, entities.SFX_PAD)
 
     return pad
-
-
-
-        
-
-
-

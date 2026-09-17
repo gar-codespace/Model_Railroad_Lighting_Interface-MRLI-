@@ -25,9 +25,7 @@ class UserInterface:
         # The buttons are initialized with get_all_the_buttons()
         self.update_display(self.welcome_list)
 
-
 ################ methods in main - UASYNCIO.gather ##################
-
 
     def run_lighting_effect(self):
         '''A lighting effect is always being run.'''
@@ -119,9 +117,7 @@ class UserInterface:
 
             await entities.UASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
 
-
 ################ display methods #################
-
 
     def update_display(self, content: list = entities.WELCOME_SCREEN):
         '''One method to rule them all...'''
@@ -143,9 +139,7 @@ class UserInterface:
         self.main_display.contrast(entities.MAIN_DISPLAY_BRIGHTNESS)
         self.main_display.show()
 
-
 ################# callbacks ##################
-
 
     def turn_left_callback(self):
         
