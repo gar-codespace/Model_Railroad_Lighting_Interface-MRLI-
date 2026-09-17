@@ -218,7 +218,7 @@ def edit_turn_left():
     '''Reduce the selected colors brightness.'''
 
     index = entities.CURRENT_EFFECT[2]
-    color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
+    color = entities.EDIT_SCREEN_ITEMS[entities.STATIC_SELECT_ROW]
     pwm_color_value = getattr(entities, color) # PWM expression
 
     pwm_color_value -= entities.PWM_TICKS # PWM expression
@@ -234,7 +234,7 @@ def edit_turn_right():
     '''Increase the selected colors brightness.'''
     
     index = entities.CURRENT_EFFECT[2]
-    color = entities.LED_INDEX_MAP[entities.STATIC_SELECT_ROW]
+    color = entities.EDIT_SCREEN_ITEMS[entities.STATIC_SELECT_ROW]
     pwm_color_value = getattr(entities, color) # PWM expression
 
     pwm_color_value += entities.PWM_TICKS # PWM expression

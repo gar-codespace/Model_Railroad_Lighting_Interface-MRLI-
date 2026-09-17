@@ -11,6 +11,7 @@ class UserInterface:
 
     def __init__(self):
 
+        model.get_menu_first_item()
         entities.WORKING_BUFFER = entities.STATIC
         self.standby_toggle: str
         self.welcome_list = view.get_welcome_list()

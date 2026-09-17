@@ -1,8 +1,6 @@
 '''
 All the settings for the program are here.
-Everything is upper case, even though some settings are constants and some are variables.
-Oh well. That's what version 2 is for.
-Also, I like to keep all the imports in one place.
+All the imports are in one place.
 '''
 
 __version__ = '20260901.1.1'
@@ -82,13 +80,6 @@ PICO_PIN = {
 
 ################## SERIAL COMMUNICATION PROTOCOLS ######################
 
-I2C1 = I2C(
-          id = 0,
-          sda = PIN(PICO_PIN['SDA']),
-          scl = PIN(PICO_PIN['SCL']),
-          freq = 400000
-          )
-
 I2C0 = {
           'ID':0,
           'SDA':PIN(PICO_PIN['SDA']),
@@ -125,8 +116,7 @@ MAIN_FORMAT =  {
 
 ################## SOUND HARDWARE ######################
 
-# Adafruit sound FX board
-SB0 = {
+SB0 = { # Adafruit Sound FX Board
         'BAUD_RATE':9600,  # Baud rate of the sound boards
         'VOLUME':None,
         'MIN_VOL':0,
@@ -160,27 +150,6 @@ WELCOME_SCREEN = ['   M.U.T.T.',
                   '   Terminal'
                   ] # 6 lines maximum, 15 char per line
 
-HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
-STATIC_SELECT_ROW = 3 # In STATIC mode, the encoder moves the rectangle up and down
-CURRENT_EFFECT = ('Daytime', 'STATIC', 2) # Also used as the default effect
-HILIGHTED_EFFECT = 1 # MAIN_MENU key
-# TODO MENU_FIRST_ITEM is hard coded based on 6 menu lines and the highlite on line 2
-# This should be abstracted
-MENU_FIRST_ITEM = 12 # Index of MAIN_MENU for first item in menu
-
-# TODO change the name of LED_INDEX_MAP to reflect what it is and make it a list
- 
-LED_INDEX_MAP = {
-                 0: 'WP_NAME',
-                 1: 'RED',
-                 2: 'GREEN',
-                 3: 'BLUE',
-                 4: 'WARM',
-                 5: 'COOL'
-                 }
-PWM_TICKS = 100 # How many ticks per indent of the rotary encoder when changing color values.
-                # Smaller is finer control.
-
 MAIN_MENU = { # In the order they show on the display
              0: ('Maintenance',        'STATIC',  1),
              1: ('Daytime',            'STATIC',  2),
@@ -196,6 +165,26 @@ MAIN_MENU = { # In the order they show on the display
             11: ('* A Cloudy Day',     'CLOUDY',  0),
             12: ('* Stormy Night',     'STORMY',  0)
             }
+
+HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
+HILIGHTED_EFFECT = 1 # MAIN_MENU key
+CURRENT_EFFECT = MAIN_MENU[HILIGHTED_EFFECT] # Also used as the default effect
+MENU_FIRST_ITEM = 0 # calculated on startup by model.get_menu_first_item()
+
+STATIC_SELECT_ROW = 3 # In STATIC mode, the encoder moves the rectangle up and down
+EDIT_SCREEN_ITEMS = [
+                 'WP_NAME',
+                 'RED',
+                 'GREEN',
+                 'BLUE',
+                 'WARM',
+                 'COOL'
+                ]
+
+PWM_TICKS = 100 # How many ticks per indent of the rotary encoder when changing color values.
+                # Smaller is finer control.
+
+
 
 
 ################## BUFFERS ######################
@@ -221,14 +210,14 @@ BANK_3  = 1
 BANK_4  = 1
 SCENIC  = 1
 WP_DUR  = 1 # waypoint_duration is the number of times the effect will await, given a delay of entities.CLOCK_CYCLE
+WP_NAME = 'name'
 NEXT_WP = 0 # Index of the next waypoint
+SFX_GRP = None
 STEP_R  = 0 # how much in pwm steps does each color change per CLOCK_CYCLE. pos or neg
 STEP_G  = 0
 STEP_B  = 0
 STEP_W  = 0
 STEP_C  = 0
-WP_NAME = 'name'
-SFX_GRP = None
 ################## EFFECT BUFFER ######################
 
 
@@ -336,9 +325,7 @@ CLOUDY = { # Simulates a cloudy day
 'SCENIC': [       0,        0,        0,         0],
 }
 
-
 ################## SOUND EFFECTS DEFINITIONS ######################
-
 
 SFX_PAD = 20 # maximum time between sfx (SECONDS)
 
@@ -370,6 +357,27 @@ A3 = ['clip01',
       ]
 
 A4 = [
+      'clip06',
+      'clip07',
+      'clip08',
+      'clip09'
+     ]
+
+A5 = [
+      'clip06',
+      'clip07',
+      'clip08',
+      'clip09'
+     ]
+
+B2 = [
+      'clip06',
+      'clip07',
+      'clip08',
+      'clip09'
+     ]
+
+D1 = [
       'clip06',
       'clip07',
       'clip08',

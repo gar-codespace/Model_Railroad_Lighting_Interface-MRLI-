@@ -100,3 +100,18 @@ def get_color_delta(index:int, color:str):
         color_delta *= entities.PWM_STEPS # pwm steps
 
     return int(color_delta)
+
+def get_menu_first_item():
+    '''Abstracted to adjust for menu layout changes.'''
+
+    entities.CURRENT_EFFECT[2]
+    entities.HIGHLIGHT_ROW
+    entities.MAIN_FORMAT['ROWS']
+    index_double = get_index_double()
+
+    position = len(entities.MAIN_MENU) + entities.HILIGHTED_EFFECT
+    entities.MENU_FIRST_ITEM = index_double[position - entities.HIGHLIGHT_ROW]
+
+    print(index_double)
+    print(position - entities.HIGHLIGHT_ROW)
+    print(index_double[position - entities.HIGHLIGHT_ROW])
