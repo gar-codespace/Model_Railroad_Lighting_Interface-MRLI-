@@ -23,7 +23,7 @@ def get_display(specs):
                        )
 
 
-    return entities.DISPLAY_LIBRARY.Driver_I2C(width, height, i2c, addr)
+    return entities.DISPLAY_LIBRARY(width, height, i2c, addr)
 
 def get_welcome_list() -> list:
 

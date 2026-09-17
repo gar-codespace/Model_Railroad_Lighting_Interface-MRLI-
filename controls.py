@@ -16,7 +16,8 @@ class UserInterface:
         self.welcome_list = view.get_welcome_list()
 
         self.main_display = view.get_display(entities.MAIN_DISPLAY)
-        self.sound_card: object
+        self.main_sound_card = sound.get_sound_card(entities.MAIN_SOUND_CARD)
+        self.main_sound_card.initialize_board()
 
         model.set_relay_pins() # the relays that turn the led banks on or off
         model.set_pwm_led_pins() # sets pico pins to pwm
@@ -53,16 +54,30 @@ class UserInterface:
 
     def run_sound_effects(self):
         '''
-        Randomly picks a SFX from the SFX group.
-        Adds a random ammount of time till the next SFX is played.
-        '''
+        A sound effect is always being run.'''
 
         while True:
-            pass
+
+            sound_clip = sound.get_sound_clip()
+
+
+
+            clip = entities.SFX_LIBRARY[sound_clip][0]
+            duration = entities.SFX_LIBRARY[sound_clip][1]
+            description = entities.SFX_LIBRARY[sound_clip][2]
+            self.main_sound_card.play_now(clip)
+
+            duration += 1
+            duration *= 1000
+
+
+
+            print(entities.SFX_LIBRARY[sound_clip])
+            print(entities.SFX_GRP)
 
 
             # await entities.UASYNCIO.sleep_ms(sfx_duration + sfx_interval)
-            await entities.UASYNCIO.sleep_ms(40000)
+            await entities.UASYNCIO.sleep_ms(duration)
 
     def get_encoder(self):
         '''The await part is in async_tick.'''

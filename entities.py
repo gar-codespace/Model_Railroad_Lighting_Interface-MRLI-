@@ -29,7 +29,7 @@ import uasyncio as UASYNCIO
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 from hw_button import Button
-DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER)
+DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER).Driver_I2C
 SOUND_FX_LIBRARY = __import__('hw_adafruit_audio_fx').SoundFX
 
 ################## HARDWARE ######################
@@ -72,8 +72,8 @@ PICO_PIN = {
         'SCL':21, # i2c0
 
         'TX0':0, # UART0
-        'AVAILABLE':1,
-        'RST':2,
+        'RST':1,
+        'AVAILABLE':2,
 
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
