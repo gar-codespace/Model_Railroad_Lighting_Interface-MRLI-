@@ -58,7 +58,7 @@ class SoundFX:
 
         self.uart.write(f'{command}\n'.encode('utf-8'))
 
-        entities.SLEEP_MS(self.wait)
+        entities.UTIME.sleep_ms(self.wait)
 
         return self.uart.read()
 
@@ -75,7 +75,7 @@ class SoundFX:
     def play_now(self, track):
 
         self.stop()
-        entities.SLEEP_MS(self.wait)
+        entities.UTIME.sleep_ms(self.wait)
         # print(self.uart.read())
         self.play(track)          
 
@@ -104,7 +104,7 @@ class SoundFX:
 
         for _ in range(0, 50):
             self._send_simple(CMD.UP)
-            entities.SLEEP_MS(self.wait)
+            entities.UTIME.sleep_ms(self.wait)
 
     def reset(self):
         '''Reset the sound board.'''
@@ -113,9 +113,9 @@ class SoundFX:
 
             self.reset_pin(0)
             self.reset_pin(entities.PIN.OUT)
-            entities.SLEEP_MS(self.wait)
+            entities.UTIME.sleep_ms(self.wait)
             self.reset_pin(entities.PIN.IN)
 
-            entities.SLEEP_MS(1000)  # Give the board some time to boot
+            entities.UTIME.sleep_ms(1000)  # Give the board some time to boot
 
         return True

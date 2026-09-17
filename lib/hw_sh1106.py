@@ -76,7 +76,7 @@ class Driver_I2C(entities.FRAMEBUF.FrameBuffer):
         
         for cmd in init_commands:
             self.write_cmd(cmd)
-            entities.SLEEP_MS(1)
+            entities.UTIME.sleep_ms(1)
         
         self.fill(0)
         self.show()

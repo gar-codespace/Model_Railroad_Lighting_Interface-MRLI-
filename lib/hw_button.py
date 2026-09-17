@@ -22,7 +22,7 @@ class Button(object):
     self.current_state = rest_state
     self.previous_debounced_state = rest_state
     self.current_debounced_state = rest_state
-    self.last_check_tick = entities.TICKS_MS()
+    self.last_check_tick = entities.UTIME.ticks_ms()
     self.debounce_time = debounce_time or Button.DEBOUNCE_TIME
     if internal_pulldown:
       self.internal_pull = entities.PIN.PULL_DOWN
@@ -42,7 +42,7 @@ class Button(object):
     self.active = False
   
   def debounce(self):
-    ms_now = entities.TICKS_MS()
+    ms_now = entities.UTIME.ticks_ms()
     self.current_state = self.pin.value()
     state_changed = self.current_state != self.previous_state
     if state_changed:
