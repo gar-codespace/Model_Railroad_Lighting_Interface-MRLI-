@@ -11,10 +11,10 @@ __repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
 ###### PICK A DISPLAY DRIVER ######
 
 # Choose this for the 1.3 inch display
-DISPLAY_DRIVER = 'hw_sh1106'
+# DISPLAY_DRIVER = 'hw_sh1106'
 
 # Choose this for the 0.9 inch display
-# DISPLAY_DRIVER = 'hw_ssd1306'
+DISPLAY_DRIVER = 'hw_ssd1306'
 
 
 # packaged libraries
@@ -27,9 +27,9 @@ import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
 
 # hardware libraries (3rd party)
-#from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
-#from hw_button import Button
-#DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER)
+from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
+from hw_button import Button
+DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER)
 SOUND_FX_LIBRARY = __import__('hw_adafruit_audio_fx').SoundFX
 
 ################## HARDWARE ######################
@@ -83,19 +83,19 @@ PICO_PIN = {
 
 ################## SERIAL COMMUNICATION PROTOCOLS ######################
 
-I2C0 = I2C(
+I2C1 = I2C(
           id = 0,
           sda = PIN(PICO_PIN['SDA']),
           scl = PIN(PICO_PIN['SCL']),
           freq = 400000
           )
 
-# I2C0 = {
-#           'ID':0,
-#           'SDA':PIN(PICO_PIN['SDA']),
-#           'SCL':PIN(PICO_PIN['SCL']),
-#           'FREQ':400000
-#         }
+I2C0 = {
+          'ID':0,
+          'SDA':PIN(PICO_PIN['SDA']),
+          'SCL':PIN(PICO_PIN['SCL']),
+          'FREQ':400000
+        }
 
 UART0 = { # RX not used
           'ID':0,
@@ -111,17 +111,15 @@ OLED0 = {
         'HEIGHT': 64,
         }
 
-DISPLAY0 = (OLED0['WIDTH'], OLED0['HEIGHT'], OLED0['ADDRESS'])
-
 ################## MAIN DISPLAY ######################
 
-MAIN_DISPLAY = DISPLAY0
-# MAIN_DISPLAY = (DISPLAY0, I2C0)
+MAIN_DISPLAY = (OLED0, I2C0)
 MAIN_DISPLAY_BRIGHT = 70
 MAIN_DISPLAY_DIM = 1
 MAIN_DISPLAY_BRIGHTNESS = MAIN_DISPLAY_BRIGHT
 
-MAIN_FORMAT =  {'LINE_HEIGHT': 10,
+MAIN_FORMAT =  {
+                'LINE_HEIGHT': 10,
                 'ROWS': 6,
                 'X_OFFSET': 4
                 }

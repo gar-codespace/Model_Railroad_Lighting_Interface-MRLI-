@@ -9,10 +9,19 @@ import model
 
 def get_display(specs):
 
-    width = specs[0]
-    height = specs[1]
-    addr = specs[2]
-    i2c = entities.I2C0
+    board = specs[0]
+    protocol = specs[1]
+
+    width = board['WIDTH']
+    height = board['HEIGHT']
+    addr = board['ADDRESS']
+    i2c = entities.I2C(
+                        id = protocol['ID'],
+                        sda = protocol['SDA'],
+                        scl = protocol['SCL'],
+                        freq = protocol['FREQ'],
+                       )
+
 
     return entities.DISPLAY_LIBRARY.Driver_I2C(width, height, i2c, addr)
 

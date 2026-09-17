@@ -7,7 +7,10 @@ import entities
 
 def get_sound_card(specs):
 
-    return entities.SOUND_FX_LIBRARY(board=specs[0], protocol=specs[1])
+    board=specs[0]
+    protocol=specs[1]
+
+    return entities.SOUND_FX_LIBRARY(board, protocol)
 
 
 
