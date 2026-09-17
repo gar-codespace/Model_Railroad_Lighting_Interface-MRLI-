@@ -47,9 +47,9 @@ Adafruit Stereo 20W Class D Audio Amplifier - MAX9744
 Plugs, switches, buttons etc. 
   
 ## Operation  
-This project is built upon a modified state machine pattern, with a bit of MVC mixed in. It is always running a lighting and sound effect, even when ste in standby.  
+This project is built upon a modified state machine pattern, with a bit of MVC mixed in. It is always running a lighting and sound effect, even when it's in standby.  
   
-The mavhine operates in one of 7 states:  
+The machine operates in one of 7 states:  
 WELCOME - The initial screen presented at startup.  
 EFFECTS - A scrollable list of available lighting effects.  
 ANIMATED - Displays the values of the RGBWC colors as they change.  

@@ -48,6 +48,9 @@ def welcome_toggle():
 
     return view.get_empty_list()
 
+def welcome_play_sound():
+    '''Sound FX clips play in this state.'''
+
 
 ########### MACHINE_STATE: EFFECTS
 
@@ -100,6 +103,9 @@ def effects_toggle():
 
     return view.get_empty_list()
 
+def effects_play_sound():
+    '''Sound FX clips play in this state.'''
+
 
 ########### MACHINE_STATE: ANIMATED
 
@@ -150,6 +156,9 @@ def animated_toggle():
     # sound.stop_sfx
 
     return view.get_empty_list()
+
+def animated_play_sound():
+    '''Sound FX clips play in this state.'''
 
 
 ########### MACHINE_STATE: STATIC
@@ -209,6 +218,9 @@ def static_bank(name, index):
 
     entities.PIN(entities.PICO_PIN[relay]).toggle()
     entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[relay]).value()
+
+def static_play_sound():
+    '''Sound FX clips play in this state.'''
 
 
 ########### MACHINE_STATE: EDIT
@@ -277,6 +289,10 @@ def edit_bank(name, index):
 
     entities.PIN(entities.PICO_PIN[relay]).toggle()
     entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[relay]).value()
+
+
+def edit_play_sound():
+    '''Sound FX clips play in this state.'''
 
 
 ########### MACHINE_STATE: PAUSED

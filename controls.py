@@ -14,7 +14,6 @@ class UserInterface:
         model.get_menu_first_item()
         entities.WORKING_BUFFER = entities.STATIC
         self.standby_toggle: str
-        self.welcome_list = view.get_welcome_list()
 
         self.main_display = view.get_display(entities.MAIN_DISPLAY)
         self.main_sound_card = sound.get_sound_card(entities.MAIN_SOUND_CARD)
@@ -23,7 +22,7 @@ class UserInterface:
         model.set_relay_pins() # the relays that turn the led banks on or off
         model.set_pwm_led_pins() # sets pico pins to pwm
         # The buttons are initialized with get_all_the_buttons()
-        self.update_display(self.welcome_list)
+        self.update_display(view.get_welcome_list())
 
 ################ methods in main - UASYNCIO.gather ##################
 
@@ -36,13 +35,13 @@ class UserInterface:
 
             try:
                 attrib = f'{entities.MACHINE_STATE}_set_next_waypoint'
-                getattr(states, attrib)() # IE ANIMATED_set_next_waypoint()
+                getattr(states, attrib)() # IE aniamated_set_next_waypoint()
             except:
                 pass
 
             try: # only update colors when an animated effect is running
                 attrib = f'{entities.MACHINE_STATE}_increment_waypoint'
-                getattr(states, attrib)() # IE ANIMATED_increment_waypoint()
+                getattr(states, attrib)() # IE animated_increment_waypoint()
 
                 lighting.set_led_values()
                 self.update_display(view.get_status_list())
@@ -52,7 +51,7 @@ class UserInterface:
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
     def run_sound_effects(self):
-        '''A sound effect is always being run.'''
+        '''Sound effect clips don't play when the state is PAUSED or STANDBY.'''
 
         while True:
 
@@ -62,14 +61,18 @@ class UserInterface:
             duration = entities.SFX_LIBRARY[sound_clip][1]
             description = entities.SFX_LIBRARY[sound_clip][2]
 
-            self.main_sound_card.play_now(clip)
+            try:
+                attrib = f'{entities.MACHINE_STATE}_play_sound'
+                getattr(states, attrib)() # IE states.animated_play_sound()
+                self.main_sound_card.play_now(clip)
+            except:
+                pass
 
             pad = sound.get_pad()
-
             wait = duration + pad
             wait *= 1000
 
-            print(entities.SFX_LIBRARY[sound_clip])
+            print(f'Sound Clip: {clip}')
 
             await entities.UASYNCIO.sleep_ms(wait)
 
