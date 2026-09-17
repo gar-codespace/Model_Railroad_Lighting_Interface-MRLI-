@@ -53,31 +53,26 @@ class UserInterface:
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
     def run_sound_effects(self):
-        '''
-        A sound effect is always being run.'''
+        '''A sound effect is always being run.'''
 
         while True:
 
             sound_clip = sound.get_sound_clip()
 
-
-
             clip = entities.SFX_LIBRARY[sound_clip][0]
             duration = entities.SFX_LIBRARY[sound_clip][1]
             description = entities.SFX_LIBRARY[sound_clip][2]
+
             self.main_sound_card.play_now(clip)
 
-            duration += 1
-            duration *= 1000
+            pad = sound.get_pad()
 
-
+            wait = duration + pad
+            wait *= 1000
 
             print(entities.SFX_LIBRARY[sound_clip])
-            print(entities.SFX_GRP)
 
-
-            # await entities.UASYNCIO.sleep_ms(sfx_duration + sfx_interval)
-            await entities.UASYNCIO.sleep_ms(duration)
+            await entities.UASYNCIO.sleep_ms(wait)
 
     def get_encoder(self):
         '''The await part is in async_tick.'''

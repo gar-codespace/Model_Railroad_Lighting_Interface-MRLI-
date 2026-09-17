@@ -43,8 +43,8 @@ class SoundFX:
 
         self._flush_uart_input()
         self.reset()
-        self.volume = entities.SOUND_LEVEL
-        self.current_volume = entities.SOUND_LEVEL
+        # self.volume = entities.SOUND_LEVEL
+        # self.current_volume = entities.SOUND_LEVEL
 
     def _flush_uart_input(self):
         '''Read any available data from the UART bus until none is left.'''
@@ -76,7 +76,7 @@ class SoundFX:
 
         self.stop()
         entities.SLEEP_MS(self.wait)
-        print(self.uart.read())
+        # print(self.uart.read())
         self.play(track)          
 
     def increment_up(self):

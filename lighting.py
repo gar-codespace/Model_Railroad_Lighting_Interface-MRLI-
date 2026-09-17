@@ -37,6 +37,7 @@ def lighting_effect_boiler_plate(index):
     get_sfx_group(index)
     if not current_waypoint_name == entities.WP_NAME:
         print(f'Current effect waypoint: {entities.WP_NAME}')
+        print(f'Current sound fx group: {entities.SFX_GRP}')
 
     set_up_colors(index)
     set_up_banks(index)

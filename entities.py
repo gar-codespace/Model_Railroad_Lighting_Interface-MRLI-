@@ -22,6 +22,7 @@ from machine import Pin as PIN, I2C, Timer as TIMER, PWM, UART
 from micropython import const as CONST
 from random import randint as RANDINT
 from utime import sleep_ms as SLEEP_MS, ticks_ms as TICKS_MS
+import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
 
@@ -339,8 +340,8 @@ CLOUDY = { # Simulates a cloudy day
 
 ################## SOUND EFFECTS DEFINITIONS ######################
 
-SOUND_LEVEL = .2 # Decimal percentage
-SFX_INTERVAL = 0.3 # maximum time between sfx (minutes)
+
+SFX_PAD = 20 # maximum time between sfx (SECONDS)
 
 SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip00':('SILENCE0OGG', 10, 'Silence01'),
@@ -368,3 +369,10 @@ A3 = ['clip01',
       'clip08',
       'clip09',
       ]
+
+A4 = [
+      'clip06',
+      'clip07',
+      'clip08',
+      'clip09'
+     ]
