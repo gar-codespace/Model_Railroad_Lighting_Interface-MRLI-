@@ -11,25 +11,44 @@ class UserInterface:
 
     def __init__(self):
 
+    # Initialize The Pico
+        model.set_relay_pins() # the relays that turn the led banks on or off
+        model.set_pwm_led_pins() # sets pico pins to pwm
+        self.bC = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_r_callback, 'STANDBY')
+        # self.bB = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_r_callback)
+        self.b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.bank_button_r_callback, 'BANK_0')
+        self.b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.bank_button_r_callback, 'BANK_1')
+        self.b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.bank_button_r_callback, 'BANK_2')
+        self.b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.bank_button_r_callback, 'BANK_3')
+        self.b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.bank_button_r_callback, 'BANK_4')
+        self.bS = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.bank_button_r_callback, 'SCENIC')
+        self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], entities.PIN.IN, entities.PIN.PULL_UP)
+        self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], entities.PIN.IN, entities.PIN.PULL_UP)
+        self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], entities.PIN.IN, entities.PIN.PULL_UP)
+        sda = entities.PIN(entities.PICO_PIN['SDA'])
+        scl = entities.PIN(entities.PICO_PIN['SCL'])
+        tx = entities.PIN(entities.PICO_PIN['TX'])
+        rx = None
+        reset = None
+    # Initialize The Machine
         model.get_menu_first_item()
         entities.WORKING_BUFFER = entities.STATIC
         self.standby_toggle: str
 
-        self.main_display = view.get_display(entities.MAIN_DISPLAY)
-        self.main_sound_card = sound.get_sound_card(entities.MAIN_SOUND_CARD)
-        self.main_sound_card.initialize_board()
+        i2c_bus = model.get_i2c(entities.I2C0, sda=sda, scl=scl)
+        self.main_display = view.get_display(entities.MAIN_DISPLAY, i2c_bus)
 
-        model.set_relay_pins() # the relays that turn the led banks on or off
-        model.set_pwm_led_pins() # sets pico pins to pwm
-        # The buttons are initialized with get_all_the_buttons()
+        uart_bus = model.get_uart(entities.UART0, tx=tx, rx=rx)
+        self.main_sound_card = sound.get_sound_card(entities.MAIN_SOUND_CARD, uart_bus)
+    # Start The Machine
         self.update_display(view.get_welcome_list())
+        self.main_sound_card.play_now(entities.WELCOME_CLIP)
+        lighting.set_up_effect()
 
 ################ methods in main - UASYNCIO.gather ##################
 
     def run_lighting_effect(self):
         '''A lighting effect is always being run.'''
-
-        lighting.set_up_effect()
 
         while True:
 
@@ -51,7 +70,7 @@ class UserInterface:
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
     def run_sound_effects(self):
-        '''Sound effect clips don't play when the state is PAUSED or STANDBY.'''
+        '''Sound effect clips don't play when the state is WELCOME, PAUSED or STANDBY.'''
 
         while True:
 
@@ -79,13 +98,9 @@ class UserInterface:
     def get_encoder(self):
         '''The await part is in async_tick.'''
 
-        encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], entities.PIN.IN, entities.PIN.PULL_UP)
-        encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], entities.PIN.IN, entities.PIN.PULL_UP)
-        encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], entities.PIN.IN, entities.PIN.PULL_UP)
-
-        encoder = entities.RotaryEncoderRP2(pin_clk=encoder_trb,
-                                            pin_dt=encoder_tra,
-                                            pin_sw=encoder_psh
+        encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_trb,
+                                            pin_dt=self.encoder_tra,
+                                            pin_sw=self.encoder_psh
                                             )
         # subscribe to events
         encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_callback)
@@ -98,29 +113,20 @@ class UserInterface:
     def get_all_the_buttons(self):
         '''Consolidate all the front panel buttons into one loop.'''
 
-        bC = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_r_callback, 'STANDBY')
-        # bB = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_r_callback)
-        b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.bank_button_r_callback, 'BANK_0')
-        b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.bank_button_r_callback, 'BANK_1')
-        b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.bank_button_r_callback, 'BANK_2')
-        b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.bank_button_r_callback, 'BANK_3')
-        b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.bank_button_r_callback, 'BANK_4')
-        bS = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.bank_button_r_callback, 'SCENIC')
-
         while(True):
 
-            bC.update()
-            # bB.update()
-            b0.update()
-            b1.update()
-            b2.update()
-            b3.update()
-            b4.update()
-            bS.update() # that's an s not a 5
+            self.bC.update()
+            # self.bB.update()
+            self.b0.update()
+            self.b1.update()
+            self.b2.update()
+            self.b3.update()
+            self.b4.update()
+            self.bS.update() # that's an s not a 5
 
             await entities.UASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
 
-################ display methods #################
+################ display method #################
 
     def update_display(self, content: list = entities.WELCOME_SCREEN):
         '''One method to rule them all...'''

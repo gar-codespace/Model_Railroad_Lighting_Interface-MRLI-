@@ -7,23 +7,13 @@ import entities
 import model
 
 
-def get_display(specs):
-
-    board = specs[0]
-    protocol = specs[1]
+def get_display(board, bus) -> object:
 
     width = board['WIDTH']
     height = board['HEIGHT']
     addr = board['ADDRESS']
-    i2c = entities.I2C(
-                        id = protocol['ID'],
-                        sda = protocol['SDA'],
-                        scl = protocol['SCL'],
-                        freq = protocol['FREQ'],
-                       )
 
-
-    return entities.DISPLAY_LIBRARY(width, height, i2c, addr)
+    return entities.DISPLAY_DRIVER(width, height, bus, addr)
 
 def get_welcome_list() -> list:
 

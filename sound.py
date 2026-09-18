@@ -1,11 +1,11 @@
 import entities
 
-def get_sound_card(specs:tuple) -> object:
+def get_sound_card(board:dict, bus:dict) -> object:
 
-    board=specs[0]
-    protocol=specs[1]
+    sound_card = entities.SOUND_DRIVER(board, bus)
+    sound_card.initialize_board()
 
-    return entities.SOUND_FX_LIBRARY(board, protocol)
+    return sound_card
 
 def get_sound_clip():
 

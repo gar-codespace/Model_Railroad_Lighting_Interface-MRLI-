@@ -34,7 +34,6 @@ def welcome_turn_right():
 
 def welcome_click():
     entities.MACHINE_STATE = States.EFFECTS
-    print(entities.MACHINE_STATE)
 
     return view.get_menu_list()
 
@@ -47,9 +46,6 @@ def welcome_toggle():
     # sound.stop_sfx
 
     return view.get_empty_list()
-
-def welcome_play_sound():
-    '''Sound FX clips play in this state.'''
 
 
 ########### MACHINE_STATE: EFFECTS

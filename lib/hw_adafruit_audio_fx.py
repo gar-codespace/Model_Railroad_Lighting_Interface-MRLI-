@@ -29,9 +29,9 @@ class CMD:
 
 class SoundFX:
 
-    def __init__(self, board:dict, protocol:dict):
+    def __init__(self, board:dict, bus:object):
 
-        self.uart = entities.UART(protocol['ID'], baudrate=board['BAUD_RATE'], tx=protocol['TX'], rx=protocol['RX'])
+        self.uart = bus
         self.board = board
         self.wait = board['MIN_WAIT']
 
@@ -43,8 +43,6 @@ class SoundFX:
 
         self._flush_uart_input()
         self.reset()
-        # self.volume = entities.SOUND_LEVEL
-        # self.current_volume = entities.SOUND_LEVEL
 
     def _flush_uart_input(self):
         '''Read any available data from the UART bus until none is left.'''

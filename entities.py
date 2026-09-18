@@ -9,11 +9,12 @@ __repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
 ###### PICK A DISPLAY DRIVER ######
 
 # Choose this for the 1.3 inch display
-# DISPLAY_DRIVER = 'hw_sh1106'
+DISPLAY_LIBRARY = 'hw_sh1106'
 
 # Choose this for the 0.9 inch display
-DISPLAY_DRIVER = 'hw_ssd1306'
+# DISPLAY_LIBRARY = 'hw_ssd1306'
 
+SOUND_LIBRARY = 'hw_adafruit_audio_fx'
 
 # packaged libraries
 from machine import Pin as PIN, I2C, Timer as TIMER, PWM, UART
@@ -26,8 +27,8 @@ import uasyncio as UASYNCIO
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 from hw_button import Button
-DISPLAY_LIBRARY = __import__(DISPLAY_DRIVER).Driver_I2C
-SOUND_FX_LIBRARY = __import__('hw_adafruit_audio_fx').SoundFX
+DISPLAY_DRIVER = __import__(DISPLAY_LIBRARY).Driver_I2C
+SOUND_DRIVER = __import__(SOUND_LIBRARY).SoundFX
 
 ################## HARDWARE ######################
 
@@ -65,10 +66,11 @@ PICO_PIN = {
         'TRA':18, # encoder
         'TRB':19, # encoder
 
-        'SDA':20, # i2c0
-        'SCL':21, # i2c0
+        'SDA':20, # I2C
+        'SCL':21, # I2C
 
-        'TX0':0, # UART0
+        'TX':0, # UART
+        'RX':None, # UART not used
         'RST':1,
         'AVAILABLE':2,
 
@@ -80,17 +82,15 @@ PICO_PIN = {
 
 ################## SERIAL COMMUNICATION PROTOCOLS ######################
 
+
 I2C0 = {
           'ID':0,
-          'SDA':PIN(PICO_PIN['SDA']),
-          'SCL':PIN(PICO_PIN['SCL']),
           'FREQ':400000
         }
 
-UART0 = { # RX not used
+UART0 = {
           'ID':0,
-          'TX':PIN(PICO_PIN['TX0']),
-          'RX':None
+          'BAUD_RATE':9600
         }
 
 ################## OLED CONFIGURATIONS ######################
@@ -103,7 +103,7 @@ OLED0 = {
 
 ################## MAIN DISPLAY ######################
 
-MAIN_DISPLAY = (OLED0, I2C0)
+MAIN_DISPLAY = OLED0
 MAIN_DISPLAY_BRIGHT = 70
 MAIN_DISPLAY_DIM = 1
 MAIN_DISPLAY_BRIGHTNESS = MAIN_DISPLAY_BRIGHT
@@ -127,7 +127,7 @@ SB0 = { # Adafruit Sound FX Board
         'MIN_WAIT':30 # milleseconds
         }
 
-MAIN_SOUND_CARD = (SB0, UART0)
+MAIN_SOUND_CARD = SB0
 
 ################## SOFTWARE ######################
 
@@ -306,9 +306,9 @@ CLOUDY = { # Simulates a cloudy day
 'CLOCK_CYCLE'  : 25,
 'CLOCK_OFFSET' : .6,
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name
-'GROUP':  (    'C1',     'C1',     'C1',      'C1'), # sound effects group
+'GROUP':  (    'A3',     'A3',     'A3',      'A3'), # sound effects group
 'FRAME':  (       1,        1,        1,         1), # Keyframe marker
-'TIME':   (       4,      2.5,      2.5,         2), # duration of waypoint in real time minutes
+'TIME':   (       4,      3.5,      2.5,       3.5), # duration of waypoint in real time minutes
 'RANDOM': (      .7,       .7,       .7,        .7),
 
 'RED':    [    0.00,     0.00,     0.00,      0.00],
@@ -329,6 +329,8 @@ CLOUDY = { # Simulates a cloudy day
 
 MIN_PAD = 2 # seconds
 SFX_PAD = 20 # maximum time between sfx (SECONDS)
+
+WELCOME_CLIP = 'WHISTLE1OGG'
 
 SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip00':('SILENCE0OGG', 10, 'Silence01'),
