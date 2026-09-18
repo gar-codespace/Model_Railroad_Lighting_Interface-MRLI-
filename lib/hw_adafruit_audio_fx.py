@@ -42,7 +42,7 @@ class SoundFX:
     def initialize_board(self):
 
         self._flush_uart_input()
-        self.reset()
+        self.reset_board()
 
     def _flush_uart_input(self):
         '''Read any available data from the UART bus until none is left.'''
@@ -74,7 +74,6 @@ class SoundFX:
 
         self.stop()
         entities.UTIME.sleep_ms(self.wait)
-        # print(self.uart.read())
         self.play(track)          
 
     def increment_up(self):
@@ -104,8 +103,7 @@ class SoundFX:
             self._send_simple(CMD.UP)
             entities.UTIME.sleep_ms(self.wait)
 
-    def reset(self):
-        '''Reset the sound board.'''
+    def reset_board(self):
 
         if self.reset_pin:
 

@@ -109,9 +109,9 @@ def get_menu_first_item():
     position = len(entities.MAIN_MENU) + entities.HILIGHTED_EFFECT
     entities.MENU_FIRST_ITEM = index_double[position - entities.HIGHLIGHT_ROW]
 
-def get_i2c(spec, sda, scl) -> object:
+def get_i2c(specs:dict, sda, scl) -> object:
 
-    i2c = entities.I2C(id = spec['ID'], sda = sda, scl = scl, freq = spec['FREQ'])
+    i2c = entities.I2C(id = specs['ID'], sda = sda, scl = scl, freq = specs['FREQ'])
 
     return i2c
 
