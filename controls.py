@@ -29,7 +29,7 @@ class UserInterface:
         scl = entities.PIN(entities.PICO_PIN['SCL'])
         tx = entities.PIN(entities.PICO_PIN['TX'])
         rx = None
-        reset = None
+        reset = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
     # Initialize The Machine
         model.get_menu_first_item()
         entities.WORKING_BUFFER = entities.STATIC
@@ -39,7 +39,7 @@ class UserInterface:
         self.main_display = view.get_display(entities.MAIN_DISPLAY, i2c_bus)
 
         uart_bus = model.get_uart(entities.UART0, tx=tx, rx=rx)
-        self.main_sound_card = sound.get_sound_card(entities.MAIN_SOUND_CARD, uart_bus)
+        self.main_sound_card = sound.get_sound_card(entities.MAIN_SOUND_CARD, uart_bus, reset_pin=reset)
     # Start The Machine
         self.update_display(view.get_welcome_list())
         self.main_sound_card.play_now(entities.WELCOME_CLIP)

@@ -69,11 +69,10 @@ PICO_PIN = {
         'SDA':20, # I2C
         'SCL':21, # I2C
 
-        'TX':0, # UART
-        'RX':None, # UART not used
-        'RST':1,
-        'AVAILABLE':2,
+        'TX'   :0, # UART
+        'RESET':1, # SFX board
 
+        'AVAILABLE':2,
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
         'LED':'LED',
@@ -117,13 +116,9 @@ MAIN_FORMAT =  {
 ################## SOUND HARDWARE ######################
 
 SB0 = { # Adafruit Sound FX Board
-        'BAUD_RATE':9600,  # Baud rate of the sound boards
-        'VOLUME':None,
+        'VOLUME':100,
         'MIN_VOL':0,
         'MAX_VOL':204,
-        'MAX_FILES':25,
-        'DEBUG':False,
-        'RESET_PIN':PICO_PIN['RST'],
         'MIN_WAIT':30 # milleseconds
         }
 

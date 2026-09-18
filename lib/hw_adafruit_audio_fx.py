@@ -29,15 +29,15 @@ class CMD:
 
 class SoundFX:
 
-    def __init__(self, board:dict, bus:object):
+    def __init__(self, board:dict, bus:object, reset_pin:object):
 
         self.uart = bus
         self.board = board
         self.wait = board['MIN_WAIT']
 
         self.reset_pin = None
-        if board['RESET_PIN']:
-            self.reset_pin = entities.PIN(board['RESET_PIN'], entities.PIN.IN)
+        if reset_pin:
+            self.reset_pin = reset_pin
 
     def initialize_board(self):
 

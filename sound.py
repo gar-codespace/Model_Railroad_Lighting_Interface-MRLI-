@@ -1,8 +1,8 @@
 import entities
 
-def get_sound_card(board:dict, bus:dict) -> object:
+def get_sound_card(board:dict, bus:dict, reset_pin:object=None) -> object:
 
-    sound_card = entities.SOUND_DRIVER(board, bus)
+    sound_card = entities.SOUND_DRIVER(board, bus, reset_pin)
     sound_card.initialize_board()
 
     return sound_card
