@@ -1,6 +1,6 @@
 '''
 This library creates and runs both animated and static lighting effects.
-Static effects are all grouped together in one dictionary called entities.STATIC.
+Static effects are all grouped together in one dictionary called entities.SINGLES.
 Each animated effect gets its own dictionary.
 '''
 
@@ -15,7 +15,7 @@ def run_startup_effect(): # Special case, runs only on startup.
     effect_length = entities.STARTUP_EFFECT_LENGTH # Seconds
     effect_length *= 1000 #Milliseconds
 
-    entities.WORKING_BUFFER = entities.STATIC
+    entities.WORKING_BUFFER = entities.SINGLES
     entities.WP_DUR = effect_length / entities.DEFAULT_CYCLE
     entities.NEXT_WP = end_index
     entities.SFX_GRP =  entities.WORKING_BUFFER['GROUP'][end_index]
@@ -44,7 +44,7 @@ def set_up_effect():
     '''Load initial values into the Working Buffer.'''
 
     if entities.CURRENT_EFFECT[1] == 'STATIC':
-        entities.WORKING_BUFFER = entities.STATIC
+        entities.WORKING_BUFFER = entities.SINGLES
     else:
         entities.WORKING_BUFFER = getattr(entities, entities.CURRENT_EFFECT[1])
         entities.CLOCK_CYCLE = entities.WORKING_BUFFER['CLOCK_CYCLE']

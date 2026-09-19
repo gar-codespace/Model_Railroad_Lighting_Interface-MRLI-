@@ -32,7 +32,7 @@ class UserInterface:
         reset = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
     # Initialize The Machine
         model.get_menu_first_item()
-        entities.WORKING_BUFFER = entities.STATIC
+        entities.WORKING_BUFFER = entities.SINGLES
         self.standby_toggle: str
 
         i2c_bus = model.get_i2c(entities.I2C0, sda=sda, scl=scl)

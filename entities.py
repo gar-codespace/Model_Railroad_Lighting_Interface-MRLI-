@@ -222,13 +222,9 @@ The duration is then adjusted for model railroad 'scale' and converted to millis
 
 The duration of STATIC effects is defined as 0, since 'infinately long' seems rediculous.
 The random value is a float between 0 and 1. 0 is not random, 1 is max randomness.
-Be sure not to confuse STATIC: the lighting effect with STATIC: the machine state.
 '''
-'''
-TODO Decide if machine state: STATIC and animation effect: STATIC is confusing.
-Maybe change STATIC to FIXED.
-'''
-STATIC = {
+
+SINGLES = {
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Stby', 'Maint',   'Day',   'Fog', 'Night', 'Twili'), # Waypoint name

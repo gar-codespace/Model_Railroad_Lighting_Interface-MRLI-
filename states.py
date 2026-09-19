@@ -1,7 +1,3 @@
-'''
-Be sure not to confuse STATIC: the lighting effect with STATIC: the machine state.
-'''
-
 import entities
 import model
 import view
@@ -217,7 +213,7 @@ def static_bank(name, index):
     relay = f'{name}_R'
 
     entities.PIN(entities.PICO_PIN[relay]).toggle()
-    entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[relay]).value()
+    entities.SINGLES[name][index] = entities.PIN(entities.PICO_PIN[relay]).value()
 
 def static_play_sound():
     '''Sound FX clips play in this state.'''
@@ -288,7 +284,7 @@ def edit_bank(name, index):
     relay = f'{name}_R'
 
     entities.PIN(entities.PICO_PIN[relay]).toggle()
-    entities.STATIC[name][index] = entities.PIN(entities.PICO_PIN[relay]).value()
+    entities.SINGLES[name][index] = entities.PIN(entities.PICO_PIN[relay]).value()
 
 
 def edit_play_sound():
