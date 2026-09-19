@@ -14,10 +14,9 @@ def run_startup_effect(): # Special case, runs only on startup.
     end_index = entities.CURRENT_EFFECT[2]
     effect_length = entities.STARTUP_EFFECT_LENGTH # Seconds
     effect_length *= 1000 #Milliseconds
-    wait = 25 # Milliseconde
 
     entities.WORKING_BUFFER = entities.STATIC
-    entities.WP_DUR = effect_length / wait
+    entities.WP_DUR = effect_length / entities.DEFAULT_CYCLE
     entities.NEXT_WP = end_index
     entities.SFX_GRP =  entities.WORKING_BUFFER['GROUP'][end_index]
 
@@ -39,7 +38,7 @@ def run_startup_effect(): # Special case, runs only on startup.
 
         entities.WP_DUR -= 1
 
-        entities.UTIME.sleep_ms(wait)
+        entities.UTIME.sleep_ms(entities.DEFAULT_CYCLE)
 
 def set_up_effect():
     '''Load initial values into the Working Buffer.'''
