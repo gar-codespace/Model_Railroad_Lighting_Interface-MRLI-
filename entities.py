@@ -256,7 +256,7 @@ ALL_DAY = { # simulates an entire day
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : .864,
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
-'GROUP':  (    'B2',    'B2',    'B2',    'B1',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'B2',    'B2'), # sound effects group
+'GROUP':  (    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3'), # sound effects group
 'FRAME':  (       1,       0,       1,       0,       1,       0,       1,       0,       1,       0,       1,       0), # Keyframe marker
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
@@ -277,7 +277,7 @@ ALL_DAY = { # simulates an entire day
 
 STORMY = { # Simulates a stormy night
 'CLOCK_CYCLE'  : 25,
-'CLOCK_OFFSET' : .4,
+'CLOCK_OFFSET' : .8,
 'NAME':   ( 'Clear','Roll In',  'STORMY','Roll Out'), # Waypoint name
 'GROUP':  (    'D1',     'D1',      'D1',      'D1'), # sound effects group
 'FRAME':  (       1,        1,         1,         1), # Keyframe marker
@@ -300,7 +300,7 @@ STORMY = { # Simulates a stormy night
 
 CLOUDY = { # Simulates a cloudy day
 'CLOCK_CYCLE'  : 25,
-'CLOCK_OFFSET' : .6,
+'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name
 'GROUP':  (    'A3',     'A3',     'A3',      'A3'), # sound effects group
 'FRAME':  (       1,        1,        1,         1), # Keyframe marker
@@ -326,7 +326,7 @@ CLOUDY = { # Simulates a cloudy day
 MIN_PAD = 2 # seconds
 SFX_PAD = 20 # maximum time between sfx (SECONDS)
 
-WELCOME_CLIP = 'WHISTLE1OGG'
+WELCOME_CLIP = 'WELCOME1OGG'
 
 SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip00':('SILENCE0OGG', 10, 'Silence01'),
@@ -339,6 +339,7 @@ SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip07':('BELL0002OGG', 5, 'Bells 2'),
                 'clip08':('BELL0003OGG', 3, 'Bells 3'),
                 'clip09':('WHISTLE1OGG', 3, 'Whistle 1'),
+                'clip10':('WELCOME1OGG', 10, 'Whistle 1'),
                } # The name is conformed to the soundboard specification
 
 # SFX Groups
