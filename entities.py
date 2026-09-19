@@ -163,8 +163,8 @@ MAIN_MENU = { # In the order they show on the display
 
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 HILIGHTED_EFFECT = 1 # MAIN_MENU key
-CURRENT_EFFECT = MAIN_MENU[HILIGHTED_EFFECT] # Also used as the default effect
-MENU_FIRST_ITEM = 0 # calculated on startup by model.get_menu_first_item()
+CURRENT_EFFECT = MAIN_MENU[HILIGHTED_EFFECT] # Must be a STATIC effect
+MENU_FIRST_ITEM: int # calculated on startup by model.get_menu_first_item()
 STARTUP_EFFECT_LENGTH = 5 # Seconds
 
 STATIC_SELECT_ROW = 3 # In STATIC mode, the encoder moves the rectangle up and down
@@ -226,6 +226,7 @@ The duration is then adjusted for model railroad 'scale' and converted to millis
 
 The duration of STATIC effects is defined as 0, since 'infinately long' seems rediculous.
 The random value is a float between 0 and 1. 0 is not random, 1 is max randomness.
+Be sure not to confuse STATIC: the lighting effect with STATIC: the machine state.
 '''
 
 STATIC = {

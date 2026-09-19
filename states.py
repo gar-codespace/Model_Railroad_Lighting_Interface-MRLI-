@@ -1,3 +1,7 @@
+'''
+Be sure not to confuse STATIC: the lighting effect with STATIC: the machine state.
+'''
+
 import entities
 import model
 import view

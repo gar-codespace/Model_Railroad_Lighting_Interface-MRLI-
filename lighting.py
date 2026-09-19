@@ -3,10 +3,6 @@ This library creates and runs both animated and static lighting effects.
 Static effects are all grouped together in one dictionary called entities.STATIC.
 Each animated effect gets its own dictionary.
 '''
-'''
-It's possible to confuse STATIC the lighting effect with STATIC the machine state.
-Fix this.
-'''
 
 import entities
 import model
