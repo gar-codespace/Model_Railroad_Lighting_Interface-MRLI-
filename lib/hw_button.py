@@ -1,5 +1,5 @@
 '''
-hardware library
+Hardware library for the fromt panel buttons.
 https://github.com/ubidefeo/MicroPython-Button
 Move imports to entities
 '''

@@ -8,8 +8,6 @@ def get_sound_card(board:dict, bus:dict, reset_pin:object=None) -> object:
     return sound_card
 
 def get_sound_clip():
-
-    # print(getattr(entities, entities.SFX_GRP))
     
     sfx_group = getattr(entities, entities.SFX_GRP)
     group_count = len(sfx_group)

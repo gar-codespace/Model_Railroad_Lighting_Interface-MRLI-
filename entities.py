@@ -76,7 +76,6 @@ PICO_PIN = {
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
         'LED':'LED',
-
         }
 
 ################## SERIAL COMMUNICATION PROTOCOLS ######################
@@ -131,7 +130,7 @@ MAIN_SOUND_CARD = SB0
 FAST_TIME_CLOCK = 8 # used in model railroading to compress time.
 DEFAULT_CYCLE = 20 # milliseconds used for other awaits
 START_TIME = 0 # Used for the waypoint duration measurement.
-END_TIME = 0
+END_TIME = 0 # Used for the waypoint duration measurement.
 
 ################## NAVIGATION ######################
 
@@ -180,9 +179,6 @@ EDIT_SCREEN_ITEMS = [
 PWM_TICKS = 100 # How many ticks per indent of the rotary encoder when changing color values.
                 # Smaller is finer control.
 
-
-
-
 ################## BUFFERS ######################
 
 WORKING_BUFFER = {} # Either the static dictionary or one of the animated dictionaries is copied into this.
@@ -228,7 +224,10 @@ The duration of STATIC effects is defined as 0, since 'infinately long' seems re
 The random value is a float between 0 and 1. 0 is not random, 1 is max randomness.
 Be sure not to confuse STATIC: the lighting effect with STATIC: the machine state.
 '''
-
+'''
+TODO Decide if machine state: STATIC and animation effect: STATIC is confusing.
+Maybe change STATIC to FIXED.
+'''
 STATIC = {
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : 1,
@@ -251,6 +250,8 @@ STATIC = {
 'BANK_4': [      0,       1,       1,       1,       1,      1,],
 'SCENIC': [      0,       1,       0,       1,       1,      1,],
 }
+
+################## ANIMATED LIGHTING EFFECTS ######################
 
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day

@@ -1,8 +1,3 @@
-'''
-There is a lot of hard coding of the display to have 5 lines.
-Maybe not so much.
-'''
-
 import entities
 import model
 

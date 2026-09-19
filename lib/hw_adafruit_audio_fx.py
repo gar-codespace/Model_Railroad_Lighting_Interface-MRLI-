@@ -1,5 +1,5 @@
 '''
-hardware library for the Adafruit Audio FX Sound Board
+Hardware library for the Adafruit Audio FX Sound Board.
 This library is a much less enthusiastic version of:
 https://github.com/mmabey/Adafruit_Soundboard_uPy/tree/master
 
