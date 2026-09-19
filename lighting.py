@@ -11,6 +11,40 @@ Fix this.
 import entities
 import model
 
+def run_startup_effect(): # Special case, runs only on startup.
+    '''Effect fades up LEDs from dark (STATIC.Stby) to the the values of HILIGHTED_EFFECT.'''
+
+    begin_index = 0
+    end_index = entities.CURRENT_EFFECT[2]
+    effect_length = entities.STARTUP_EFFECT_LENGTH # Seconds
+    effect_length *= 1000 #Milliseconds
+    wait = 25 # Milliseconde
+
+    entities.WORKING_BUFFER = entities.STATIC
+    entities.WP_DUR = effect_length / wait
+    entities.NEXT_WP = end_index
+    entities.SFX_GRP =  entities.WORKING_BUFFER['GROUP'][end_index]
+
+    set_up_colors(begin_index)
+    set_led_values()
+    set_up_banks(end_index)
+    set_led_banks()
+
+    model.get_color_steps(begin_index)
+    while entities.WP_DUR > 0:
+
+        entities.RED -= entities.STEP_R
+        entities.GREEN -= entities.STEP_G
+        entities.BLUE -= entities.STEP_B
+        entities.WARM -= entities.STEP_W
+        entities.COOL -= entities.STEP_C
+
+        set_led_values()
+
+        entities.WP_DUR -= 1
+
+        entities.UTIME.sleep_ms(wait)
+
 def set_up_effect():
     '''Load initial values into the Working Buffer.'''
 

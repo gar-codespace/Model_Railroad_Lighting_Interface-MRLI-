@@ -43,7 +43,8 @@ class UserInterface:
     # Start The Machine
         self.update_display(view.get_welcome_list())
         self.main_sound_card.play_now(entities.WELCOME_CLIP)
-        lighting.set_up_effect()
+        lighting.run_startup_effect()
+        # lighting.set_up_effect()
 
 ################ methods in main - UASYNCIO.gather ##################
 

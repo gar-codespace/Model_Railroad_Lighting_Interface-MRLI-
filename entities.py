@@ -165,6 +165,7 @@ HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 HILIGHTED_EFFECT = 1 # MAIN_MENU key
 CURRENT_EFFECT = MAIN_MENU[HILIGHTED_EFFECT] # Also used as the default effect
 MENU_FIRST_ITEM = 0 # calculated on startup by model.get_menu_first_item()
+STARTUP_EFFECT_LENGTH = 5 # Seconds
 
 STATIC_SELECT_ROW = 3 # In STATIC mode, the encoder moves the rectangle up and down
 EDIT_SCREEN_ITEMS = [
@@ -242,7 +243,7 @@ STATIC = {
 'WARM':   [      0,     .99,     .22,    .002,       0,     .05],
 'COOL':   [      0,     .99,     .02,    .002,    .002,       0],
 
-'BANK_0': [      0,       1,       1,       1,       0,      0,],
+'BANK_0': [      1,       1,       1,       1,       0,      0,],
 'BANK_1': [      0,       1,       0,       0,       0,      0,],
 'BANK_2': [      0,       1,       1,       0,       0,      0,],
 'BANK_3': [      0,       0,       1,       0,       0,      0,],

@@ -90,14 +90,14 @@ def get_color_delta(index:int, color:str):
     Can return zero, a positive or negative value.
     '''
 
-    if entities.CURRENT_EFFECT[1] == 'STATIC':
-       color_delta = 0
+    # if entities.CURRENT_EFFECT[1] == 'STATIC':
+    #    color_delta = 0
 
-    else:
-        color_begin = entities.WORKING_BUFFER[color][index] # decimal percent
-        color_end = entities.WORKING_BUFFER[color][entities.NEXT_WP] # decimal percent
-        color_delta = color_begin - color_end # decimal percent
-        color_delta *= entities.PWM_STEPS # pwm steps
+    # else:
+    color_begin = entities.WORKING_BUFFER[color][index] # decimal percent
+    color_end = entities.WORKING_BUFFER[color][entities.NEXT_WP] # decimal percent
+    color_delta = color_begin - color_end # decimal percent
+    color_delta *= entities.PWM_STEPS # pwm steps
 
     return int(color_delta)
 
