@@ -19,6 +19,6 @@ def get_sound_clip():
 def get_pad():
     '''A random ammount of time between sound clips (seconds).'''
 
-    pad = entities.RANDINT(entities.MIN_PAD, entities.SFX_PAD)
+    pad = entities.RANDINT(entities.PAD_MIN, entities.PAD_MAX)
 
     return pad

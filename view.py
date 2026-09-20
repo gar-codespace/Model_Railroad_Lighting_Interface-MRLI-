@@ -36,9 +36,7 @@ def get_menu_list() -> list:
     return menu_list
 
 def get_status_list() -> list:
-    '''The status screen is displayed when the machine state is ANIMATED, STATIC, or EDIT.
-    TODO Hardcoding??? Yikes!!
-    '''
+    '''The status screen is displayed when the machine state is ANIMATED, STATIC, or EDIT.'''
 
     status_screen: list = []
 

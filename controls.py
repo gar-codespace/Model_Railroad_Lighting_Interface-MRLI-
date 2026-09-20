@@ -7,7 +7,9 @@ import sound
 
 
 class UserInterface:
-    '''The user interface initializes with the welcome screen displayed.'''
+    '''The user interface initializes with the welcome screen displayed
+    and entities.WELCOME_CLIP is played.
+    '''
 
     def __init__(self):
 

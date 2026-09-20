@@ -166,7 +166,7 @@ CURRENT_EFFECT = MAIN_MENU[HILIGHTED_EFFECT] # Must be a STATIC effect
 MENU_FIRST_ITEM: int # calculated on startup by model.get_menu_first_item()
 STARTUP_EFFECT_LENGTH = 5 # Seconds
 
-STATIC_SELECT_ROW = 3 # In STATIC mode, the encoder moves the rectangle up and down
+STATIC_SELECT_ROW = 3 # In STATIC state, the encoder moves the rectangle up and down
 EDIT_SCREEN_ITEMS = [
                  'WP_NAME',
                  'RED',
@@ -185,7 +185,7 @@ WORKING_BUFFER = {} # Either the static dictionary or one of the animated dictio
 
 ################## EFFECT BUFFER ######################
 # The running effect writes to and reads from this buffer.
-# In STATIC mode user inputs are written here.
+# In STATIC state user inputs are written here.
 # The slower the clock cycle, the more accurate the delay.
 CLOCK_CYCLE = 500 # Milliseconds per cycle. The delay the lighting effect awaits.
 CLOCK_OFFSET = 1 # Adjustment to keep the effect times closer to what they should be.
@@ -220,8 +220,8 @@ In the dictionary for each effect, the duration of the effect is given in real t
 the time the effect actually takes in the real world.
 The duration is then adjusted for model railroad 'scale' and converted to milliseconds.
 
-The duration of STATIC effects is defined as 0, since 'infinately long' seems rediculous.
-The random value is a float between 0 and 1. 0 is not random, 1 is max randomness.
+SINGLES effects have one waypoint. The duration is defined as 0, since 'infinately long' seems rediculous.
+The random value is a float between 0 and 1. 0 is not random, 1 is maximum randomness.
 '''
 
 SINGLES = {
@@ -321,8 +321,8 @@ CLOUDY = { # Simulates a cloudy day
 
 ################## SOUND EFFECTS DEFINITIONS ######################
 
-MIN_PAD = 2 # seconds
-SFX_PAD = 20 # maximum time between sfx (SECONDS)
+PAD_MIN = 2 # Pad is the time between sound effects in seconds
+PAD_MAX = 20 # maximum time between sfx (seconds)
 
 WELCOME_CLIP = 'WELCOME1OGG'
 
