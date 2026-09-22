@@ -24,9 +24,10 @@ def get_welcome_list() -> list:
 
 def get_menu_list() -> list:
     '''Returns a list of main menu items.'''
+    '''TODO is it still called main menu?'''
 
     index_double = model.get_index_double()
-    index_subset = index_double[entities.MENU_FIRST_ITEM:]
+    index_subset = index_double[entities.MENU_FIRST_ITEM:] # it's only important to chop the beginning
     entities.HILIGHTED_EFFECT = index_subset[entities.HIGHLIGHT_ROW]
 
     menu_list: list = []

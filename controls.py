@@ -86,7 +86,7 @@ class UserInterface:
             try:
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound()
-                self.main_sound_card.play_now(clip)
+                self.main_sound_card.play_now(clip) # TODO is there a better way?
             except:
                 pass
 
