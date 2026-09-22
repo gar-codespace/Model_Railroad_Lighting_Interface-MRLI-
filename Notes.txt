@@ -1,2 +1,35 @@
-How the Animated Effect Works
+How the Animated Effect Works:
+
+The controls.run_lighting_effect() method is an asyncio loop, it never stops. So in that
+sense lighting effects are never stopped. When a new one is chosen, it elbows the current
+one out of the way and start running beginning at the selected waypoint. The first try block sets the waypoints.
+the second try block increments the color changes, it tries to run states.animated_increment_waypoint().
+When entities.WP_DUR is counted down to zero, the first try block will run the states.aniamated_set_next_waypoint()
+method. This method will populate entities.WP_DUR.entities.WP_NAME, entities.NEXT_WP (an index) and entities.SFX_GRP.
+It will also populate the five entities.STEP<color> values. In the future, LED banks might be toggled here as well,
+but for now they don't change during an animated effect. An animated effect will loop back to the first waypoint after
+it completes the last waypoint, so in effect animated effects have no end.
+
+Static effects have only one waypoint, therefore the end is the same as the beginning, so waypoint duration becomes irrelevant.
+
+When the machine is paused, the animated pauses. When the maching is put in standby, the animated effect keeps running
+in the background.
+
+There were two ways to code an animated effect, either hold the await constant and have different increments for each color, or
+have all colors have the same increment and have a different await for each color (5 asyncio loops). In testing the first one
+better, the color transitions could be controlled to eliminate noticible stepping as the effect progressed.
+
+Asyncio has overhead. It is predictable which is nice so I compensate for that by speeding up the effect with entities.CLOCK_OFFSET
+
+At this point the animated effects do not synce with any external time source.
+
+How sound effects work:
+
+The controls.run_sound_effects() method is an asyncio loop. It never stops running so silence is accomplished bu sending
+a silent clip to the player. Sound effects are combined together in groups. A sound effect group is assigned to every waypoint,
+animated and static. The code randomly selects a sound effect from the group and adds a pad of random length to the end of the
+sound effect. The sound effect length and pad are used as the asyncio wait. Sound effects are pushed to the player,
+messages are sent back from the player but I don't use them.
+
+How the lightning effect works:
 

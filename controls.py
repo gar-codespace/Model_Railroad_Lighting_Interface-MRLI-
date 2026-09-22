@@ -45,7 +45,7 @@ class UserInterface:
     # Start The Machine
         self.update_display(view.get_welcome_list())
         self.main_sound_card.play_now(entities.WELCOME_CLIP)
-
+    # Pick one, run time or testing.
         # lighting.run_startup_effect() # This line is for run time
         lighting.set_up_effect() # This line is for testing
 
@@ -100,7 +100,6 @@ class UserInterface:
 
             try: # Run a visual effect if there is one
                 attrib = f'{entities.MACHINE_STATE}_run_vfx'
-                print(f'{attrib} {vfx}')
                 getattr(states, attrib)(vfx) # IE states.animated_run_vfx()
             except:
                 pass

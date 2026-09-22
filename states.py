@@ -143,7 +143,6 @@ def animated_toggle():
     entities.STANDBY_TOGGLE = States.ANIMATED
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
-    # sound.stop_sfx
 
     return view.get_empty_list()
 
