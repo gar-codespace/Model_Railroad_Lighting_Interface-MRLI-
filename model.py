@@ -101,6 +101,16 @@ def get_color_delta(index:int, color:str):
 
     return int(color_delta)
 
+def increment_colors():
+
+        entities.RED -= entities.STEP_R
+        entities.GREEN -= entities.STEP_G
+        entities.BLUE -= entities.STEP_B
+        entities.WARM -= entities.STEP_W
+        entities.COOL -= entities.STEP_C
+
+        entities.WP_DUR -= 1
+
 def get_menu_first_item():
     '''Abstracted to adjust for menu layout changes.'''
 

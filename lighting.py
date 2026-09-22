@@ -12,11 +12,9 @@ def run_startup_effect(): # Special case, runs only on startup.
 
     begin_index = 0
     end_index = entities.CURRENT_EFFECT[2]
-    effect_length = entities.STARTUP_EFFECT_LENGTH # Seconds
-    effect_length *= 1000 #Milliseconds
 
     entities.WORKING_BUFFER = entities.SINGLES
-    entities.WP_DUR = effect_length / entities.DEFAULT_CYCLE
+    entities.WP_DUR = entities.STARTUP_EFFECT_LENGTH / entities.DEFAULT_CYCLE
     entities.NEXT_WP = end_index
     entities.SFX_GRP =  entities.WORKING_BUFFER['GROUP'][end_index]
 
@@ -28,15 +26,8 @@ def run_startup_effect(): # Special case, runs only on startup.
     model.get_color_steps(begin_index)
     while entities.WP_DUR > 0:
 
-        entities.RED -= entities.STEP_R
-        entities.GREEN -= entities.STEP_G
-        entities.BLUE -= entities.STEP_B
-        entities.WARM -= entities.STEP_W
-        entities.COOL -= entities.STEP_C
-
+        model.increment_colors()
         set_led_values()
-
-        entities.WP_DUR -= 1
 
         entities.UTIME.sleep_ms(entities.DEFAULT_CYCLE)
 

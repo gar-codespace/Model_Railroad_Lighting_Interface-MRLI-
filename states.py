@@ -123,13 +123,15 @@ def animated_click2():
 
 def animated_increment_waypoint():
 
-    entities.RED -= entities.STEP_R
-    entities.GREEN -= entities.STEP_G
-    entities.BLUE -= entities.STEP_B
-    entities.WARM -= entities.STEP_W
-    entities.COOL -= entities.STEP_C
+    model.increment_colors()
 
-    entities.WP_DUR -= 1
+    # entities.RED -= entities.STEP_R
+    # entities.GREEN -= entities.STEP_G
+    # entities.BLUE -= entities.STEP_B
+    # entities.WARM -= entities.STEP_W
+    # entities.COOL -= entities.STEP_C
+
+    # entities.WP_DUR -= 1
 
 def animated_set_next_waypoint():
 
