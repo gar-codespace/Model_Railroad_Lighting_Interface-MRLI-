@@ -326,21 +326,23 @@ PAD_MAX = 20 # maximum time between sfx (seconds)
 WELCOME_CLIP = 'WELCOME1OGG'
 
 SFX_LIBRARY = {  # File    Name,       Duration, Description
-                'clip00':('SILENCE0OGG', 10, 'Silence01'),
-                'clip01':('GULLS001OGG', 16, 'Seagulls 1'),
-                'clip02':('GULLS002OGG', 9, 'Seagulls 2'),
-                'clip03':('GULLS003OGG', 8, 'Seagulls 3'),
-                'clip04':('GULLS004OGG', 13, 'Seagulls 4'),
-                'clip05':('GULLS005OGG', 20, 'Seagulls 5'),
-                'clip06':('BELL0001OGG', 6, 'Bells 1'),
-                'clip07':('BELL0002OGG', 5, 'Bells 2'),
-                'clip08':('BELL0003OGG', 3, 'Bells 3'),
-                'clip09':('WHISTLE1OGG', 3, 'Whistle 1'),
-                'clip10':('WELCOME1OGG', 10, 'Whistle 1'),
+                'clip00':('SILENCE0OGG', 10, 'Silence01', 'bolt'),
+                'clip01':('GULLS001OGG', 16, 'Seagulls 1',  None),
+                'clip02':('GULLS002OGG', 9,  'Seagulls 2',  None),
+                'clip03':('GULLS003OGG', 8,  'Seagulls 3',  None),
+                'clip04':('GULLS004OGG', 13, 'Seagulls 4',  None),
+                'clip05':('GULLS005OGG', 20, 'Seagulls 5',  None),
+                'clip06':('BELL0001OGG', 6,  'Bells 1',     None),
+                'clip07':('BELL0002OGG', 5,  'Bells 2',     None),
+                'clip08':('BELL0003OGG', 3,  'Bells 3',     None),
+                'clip09':('WHISTLE1OGG', 3,  'Whistle 1',   None),
+                'clip10':('WELCOME1OGG', 10, 'Whistle 1',   None),
                } # The name is conformed to the soundboard specification
 
 # SFX Groups
 A1 = ['clip00'] # silence
+
+D1 = ['clip00'] # silence
 
 A3 = ['clip01',
       'clip02',
@@ -374,9 +376,22 @@ B2 = [
       'clip09'
      ]
 
-D1 = [
-      'clip06',
-      'clip07',
-      'clip08',
-      'clip09'
-     ]
+
+################## VISUAL EFFECTS ######################
+
+LIGHTNING = [
+             (10000, 8),
+             (0, 500),
+             (10000, 8),
+             (0, 400),
+             (10000, 8),
+             (0, 300),
+             (10000, 8),
+             (0, 200),
+             (10000, 8),
+             (0, 100),
+             (10000, 8),
+             (0, 50),
+             (10000, 8),
+             (0, 25)
+             ]

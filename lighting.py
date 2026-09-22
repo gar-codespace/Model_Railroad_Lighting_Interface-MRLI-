@@ -127,3 +127,30 @@ def shut_off_led_banks():
     entities.PIN(entities.PICO_PIN['BANK_3_R']).value(0)
     entities.PIN(entities.PICO_PIN['BANK_4_R']).value(0)
     entities.PIN(entities.PICO_PIN['SCENIC_R']).value(0)
+
+########## VISUAL EFFECTS ###########
+'''
+For now there is only one but there could be more.
+'''
+
+def run_bolt():
+    '''Simulated lightning.'''
+
+
+    lightning = entities.LIGHTNING
+    sample_count = len(lightning)
+
+    # randomly get the number of samples (4 - 10)
+
+    c = entities.PICO_PIN['COOL']
+
+    for i in entities.LIGHTNING:
+
+        entities.PWM(c).duty_u16(int(i[0]))
+        entities.UTIME.sleep_ms(i[1])
+        
+
+
+  
+
+

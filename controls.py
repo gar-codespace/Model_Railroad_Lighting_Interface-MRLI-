@@ -45,8 +45,9 @@ class UserInterface:
     # Start The Machine
         self.update_display(view.get_welcome_list())
         self.main_sound_card.play_now(entities.WELCOME_CLIP)
-        lighting.run_startup_effect()
-        # lighting.set_up_effect()
+
+        # lighting.run_startup_effect() # This line is for run time
+        lighting.set_up_effect() # This line is for testing
 
 ################ methods in main - UASYNCIO.gather ##################
 
@@ -82,8 +83,9 @@ class UserInterface:
             clip = entities.SFX_LIBRARY[sound_clip][0]
             duration = entities.SFX_LIBRARY[sound_clip][1]
             description = entities.SFX_LIBRARY[sound_clip][2]
+            vfx = entities.SFX_LIBRARY[sound_clip][3]
 
-            try:
+            try: # Play the sound group
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound()
                 self.main_sound_card.play_now(clip) # TODO is there a better way?
@@ -94,7 +96,14 @@ class UserInterface:
             wait = duration + pad
             wait *= 1000
 
-            print(f'Sound Clip: {clip}')
+            print(f'Sound Clip: {clip} - {description}')
+
+            try: # Run a visual effect if there is one
+                attrib = f'{entities.MACHINE_STATE}_run_vfx'
+                print(f'{attrib} {vfx}')
+                getattr(states, attrib)(vfx) # IE states.animated_run_vfx()
+            except:
+                pass
 
             await entities.UASYNCIO.sleep_ms(wait)
 

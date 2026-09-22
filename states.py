@@ -125,14 +125,6 @@ def animated_increment_waypoint():
 
     model.increment_colors()
 
-    # entities.RED -= entities.STEP_R
-    # entities.GREEN -= entities.STEP_G
-    # entities.BLUE -= entities.STEP_B
-    # entities.WARM -= entities.STEP_W
-    # entities.COOL -= entities.STEP_C
-
-    # entities.WP_DUR -= 1
-
 def animated_set_next_waypoint():
 
     if entities.WP_DUR <= 1:
@@ -157,6 +149,16 @@ def animated_toggle():
 
 def animated_play_sound():
     '''Sound FX clips play in this state.'''
+
+def animated_run_vfx(vfx:str):
+    '''Runs the associated visual effect if it exists.'''
+
+    try:
+        attrib = f'run_{vfx}'
+        getattr(lighting, attrib)() # IE lighting.run_bolt()
+
+    except:
+        pass
 
 
 ########### MACHINE_STATE: STATIC
