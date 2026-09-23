@@ -337,14 +337,20 @@ SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip08':('BELL0003OGG', 3,  'Bells 3',     None),
                 'clip09':('WHISTLE1OGG', 3,  'Whistle 1',   None),
                 'clip10':('WELCOME1OGG', 10, 'Whistle 1',   None),
+                'clip11':('BRODY001OGG',  2, 'Brody 1',     None),
+                'clip12':('TRAIN001OGG', 12, 'Train 1',     None),
+                'clip13':('TRAIN002OGG', 12, 'Train 2',     None),
+                'clip14':('TRAIN002OGG',  9, 'Train 3',     None),
+                'clip15':('HORN0001OGG',  5, 'Horn 1',      None),
+                'clip16':('HORN0002OGG',  5, 'Horn 2',      None),
+                'clip17':('HORN0003OGG',  5, 'Horn 3',      None),
                } # The name is conformed to the soundboard specification
 
 # SFX Groups
 A1 = ['clip00'] # silence
 
-D1 = ['clip00'] # silence
 
-A3 = ['clip01',
+A3 = ['clip01', # Daytime
       'clip02',
       'clip03',
       'clip04',
@@ -353,16 +359,23 @@ A3 = ['clip01',
       'clip07',
       'clip08',
       'clip09',
+      'clip11',
+      'clip12',
+      'clip13',
+      'clip14',
+      'clip15',
+      'clip16',
+      'clip17',
       ]
 
-A4 = [
+A4 = [ # Twlight, same as day + crickets
       'clip06',
       'clip07',
       'clip08',
       'clip09'
      ]
 
-A5 = [
+A5 = [ # Night time, daytime - gulls + crickets + owles
       'clip06',
       'clip07',
       'clip08',
@@ -376,10 +389,11 @@ B2 = [
       'clip09'
      ]
 
+D1 = ['clip00'] # Stormy
 
 ################## VISUAL EFFECTS ######################
 
-LIGHTNING = [
+LIGHTNING = [# pwm, MS
              (1400, 40),
              (1000, 40),
              (800, 40),
