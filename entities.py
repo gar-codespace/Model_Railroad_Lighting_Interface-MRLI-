@@ -227,7 +227,7 @@ SINGLES = {
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Stby', 'Maint',   'Day',   'Fog', 'Night', 'Twili'), # Waypoint name
-'GROUP':  (   'A1',    'A1',    'A3',    'A3',    'A4',    'A5'), # sound effects group
+'GROUP':  (   'A1',    'A1',    'A3',    'A3',    'A5',    'A4'), # sound effects group
 'FRAME':  (      1,       1,       1,       1,       1,       1), # Keyframe marker
 'TIME':   (      0,       0,       0,       0,       0,       0), # duration of waypoint
 'RANDOM': (     .0,      .0,      .0,      .0,      .0,      .0),
@@ -253,7 +253,7 @@ ALL_DAY = { # simulates an entire day
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : .864,
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
-'GROUP':  (    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3',    'A3'), # sound effects group
+'GROUP':  (    'A5',    'A5',    'A4',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A4',    'A5'), # sound effects group
 'FRAME':  (       1,       0,       1,       0,       1,       0,       1,       0,       1,       0,       1,       0), # Keyframe marker
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
@@ -386,27 +386,68 @@ A3 = [ # Daytime
       ]
 
 A4 = [ # Twlight, same as day + crickets + morning
+      'clip01',
+      'clip02',
+      'clip03',
+      'clip04',
+      'clip05',
       'clip06',
       'clip07',
       'clip08',
-      'clip09'
-     ]
+      'clip09',
+      'clip11',
+      'clip12',
+      'clip13',
+      'clip14',
+      'clip15',
+      'clip16',
+      'clip17',
+      'clip18',
+      'clip19',
+      'clip20',
+      'clip21',
+      ]
 
 A5 = [ # Night time, daytime - gulls + crickets + owles
       'clip06',
       'clip07',
       'clip08',
-      'clip09'
-     ]
+      'clip09',
+      'clip11',
+      'clip12',
+      'clip13',
+      'clip14',
+      'clip15',
+      'clip16',
+      'clip17',
+      'clip18',
+      'clip19',
+      'clip22',
+      'clip23',
+      'clip24',
+      ]
 
-B2 = [
-      'clip06',
-      'clip07',
-      'clip08',
-      'clip09'
-     ]
+D2 = [ # Stormy
+      'clip25',
+      'clip26',
+      'clip27',
+      'clip28',
+      'clip29',
+      'clip30',
+      'clip31',
+      'clip32',
+      'clip33',
+      'clip34',
+      'clip12',
+      'clip13',
+      'clip14',
+      'clip15',
+      'clip16',
+      'clip17',
+      'clip11',
+      ]
 
-D1 = [ # Stormy
+D1 = [ # Stormy test
       'clip25',
       'clip26',
       'clip27',
