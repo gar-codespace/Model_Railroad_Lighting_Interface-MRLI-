@@ -273,13 +273,13 @@ ALL_DAY = { # simulates an entire day
 }
 
 STORMY = { # Simulates a stormy night
-'CLOCK_CYCLE'  : 25,
-'CLOCK_OFFSET' : .8,
+'CLOCK_CYCLE'  : 20,
+'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Clear','Roll In',  'STORMY','Roll Out'), # Waypoint name
 'GROUP':  (    'D1',     'D1',      'D1',      'D1'), # sound effects group
-'FRAME':  (       1,        1,         1,         1), # Keyframe marker
-'TIME':   (       3,        2,         2,         1), # duration of waypoint in minutes
-'RANDOM': (      .7,       .7,        .7,        .7),
+'FRAME':  (       1,        1,         1,         2), # Keyframe marker
+'TIME':   (       2,        1,         1,         2), # duration of waypoint in minutes
+'RANDOM': (      .8,       .8,        .8,        .8),
 
 'RED':    [    0.00,     0.00,      0.00,      0.00],
 'GREEN':  [    0.00,     0.00,      0.00,      0.00],
@@ -287,7 +287,7 @@ STORMY = { # Simulates a stormy night
 'WARM':   [    0.00,     0.00,      0.00,      0.00],
 'COOL':   [    .001,     .001,     .0005,      .001],
 
-'BANK_0': [       1,        1,         1,         1],
+'BANK_0': [       0,        0,         0,         0],
 'BANK_1': [       0,        0,         0,         0],
 'BANK_2': [       0,        0,         0,         0],
 'BANK_3': [       0,        0,         0,         0],
@@ -380,18 +380,23 @@ B2 = [
 ################## VISUAL EFFECTS ######################
 
 LIGHTNING = [
-             (10000, 8),
-             (0, 500),
-             (10000, 8),
-             (0, 400),
-             (10000, 8),
-             (0, 300),
-             (10000, 8),
-             (0, 200),
-             (10000, 8),
-             (0, 100),
-             (10000, 8),
-             (0, 50),
-             (10000, 8),
-             (0, 25)
+             (1400, 40),
+             (1000, 40),
+             (800, 40),
+             (600, 40),
+             (400, 40),
+             (1400, 80),
+             (1000, 80),
+             (800, 80),
+             (600, 80),
+             (400, 80),
+             (1000, 80),
+             (600, 80),
+             (200, 80),
+             (0, 40),
+             (0, 80),
+             (0, 120),
+             (0, 160),
+             (0, 240),
+             (0, 280)
              ]

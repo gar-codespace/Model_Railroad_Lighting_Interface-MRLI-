@@ -134,17 +134,29 @@ For now there is only one but there could be more.
 '''
 
 def run_bolt():
-    '''Simulated lightning.'''
+    '''
+    Simulated lightning.
+    sub_set is a list of random length between 4 and 8 made up
+    from randomly selected tuples from entities.LIGHTNING
+    '''
 
 
-    lightning = entities.LIGHTNING
-    sample_count = len(lightning)
 
-    # randomly get the number of samples (4 - 10)
+    sample_count = len(entities.LIGHTNING) - 1 # The number of entries in entities.LIGHTNING
+    sub_set_length = entities.RANDINT(4, 8) # A random number for the length of the subset
+    sub_set = []
+
+    for _ in range(0, sub_set_length):
+        pick_one = entities.RANDINT(0, sample_count) # Random integer
+        sub_set.append(entities.LIGHTNING[pick_one]) # An entry from entities.LIGHTNING picked at random
+
+    print(sub_set)
+
+
+
 
     c = entities.PICO_PIN['COOL']
-
-    for i in entities.LIGHTNING:
+    for i in sub_set:
 
         entities.PWM(c).duty_u16(int(i[0]))
         entities.UTIME.sleep_ms(i[1])
