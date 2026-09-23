@@ -43,7 +43,6 @@ def welcome_toggle():
     entities.STANDBY_TOGGLE = States.EFFECTS
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
-    # sound.stop_sfx
 
     return view.get_empty_list()
 
@@ -95,7 +94,6 @@ def effects_toggle():
     entities.STANDBY_TOGGLE = States.EFFECTS
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
-    # sound.stop_sfx
 
     return view.get_empty_list()
 
@@ -199,7 +197,6 @@ def static_toggle():
     entities.STANDBY_TOGGLE = States.STATIC
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
-    # sound.stop_sfx
 
     return view.get_empty_list()
 
@@ -270,7 +267,6 @@ def edit_toggle():
     entities.STANDBY_TOGGLE = States.EFFECTS
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
-    # sound.stop_sfx
 
     return view.get_empty_list()
 
@@ -307,6 +303,5 @@ def standby_toggle():
 
     entities.MACHINE_STATE = entities.STANDBY_TOGGLE
     lighting.set_led_banks()
-    # Turn on SFX
     
     return view.get_menu_list()
