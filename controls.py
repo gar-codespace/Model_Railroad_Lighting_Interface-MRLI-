@@ -46,8 +46,8 @@ class UserInterface:
         self.update_display(view.get_welcome_list())
         self.main_sound_card.play_now(entities.WELCOME_CLIP)
     # Pick one, run time or testing.
-        # lighting.run_startup_effect() # This line is for run time
-        lighting.set_up_effect() # This line is for testing
+        lighting.run_startup_effect() # This line is for run time
+        #lighting.set_up_effect() # This line is for testing
 
 ################ methods in main - UASYNCIO.gather ##################
 
@@ -56,7 +56,7 @@ class UserInterface:
 
         while True:
 
-            try:
+            try: # set next waypoint
                 attrib = f'{entities.MACHINE_STATE}_set_next_waypoint'
                 getattr(states, attrib)() # IE aniamated_set_next_waypoint()
             except:
@@ -79,31 +79,23 @@ class UserInterface:
         while True:
 
             sound_clip = sound.get_sound_clip()
+            duration = 1000
 
-            clip = entities.SFX_LIBRARY[sound_clip][0]
-            duration = entities.SFX_LIBRARY[sound_clip][1]
-            description = entities.SFX_LIBRARY[sound_clip][2]
-            vfx = entities.SFX_LIBRARY[sound_clip][3]
-
-            try: # Play the sound group
+            try: # Play the sound clip
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound()
-                self.main_sound_card.play_now(clip) # TODO is there a better way?
+                duration = self.play_sound_clip(sound_clip) # TODO is there a better way?
             except:
                 pass
-
-            pad = sound.get_pad()
-            wait = duration + pad
-            wait *= 1000
-
-            print(f'Sound Clip: {clip} - {description}')
 
             try: # Run a visual effect if there is one
                 attrib = f'{entities.MACHINE_STATE}_run_vfx'
-                getattr(states, attrib)(vfx) # IE states.animated_run_vfx()
+                getattr(states, attrib)() # IE states.animated_run_vfx()
+                self.run_vfx(sound_clip)
             except:
                 pass
 
+            wait = duration + sound.get_pad()
             await entities.UASYNCIO.sleep_ms(wait)
 
     def get_encoder(self):
@@ -158,6 +150,31 @@ class UserInterface:
 
         self.main_display.contrast(entities.MAIN_DISPLAY_BRIGHTNESS)
         self.main_display.show()
+
+################ sound method #################
+
+    def play_sound_clip(self, sound_clip):
+
+            clip = entities.SFX_LIBRARY[sound_clip][0]
+            duration = entities.SFX_LIBRARY[sound_clip][1] * 1000 # ms
+            description = entities.SFX_LIBRARY[sound_clip][2]
+
+            self.main_sound_card.play_now(clip)
+
+            print(f'Sound Clip: {clip} - {description}')
+
+            return duration
+
+################ visual effects method #################
+
+    def run_vfx(self, sound_clip):
+        '''Runs the associated visual effect if it exists.'''
+
+        vfx = entities.SFX_LIBRARY[sound_clip][3]
+
+        if vfx:
+            attrib = f'run_{vfx}'
+            getattr(lighting, attrib)() # IE lighting.run_bolt()
 
 ################# callbacks ##################
 

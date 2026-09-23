@@ -31,5 +31,14 @@ animated and static. The code randomly selects a sound effect from the group and
 sound effect. The sound effect length and pad are used as the asyncio wait. Sound effects are pushed to the player,
 messages are sent back from the player but I don't use them.
 
-How the lightning effect works:
+How the visual effects works:
+
+Visual effects are triggered by a field in the sound effects tuple. In other words, sound effects drive visual effects.
+
+Lightning:
+
+The lightning visual effect uses only the cool LEDs. A bunch of tuples are described in entities.LIGHTNING. The values are pwm brightness
+and millisecond duration. The code selects a subset of this. First it creates a new list of random length between 5 and 10. Then it populates
+the new list by randomly picking tuples from entities.LIGHTNING. The random list of random elements is then run. What's nice is that after
+the effect is run the code politely returns to the waypoint progression.
 

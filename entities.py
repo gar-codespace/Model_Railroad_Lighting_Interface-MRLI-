@@ -318,13 +318,11 @@ CLOUDY = { # Simulates a cloudy day
 
 ################## SOUND EFFECTS DEFINITIONS ######################
 
-PAD_MIN = 2 # Pad is the time between sound effects in seconds
-PAD_MAX = 20 # maximum time between sfx (seconds)
-
-WELCOME_CLIP = 'WELCOME1OGG'
+PAD_MIN = 2000 # Pad is the time between sound effects in ms
+PAD_MAX = 20000 # maximum time between sfx (ms)
 
 SFX_LIBRARY = {  # File    Name,       Duration, Description
-                'clip00':('SILENCE0OGG', 10, 'Silence01', 'bolt'),
+                'clip00':('SILENCE0OGG', 10, 'Silence01',   None),
                 'clip01':('GULLS001OGG', 16, 'Seagulls 1',  None),
                 'clip02':('GULLS002OGG', 9,  'Seagulls 2',  None),
                 'clip03':('GULLS003OGG', 8,  'Seagulls 3',  None),
@@ -334,7 +332,7 @@ SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip07':('BELL0002OGG', 5,  'Bells 2',     None),
                 'clip08':('BELL0003OGG', 3,  'Bells 3',     None),
                 'clip09':('WHISTLE1OGG', 3,  'Whistle 1',   None),
-                'clip10':('WELCOME1OGG', 10, 'Whistle 1',   None),
+                'clip10':('WELCOME1OGG', 10, 'Welcome 1',   None),
                 'clip11':('BRODY001OGG',  2, 'Brody 1',     None),
                 'clip12':('TRAIN001OGG', 12, 'Train 1',     None),
                 'clip13':('TRAIN002OGG', 12, 'Train 2',     None),
@@ -342,13 +340,34 @@ SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip15':('HORN0001OGG',  5, 'Horn 1',      None),
                 'clip16':('HORN0002OGG',  5, 'Horn 2',      None),
                 'clip17':('HORN0003OGG',  5, 'Horn 3',      None),
+                'clip18':('CRICKET1OGG',  8, 'Cricket 1',   None),
+                'clip19':('CRICKET2OGG',  7, 'Cricket 2',   None),
+                'clip20':('MORNING1OGG', 12, 'Morning 1',   None),
+                'clip21':('MORNING2OGG', 19, 'Morning 2',   None),
+                'clip22':('NIGHT001OGG', 11, 'Night 1',     None),
+                'clip23':('OWL00001OGG',  1, 'Owl 1',       None),
+                'clip24':('OWL00002OGG',  3, 'Owl 2',       None),
+                'clip25':('THUNDER0OGG',  9, 'Thunder 0',   None),
+                'clip26':('THUNDER1OGG', 12, 'Thunder 1',   None),
+                'clip27':('THUNDER2OGG', 18, 'Thunder 2', 'bolt'),
+                'clip28':('THUNDER3OGG', 11, 'Thunder 3', 'bolt'),
+                'clip29':('THUNDER4OGG', 19, 'Thunder 4', 'bolt'),
+                'clip30':('WIND0001OGG', 19, 'Wind 1',      None),
+                'clip31':('WIND0002OGG', 19, 'Wind 2',      None),
+                'clip32':('BELLS004OGG',  7, 'Bells 4',     None),
+                'clip33':('BELLS005OGG',  7, 'Bells 5',     None),
+                'clip34':('BELLS006OGG',  6, 'Bells 6',     None),
                } # The name is conformed to the soundboard specification
 
+WELCOME_CLIP = SFX_LIBRARY['clip10'][0] # Welcome
+
 # SFX Groups
-A1 = ['clip00'] # silence
+A1 = [ # silence
+      'clip00'
+      ]
 
-
-A3 = ['clip01', # Daytime
+A3 = [ # Daytime
+      'clip01',
       'clip02',
       'clip03',
       'clip04',
@@ -366,7 +385,7 @@ A3 = ['clip01', # Daytime
       'clip17',
       ]
 
-A4 = [ # Twlight, same as day + crickets
+A4 = [ # Twlight, same as day + crickets + morning
       'clip06',
       'clip07',
       'clip08',
@@ -387,7 +406,13 @@ B2 = [
       'clip09'
      ]
 
-D1 = ['clip00'] # Stormy
+D1 = [ # Stormy
+      'clip25',
+      'clip26',
+      'clip27',
+      'clip28',
+      'clip29',
+      ]
 
 ################## VISUAL EFFECTS ######################
 

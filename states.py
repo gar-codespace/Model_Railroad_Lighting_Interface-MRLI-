@@ -149,15 +149,8 @@ def animated_toggle():
 def animated_play_sound():
     '''Sound FX clips play in this state.'''
 
-def animated_run_vfx(vfx:str):
-    '''Runs the associated visual effect if it exists.'''
-
-    try:
-        attrib = f'run_{vfx}'
-        getattr(lighting, attrib)() # IE lighting.run_bolt()
-
-    except:
-        pass
+def animated_run_vfx():
+    '''Visual effects run in this state.'''
 
 
 ########### MACHINE_STATE: STATIC
