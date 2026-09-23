@@ -143,7 +143,7 @@ def run_bolt():
 
 
     sample_count = len(entities.LIGHTNING) - 1 # The number of entries in entities.LIGHTNING
-    sub_set_length = entities.RANDINT(4, 8) # A random number for the length of the subset
+    sub_set_length = entities.RANDINT(5, 10) # A random number for the length of the subset
     sub_set = []
 
     for _ in range(0, sub_set_length):

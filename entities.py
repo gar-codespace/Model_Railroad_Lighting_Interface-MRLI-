@@ -273,26 +273,24 @@ ALL_DAY = { # simulates an entire day
 }
 
 STORMY = { # Simulates a stormy night
-'CLOCK_CYCLE'  : 20,
+'CLOCK_CYCLE'  : 8,
 'CLOCK_OFFSET' : 1,
-'NAME':   ( 'Clear','Roll In',  'STORMY','Roll Out'), # Waypoint name
-'GROUP':  (    'D1',     'D1',      'D1',      'D1'), # sound effects group
-'FRAME':  (       1,        1,         1,         2), # Keyframe marker
-'TIME':   (       2,        1,         1,         2), # duration of waypoint in minutes
-'RANDOM': (      .8,       .8,        .8,        .8),
-
-'RED':    [    0.00,     0.00,      0.00,      0.00],
-'GREEN':  [    0.00,     0.00,      0.00,      0.00],
-'BLUE':   [    .001,     .001,      .000,     .0005],
-'WARM':   [    0.00,     0.00,      0.00,      0.00],
-'COOL':   [    .001,     .001,     .0005,      .001],
-
-'BANK_0': [       0,        0,         0,         0],
-'BANK_1': [       0,        0,         0,         0],
-'BANK_2': [       0,        0,         0,         0],
-'BANK_3': [       0,        0,         0,         0],
-'BANK_4': [       1,        1,         1,         1],
-'SCENIC': [       1,        1,         1,         1],
+'NAME':   ( 'Stormy','Roll Out',  'Clear', 'Roll In'), # Waypoint name
+'GROUP':  (    'D1',       'D1',     'D1',      'D1'), # sound effects group
+'FRAME':  (       1,          1,        1,         2), # Keyframe marker
+'TIME':   (     1.0,        1.2,      1.0,       1.2), # duration of waypoint in minutes
+'RANDOM': (      .8,         .8,       .8,        .8),
+'RED':    [    0.00,       0.00,     0.00,      0.00],
+'GREEN':  [    0.00,       0.00,     0.00,      0.00],
+'BLUE':   [   .0035,      .0035,    .0035,     .0035],
+'WARM':   [    0.00,       0.00,     0.00,      0.00],
+'COOL':   [    .000,       .000,    .0008,     .0008],
+'BANK_0': [       0,          0,        0,         0],
+'BANK_1': [       0,          0,        0,         0],
+'BANK_2': [       0,          0,        0,         0],
+'BANK_3': [       0,          0,        0,         0],
+'BANK_4': [       1,          1,        1,         1],
+'SCENIC': [       1,          1,        1,         1],
 }
 
 CLOUDY = { # Simulates a cloudy day

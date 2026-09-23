@@ -41,22 +41,22 @@ def get_status_list() -> list:
 
     status_screen: list = []
 
-    status_screen.append(f'Waypoint:{entities.WP_NAME}')
+    status_screen.append(f'   WP: {entities.WP_NAME}')
 
     value = model.pwm2percent(getattr(entities, 'RED')) * 100
-    status_screen.append(f'Red:   {round(value, 4)}%')
+    status_screen.append(f'  Red: {round(value, 4)}%')
 
     value = model.pwm2percent(getattr(entities, 'GREEN')) * 100
     status_screen.append(f'Green: {round(value, 4)}%')
 
     value = model.pwm2percent(getattr(entities, 'BLUE')) * 100
-    status_screen.append(f'Blue:  {round(value, 4)}%')
+    status_screen.append(f' Blue: {round(value, 4)}%')
 
     value = model.pwm2percent(getattr(entities, 'WARM')) * 100
-    status_screen.append(f'Warm:  {round(value, 4)}%')
+    status_screen.append(f' Warm: {round(value, 4)}%')
 
     value = model.pwm2percent(getattr(entities, 'COOL')) * 100
-    status_screen.append(f'Cool:  {round(value, 4)}%')
+    status_screen.append(f' Cool: {round(value, 4)}%')
 
     return status_screen
 
