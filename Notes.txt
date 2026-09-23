@@ -19,6 +19,9 @@ There were two ways to code an animated effect, either hold the await constant a
 have all colors have the same increment and have a different await for each color (5 asyncio loops). In testing the first one
 better, the color transitions could be controlled to eliminate noticible stepping as the effect progressed.
 
+entities.WP_DUR is waypoint duration. It is not a time per se, it it the number of cycles the waypoint awaits before moving on to the
+next waypoint and resetting WP_DUR. The actual amount of time (milliseconds) the waypoint takes is WP_DUR * CLOCK_CYCLE.
+
 Asyncio has overhead. It is predictable which is nice so I compensate for that by speeding up the effect with entities.CLOCK_OFFSET
 
 At this point the animated effects do not synce with any external time source.

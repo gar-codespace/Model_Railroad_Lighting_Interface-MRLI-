@@ -186,7 +186,7 @@ WORKING_BUFFER = {} # Either the static dictionary or one of the animated dictio
 # The running effect writes to and reads from this buffer.
 # In STATIC state user inputs are written here.
 # The slower the clock cycle, the more accurate the delay.
-CLOCK_CYCLE = 500 # Milliseconds per cycle. The delay the lighting effect awaits.
+CLOCK_CYCLE = 500 # Milliseconds. WP_DUR * CLOCK_CYCLE = total time of the waypoint
 CLOCK_OFFSET = 1 # Adjustment to keep the effect times closer to what they should be.
                  # Adjusts for asyncio overhead slowing down the effects.
 RED     = 32500 # PWM value
