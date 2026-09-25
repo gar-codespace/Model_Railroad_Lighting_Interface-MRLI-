@@ -31,7 +31,7 @@ class UserInterface:
         scl = entities.PIN(entities.PICO_PIN['SCL'])
         tx = entities.PIN(entities.PICO_PIN['TX'])
         rx = None
-        reset = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
+        reset = None # Specific to the SFX board
     # Initialize The Machine
         model.get_menu_first_item()
         entities.WORKING_BUFFER = entities.SINGLES

@@ -35,7 +35,10 @@ class SoundFX:
         self.board = board
         self.wait = board['MIN_WAIT']
         self.duplex = board['DUPLEX']
-        self.reset_pin = entities.PIN(board['RESET_PIN'], entities.PIN.IN)
+        try:
+            self.reset_pin = entities.PIN(board['RESET_PIN'], entities.PIN.IN)
+        except:
+            self.reset_pin = None
 
     def initialize_board(self):
 
