@@ -124,6 +124,19 @@ SB0 = { # Adafruit Sound FX Board
 
 MAIN_SOUND_CARD = SB0
 
+################## PUSH BUTTON PARAMETERS ######################
+
+BUTTON0 = { # Generic push button, normally open
+            'REST_STATE':False,
+            'NAME':None,
+            'PUSH_CALLBACK':None,
+            'RELEASE_CALLBACK':None,
+            'INTERNAL_PULLDOWN':False,
+            'INTERNAL_PULLUP':True,
+            'DEBOUNCE_TIME':50    
+            }
+
+
 ################## SOFTWARE ######################
 
 ################## TIME BASE ######################

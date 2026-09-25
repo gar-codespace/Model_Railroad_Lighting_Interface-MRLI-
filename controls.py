@@ -16,14 +16,14 @@ class UserInterface:
     # Initialize The Pico
         model.set_relay_pins() # the relays that turn the led banks on or off
         model.set_pwm_led_pins() # sets pico pins to pwm
-        self.bC = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.confirm_button_r_callback, 'STANDBY')
-        # self.bB = entities.Button(entities.PICO_PIN['BACK'], True, self.back_button_r_callback)
-        self.b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.bank_button_r_callback, 'BANK_0')
-        self.b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.bank_button_r_callback, 'BANK_1')
-        self.b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.bank_button_r_callback, 'BANK_2')
-        self.b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.bank_button_r_callback, 'BANK_3')
-        self.b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.bank_button_r_callback, 'BANK_4')
-        self.bS = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.bank_button_r_callback, 'SCENIC')
+        self.bC = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.cb_confirm_release, 'STANDBY')
+        # self.bB = entities.Button(entities.PICO_PIN['BACK'], True, self.cb_back_release)
+        self.b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.cb_bank_release, 'BANK_0')
+        self.b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.cb_bank_release, 'BANK_1')
+        self.b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.cb_bank_release, 'BANK_2')
+        self.b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.cb_bank_release, 'BANK_3')
+        self.b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.cb_bank_release, 'BANK_4')
+        self.bS = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.cb_bank_release, 'SCENIC')
         self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], entities.PIN.IN, entities.PIN.PULL_UP)
@@ -106,10 +106,10 @@ class UserInterface:
                                             pin_sw=self.encoder_psh
                                             )
         # subscribe to events
-        encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.turn_left_callback)
-        encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.turn_right_callback)
-        encoder.on(entities.RotaryEncoderEvent.CLICK, self.single_click_callback)
-        encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.multi_click_callback)
+        encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.cb_turn_left)
+        encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.cb_turn_right)
+        encoder.on(entities.RotaryEncoderEvent.CLICK, self.cb_single_click)
+        encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.cb_multi_click)
 
         return encoder 
 
@@ -178,7 +178,7 @@ class UserInterface:
 
 ################# callbacks ##################
 
-    def turn_left_callback(self):
+    def cb_turn_left(self):
         
         try:
             attrib = f'{entities.MACHINE_STATE}_turn_left'
@@ -187,7 +187,7 @@ class UserInterface:
         except:
             pass
 
-    def turn_right_callback(self):
+    def cb_turn_right(self):
 
         try:
             attrib = f'{entities.MACHINE_STATE}_turn_right'
@@ -196,7 +196,7 @@ class UserInterface:
         except:
             pass        
 
-    def single_click_callback(self):
+    def cb_single_click(self):
 
         try:
             attrib = f'{entities.MACHINE_STATE}_click'
@@ -205,7 +205,7 @@ class UserInterface:
         except:
             pass
 
-    def multi_click_callback(self, clicks):
+    def cb_multi_click(self, clicks):
         #print(f"Multiple Clicks: {clicks}")
  
         try:
@@ -215,7 +215,7 @@ class UserInterface:
         except:
             pass
 
-    def confirm_button_r_callback(self, name, event):
+    def cb_confirm_release(self, name, event):
         '''Toggle standby.'''
 
         try:
@@ -225,12 +225,12 @@ class UserInterface:
         except:
             pass
 
-    def back_button_r_callback(self, name, event):
+    def cb_back_release(self, name, event):
         '''Not used.'''
 
         pass
 
-    def bank_button_r_callback(self, name, event):
+    def cb_bank_release(self, name, event):
         '''The 5 LED bank and scenic buttons.'''
 
         index = entities.CURRENT_EFFECT[2]
