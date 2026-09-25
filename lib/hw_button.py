@@ -7,8 +7,9 @@ params looks like this:
 BUTTON0 = { # Generic push button, normally open
             'REST_STATE':True,
             'INTERNAL_PULLDOWN':False,
-            'INTERNAL_PULLUP':True,
-            'DEBOUNCE_TIME':50    
+            'DEBOUNCE_TIME':50,
+            'PRESSED':'pressed',
+            'RELEASED':'released'
             }
 '''
 
@@ -19,8 +20,12 @@ class Button(object):
   RELEASED = 'released'
   PRESSED = 'pressed'
 
-  def __init__(self, params:dict, pin:object, cb_release:object = None, cb_press:object = None, name:str = None):
-    self.pin_number = pin
+  def __init__(self, params:dict, pin:object, cb_press:object = None, cb_release:object = None, name:str = None):
+
+    internal_pull = entities.PIN.PULL_UP
+    if params['INTERNAL_PULLDOWN']:
+      internal_pull = entities.PIN.PULL_DOWN
+    self.pin = entities.PIN(pin, mode=entities.PIN.IN, pull=internal_pull)
     self.name = name
     self.rest_state = params['REST_STATE']
     self.previous_state = params['REST_STATE']
@@ -28,23 +33,25 @@ class Button(object):
     self.previous_debounced_state = params['REST_STATE']
     self.current_debounced_state = params['REST_STATE']
     self.debounce_time = params['DEBOUNCE_TIME']
-    self.last_check_tick = entities.UTIME.ticks_ms()
+    self.pressed = params['PRESSED']
+    self.released = params['RELEASED']
 
-    if params['INTERNAL_PULLDOWN']:
-      self.internal_pull = entities.PIN.PULL_DOWN
-    elif  params['INTERNAL_PULLUP']:
-      self.internal_pull = entities.PIN.PULL_UP
-    else:
-      self.internal_pull = None
-
-    if isinstance(pin, int):
-      self.pin = entities.PIN(pin, mode=entities.PIN.IN, pull=self.internal_pull)
-    else:
-      self.pin = pin
-      
     self.cb_press = cb_press # pressed callback
     self.cb_release = cb_release # released callback
-    self.active = False
+      
+    self.last_check_tick = entities.UTIME.ticks_ms()
+
+  def press(self):
+    try:
+      self.cb_press(self.name)
+    except:
+      pass
+
+  def release(self):
+    try:
+      self.cb_release(self.name)
+    except:
+      pass
 
   def debounce(self):
     ms_now = entities.UTIME.ticks_ms()
@@ -59,16 +66,15 @@ class Button(object):
     self.previous_state = self.current_state
 
   def check_debounce_state(self):
-    if self.current_debounced_state != self.previous_debounced_state:
-      if self.current_debounced_state != self.rest_state:
-        self.active = True
-        if self.cb_press:
-          self.cb_press(self.name, Button.PRESSED)
-      else:
-        self.active = False
-        if self.cb_release:
-          self.cb_release(self.name, Button.RELEASED)
-    self.previous_debounced_state = self.current_debounced_state
+    if self.current_debounced_state == self.previous_debounced_state:
+      return
+
+    if self.current_debounced_state != self.rest_state:
+      self.press()
+      self.previous_debounced_state = self.current_debounced_state
+    else:
+      self.release()
+      self.previous_debounced_state = self.current_debounced_state
 
   def update(self):
     self.debounce()

@@ -129,8 +129,9 @@ MAIN_SOUND_CARD = SB0
 BUTTON0 = { # Generic push button, normally open
             'REST_STATE':True,
             'INTERNAL_PULLDOWN':False,
-            'INTERNAL_PULLUP':True,
-            'DEBOUNCE_TIME':50    
+            'DEBOUNCE_TIME':50,
+            'PRESSED':'pressed',
+            'RELEASED':'released'
             }
 
 

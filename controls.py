@@ -215,7 +215,7 @@ class UserInterface:
         except:
             pass
 
-    def cb_confirm_release(self, name, event):
+    def cb_confirm_release(self, name):
         '''Toggle standby.'''
 
         try:
@@ -225,13 +225,13 @@ class UserInterface:
         except:
             pass
 
-    def cb_back_release(self, name, event):
+    def cb_back_release(self, name):
         '''Not used.'''
 
         pass
 
-    def cb_bank_release(self, name, event):
-        '''The 5 LED bank and scenic buttons.'''
+    def cb_bank_release(self, name):
+        '''The scenic and 5 LED bank buttons.'''
 
         index = entities.CURRENT_EFFECT[2]
 
