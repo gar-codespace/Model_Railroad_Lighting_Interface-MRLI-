@@ -16,14 +16,14 @@ class UserInterface:
     # Initialize The Pico
         model.set_relay_pins() # the relays that turn the led banks on or off
         model.set_pwm_led_pins() # sets pico pins to pwm
-        self.bC = entities.Button(entities.PICO_PIN['CONFIRM'], True, self.cb_confirm_release, 'STANDBY')
-        # self.bB = entities.Button(entities.PICO_PIN['BACK'], True, self.cb_back_release)
-        self.b0 = entities.Button(entities.PICO_PIN['BANK_0_B'], True, self.cb_bank_release, 'BANK_0')
-        self.b1 = entities.Button(entities.PICO_PIN['BANK_1_B'], True, self.cb_bank_release, 'BANK_1')
-        self.b2 = entities.Button(entities.PICO_PIN['BANK_2_B'], True, self.cb_bank_release, 'BANK_2')
-        self.b3 = entities.Button(entities.PICO_PIN['BANK_3_B'], True, self.cb_bank_release, 'BANK_3')
-        self.b4 = entities.Button(entities.PICO_PIN['BANK_4_B'], True, self.cb_bank_release, 'BANK_4')
-        self.bS = entities.Button(entities.PICO_PIN['SCENIC_B'], True, self.cb_bank_release, 'SCENIC')
+        self.bC = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['CONFIRM'], cb_release=self.cb_confirm_release, name='STANDBY')
+        # self.bB = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BACK'], cb_release=self.cb_back_release, name=None)
+        self.b0 = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BANK_0_B'], cb_release=self.cb_bank_release, name='BANK_0')
+        self.b1 = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BANK_1_B'], cb_release=self.cb_bank_release, name='BANK_1')
+        self.b2 = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BANK_2_B'], cb_release=self.cb_bank_release, name='BANK_2')
+        self.b3 = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BANK_3_B'], cb_release=self.cb_bank_release, name='BANK_3')
+        self.b4 = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BANK_4_B'], cb_release=self.cb_bank_release, name='BANK_4')
+        self.bS = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['SCENIC_B'], cb_release=self.cb_bank_release, name='SCENIC')
         self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], entities.PIN.IN, entities.PIN.PULL_UP)

@@ -2,45 +2,50 @@
 Hardware library for the fromt panel buttons.
 https://github.com/ubidefeo/MicroPython-Button
 Move imports to entities
+
+params looks like this:
+BUTTON0 = { # Generic push button, normally open
+            'REST_STATE':True,
+            'INTERNAL_PULLDOWN':False,
+            'INTERNAL_PULLUP':True,
+            'DEBOUNCE_TIME':50    
+            }
 '''
 
 import entities
 
 class Button(object):
-  rest_state = False
-  # pin = None
-  # pin_number = 0
+
   RELEASED = 'released'
   PRESSED = 'pressed'
-  DEBOUNCE_TIME = 50
 
-  def __init__(self, pin, rest_state = False, r_callback = None, name = None, p_callback = None, internal_pullup = True, internal_pulldown = False, debounce_time = None):
+  def __init__(self, params:dict, pin:object, cb_release:object = None, cb_press:object = None, name:str = None):
     self.pin_number = pin
-    self.rest_state = rest_state
     self.name = name
-    self.previous_state = rest_state
-    self.current_state = rest_state
-    self.previous_debounced_state = rest_state
-    self.current_debounced_state = rest_state
+    self.rest_state = params['REST_STATE']
+    self.previous_state = params['REST_STATE']
+    self.current_state = params['REST_STATE']
+    self.previous_debounced_state = params['REST_STATE']
+    self.current_debounced_state = params['REST_STATE']
+    self.debounce_time = params['DEBOUNCE_TIME']
     self.last_check_tick = entities.UTIME.ticks_ms()
-    self.debounce_time = debounce_time or Button.DEBOUNCE_TIME
-    if internal_pulldown:
+
+    if params['INTERNAL_PULLDOWN']:
       self.internal_pull = entities.PIN.PULL_DOWN
-      self.rest_state = False
-    elif internal_pullup:
+    elif  params['INTERNAL_PULLUP']:
       self.internal_pull = entities.PIN.PULL_UP
-      self.rest_state = True
     else:
       self.internal_pull = None
+
     if isinstance(pin, int):
-      self.pin = entities.PIN(pin, mode = entities.PIN.IN, pull = self.internal_pull)
+      self.pin = entities.PIN(pin, mode=entities.PIN.IN, pull=self.internal_pull)
     else:
       self.pin = pin
       
-    self.p_callback = p_callback # pressed callback
-    self.r_callback = r_callback # released callback
+    self.cb_press = cb_press # pressed callback
+    self.cb_release = cb_release # released callback
     self.active = False
-  
+
   def debounce(self):
     ms_now = entities.UTIME.ticks_ms()
     self.current_state = self.pin.value()
@@ -57,15 +62,14 @@ class Button(object):
     if self.current_debounced_state != self.previous_debounced_state:
       if self.current_debounced_state != self.rest_state:
         self.active = True
-        if self.p_callback != None:
-          self.p_callback(self.name, Button.PRESSED)
+        if self.cb_press:
+          self.cb_press(self.name, Button.PRESSED)
       else:
         self.active = False
-        if self.r_callback != None:
-          self.r_callback(self.name, Button.RELEASED)
+        if self.cb_release:
+          self.cb_release(self.name, Button.RELEASED)
     self.previous_debounced_state = self.current_debounced_state
 
   def update(self):
     self.debounce()
     self.check_debounce_state()
-
