@@ -41,7 +41,7 @@ class UserInterface:
         self.main_display = view.get_display(entities.MAIN_DISPLAY, i2c_bus)
 
         uart_bus = model.get_uart(entities.UART0, tx=tx, rx=rx)
-        self.main_sound_card = sound.get_sound_card(entities.MAIN_SOUND_CARD, uart_bus, reset_pin=reset)
+        self.main_sound_card = sound.get_sound_card(entities.MAIN_SOUND_CARD, uart_bus)
     # Start The Machine
         self.update_display(view.get_welcome_list())
         self.main_sound_card.play_now(entities.WELCOME_CLIP)

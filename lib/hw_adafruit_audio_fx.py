@@ -29,26 +29,37 @@ class CMD:
 
 class SoundFX:
 
-    def __init__(self, board:dict, bus:object, reset_pin:object):
+    def __init__(self, board:dict, bus:object):
 
         self.uart = bus
         self.board = board
         self.wait = board['MIN_WAIT']
-
-        self.reset_pin = None
-        if reset_pin:
-            self.reset_pin = reset_pin
+        self.duplex = board['DUPLEX']
+        self.reset_pin = entities.PIN(board['RESET_PIN'], entities.PIN.IN)
 
     def initialize_board(self):
 
         self._flush_uart_input()
         self.reset_board()
-
+    
     def _flush_uart_input(self):
         '''Read any available data from the UART bus until none is left.'''
 
         while self.uart.any():
             self.uart.read()
+
+    def reset_board(self):
+
+        if self.reset_pin:
+            self.reset_pin(0)
+            self.reset_pin(entities.PIN.OUT)
+            entities.UTIME.sleep_ms(self.wait)
+            self.reset_pin(entities.PIN.IN)
+            entities.UTIME.sleep_ms(1000)  # Give the board some time to boot
+
+        if self.duplex:
+            entities.UTIME.sleep_ms(self.wait)
+            return self.uart.read()
         
     def _send_simple(self, command):
 
@@ -56,9 +67,9 @@ class SoundFX:
 
         self.uart.write(f'{command}\n'.encode('utf-8'))
 
-        entities.UTIME.sleep_ms(self.wait)
-
-        return self.uart.read()
+        if self.duplex:
+            entities.UTIME.sleep_ms(self.wait)
+            return self.uart.read()
 
     def play(self, track=None):
 
@@ -70,48 +81,57 @@ class SoundFX:
 
         self._send_simple(f'{command}{track}')
 
+        if self.duplex:
+            entities.UTIME.sleep_ms(self.wait)
+            return self.uart.read()
+        
     def play_now(self, track):
 
         self.stop()
         entities.UTIME.sleep_ms(self.wait)
         self.play(track)          
 
-    def increment_up(self):
-
-        self._send_simple(CMD.UP)
-
-    def increment_down(self):
-
-        self._send_simple(CMD.DOWN)
-
-    def pause(self):
-
-        self._send_simple(CMD.PAUSE)
-
-    def unpause(self):
-
-        self._send_simple(CMD.UNPAUSE)
+        if self.duplex:
+            entities.UTIME.sleep_ms(self.wait)
+            return self.uart.read()
 
     def stop(self):
 
         self._send_simple(CMD.STOP)
-
-    def volume_up(self):
-        '''does not work in tests'''
-
-        for _ in range(0, 50):
-            self._send_simple(CMD.UP)
+        
+        if self.duplex:
             entities.UTIME.sleep_ms(self.wait)
+            return self.uart.read()
+        
+# These are untested
 
-    def reset_board(self):
+    def increment_up(self):
 
-        if self.reset_pin:
-
-            self.reset_pin(0)
-            self.reset_pin(entities.PIN.OUT)
+        self._send_simple(CMD.UP)
+        if self.duplex:
             entities.UTIME.sleep_ms(self.wait)
-            self.reset_pin(entities.PIN.IN)
+            return self.uart.read()
+        
+    def increment_down(self):
 
-            entities.UTIME.sleep_ms(1000)  # Give the board some time to boot
+        self._send_simple(CMD.DOWN)
 
-        return True
+        if self.duplex:
+            entities.UTIME.sleep_ms(self.wait)
+            return self.uart.read()
+        
+    def pause(self):
+
+        self._send_simple(CMD.PAUSE)
+
+        if self.duplex:
+            entities.UTIME.sleep_ms(self.wait)
+            return self.uart.read()
+        
+    def unpause(self):
+
+        self._send_simple(CMD.UNPAUSE)
+
+        if self.duplex:
+            entities.UTIME.sleep_ms(self.wait)
+            return self.uart.read()

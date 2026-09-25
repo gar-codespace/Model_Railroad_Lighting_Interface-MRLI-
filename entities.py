@@ -117,7 +117,9 @@ SB0 = { # Adafruit Sound FX Board
         'VOLUME':100,
         'MIN_VOL':0,
         'MAX_VOL':204,
-        'MIN_WAIT':30 # milleseconds
+        'MIN_WAIT':30, # milleseconds
+        'DUPLEX':False,
+        'RESET_PIN':PICO_PIN['RESET']
         }
 
 MAIN_SOUND_CARD = SB0
