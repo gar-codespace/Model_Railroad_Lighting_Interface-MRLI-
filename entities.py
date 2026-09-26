@@ -12,7 +12,7 @@ __repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
 DISPLAY_LIBRARY = 'hw_sh1106'
 
 # Choose this for the 0.9 inch display
-# DISPLAY_LIBRARY = 'hw_ssd1306'
+#DISPLAY_LIBRARY = 'hw_ssd1306'
 
 SOUND_LIBRARY = 'hw_adafruit_audio_fx'
 
@@ -72,7 +72,7 @@ PICO_PIN = {
         'TX'   :0, # UART
         'RESET':1, # SFX board
 
-        'AVAILABLE':2,
+        #'RX':1,
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
         'LED':'LED',
@@ -119,7 +119,7 @@ SB0 = { # Adafruit Sound FX Board
         'MAX_VOL':204,
         'MIN_WAIT':30, # milleseconds
         'DUPLEX':False,
-        'RESET_PIN':None
+        'RESET_PIN':PICO_PIN['RESET']
         }
 
 MAIN_SOUND_CARD = SB0
