@@ -5,9 +5,20 @@ https://github.com/mmabey/Adafruit_Soundboard_uPy/tree/master
 
 I have taylored it to the specific requirements of my project.
 For this project it is not necessary to receive any replies from the sound card,
-so there is no RX pin on the Pico.
+so there is no RX pin on the Pico, and duplex becomes a toggle.
 
 Move imports to entities
+'''
+'''
+The structure of 'board' looks like this:
+SB0 = { # Adafruit Sound FX Board
+        'VOLUME':100,
+        'MIN_VOL':0,
+        'MAX_VOL':204,
+        'MIN_WAIT':30, # milleseconds
+        'DUPLEX':False,
+        'RESET_PIN':object
+        }
 '''
 
 import entities
@@ -51,6 +62,12 @@ class SoundFX:
         while self.uart.any():
             self.uart.read()
 
+    def _get_reply(self):
+
+        if self.duplex:
+            entities.UTIME.sleep_ms(self.wait)
+            return self.uart.read()
+
     def reset_board(self):
 
         if self.reset_pin:
@@ -60,9 +77,7 @@ class SoundFX:
             self.reset_pin(entities.PIN.IN)
             entities.UTIME.sleep_ms(1000)  # Give the board some time to boot
 
-        if self.duplex:
-            entities.UTIME.sleep_ms(self.wait)
-            return self.uart.read()
+        return self._get_reply()
         
     def _send_simple(self, command):
 
@@ -70,9 +85,7 @@ class SoundFX:
 
         self.uart.write(f'{command}\n'.encode('utf-8'))
 
-        if self.duplex:
-            entities.UTIME.sleep_ms(self.wait)
-            return self.uart.read()
+        return self._get_reply()
 
     def play(self, track=None):
 
@@ -84,9 +97,7 @@ class SoundFX:
 
         self._send_simple(f'{command}{track}')
 
-        if self.duplex:
-            entities.UTIME.sleep_ms(self.wait)
-            return self.uart.read()
+        return self._get_reply()
         
     def play_now(self, track):
 
@@ -94,47 +105,36 @@ class SoundFX:
         entities.UTIME.sleep_ms(self.wait)
         self.play(track)          
 
-        if self.duplex:
-            entities.UTIME.sleep_ms(self.wait)
-            return self.uart.read()
+        return self._get_reply()
 
     def stop(self):
 
         self._send_simple(CMD.STOP)
         
-        if self.duplex:
-            entities.UTIME.sleep_ms(self.wait)
-            return self.uart.read()
+        return self._get_reply()
         
 # These are untested
 
     def increment_up(self):
 
         self._send_simple(CMD.UP)
-        if self.duplex:
-            entities.UTIME.sleep_ms(self.wait)
-            return self.uart.read()
+
+        return self._get_reply()
         
     def increment_down(self):
 
         self._send_simple(CMD.DOWN)
 
-        if self.duplex:
-            entities.UTIME.sleep_ms(self.wait)
-            return self.uart.read()
+        return self._get_reply()
         
     def pause(self):
 
         self._send_simple(CMD.PAUSE)
 
-        if self.duplex:
-            entities.UTIME.sleep_ms(self.wait)
-            return self.uart.read()
+        return self._get_reply()
         
     def unpause(self):
 
         self._send_simple(CMD.UNPAUSE)
 
-        if self.duplex:
-            entities.UTIME.sleep_ms(self.wait)
-            return self.uart.read()
+        return self._get_reply()
