@@ -55,9 +55,11 @@ def lighting_effect_boiler_plate(index):
     current_waypoint_name = entities.WP_NAME
     get_waypoint_name(index)
     get_sfx_group(index)
+    get_hour(index)
     if not current_waypoint_name == entities.WP_NAME:
         print(f'Current effect waypoint: {entities.WP_NAME}')
         print(f'Current sound fx group: {entities.SFX_GRP}')
+        print(f'Current hour: {entities.HOUR}')
 
     set_up_colors(index)
     set_up_banks(index)
@@ -76,6 +78,10 @@ def get_waypoint_name(index):
 def get_sfx_group(index):
 
     entities.SFX_GRP = entities.WORKING_BUFFER['GROUP'][index]
+
+def get_hour(index):
+
+    entities.HOUR = entities.WORKING_BUFFER['HOUR'][index]
 
 def set_up_colors(index):
     

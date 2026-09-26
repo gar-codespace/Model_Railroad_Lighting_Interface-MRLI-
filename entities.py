@@ -119,7 +119,7 @@ SB0 = { # Adafruit Sound FX Board
         'MAX_VOL':204,
         'MIN_WAIT':30, # milleseconds
         'DUPLEX':False,
-        'RESET_PIN':PICO_PIN['RESET']
+        'RESET_PIN':object
         }
 
 MAIN_SOUND_CARD = SB0
@@ -202,26 +202,27 @@ WORKING_BUFFER = {} # Either the static dictionary or one of the animated dictio
 CLOCK_CYCLE = 500 # Milliseconds. WP_DUR * CLOCK_CYCLE = total time of the waypoint
 CLOCK_OFFSET = 1 # Adjustment to keep the effect times closer to what they should be.
                  # Adjusts for asyncio overhead slowing down the effects.
-RED     = 32500 # PWM value
-GREEN   = 32500
-BLUE    = 32500
-WARM    = 32500
-COOL    = 32500
-BANK_0  = 1 # 1 is on, 0 is off
-BANK_1  = 1
-BANK_2  = 1
-BANK_3  = 1
-BANK_4  = 1
-SCENIC  = 1
-WP_DUR  = 1 # waypoint_duration is the number of times the effect will await, given a delay of entities.CLOCK_CYCLE
-WP_NAME = 'name'
-NEXT_WP = 0 # Index of the next waypoint
-SFX_GRP = None
-STEP_R  = 0 # how much in pwm steps does each color change per CLOCK_CYCLE. pos or neg
-STEP_G  = 0
-STEP_B  = 0
-STEP_W  = 0
-STEP_C  = 0
+RED     :int = 32500 # PWM value
+GREEN   :int = 32500
+BLUE    :int = 32500
+WARM    :int = 32500
+COOL    :int = 32500
+BANK_0  :int = 1 # 1 is on, 0 is off
+BANK_1  :int = 1
+BANK_2  :int = 1
+BANK_3  :int = 1
+BANK_4  :int = 1
+SCENIC  :int = 1
+WP_DUR  :int = 1 # waypoint_duration is the number of times the effect will await, given a delay of entities.CLOCK_CYCLE
+HOUR    :int = 0
+WP_NAME :str = 'name'
+SFX_GRP :str = None
+NEXT_WP :int = 0 # Index of the next waypoint
+STEP_R  :int = 0 # how much in pwm steps does each color change per CLOCK_CYCLE. pos or neg
+STEP_G  :int = 0
+STEP_B  :int = 0
+STEP_W  :int = 0
+STEP_C  :int = 0
 ################## EFFECT BUFFER ######################
 
 
@@ -241,15 +242,15 @@ SINGLES = {
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Stby', 'Maint',   'Day',   'Fog', 'Night', 'Twili'), # Waypoint name
 'GROUP':  (   'A1',    'A1',    'A3',    'A3',    'A5',    'A4'), # sound effects group
-'FRAME':  (      1,       1,       1,       1,       1,       1), # Keyframe marker
+'HOUR':   (      0,       0,       0,       0,       0,       0),
 'TIME':   (      0,       0,       0,       0,       0,       0), # duration of waypoint
 'RANDOM': (     .0,      .0,      .0,      .0,      .0,      .0),
 
-'RED':    [      0,       0,       0,       0,       0,      .1],
-'GREEN':  [      0,       0,       0,       0,       0,      .1],
-'BLUE':   [      0,       0,       0,       0,    .002,       0],
-'WARM':   [      0,     .99,     .22,    .002,       0,     .05],
-'COOL':   [      0,     .99,     .02,    .002,    .002,       0],
+'RED':    [      0,       0,       0,       0,       0,    .004],
+'GREEN':  [      0,       0,       0,       0,       0,    .006],
+'BLUE':   [      0,       0,       0,       0,   .0035,       0],
+'WARM':   [      0,     .99,     .22,    .002,       0,    .005],
+'COOL':   [      0,     .99,     .02,    .002,   .0008,       0],
 
 'BANK_0': [      1,       1,       1,       1,       0,      0,],
 'BANK_1': [      0,       1,       0,       0,       0,      0,],
@@ -267,14 +268,14 @@ ALL_DAY = { # simulates an entire day
 'CLOCK_OFFSET' : .864,
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
 'GROUP':  (    'A5',    'A5',    'A4',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A4',    'A5'), # sound effects group
-'FRAME':  (       1,       0,       1,       0,       1,       0,       1,       0,       1,       0,       1,       0), # Keyframe marker
+'HOUR':   (    2300,     100,     300,     500,     700,     900,    1100,    1300,    1500,    1700,    1900,    2100),
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
 
 'RED':    [    0.00,    0.00,    0.00,    .000,    .004,    0.02,    0.00,    0.00,    0.00,    .003,    .006,    .003],
-'GREEN':  [    0.00,    0.00,    0.00,    0.00,    .006,    0.02,    0.00,    0.00,    0.00,    .002,    .004,    0.00],
+'GREEN':  [    0.00,    0.00,    0.00,    0.00,    .006,    0.02,    0.00,    0.00,    0.00,    .002,    .004,    .002],
 'BLUE':   [    .001,   .0005,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00],
-'WARM':   [    0.00,    0.00,    0.00,    .000,    .005,    0.12,    0.18,    0.18,    0.22,    0.10,    .005,    0.00],
+'WARM':   [    0.00,    0.00,    0.00,    .000,    .005,    0.12,    0.18,    0.18,    0.22,    0.10,    .005,    .003],
 'COOL':   [    .001,    .001,    .001,    0.00,    0.00,    0.01,    0.02,    0.03,    0.02,    .001,    0.00,    .000],
 
 'BANK_0': [       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1],
@@ -290,7 +291,7 @@ STORMY = { # Simulates a stormy night
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Stormy','Roll Out',  'Clear', 'Roll In'), # Waypoint name
 'GROUP':  (    'D1',       'D1',     'D1',      'D1'), # sound effects group
-'FRAME':  (       1,          1,        1,         2), # Keyframe marker
+'HOUR':   (       0,          0,        0,         0),
 'TIME':   (     1.0,        1.2,      1.0,       1.2), # duration of waypoint in minutes
 'RANDOM': (      .8,         .8,       .8,        .8),
 'RED':    [    0.00,       0.00,     0.00,      0.00],
@@ -311,7 +312,7 @@ CLOUDY = { # Simulates a cloudy day
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name
 'GROUP':  (    'A3',     'A3',     'A3',      'A3'), # sound effects group
-'FRAME':  (       1,        1,        1,         1), # Keyframe marker
+'HOUR':   (       0,        0,        0,         0),
 'TIME':   (       4,      3.5,      2.5,       3.5), # duration of waypoint in real time minutes
 'RANDOM': (      .7,       .7,       .7,        .7),
 

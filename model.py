@@ -44,24 +44,25 @@ def get_waypoint_duration(index):
 
     if entities.CURRENT_EFFECT[1] == 'STATIC':
         entities.WP_DUR = 1
-    else: # Convert duration to milliseconds
+    else:
+    # Convert duration to milliseconds
         duration = entities.WORKING_BUFFER['TIME'][index] # real time minutes
         duration *= 60 # real time seconds
         duration *= 1000 # real time milliseconds
 
-        # Adjustment for asyncio overhead
+    # Adjustment for asyncio overhead
         duration *= entities.CLOCK_OFFSET 
 
-        # Apply the random factor
+    # Apply the random factor
         random = entities.WORKING_BUFFER['RANDOM'][index]
         d_max = duration # milliseconds
         d_min = duration * (random) # milliseconds
         duration = entities.RANDINT(int(d_max - d_min), int(d_max)) # milliseconds
 
-        # Scale the duration for model railroads
+    # Scale the duration for model railroads
         duration /= entities.FAST_TIME_CLOCK # milliseconds
 
-        # The waypoint duration expressed in cycles
+    # The waypoint duration expressed in cycles
         entities.WP_DUR = int(duration / entities.CLOCK_CYCLE) # milliseconds / ms per cycle = cycles
 
 def get_next_waypoint(index):
@@ -90,10 +91,6 @@ def get_color_delta(index:int, color:str):
     Can return zero, a positive or negative value.
     '''
 
-    # if entities.CURRENT_EFFECT[1] == 'STATIC':
-    #    color_delta = 0
-
-    # else:
     color_begin = entities.WORKING_BUFFER[color][index] # decimal percent
     color_end = entities.WORKING_BUFFER[color][entities.NEXT_WP] # decimal percent
     color_delta = color_begin - color_end # decimal percent

@@ -343,7 +343,7 @@ class RotaryEncoderRP2(RotaryEncoder):
         if self.timer is not None:
             self.timer.deinit()
 
-    async def async_tick(self, timeout=1):
+    def async_tick(self, timeout=1): # How does this work without async?
         """async_tick is used to process the encoder events. It should be run by entities.UASYNCIO."""
         timeout = entities.DEFAULT_CYCLE
         while self.alive:

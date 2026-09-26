@@ -31,7 +31,8 @@ class UserInterface:
         scl = entities.PIN(entities.PICO_PIN['SCL'])
         tx = entities.PIN(entities.PICO_PIN['TX'])
         rx = None
-        reset = None # Specific to the SFX board
+        reset_pin = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
+        entities.MAIN_SOUND_CARD['RESET_PIN'] = reset_pin
     # Initialize The Machine
         model.get_menu_first_item()
         entities.WORKING_BUFFER = entities.SINGLES
@@ -45,13 +46,11 @@ class UserInterface:
     # Start The Machine
         self.update_display(view.get_welcome_list())
         self.main_sound_card.play_now(entities.WELCOME_CLIP)
-    # Pick one, run time or testing.
-        lighting.run_startup_effect() # This line is for run time
-        #lighting.set_up_effect() # This line is for testing
+        lighting.run_startup_effect()
 
 ################ methods in main - UASYNCIO.gather ##################
 
-    def run_lighting_effect(self):
+    def run_lighting_effect(self): # How does this work without async?
         '''A lighting effect is always being run.'''
 
         while True:
@@ -73,7 +72,7 @@ class UserInterface:
 
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
-    def run_sound_effects(self):
+    def run_sound_effects(self): # How does this work without async?
         '''Sound effect clips don't play when the state is WELCOME, PAUSED or STANDBY.'''
 
         while True:
@@ -113,7 +112,7 @@ class UserInterface:
 
         return encoder 
 
-    def get_all_the_buttons(self):
+    def get_all_the_buttons(self): # How does this work without async?
         '''Consolidate all the front panel buttons into one loop.'''
 
         while(True):
