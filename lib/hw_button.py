@@ -6,26 +6,21 @@ Move imports to entities
 params looks like this:
 BUTTON0 = { # Generic push button, normally open
             'REST_STATE':True,
-            'INTERNAL_PULLDOWN':False,
             'DEBOUNCE_TIME':50,
             'PRESSED':'pressed',
-            'RELEASED':'released'
+            'RELEASED':'released',
+            'PULL':'PULL_UP' # not used
             }
+
 '''
 
 import entities
 
-class Button(object):
-
-  RELEASED = 'released'
-  PRESSED = 'pressed'
+class Button:
 
   def __init__(self, params:dict, pin:object, cb_press:object = None, cb_release:object = None, name:str = None):
 
-    internal_pull = entities.PIN.PULL_UP
-    if params['INTERNAL_PULLDOWN']:
-      internal_pull = entities.PIN.PULL_DOWN
-    self.pin = entities.PIN(pin, mode=entities.PIN.IN, pull=internal_pull)
+    self.pin = pin
     self.name = name
     self.rest_state = params['REST_STATE']
     self.previous_state = params['REST_STATE']

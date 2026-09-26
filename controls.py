@@ -13,26 +13,40 @@ class UserInterface:
 
     def __init__(self):
 
-    # Initialize The Pico
-        model.set_relay_pins() # the relays that turn the led banks on or off
-        model.set_pwm_led_pins() # sets pico pins to pwm
-        self.bC = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['CONFIRM'], cb_release=self.cb_confirm_release, name='STANDBY')
-        # self.bB = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BACK'], cb_release=self.cb_back_release, name=None)
-        self.b0 = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BANK_0_B'], cb_release=self.cb_bank_release, name='BANK_0')
-        self.b1 = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BANK_1_B'], cb_release=self.cb_bank_release, name='BANK_1')
-        self.b2 = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BANK_2_B'], cb_release=self.cb_bank_release, name='BANK_2')
-        self.b3 = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BANK_3_B'], cb_release=self.cb_bank_release, name='BANK_3')
-        self.b4 = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['BANK_4_B'], cb_release=self.cb_bank_release, name='BANK_4')
-        self.bS = entities.Button(params=entities.BUTTON0, pin=entities.PICO_PIN['SCENIC_B'], cb_release=self.cb_bank_release, name='SCENIC')
+# Initialize The Pico
+    # The relays that turn the led banks on or off
+        model.set_relay_pins()
+    # Sets pico pins to pwm
+        model.set_pwm_led_pins()
+    # Front panel buttons        
+        pin = entities.PIN(entities.PICO_PIN['CONFIRM'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        self.bC = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_confirm_release, name='STANDBY')
+        # pin = entities.PIN(entities.PICO_PIN['BACK'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        # self.bB = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_back_release, name=None)
+        pin = entities.PIN(entities.PICO_PIN['BANK_0_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        self.b0 = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='BANK_0')
+        pin = entities.PIN(entities.PICO_PIN['BANK_1_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        self.b1 = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='BANK_1')
+        pin = entities.PIN(entities.PICO_PIN['BANK_2_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        self.b2 = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='BANK_2')
+        pin = entities.PIN(entities.PICO_PIN['BANK_3_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        self.b3 = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='BANK_3')
+        pin = entities.PIN(entities.PICO_PIN['BANK_4_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        self.b4 = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='BANK_4')
+        pin = entities.PIN(entities.PICO_PIN['SCENIC_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        self.bS = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='SCENIC')
+    # Encoder
         self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], entities.PIN.IN, entities.PIN.PULL_UP)
         self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], entities.PIN.IN, entities.PIN.PULL_UP)
+    # I2C
         sda = entities.PIN(entities.PICO_PIN['SDA'])
         scl = entities.PIN(entities.PICO_PIN['SCL'])
+    # UART
         tx = entities.PIN(entities.PICO_PIN['TX'])
         rx = None
         reset_pin = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
-    # Initialize The Machine
+# Initialize The Machine
         entities.SB0['RESET_PIN'] = reset_pin
         model.get_menu_first_item()
         entities.WORKING_BUFFER = entities.SINGLES
@@ -43,7 +57,7 @@ class UserInterface:
 
         uart_bus = model.get_uart(entities.UART0, tx=tx, rx=rx)
         self.main_sound_card = sound.get_sound_card(entities.MAIN_SOUND_CARD, uart_bus)
-    # Start The Machine
+# Start The Machine
         self.update_display(view.get_welcome_list())
         self.main_sound_card.play_now(entities.WELCOME_CLIP)
         lighting.run_startup_effect()

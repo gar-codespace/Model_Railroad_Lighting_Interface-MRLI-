@@ -119,7 +119,7 @@ SB0 = { # Adafruit Sound FX Board
         'MAX_VOL':204,
         'MIN_WAIT':30, # milleseconds
         'DUPLEX':False,
-        'RESET_PIN':object
+        'RESET_PIN':object,
         }
 
 MAIN_SOUND_CARD = SB0
@@ -128,10 +128,10 @@ MAIN_SOUND_CARD = SB0
 
 BUTTON0 = { # Generic push button, normally open
             'REST_STATE':True,
-            'INTERNAL_PULLDOWN':False,
             'DEBOUNCE_TIME':50,
             'PRESSED':'pressed',
-            'RELEASED':'released'
+            'RELEASED':'released',
+            'PULL':'PULL_UP' # not used
             }
 
 
