@@ -32,8 +32,8 @@ class UserInterface:
         tx = entities.PIN(entities.PICO_PIN['TX'])
         rx = None
         reset_pin = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
-        entities.MAIN_SOUND_CARD['RESET_PIN'] = reset_pin
     # Initialize The Machine
+        entities.SB0['RESET_PIN'] = reset_pin
         model.get_menu_first_item()
         entities.WORKING_BUFFER = entities.SINGLES
         self.standby_toggle: str
