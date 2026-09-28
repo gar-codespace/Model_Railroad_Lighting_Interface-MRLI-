@@ -370,6 +370,8 @@ SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip32':('BELLS004OGG',  7, 'Bells 4',     None),
                 'clip33':('BELLS005OGG',  7, 'Bells 5',     None),
                 'clip34':('BELLS006OGG',  6, 'Bells 6',     None),
+                'clip35':('HORN0004OGG',  5, 'Horn 4',      None),
+                'clip36':('HORN0005OGG',  5, 'Horn 5',      None),
                } # The name is conformed to the soundboard specification
 
 WELCOME_CLIP = SFX_LIBRARY['clip10'][0] # Welcome
@@ -396,6 +398,8 @@ A3 = [ # Daytime
       'clip15',
       'clip16',
       'clip17',
+      'clip35',
+      'clip36',
       ]
 
 A4 = [ # Twlight, same as day + crickets + morning
@@ -419,6 +423,8 @@ A4 = [ # Twlight, same as day + crickets + morning
       'clip19',
       'clip20',
       'clip21',
+      'clip35',
+      'clip36',
       ]
 
 A5 = [ # Night time, daytime - gulls + crickets + owles
@@ -438,6 +444,8 @@ A5 = [ # Night time, daytime - gulls + crickets + owles
       'clip22',
       'clip23',
       'clip24',
+      'clip35',
+      'clip136',
       ]
 
 D2 = [ # Stormy
@@ -458,6 +466,8 @@ D2 = [ # Stormy
       'clip16',
       'clip17',
       'clip11',
+      'clip35',
+      'clip36',
       ]
 
 D1 = [ # Stormy test

@@ -17,7 +17,7 @@ import entities
 
 class Button:
 
-  def __init__(self, params:dict, pin:object, cb_press:object = None, cb_release:object = None, name:str = None):
+  def __init__(self, params:dict, pin:object, cb_press:object=None, cb_release:object=None, name:str=None):
 
   # Setttings
     self.pin = pin
