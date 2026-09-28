@@ -25,17 +25,17 @@ entities.STANDBY_TOGGLE = States.WELCOME
 def welcome_turn_left():
     entities.MACHINE_STATE = States.EFFECTS
 
-    return view.get_menu_list()
+    return view.get_effects_list()
 
 def welcome_turn_right():
     entities.MACHINE_STATE = States.EFFECTS
 
-    return view.get_menu_list()
+    return view.get_effects_list()
 
 def welcome_click():
     entities.MACHINE_STATE = States.EFFECTS
 
-    return view.get_menu_list()
+    return view.get_effects_list()
 
 def welcome_toggle():
     '''Puts machine in standby.'''
@@ -57,7 +57,7 @@ def effects_turn_left():
     if entities.MENU_FIRST_ITEM < 0:
         entities.MENU_FIRST_ITEM = len(entities.MAIN_MENU) - 1
 
-    return view.get_menu_list()
+    return view.get_effects_list()
 
 def effects_turn_right():
     '''Scrolls the effects menu.'''
@@ -66,7 +66,7 @@ def effects_turn_right():
     if entities.MENU_FIRST_ITEM > len(entities.MAIN_MENU) - 1:
         entities.MENU_FIRST_ITEM = 0
 
-    return view.get_menu_list()
+    return view.get_effects_list()
 
 def effects_click():
     '''Select an effect.'''
@@ -117,7 +117,7 @@ def animated_click2():
     
     entities.MACHINE_STATE = States.EFFECTS
 
-    return view.get_menu_list()
+    return view.get_effects_list()
 
 def animated_increment_waypoint():
 
@@ -182,7 +182,7 @@ def static_click2():
     
     entities.MACHINE_STATE = States.EFFECTS
 
-    return view.get_menu_list()
+    return view.get_effects_list()
 
 def static_get_hilight():
 
@@ -304,4 +304,4 @@ def standby_toggle():
     entities.MACHINE_STATE = entities.STANDBY_TOGGLE
     lighting.set_led_banks()
     
-    return view.get_menu_list()
+    return view.get_effects_list()

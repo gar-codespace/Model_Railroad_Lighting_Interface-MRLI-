@@ -155,21 +155,21 @@ WELCOME_SCREEN = ['   M.U.T.T.',
                   '   Terminal'
                   ] # 6 lines maximum, 15 char per line
 
-MAIN_MENU = { # In the order they show on the display
-             0: ('| Maintenance',        'STATIC',  1),
-             1: ('| Daytime',            'STATIC',  2),
-             2: ('| Overcast',           'STATIC',  3),
-             3: ('| Twilight',           'STATIC',  5),
-             4: ('| Nightime',           'STATIC',  4),
-             5: ('> 11PM',            'ALL_DAY',  0),
-             6: ('> 3AM',             'ALL_DAY',  2),
-             7: ('> 7AM',             'ALL_DAY',  4),
-             8: ('> 11AM',            'ALL_DAY',  6),
-             9: ('> 3PM',             'ALL_DAY',  8),
-            10: ('> 7PM',             'ALL_DAY', 10),
-            11: ('> A Cloudy Day',     'CLOUDY',  0),
-            12: ('> Stormy Night',     'STORMY',  0)
-            }
+MAIN_MENU = { #     Name             Type    Index
+             0: ('| Maintenance',   'STATIC',  1),
+             1: ('| Daytime',       'STATIC',  2),
+             2: ('| Overcast',      'STATIC',  3),
+             3: ('| Twilight',      'STATIC',  5),
+             4: ('| Nightime',      'STATIC',  4),
+             5: ('> 11PM',         'ALL_DAY',  0),
+             6: ('> 3AM',          'ALL_DAY',  2),
+             7: ('> 7AM',          'ALL_DAY',  4),
+             8: ('> 11AM',         'ALL_DAY',  6),
+             9: ('> 3PM',          'ALL_DAY',  8),
+            10: ('> 7PM',          'ALL_DAY', 10),
+            11: ('> A Cloudy Day',  'CLOUDY',  0),
+            12: ('> Stormy Night',  'STORMY',  0)
+            } # In the order they show on the display
 
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 HILIGHTED_EFFECT = 1 # MAIN_MENU key

@@ -22,9 +22,8 @@ def get_welcome_list() -> list:
 
     return welcome_list
 
-def get_menu_list() -> list:
-    '''Returns a list of main menu items.'''
-    '''TODO is it still called main menu?'''
+def get_effects_list() -> list:
+    '''Returns a list of effects menu items.'''
 
     index_double = model.get_index_double()
     index_subset = index_double[entities.MENU_FIRST_ITEM:] # it's only important to chop the beginning
