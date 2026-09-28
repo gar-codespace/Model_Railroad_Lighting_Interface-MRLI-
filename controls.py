@@ -145,7 +145,6 @@ class UserInterface:
 ################ display method #################
 
     def update_display(self, content: list = entities.WELCOME_SCREEN):
-        '''One method to rule them all...'''
 
         self.main_display.fill(0)
 
@@ -185,9 +184,11 @@ class UserInterface:
 
         vfx = entities.SFX_LIBRARY[sound_clip][3]
 
-        if vfx:
+        try:
             attrib = f'run_{vfx}'
             getattr(lighting, attrib)() # IE lighting.run_bolt()
+        except:
+            pass
 
 ################# callbacks ##################
 
@@ -228,7 +229,7 @@ class UserInterface:
         except:
             pass
 
-    def cb_confirm_release(self, name):
+    def cb_confirm_release(self, name, message):
         '''Toggle standby.'''
 
         try:
@@ -238,12 +239,12 @@ class UserInterface:
         except:
             pass
 
-    def cb_back_release(self, name):
+    def cb_back_release(self, name, message):
         '''Not used.'''
 
         pass
 
-    def cb_bank_release(self, name):
+    def cb_bank_release(self, name, message):
         '''The scenic and 5 LED bank buttons.'''
 
         index = entities.CURRENT_EFFECT[2]
@@ -251,5 +252,6 @@ class UserInterface:
         try:
             attrib = f'{entities.MACHINE_STATE}_bank' # IE states.edit_bank(name, index)
             getattr(states, attrib)(name, index)
+            print(message)
         except:
             pass

@@ -126,12 +126,11 @@ MAIN_SOUND_CARD = SB0
 
 ################## PUSH BUTTON PARAMETERS ######################
 
-BUTTON0 = { # Generic push button, normally open
-            'REST_STATE':True,
+BUTTON0 = {
+            'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
             'DEBOUNCE_TIME':50,
-            'PRESSED':'pressed',
-            'RELEASED':'released',
-            'PULL':'PULL_UP' # not used
+            'PRESSED':'button pressed message',
+            'RELEASED':'button released message'
             }
 
 
