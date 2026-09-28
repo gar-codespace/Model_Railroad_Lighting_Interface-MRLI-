@@ -59,8 +59,8 @@ class UserInterface:
         self.main_sound_card = sound.get_sound_card(entities.MAIN_SOUND_CARD, uart_bus)
 # Start The Machine
         self.update_display(view.get_welcome_list())
-        self.main_sound_card.play_now(entities.WELCOME_CLIP)
         lighting.run_startup_effect()
+        self.main_sound_card.play(entities.WELCOME_CLIP)
 
 ################ methods in main - UASYNCIO.gather ##################
 
@@ -252,6 +252,6 @@ class UserInterface:
         try:
             attrib = f'{entities.MACHINE_STATE}_bank' # IE states.edit_bank(name, index)
             getattr(states, attrib)(name, index)
-            print(message)
+            print(f'{message}: {name}')
         except:
             pass

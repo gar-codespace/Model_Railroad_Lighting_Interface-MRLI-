@@ -129,8 +129,8 @@ MAIN_SOUND_CARD = SB0
 BUTTON0 = {
             'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
             'DEBOUNCE_TIME':50,
-            'PRESSED':'button pressed message',
-            'RELEASED':'button released message'
+            'PRESSED':'button pressed',
+            'RELEASED':'button released'
             }
 
 
@@ -337,15 +337,15 @@ PAD_MAX = 20000 # maximum time between sfx (ms)
 SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip00':('SILENCE0OGG', 10, 'Silence01',   None),
                 'clip01':('GULLS001OGG', 16, 'Seagulls 1',  None),
-                'clip02':('GULLS002OGG', 9,  'Seagulls 2',  None),
-                'clip03':('GULLS003OGG', 8,  'Seagulls 3',  None),
+                'clip02':('GULLS002OGG',  9, 'Seagulls 2',  None),
+                'clip03':('GULLS003OGG',  8, 'Seagulls 3',  None),
                 'clip04':('GULLS004OGG', 13, 'Seagulls 4',  None),
                 'clip05':('GULLS005OGG', 20, 'Seagulls 5',  None),
-                'clip06':('BELL0001OGG', 6,  'Bells 1',     None),
-                'clip07':('BELL0002OGG', 5,  'Bells 2',     None),
-                'clip08':('BELL0003OGG', 3,  'Bells 3',     None),
-                'clip09':('WHISTLE1OGG', 3,  'Whistle 1',   None),
-                'clip10':('WELCOME1OGG', 10, 'Welcome 1',   None),
+                'clip06':('BELL0001OGG',  6, 'Bells 1',     None),
+                'clip07':('BELL0002OGG',  5, 'Bells 2',     None),
+                'clip08':('BELL0003OGG',  3, 'Bells 3',     None),
+                'clip09':('WHISTLE1OGG',  3, 'Whistle 1',   None),
+                'clip10':('WELCOME1OGG',  6, 'Welcome 1',   None),
                 'clip11':('BRODY001OGG',  2, 'Brody 1',     None),
                 'clip12':('TRAIN001OGG', 12, 'Train 1',     None),
                 'clip13':('TRAIN002OGG', 12, 'Train 2',     None),

@@ -3,7 +3,7 @@ import entities
 def get_sound_card(board:dict, bus:dict) -> object:
 
     sound_card = entities.SOUND_DRIVER(board, bus)
-    sound_card.initialize_board()
+    # sound_card.initialize_board()
 
     return sound_card
 
