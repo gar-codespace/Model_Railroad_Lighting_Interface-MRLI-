@@ -1,32 +1,18 @@
-How the Animated Effect Works:
+Animated Effects:
 
 The controls.run_lighting_effect() method is an asyncio loop, it never stops. So in that
 sense lighting effects are never stopped. When a new one is chosen, it elbows the current
-one out of the way and start running beginning at the selected waypoint. The first try block sets the waypoints.
-the second try block increments the color changes, it tries to run states.animated_increment_waypoint().
-When entities.WP_DUR is counted down to zero, the first try block will run the states.aniamated_set_next_waypoint()
-method. This method will populate entities.WP_DUR.entities.WP_NAME, entities.NEXT_WP (an index) and entities.SFX_GRP.
-It will also populate the five entities.STEP<color> values. In the future, LED banks might be toggled here as well,
-but for now they don't change during an animated effect. An animated effect will loop back to the first waypoint after
-it completes the last waypoint, so in effect animated effects have no end.
+one out of the way and start running beginning at the selected waypoint. The first try block sets the waypoints.The second try block increments the color changes, it tries to run states.animated_increment_waypoint().
 
-Static effects have only one waypoint, therefore the end is the same as the beginning, so waypoint duration becomes irrelevant.
+When entities.WP_DUR is counted down to zero, the first try block will run the states.aniamated_set_next_waypoint() method. This method will populate entities.WP_DUR.entities.WP_NAME, entities.NEXT_WP (an index) and entities.SFX_GRP. It will also populate the five entities.STEP<color> values. In the future, LED banks might be toggled here as well, but for now they don't change during an animated effect. An animated effect will loop back to the first waypoint after it completes the last waypoint, so in effect animated effects have no end.
 
-When the machine is paused, the animated pauses. When the maching is put in standby, the animated effect keeps running
-in the background.
+There were two ways to code an animated effect, either hold the await constant and have different increments for each color, or have all colors have the same increment and have a different await for each color (5 asyncio loops). In testing the first one was better, the color transitions could be controlled to eliminate noticible stepping as the effect progressed.
 
-There were two ways to code an animated effect, either hold the await constant and have different increments for each color, or
-have all colors have the same increment and have a different await for each color (5 asyncio loops). In testing the first one
-better, the color transitions could be controlled to eliminate noticible stepping as the effect progressed.
+Static Effects:
 
-entities.WP_DUR is waypoint duration. It is not a time per se, it it the number of cycles the waypoint awaits before moving on to the
-next waypoint and resetting WP_DUR. The actual amount of time (milliseconds) the waypoint takes is WP_DUR * CLOCK_CYCLE.
+Static effects have only one waypoint, therefore the end is the same as the beginning, so waypoint duration becomes irrelevant. All the static effects are grouped together in a dictionary called SINGLES.
 
-Asyncio has overhead. It is predictable which is nice so I compensate for that by speeding up the effect with entities.CLOCK_OFFSET
-
-At this point the animated effects do not synce with any external time source.
-
-How sound effects work:
+Sound effects:
 
 The controls.run_sound_effects() method is an asyncio loop. It never stops running so silence is accomplished bu sending
 a silent clip to the player. Sound effects are combined together in groups. A sound effect group is assigned to every waypoint,
@@ -34,14 +20,23 @@ animated and static. The code randomly selects a sound effect from the group and
 sound effect. The sound effect length and pad are used as the asyncio wait. Sound effects are pushed to the player,
 messages are sent back from the player but I don't use them.
 
-How the visual effects works:
+Visual effects:
 
 Visual effects are triggered by a field in the sound effects tuple. In other words, sound effects drive visual effects.
 
 Lightning:
 
-The lightning visual effect uses only the cool LEDs. A bunch of tuples are described in entities.LIGHTNING. The values are pwm brightness
-and millisecond duration. The code selects a subset of this. First it creates a new list of random length between 5 and 10. Then it populates
-the new list by randomly picking tuples from entities.LIGHTNING. The random list of random elements is then run. What's nice is that after
-the effect is run the code politely returns to the waypoint progression.
+The lightning visual effect uses only the cool LEDs. A bunch of tuples are described in entities.LIGHTNING. The values are pwm brightness and millisecond duration. The code selects a subset of this. First it creates a new list of random length between 5 and 10. Then it populates the new list by randomly picking tuples from entities.LIGHTNING. The random list of random elements is then run. What's nice is that after the effect is run the code politely returns to the waypoint progression.
+
+Operations:
+
+When the machine is paused, the machines state is set to PAUSED and the animated pauses. Set next waypoint and increment waypoint have no method for PAUSED, so that even though the the asyncio while loop keeps going, no action is taken. Same for run_sound_effects(). Since there is no paused_play_sound() method, the currently playing clip will finish and no new one will be played.
+
+When the maching is put in standby, the animated effect keeps running in the background. The LED banks are turned off so the machine looks like it's turned off. Sound effects are treated the same as PAUSED.
+
+entities.WP_DUR is waypoint duration. It is not a time per se, it is the number of cycles the waypoint awaits before moving on to the next waypoint and resetting WP_DUR. The actual amount of time (milliseconds) the waypoint takes is WP_DUR * CLOCK_CYCLE.
+
+Asyncio has overhead. It is predictable which is nice so I compensate for that by speeding up the effect with entities.CLOCK_OFFSET.
+
+At this point the animated effects do not synchronize with any external time source, and the WIFI feature of the Pico is not utilized.
 
