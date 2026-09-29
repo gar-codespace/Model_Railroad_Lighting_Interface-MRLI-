@@ -45,9 +45,8 @@ class UserInterface:
     # UART
         tx = entities.PIN(entities.PICO_PIN['TX'])
         rx = None
-        reset_pin = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
+        # reset_pin = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
 # Initialize The Machine
-        entities.SB0['RESET_PIN'] = reset_pin
         model.get_menu_first_item()
         entities.WORKING_BUFFER = entities.SINGLES
         self.standby_toggle: str
@@ -56,11 +55,11 @@ class UserInterface:
         self.main_display = view.get_display(entities.MAIN_DISPLAY, i2c_bus)
 
         uart_bus = model.get_uart(entities.UART0, tx=tx, rx=rx)
-        self.main_sound_card = sound.get_sound_card(entities.MAIN_SOUND_CARD, uart_bus)
+        self.sound_fx_board = sound.get_sound_fx_board(entities.SB0, uart_bus)
 # Start The Machine
         self.update_display(view.get_welcome_list())
         lighting.run_startup_effect()
-        self.main_sound_card.play(entities.WELCOME_CLIP)
+        self.sound_fx_board.play(entities.WELCOME_CLIP)
 
 ################ methods in main - UASYNCIO.gather ##################
 
@@ -171,7 +170,7 @@ class UserInterface:
             duration = entities.SFX_LIBRARY[sound_clip][1] * 1000 # ms
             description = entities.SFX_LIBRARY[sound_clip][2]
 
-            self.main_sound_card.play_now(clip)
+            self.sound_fx_board.play_now(clip)
 
             print(f'Sound Clip: {clip} - {description}')
 

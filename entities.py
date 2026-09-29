@@ -28,7 +28,7 @@ import uasyncio as UASYNCIO
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 from hw_button import Button
 DISPLAY_DRIVER = __import__(DISPLAY_LIBRARY).Driver_I2C
-SOUND_DRIVER = __import__(SOUND_LIBRARY).SoundFX
+SOUND_FX_DRIVER = __import__(SOUND_LIBRARY).SoundFX
 
 ################## HARDWARE ######################
 
@@ -70,9 +70,10 @@ PICO_PIN = {
         'SCL':21, # I2C
 
         'TX'   :0, # UART
-        'RESET':1, # SFX board
 
-        #'RX':1,
+        'available':1,
+        'available':2,
+
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
         'LED':'LED',
@@ -113,16 +114,10 @@ MAIN_FORMAT =  {
 
 ################## SOUND HARDWARE ######################
 
-SB0 = { # Adafruit Sound FX Board
-        'VOLUME':100,
-        'MIN_VOL':0,
-        'MAX_VOL':204,
-        'MIN_WAIT':30, # milleseconds
-        'DUPLEX':False,
-        'RESET_PIN':object,
-        }
-
-MAIN_SOUND_CARD = SB0
+# Adafruit Sound FX Board
+SB0 = {
+       'DUPLEX':False
+       }
 
 ################## PUSH BUTTON PARAMETERS ######################
 

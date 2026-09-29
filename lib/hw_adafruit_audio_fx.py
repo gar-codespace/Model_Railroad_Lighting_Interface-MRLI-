@@ -20,6 +20,11 @@ SB0 = { # Adafruit Sound FX Board
         'RESET_PIN':object
         }
 '''
+'''
+If the UART pin is connected to ground to set the board to uart mode,
+reset dous not work, so the reset pin is useless. Only power cycling
+will reset the board when it is in UART mode.
+'''
 
 import entities
 
@@ -44,21 +49,13 @@ class SoundFX:
 
         self.uart = bus
         self.board = board
-        self.wait = board['MIN_WAIT']
         self.duplex = board['DUPLEX']
-        try:
-            self.reset_pin = board['RESET_PIN']
-        except:
-            self.reset_pin = None
-
-    def initialize_board(self):
-
-        self._flush_uart_input()
-        self.reset_board()
     
     def _flush_uart_input(self):
         '''Read any available data from the UART bus until none is left.'''
 
+        if not self.duplex:
+            return
         while self.uart.any():
             self.uart.read()
 
@@ -69,6 +66,7 @@ class SoundFX:
             return self.uart.read()
 
     def reset_board(self):
+        '''Does not work when the board is in uart mode.'''
 
         if self.reset_pin:
             self.reset_pin(0)
@@ -86,6 +84,10 @@ class SoundFX:
         self.uart.write(f'{command}\n'.encode('utf-8'))
 
         return self._get_reply()
+
+    def set_volume(self):
+
+        pass
 
     def play(self, track=None):
 
