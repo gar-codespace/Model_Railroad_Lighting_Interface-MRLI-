@@ -71,7 +71,7 @@ class SoundFX:
     def reset_board(self):
 
         if self.reset_pin:
-            self.reset_pin(0)
+            self.reset_pin.value(0)
             self.reset_pin(entities.PIN.OUT)
             entities.UTIME.sleep_ms(self.wait)
             self.reset_pin(entities.PIN.IN)

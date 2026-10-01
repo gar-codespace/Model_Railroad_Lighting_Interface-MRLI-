@@ -266,7 +266,7 @@ ALL_DAY = { # simulates an entire day
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : .864,
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
-'GROUP':  (    'A5',    'A5',    'A4',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A4',    'A5'), # sound effects group
+'GROUP':  (    'A5',    'A5',    'A5',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A5',    'A5'), # sound effects group
 'HOUR':   (    2300,     100,     300,     500,     700,     900,    1100,    1300,    1500,    1700,    1900,    2100),
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
@@ -372,6 +372,9 @@ SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip34':('BELLS006OGG',  6, 'Bells 6',     None),
                 'clip35':('HORN0004OGG',  5, 'Horn 4',      None),
                 'clip36':('HORN0005OGG',  5, 'Horn 5',      None),
+                'clip37':('GEESE001OGG',  7, 'Geese 1',     None),
+                'clip38':('GEESE002OGG',  7, 'Geese 2',     None),
+                
                } # The name is conformed to the soundboard specification
 
 WELCOME_CLIP = SFX_LIBRARY['clip10'][0] # Welcome
@@ -382,92 +385,89 @@ A1 = [ # silence
       ]
 
 A3 = [ # Daytime
-      'clip01',
-      'clip02',
-      'clip03',
-      'clip04',
-      'clip05',
-      'clip06',
-      'clip07',
-      'clip08',
-      'clip09',
-      'clip11',
-      'clip12',
-      'clip13',
-      'clip14',
-      'clip15',
-      'clip16',
-      'clip17',
-      'clip35',
-      'clip36',
+      'clip01', # Seagulls
+      'clip02', # Seagulls
+      'clip03', # Seagulls
+      'clip04', # Seagulls
+      'clip05', # Seagulls
+      'clip06', # Bells
+      'clip07', # Bells
+      'clip08', # Bells
+      'clip09', # Whistle
+      'clip11', # Brody 
+      'clip12', # Train 
+      'clip13', # Train 
+      'clip14', # Train 
+      'clip15', # Horn
+      'clip16', # Horn
+      'clip17', # Horn
+      'clip35', # Horn
+      'clip36', # Horn
       ]
 
-A4 = [ # Twlight, same as day + crickets + morning
-      'clip01',
-      'clip02',
-      'clip03',
-      'clip04',
-      'clip05',
-      'clip06',
-      'clip07',
-      'clip08',
-      'clip09',
-      'clip11',
-      'clip12',
-      'clip13',
-      'clip14',
-      'clip15',
-      'clip16',
-      'clip17',
-      'clip18',
-      'clip19',
-      'clip20',
-      'clip21',
-      'clip35',
-      'clip36',
+A4 = [ # Twlight, same as day + crickets + morning + geese - gulls
+      'clip06', # Bells
+      'clip07', # Bells
+      'clip08', # Bells
+      'clip09', # Whistle
+      'clip11', # Brody 
+      'clip12', # Train 
+      'clip13', # Train 
+      'clip14', # Train 
+      'clip15', # Horn
+      'clip16', # Horn
+      'clip17', # Horn
+      'clip18', # Cricket
+      'clip19', # Cricket
+      'clip20', # Morning
+      'clip21', # Morning
+      'clip35', # Horn
+      'clip36', # Horn
+      'clip37', # Geese
+      'clip38'  # Geese
       ]
 
 A5 = [ # Night time, daytime - gulls + crickets + owles
-      'clip06',
-      'clip07',
-      'clip08',
-      'clip09',
-      'clip11',
-      'clip12',
-      'clip13',
-      'clip14',
-      'clip15',
-      'clip16',
-      'clip17',
-      'clip18',
-      'clip19',
-      'clip22',
-      'clip23',
-      'clip24',
-      'clip35',
-      'clip136',
+      'clip06', # Bell
+      'clip07', # Bell
+      'clip08', # Bell
+      'clip09', # Whistle
+      'clip11', # Brody
+      'clip12', # Train
+      'clip13', # Train
+      'clip14', # Train
+      'clip15', # Horn
+      'clip16', # Horn
+      'clip17', # Horn
+      'clip18', # Cricket
+      'clip19', # Cricket
+      'clip22', # Night
+      'clip23', # Owl
+      'clip24', # Owl
+      'clip35', # Horn
+      'clip36', # Horn
       ]
 
 D2 = [ # Stormy
-      'clip25',
-      'clip26',
-      'clip27',
-      'clip28',
-      'clip29',
-      'clip30',
-      'clip31',
-      'clip32',
-      'clip33',
-      'clip34',
-      'clip12',
-      'clip13',
-      'clip14',
-      'clip15',
-      'clip16',
-      'clip17',
-      'clip11',
-      'clip35',
-      'clip36',
+      'clip25', # Thunder
+      'clip26', # Thunder
+      'clip27', # Thunder
+      'clip28', # Thunder
+      'clip29', # Thunder
+      'clip30', # Wind
+      'clip31', # Wind
+      'clip32', # Bells 
+      'clip33', # Bells 
+      'clip34', # Bells 
+      'clip12', # Train
+      'clip13', # Train
+      'clip14', # Train
+      'clip15', # Horn
+      'clip16', # Horn
+      'clip17', # Horn
+      'clip11', # Brody
+      'clip35', # Horn
+      'clip36', # Horn
       ]
 
 D1 = [ # Stormy test
