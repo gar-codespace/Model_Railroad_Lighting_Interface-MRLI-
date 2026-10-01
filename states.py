@@ -303,5 +303,9 @@ def standby_toggle():
 
     entities.MACHINE_STATE = entities.STANDBY_TOGGLE
     lighting.set_led_banks()
-    
-    return view.get_effects_list()
+
+    if entities.MACHINE_STATE == 'effects':
+        return view.get_effects_list()
+
+    else:
+         return view.get_status_list()
