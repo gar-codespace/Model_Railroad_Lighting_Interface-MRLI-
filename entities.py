@@ -184,8 +184,7 @@ EDIT_SCREEN_ITEMS = [
                  'WARM',
                  'COOL'
                 ]
-
-PWM_TICKS = 100 # How many ticks per indent of the rotary encoder when changing color values.
+EDIT_PWM_TICKS = 100 # How many ticks per indent of the rotary encoder when changing color values.
                 # Smaller is finer control.
 
 ################## BUFFERS ######################
