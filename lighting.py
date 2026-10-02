@@ -8,7 +8,7 @@ import entities
 import model
 
 def run_startup_effect(): # Special case, runs only on startup.
-    '''Effect fades up LEDs from dark (STATIC.Stby) to the the values of HILIGHTED_EFFECT.'''
+    '''Effect fades up LEDs from dark (STATIC.Stby) to the the values of EFFECTS_HILIGHTED_EFFECT.'''
 
     begin_index = 0
     end_index = entities.CURRENT_EFFECT[2]

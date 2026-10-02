@@ -71,7 +71,7 @@ def effects_turn_right():
 def effects_click():
     '''Select an effect.'''
 
-    entities.CURRENT_EFFECT = entities.EFFECTS_MENU.get(entities.HILIGHTED_EFFECT)
+    entities.CURRENT_EFFECT = entities.EFFECTS_MENU.get(entities.EFFECTS_HILIGHTED_EFFECT)
     entities.MACHINE_STATE = States.STATIC
     if not entities.CURRENT_EFFECT[1] == 'STATIC':
         entities.MACHINE_STATE = States.ANIMATED
