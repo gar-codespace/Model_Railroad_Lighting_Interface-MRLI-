@@ -222,7 +222,7 @@ def edit_turn_left():
     color = entities.EDIT_SCREEN_ITEMS[entities.STATIC_SELECT_ROW]
     pwm_color_value = getattr(entities, color) # PWM expression
 
-    pwm_color_value -= entities.PWM_TICKS # PWM expression
+    pwm_color_value -= entities.EDIT_PWM_TICKS # PWM expression
     pwm_color_value = max(pwm_color_value, 0) # PWM expression
 
     setattr(entities, color, pwm_color_value) # writes the new value to entities.<color>
@@ -238,7 +238,7 @@ def edit_turn_right():
     color = entities.EDIT_SCREEN_ITEMS[entities.STATIC_SELECT_ROW]
     pwm_color_value = getattr(entities, color) # PWM expression
 
-    pwm_color_value += entities.PWM_TICKS # PWM expression
+    pwm_color_value += entities.EDIT_PWM_TICKS # PWM expression
     pwm_color_value = min(pwm_color_value, entities.PWM_STEPS) # PWM expression
 
     setattr(entities, color, pwm_color_value) # writes the new value to entities.<color>
