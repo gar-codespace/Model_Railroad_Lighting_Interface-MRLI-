@@ -116,6 +116,7 @@ MAIN_FORMAT =  {
 
 # Adafruit Sound FX Board
 SB0 = {
+       'WAIT':50,
        'DUPLEX':False
        }
 
@@ -173,6 +174,7 @@ MENU_FIRST_ITEM: int # calculated on startup by model.get_menu_first_item()
 STARTUP_EFFECT_LENGTH = 5000 # Milliseconds
 
 STATIC_SELECT_ROW = 3 # In STATIC state, the encoder moves the rectangle up and down
+EDIT_ROUNDING_VALUE = 4
 EDIT_SCREEN_ITEMS = [
                  'WP_NAME',
                  'RED',
@@ -372,7 +374,7 @@ SFX_LIBRARY = {  # File    Name,       Duration, Description
                 
                } # The name is conformed to the soundboard specification
 
-WELCOME_CLIP = SFX_LIBRARY['clip10'][0] # Welcome
+WELCOME_CLIP = 'clip10'
 
 # SFX Groups
 A1 = [ # silence

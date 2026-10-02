@@ -50,6 +50,7 @@ class SoundFX:
         self.uart = bus
         self.board = board
         self.duplex = board['DUPLEX']
+        self.wait = board['WAIT']
     
     def _flush_uart_input(self):
         '''Read any available data from the UART bus until none is left.'''

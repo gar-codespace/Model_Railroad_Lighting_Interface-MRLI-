@@ -59,7 +59,14 @@ class UserInterface:
 # Start The Machine
         self.update_display(view.get_welcome_list())
         lighting.run_startup_effect()
-        self.sound_fx_board.play(entities.WELCOME_CLIP)
+        # self.sound_fx_board.play(entities.WELCOME_CLIP)
+
+
+        self.play_sound_clip(entities.WELCOME_CLIP)
+
+
+
+
 
 ################ methods in main - UASYNCIO.gather ##################
 
@@ -96,9 +103,10 @@ class UserInterface:
             try: # Play the sound clip
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound()
-                duration = self.play_sound_clip(sound_clip) # TODO is there a better way?
+                duration = self.play_sound_clip(sound_clip)
             except:
                 pass
+                
 
             try: # Run a visual effect if there is one
                 attrib = f'{entities.MACHINE_STATE}_run_vfx'
