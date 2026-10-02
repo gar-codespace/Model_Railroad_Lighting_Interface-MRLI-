@@ -220,13 +220,14 @@ def edit_turn_left():
 
     index = entities.CURRENT_EFFECT[2]
     color = entities.EDIT_SCREEN_ITEMS[entities.STATIC_SELECT_ROW]
-    pwm_color_value = getattr(entities, color) # PWM expression
 
+    pwm_color_value = getattr(entities, color) # PWM expression
     pwm_color_value -= entities.EDIT_PWM_TICKS # PWM expression
     pwm_color_value = max(pwm_color_value, 0) # PWM expression
-
     setattr(entities, color, pwm_color_value) # writes the new value to entities.<color>
-    entities.WORKING_BUFFER[color][index] = model.pwm2percent(pwm_color_value) # writes the new value into the STATIC_BUFFER
+
+    pwm_color_value = model.pwm_percent(pwm_color_value)
+    entities.WORKING_BUFFER[color][index] = pwm_color_value[0] # writes the new value into the STATIC_BUFFER
     lighting.set_led_values()
 
     return view.get_status_list()
@@ -236,13 +237,14 @@ def edit_turn_right():
     
     index = entities.CURRENT_EFFECT[2]
     color = entities.EDIT_SCREEN_ITEMS[entities.STATIC_SELECT_ROW]
-    pwm_color_value = getattr(entities, color) # PWM expression
 
+    pwm_color_value = getattr(entities, color) # PWM expression
     pwm_color_value += entities.EDIT_PWM_TICKS # PWM expression
     pwm_color_value = min(pwm_color_value, entities.PWM_STEPS) # PWM expression
-
     setattr(entities, color, pwm_color_value) # writes the new value to entities.<color>
-    entities.WORKING_BUFFER[color][index] = model.pwm2percent(pwm_color_value) # writes the new value into the STATIC_BUFFER
+    
+    pwm_color_value = model.pwm_percent(pwm_color_value)
+    entities.WORKING_BUFFER[color][index] = pwm_color_value[0] # writes the new value into the STATIC_BUFFER
     lighting.set_led_values()
 
     return view.get_status_list()

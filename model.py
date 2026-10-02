@@ -20,12 +20,13 @@ def set_pwm_led_pins():
     entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
     entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
 
-def pwm2percent(pwm):
+def pwm_percent(pwm):
     '''Convert a pwm value to decimal percentage rounded to 4 places.'''
 
-    x = pwm / entities.PWM_STEPS
-    y = x * 100
-    return x
+    decmal = pwm / entities.PWM_STEPS
+    rounded = round(decmal * 100, entities.EDIT_ROUNDING_VALUE)
+
+    return [decmal, rounded]
 
 def get_index_double():
     '''IE [0, 1, 2, 3, 4, 0, 1, 2, 3 , 4]'''
