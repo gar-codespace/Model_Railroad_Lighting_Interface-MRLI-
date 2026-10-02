@@ -55,7 +55,7 @@ def effects_turn_left():
 
     entities.MENU_FIRST_ITEM -= 1
     if entities.MENU_FIRST_ITEM < 0:
-        entities.MENU_FIRST_ITEM = len(entities.MAIN_MENU) - 1
+        entities.MENU_FIRST_ITEM = len(entities.EFFECTS_MENU) - 1
 
     return view.get_effects_list()
 
@@ -63,7 +63,7 @@ def effects_turn_right():
     '''Scrolls the effects menu.'''
 
     entities.MENU_FIRST_ITEM += 1
-    if entities.MENU_FIRST_ITEM > len(entities.MAIN_MENU) - 1:
+    if entities.MENU_FIRST_ITEM > len(entities.EFFECTS_MENU) - 1:
         entities.MENU_FIRST_ITEM = 0
 
     return view.get_effects_list()
@@ -71,7 +71,7 @@ def effects_turn_right():
 def effects_click():
     '''Select an effect.'''
 
-    entities.CURRENT_EFFECT = entities.MAIN_MENU.get(entities.HILIGHTED_EFFECT)
+    entities.CURRENT_EFFECT = entities.EFFECTS_MENU.get(entities.HILIGHTED_EFFECT)
     entities.MACHINE_STATE = States.STATIC
     if not entities.CURRENT_EFFECT[1] == 'STATIC':
         entities.MACHINE_STATE = States.ANIMATED

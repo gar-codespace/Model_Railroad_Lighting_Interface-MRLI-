@@ -151,7 +151,7 @@ WELCOME_SCREEN = ['   M.U.T.T.',
                   '   Terminal'
                   ] # 6 lines maximum, 15 char per line
 
-MAIN_MENU = { #     Name             Type    Index
+EFFECTS_MENU = { #     Name             Type    Index
              0: ('| Maintenance',   'STATIC',  1),
              1: ('| Daytime',       'STATIC',  2),
              2: ('| Overcast',      'STATIC',  3),
@@ -167,9 +167,10 @@ MAIN_MENU = { #     Name             Type    Index
             12: ('> Stormy Night',  'STORMY',  0)
             } # In the order they show on the display
 
+
 HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
-HILIGHTED_EFFECT = 1 # MAIN_MENU key
-CURRENT_EFFECT = MAIN_MENU[HILIGHTED_EFFECT] # Must be a STATIC effect
+HILIGHTED_EFFECT = 1 # EFFECTS_MENU key
+CURRENT_EFFECT = EFFECTS_MENU[HILIGHTED_EFFECT] # Must be a STATIC effect
 MENU_FIRST_ITEM: int # calculated on startup by model.get_menu_first_item()
 STARTUP_EFFECT_LENGTH = 5000 # Milliseconds
 

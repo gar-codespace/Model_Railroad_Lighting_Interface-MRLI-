@@ -31,7 +31,7 @@ def get_effects_list() -> list:
 
     menu_list: list = []
     for i in range(0, entities.MAIN_FORMAT['ROWS']):
-        menu_list.append(entities.MAIN_MENU.get(index_subset[i])[0])
+        menu_list.append(entities.EFFECTS_MENU.get(index_subset[i])[0])
 
     return menu_list
 

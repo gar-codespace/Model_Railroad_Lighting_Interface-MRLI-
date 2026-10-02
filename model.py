@@ -30,7 +30,7 @@ def pwm2percent(pwm):
 def get_index_double():
     '''IE [0, 1, 2, 3, 4, 0, 1, 2, 3 , 4]'''
     
-    index_double = tuple(range(0, len(entities.MAIN_MENU)))
+    index_double = tuple(range(0, len(entities.EFFECTS_MENU)))
     index_double = index_double + index_double
 
     return index_double
@@ -113,7 +113,7 @@ def get_menu_first_item():
 
     index_double = get_index_double()
 
-    position = len(entities.MAIN_MENU) + entities.HILIGHTED_EFFECT
+    position = len(entities.EFFECTS_MENU) + entities.HILIGHTED_EFFECT
     entities.MENU_FIRST_ITEM = index_double[position - entities.HIGHLIGHT_ROW]
 
 def get_i2c(specs:dict, sda, scl) -> object:
