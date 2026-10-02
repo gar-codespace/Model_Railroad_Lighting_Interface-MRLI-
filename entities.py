@@ -143,6 +143,7 @@ END_TIME = 0 # Used for the waypoint duration measurement.
 
 MACHINE_STATE = None
 STANDBY_TOGGLE = None
+STARTUP_EFFECT_LENGTH = 5000 # Milliseconds
 
 WELCOME_SCREEN = ['   M.U.T.T.',
                   ' Metropolitan',
@@ -168,13 +169,12 @@ EFFECTS_MENU = { #     Name             Type    Index
             } # In the order they show on the display
 EFFECTS_HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 EFFECTS_HILIGHTED_EFFECT = 1 # EFFECTS_MENU key
+EFFECTS_MENU_FIRST_ITEM: int # calculated on startup by model.get_menu_first_item()
+
 CURRENT_EFFECT = EFFECTS_MENU[EFFECTS_HILIGHTED_EFFECT] # Must be a STATIC effect
 
-
-MENU_FIRST_ITEM: int # calculated on startup by model.get_menu_first_item()
-STARTUP_EFFECT_LENGTH = 5000 # Milliseconds
-
 STATIC_SELECT_ROW = 3 # In STATIC state, the encoder moves the rectangle up and down
+
 EDIT_ROUNDING_VALUE = 4
 EDIT_SCREEN_ITEMS = [
                  'WP_NAME',

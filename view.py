@@ -26,7 +26,7 @@ def get_effects_list() -> list:
     '''Returns a list of effects menu items.'''
 
     index_double = model.get_index_double()
-    index_subset = index_double[entities.MENU_FIRST_ITEM:] # it's only important to chop the beginning
+    index_subset = index_double[entities.EFFECTS_MENU_FIRST_ITEM:] # it's only important to chop the beginning
     entities.EFFECTS_HILIGHTED_EFFECT = index_subset[entities.EFFECTS_HIGHLIGHT_ROW]
 
     menu_list: list = []

@@ -53,18 +53,18 @@ def welcome_toggle():
 def effects_turn_left():
     '''Scrolls the effects menu.'''
 
-    entities.MENU_FIRST_ITEM -= 1
-    if entities.MENU_FIRST_ITEM < 0:
-        entities.MENU_FIRST_ITEM = len(entities.EFFECTS_MENU) - 1
+    entities.EFFECTS_MENU_FIRST_ITEM -= 1
+    if entities.EFFECTS_MENU_FIRST_ITEM < 0:
+        entities.EFFECTS_MENU_FIRST_ITEM = len(entities.EFFECTS_MENU) - 1
 
     return view.get_effects_list()
 
 def effects_turn_right():
     '''Scrolls the effects menu.'''
 
-    entities.MENU_FIRST_ITEM += 1
-    if entities.MENU_FIRST_ITEM > len(entities.EFFECTS_MENU) - 1:
-        entities.MENU_FIRST_ITEM = 0
+    entities.EFFECTS_MENU_FIRST_ITEM += 1
+    if entities.EFFECTS_MENU_FIRST_ITEM > len(entities.EFFECTS_MENU) - 1:
+        entities.EFFECTS_MENU_FIRST_ITEM = 0
 
     return view.get_effects_list()
 
