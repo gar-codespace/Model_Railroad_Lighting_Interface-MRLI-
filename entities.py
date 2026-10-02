@@ -166,10 +166,10 @@ EFFECTS_MENU = { #     Name             Type    Index
             11: ('> A Cloudy Day',  'CLOUDY',  0),
             12: ('> Stormy Night',  'STORMY',  0)
             } # In the order they show on the display
+EFFECTS_HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 
-
-HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 HILIGHTED_EFFECT = 1 # EFFECTS_MENU key
+
 CURRENT_EFFECT = EFFECTS_MENU[HILIGHTED_EFFECT] # Must be a STATIC effect
 MENU_FIRST_ITEM: int # calculated on startup by model.get_menu_first_item()
 STARTUP_EFFECT_LENGTH = 5000 # Milliseconds

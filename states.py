@@ -84,7 +84,7 @@ def effects_click():
 def effects_get_hilight():
 
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
-    hilight_row = entities.HIGHLIGHT_ROW * hilight_height
+    hilight_row = entities.EFFECTS_HIGHLIGHT_ROW * hilight_height
 
     return hilight_row
 

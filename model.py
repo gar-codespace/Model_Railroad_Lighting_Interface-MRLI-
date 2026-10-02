@@ -114,7 +114,7 @@ def get_menu_first_item():
     index_double = get_index_double()
 
     position = len(entities.EFFECTS_MENU) + entities.HILIGHTED_EFFECT
-    entities.MENU_FIRST_ITEM = index_double[position - entities.HIGHLIGHT_ROW]
+    entities.MENU_FIRST_ITEM = index_double[position - entities.EFFECTS_HIGHLIGHT_ROW]
 
 def get_i2c(specs:dict, sda, scl) -> object:
 

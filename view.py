@@ -27,7 +27,7 @@ def get_effects_list() -> list:
 
     index_double = model.get_index_double()
     index_subset = index_double[entities.MENU_FIRST_ITEM:] # it's only important to chop the beginning
-    entities.HILIGHTED_EFFECT = index_subset[entities.HIGHLIGHT_ROW]
+    entities.HILIGHTED_EFFECT = index_subset[entities.EFFECTS_HIGHLIGHT_ROW]
 
     menu_list: list = []
     for i in range(0, entities.MAIN_FORMAT['ROWS']):
