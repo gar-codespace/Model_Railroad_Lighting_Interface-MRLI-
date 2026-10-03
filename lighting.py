@@ -67,6 +67,7 @@ def lighting_effect_boiler_plate(index):
     model.get_waypoint_duration(index)
     model.get_next_waypoint(index)
     model.get_color_steps(index)
+    model.set_hour(index)
 
     set_led_banks()
     set_led_values()
@@ -82,6 +83,7 @@ def get_sfx_group(index):
 def get_hour(index):
 
     entities.HOUR = entities.WORKING_BUFFER['HOUR'][index]
+    entities.TIME = entities.WORKING_BUFFER['TIME'][index]
 
 def set_up_colors(index):
     

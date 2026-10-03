@@ -132,6 +132,7 @@ def animated_set_next_waypoint():
         print(f'Measured duration: {measured_time} seconds')
 
         lighting.set_next_waypoint()
+        model.set_hour() # If that feature is utilized
 
         entities.START_TIME = entities.UTIME.time()
   

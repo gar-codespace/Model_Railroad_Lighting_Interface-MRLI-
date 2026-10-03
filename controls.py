@@ -58,15 +58,8 @@ class UserInterface:
         self.sound_fx_board = sound.get_sound_fx_board(entities.SB0, uart_bus)
 # Start The Machine
         self.update_display(view.get_welcome_list())
-        lighting.run_startup_effect()
-        # self.sound_fx_board.play(entities.WELCOME_CLIP)
-
-
         self.play_sound_clip(entities.WELCOME_CLIP)
-
-
-
-
+        lighting.run_startup_effect()
 
 ################ methods in main - UASYNCIO.gather ##################
 
@@ -84,7 +77,6 @@ class UserInterface:
             try: # only update colors when an animated effect is running
                 attrib = f'{entities.MACHINE_STATE}_increment_waypoint'
                 getattr(states, attrib)() # IE animated_increment_waypoint()
-
                 lighting.set_led_values()
                 self.update_display(view.get_status_list())
             except:

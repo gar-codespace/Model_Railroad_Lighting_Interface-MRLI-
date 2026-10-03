@@ -211,6 +211,7 @@ BANK_4  :int = 1
 SCENIC  :int = 1
 WP_DUR  :int = 1 # waypoint_duration is the number of times the effect will await, given a delay of entities.CLOCK_CYCLE
 HOUR    :int = 0
+TIME    :int = 0
 WP_NAME :str = 'name'
 SFX_GRP :str = None
 NEXT_WP :int = 0 # Index of the next waypoint
@@ -219,6 +220,7 @@ STEP_G  :int = 0
 STEP_B  :int = 0
 STEP_W  :int = 0
 STEP_C  :int = 0
+STEP_H  :int = 0 # Increment the hour
 ################## EFFECT BUFFER ######################
 
 
@@ -263,7 +265,7 @@ ALL_DAY = { # simulates an entire day
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : .864,
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
-'GROUP':  (    'A5',    'A5',    'A5',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A5',    'A5'), # sound effects group
+'GROUP':  (    'A5',    'A5',    'A5',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A4',    'A5'), # sound effects group
 'HOUR':   (    2300,     100,     300,     500,     700,     900,    1100,    1300,    1500,    1700,    1900,    2100),
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 

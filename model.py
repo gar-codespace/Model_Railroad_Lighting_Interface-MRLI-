@@ -78,6 +78,21 @@ def get_next_waypoint(index):
 
         entities.NEXT_WP = int(next_index)
 
+def set_hour(index):
+    '''Display the time of day if appropriate.'''
+
+    x = entities.TIME / entities.WP_DUR # real world minutes per cycle
+
+
+
+
+
+    print(x)
+
+
+
+
+
 def get_color_steps(index):
     
     entities.STEP_R = get_color_delta(index, 'RED') / entities.WP_DUR
