@@ -55,7 +55,7 @@ class UserInterface:
         self.main_display = view.get_display(entities.MAIN_DISPLAY, i2c_bus)
 
         uart_bus = model.get_uart(entities.UART0, tx=tx, rx=rx)
-        self.sound_fx_board = sound.get_sound_fx_board(entities.SB0, uart_bus)
+        self.ambient_sound_board = sound.get_ambient_sound_board(entities.SB0, uart_bus)
 # Start The Machine
         self.update_display(view.get_welcome_list())
         self.play_sound_clip(entities.CLIP)
@@ -166,11 +166,11 @@ class UserInterface:
 
     def play_sound_clip(self, sound_clip):
 
-            clip = entities.SFX_LIBRARY[sound_clip][0]
-            duration = entities.SFX_LIBRARY[sound_clip][1] * 1000 # ms
-            description = entities.SFX_LIBRARY[sound_clip][2]
+            clip = entities.AMBIENCE[sound_clip][0]
+            duration = entities.AMBIENCE[sound_clip][1] * 1000 # ms
+            description = entities.AMBIENCE[sound_clip][2]
 
-            self.sound_fx_board.play_now(clip)
+            self.ambient_sound_board.play_now(clip)
 
             print(f'Sound Clip: {clip} - {description}')
 
@@ -181,7 +181,7 @@ class UserInterface:
     def run_vfx(self, sound_clip):
         '''Runs the associated visual effect if it exists.'''
 
-        vfx = entities.SFX_LIBRARY[sound_clip][3]
+        vfx = entities.AMBIENCE[sound_clip][3]
 
         try:
             attrib = f'run_{vfx}'

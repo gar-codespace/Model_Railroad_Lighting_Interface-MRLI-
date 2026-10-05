@@ -1,11 +1,11 @@
 import entities
 
-def get_sound_fx_board(board:dict, bus:dict) -> object:
+def get_ambient_sound_board(board:dict, bus:dict) -> object:
 
-    sound_fx_board = entities.SOUND_FX_DRIVER(board, bus)
-    # sound_fx_board.set_volume()
+    ambient_sound_board = entities.SOUND_FX_DRIVER(board, bus)
+    # ambient_sound_board.set_volume()
 
-    return sound_fx_board
+    return ambient_sound_board
 
 def get_sound_clip() -> tuple:
     '''Randomly pick a sound clip from the sfx group.'''

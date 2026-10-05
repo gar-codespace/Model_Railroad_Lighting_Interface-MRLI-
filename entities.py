@@ -334,8 +334,8 @@ CLOUDY = { # Simulates a cloudy day
 PAD_MIN = 2000 # Pad is the time between sound effects in ms
 PAD_MAX = 20000 # maximum time between sfx (ms)
 
-SFX_LIBRARY = {  # File    Name,       Duration, Description
-                'clip00':('SILENCE0OGG', 10, 'Silence01',   None),
+AMBIENCE = {  # File    Name,       Duration, Description
+                'clip00':('SILENCE0OGG', 10, 'Silence',     None),
                 'clip01':('GULLS001OGG', 16, 'Seagulls 1',  None),
                 'clip02':('GULLS002OGG',  9, 'Seagulls 2',  None),
                 'clip03':('GULLS003OGG',  8, 'Seagulls 3',  None),
@@ -345,7 +345,7 @@ SFX_LIBRARY = {  # File    Name,       Duration, Description
                 'clip07':('BELL0002OGG',  5, 'Bells 2',     None),
                 'clip08':('BELL0003OGG',  3, 'Bells 3',     None),
                 'clip09':('WHISTLE1OGG',  3, 'Whistle 1',   None),
-                'clip10':('WELCOME1OGG',  6, 'Welcome 1',   None),
+                'clip10':('WELCOME1OGG',  6, 'Welcome',     None),
                 'clip11':('BRODY001OGG',  2, 'Brody 1',     None),
                 'clip12':('TRAIN001OGG', 12, 'Train 1',     None),
                 'clip13':('TRAIN002OGG', 12, 'Train 2',     None),
