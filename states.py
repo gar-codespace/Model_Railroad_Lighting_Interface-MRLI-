@@ -151,6 +151,15 @@ def animated_play_sound():
 def animated_run_vfx():
     '''Visual effects run in this state.'''
 
+def animated_first_line():
+    '''The first line of the status screen.'''
+
+    first_line = f'   WP: {entities.WP_NAME}'
+    if entities.HOUR:
+        first_line = f' Hour: {entities.HOUR}'
+
+    return first_line
+
 
 ########### MACHINE_STATE: STATIC
 
@@ -211,6 +220,13 @@ def static_bank(name, index):
 
 def static_play_sound():
     '''Sound FX clips play in this state.'''
+
+def static_first_line():
+    '''The first line of the status screen.'''
+
+    name = entities.CURRENT_EFFECT[0].lstrip('| ')
+
+    return f'{name:^15s}'
 
 
 ########### MACHINE_STATE: EDIT
@@ -281,9 +297,15 @@ def edit_bank(name, index):
     entities.PIN(entities.PICO_PIN[relay]).toggle()
     entities.SINGLES[name][index] = entities.PIN(entities.PICO_PIN[relay]).value()
 
-
 def edit_play_sound():
     '''Sound FX clips play in this state.'''
+
+def edit_first_line():
+    '''The first line of the status screen.'''
+
+    name = entities.CURRENT_EFFECT[0].lstrip('| ')
+
+    return f'{name:^15s}'
 
 
 ########### MACHINE_STATE: PAUSED

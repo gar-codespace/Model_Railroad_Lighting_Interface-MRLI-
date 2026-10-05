@@ -58,7 +58,7 @@ class UserInterface:
         self.ambient_sound_board = sound.get_ambient_sound_board(entities.SB0, uart_bus)
 # Start The Machine
         self.update_display(view.get_welcome_list())
-        self.play_sound_clip(entities.CLIP)
+        self.play_ambient_sound()
         lighting.run_startup_effect()
 
 ################ methods in main - UASYNCIO.gather ##################
@@ -89,13 +89,13 @@ class UserInterface:
 
         while True:
 
-            sound_clip = sound.get_sound_clip()
+            sound.get_ambient_clip()
             duration = 1000
 
             try: # Play the sound clip
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound()
-                duration = self.play_sound_clip(sound_clip)
+                duration = self.play_ambient_sound()
             except:
                 pass
                 
@@ -164,15 +164,15 @@ class UserInterface:
 
 ################ sound method #################
 
-    def play_sound_clip(self, sound_clip):
+    def play_ambient_sound(self):
 
-            clip = entities.AMBIENCE[sound_clip][0]
-            duration = entities.AMBIENCE[sound_clip][1] * 1000 # ms
-            description = entities.AMBIENCE[sound_clip][2]
+            clip = entities.AMBIENCE[entities.CLIP][0]
+            duration = entities.AMBIENCE[entities.CLIP][1] * 1000 # ms
+            description = entities.AMBIENCE[entities.CLIP][2]
 
             self.ambient_sound_board.play_now(clip)
 
-            print(f'Sound Clip: {clip} - {description}')
+            print(f'Ambient Clip: {clip} - {description}')
 
             return duration
 

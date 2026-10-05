@@ -239,24 +239,22 @@ The random value is a float between 0 and 1. 0 is not random, 1 is maximum rando
 SINGLES = {
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : 1,
-'NAME':   ( 'Stby', 'Maint',   'Day',   'Fog', 'Night', 'Twili'), # Waypoint name
-'GROUP':  (   'A1',    'A1',    'A3',    'A3',    'A5',    'A4'), # sound effects group
-'HOUR':   (      0,       0,       0,       0,       0,       0),
-'TIME':   (      0,       0,       0,       0,       0,       0), # duration of waypoint
-'RANDOM': (     .0,      .0,      .0,      .0,      .0,      .0),
-
-'RED':    [      0,       0,       0,       0,       0,    .004],
-'GREEN':  [      0,       0,       0,       0,       0,    .006],
-'BLUE':   [      0,       0,       0,       0,   .0035,       0],
-'WARM':   [      0,     .99,     .22,    .002,       0,    .005],
-'COOL':   [      0,     .99,     .02,    .002,   .0008,       0],
-
-'BANK_0': [      1,       1,       1,       1,       0,      0,],
-'BANK_1': [      0,       1,       0,       0,       0,      0,],
-'BANK_2': [      0,       1,       1,       0,       0,      0,],
-'BANK_3': [      0,       0,       1,       0,       0,      0,],
-'BANK_4': [      0,       1,       1,       1,       1,      1,],
-'SCENIC': [      0,       1,       0,       1,       1,      1,],
+'NAME':   ( 'Stby', 'Maint',   'Day',   'Ovcst', 'Night', 'Twili'), # Waypoint name
+'GROUP':  (   'A1',    'A1',    'A3',      'A3',    'A5',    'A4'), # sound effects group
+'HOUR':   (      0,       0,       0,         0,       0,       0),
+'TIME':   (      0,       0,       0,         0,       0,       0), # duration of waypoint
+'RANDOM': (     .0,      .0,      .0,        .0,      .0,      .0),
+'RED':    [      0,       0,       0,         0,       0,    .004],
+'GREEN':  [      0,       0,       0,         0,       0,    .006],
+'BLUE':   [      0,       0,       0,         0,   .0035,       0],
+'WARM':   [      0,     .99,     .22,      .002,       0,    .005],
+'COOL':   [      0,     .99,     .02,      .002,   .0008,       0],
+'BANK_0': [      1,       1,       1,         1,       0,      0,],
+'BANK_1': [      0,       1,       0,         0,       0,      0,],
+'BANK_2': [      0,       1,       1,         0,       0,      0,],
+'BANK_3': [      0,       0,       1,         0,       0,      0,],
+'BANK_4': [      0,       1,       1,         1,       1,      1,],
+'SCENIC': [      0,       1,       0,         1,       1,      1,],
 }
 
 ################## ANIMATED LIGHTING EFFECTS ######################
@@ -334,19 +332,19 @@ CLOUDY = { # Simulates a cloudy day
 PAD_MIN = 2000 # Pad is the time between sound effects in ms
 PAD_MAX = 20000 # maximum time between sfx (ms)
 
-AMBIENCE = {  # File    Name,       Duration, Description
+AMBIENCE = {  # File    Name,       Duration, Description   VFX Vol flag
                 'clip00':('SILENCE0OGG', 10, 'Silence',     None),
                 'clip01':('GULLS001OGG', 16, 'Seagulls 1',  None),
                 'clip02':('GULLS002OGG',  9, 'Seagulls 2',  None),
                 'clip03':('GULLS003OGG',  8, 'Seagulls 3',  None),
                 'clip04':('GULLS004OGG', 13, 'Seagulls 4',  None),
                 'clip05':('GULLS005OGG', 20, 'Seagulls 5',  None),
-                'clip06':('BELL0001OGG',  6, 'Bells 1',     None),
-                'clip07':('BELL0002OGG',  5, 'Bells 2',     None),
-                'clip08':('BELL0003OGG',  3, 'Bells 3',     None),
-                'clip09':('WHISTLE1OGG',  3, 'Whistle 1',   None),
+                'clip06':('BELL0001OGG',  6, 'Bells 1',     None, 1),
+                'clip07':('BELL0002OGG',  5, 'Bells 2',     None, 1),
+                'clip08':('BELL0003OGG',  3, 'Bells 3',     None, 1),
+                'clip09':('WHISTLE1OGG',  3, 'Whistle 1',   None, 1),
                 'clip10':('WELCOME1OGG',  6, 'Welcome',     None),
-                'clip11':('BRODY001OGG',  2, 'Brody 1',     None),
+                'clip11':('BRODY001OGG',  2, 'Brody 1',     None, 1),
                 'clip12':('TRAIN001OGG', 12, 'Train 1',     None),
                 'clip13':('TRAIN002OGG', 12, 'Train 2',     None),
                 'clip14':('TRAIN002OGG',  9, 'Train 3',     None),
@@ -358,8 +356,8 @@ AMBIENCE = {  # File    Name,       Duration, Description
                 'clip20':('MORNING1OGG', 12, 'Morning 1',   None),
                 'clip21':('MORNING2OGG', 19, 'Morning 2',   None),
                 'clip22':('NIGHT001OGG', 11, 'Night 1',     None),
-                'clip23':('OWL00001OGG',  1, 'Owl 1',       None),
-                'clip24':('OWL00002OGG',  3, 'Owl 2',       None),
+                'clip23':('OWL00001OGG',  1, 'Owl 1',       None, 1),
+                'clip24':('OWL00002OGG',  3, 'Owl 2',       None, 1),
                 'clip25':('THUNDER0OGG',  9, 'Thunder 0',   None),
                 'clip26':('THUNDER1OGG', 12, 'Thunder 1',   None),
                 'clip27':('THUNDER2OGG', 18, 'Thunder 2', 'bolt'),
@@ -367,11 +365,11 @@ AMBIENCE = {  # File    Name,       Duration, Description
                 'clip29':('THUNDER4OGG', 19, 'Thunder 4', 'bolt'),
                 'clip30':('WIND0001OGG', 19, 'Wind 1',      None),
                 'clip31':('WIND0002OGG', 19, 'Wind 2',      None),
-                'clip32':('BELLS004OGG',  7, 'Bells 4',     None),
-                'clip33':('BELLS005OGG',  7, 'Bells 5',     None),
-                'clip34':('BELLS006OGG',  6, 'Bells 6',     None),
-                'clip35':('HORN0004OGG',  5, 'Horn 4',      None),
-                'clip36':('HORN0005OGG',  5, 'Horn 5',      None),
+                'clip32':('BELLS004OGG',  7, 'Bells 4',     None,1),
+                'clip33':('BELLS005OGG',  7, 'Bells 5',     None,1),
+                'clip34':('BELLS006OGG',  6, 'Bells 6',     None,1),
+                'clip35':('HORN0004OGG',  5, 'Horn 4',      None,1),
+                'clip36':('HORN0005OGG',  5, 'Horn 5',      None,1),
                 'clip37':('GEESE001OGG',  7, 'Geese 1',     None),
                 'clip38':('GEESE002OGG',  7, 'Geese 2',     None),
                 

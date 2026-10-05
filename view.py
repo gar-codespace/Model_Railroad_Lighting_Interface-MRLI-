@@ -1,5 +1,6 @@
 import entities
 import model
+import states
 
 
 def get_display(board, bus) -> object:
@@ -40,8 +41,12 @@ def get_status_list() -> list:
 
     status_screen: list = []
 
-    status_screen.append(f'   WP: {entities.WP_NAME}')
+    # The first line can change, depending on the machine state
+    attrib = f'{entities.MACHINE_STATE}_first_line'
+    first_line = getattr(states, attrib)() # IE animated_first_line()
 
+    status_screen.append(first_line)
+    
     value = model.pwm_percent(entities.RED)
     # status_screen.append(f'  Red: {value[1]}%')
     status_screen.append(f'  Red: {value:.4%}')
@@ -59,15 +64,6 @@ def get_status_list() -> list:
     status_screen.append(f' Cool: {value:.4%}')
 
     return status_screen
-
-# def get_empty_list() -> list:
-
-#     menu_list: list = []
-
-#     for _ in range(0, entities.MAIN_FORMAT['ROWS']):
-#             menu_list.append('')
-
-#     return menu_list
 
 def get_empty_list() -> list:
 
