@@ -42,28 +42,33 @@ def get_status_list() -> list:
 
     status_screen.append(f'   WP: {entities.WP_NAME}')
 
-    value = model.pwm_percent(getattr(entities, 'RED'))
-    status_screen.append(f'  Red: {value[1]}%')
+    value = model.pwm_percent(entities.RED)
+    # status_screen.append(f'  Red: {value[1]}%')
+    status_screen.append(f'  Red: {value:.4%}')
 
-    value = model.pwm_percent(getattr(entities, 'GREEN'))
-    status_screen.append(f'Green: {value[1]}%')
+    value = model.pwm_percent(entities.GREEN)
+    status_screen.append(f'Green: {value:.4%}')
 
-    value = model.pwm_percent(getattr(entities, 'BLUE'))
-    status_screen.append(f' Blue: {value[1]}%')
+    value = model.pwm_percent(entities.BLUE)
+    status_screen.append(f' Blue: {value:.4%}')
 
-    value = model.pwm_percent(getattr(entities, 'WARM'))
-    status_screen.append(f' Warm: {value[1]}%')
+    value = model.pwm_percent(entities.WARM)
+    status_screen.append(f' Warm: {value:.4%}')
 
-    value = model.pwm_percent(getattr(entities, 'COOL'))
-    status_screen.append(f' Cool: {value[1]}%')
+    value = model.pwm_percent(entities.COOL)
+    status_screen.append(f' Cool: {value:.4%}')
 
     return status_screen
 
+# def get_empty_list() -> list:
+
+#     menu_list: list = []
+
+#     for _ in range(0, entities.MAIN_FORMAT['ROWS']):
+#             menu_list.append('')
+
+#     return menu_list
+
 def get_empty_list() -> list:
 
-    menu_list: list = []
-
-    for _ in range(0, entities.MAIN_FORMAT['ROWS']):
-            menu_list.append('')
-
-    return menu_list
+    return ['' for _ in range(entities.MAIN_FORMAT['ROWS'])]

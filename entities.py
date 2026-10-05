@@ -210,17 +210,18 @@ BANK_3  :int = 1
 BANK_4  :int = 1
 SCENIC  :int = 1
 WP_DUR  :int = 1 # waypoint_duration is the number of times the effect will await, given a delay of entities.CLOCK_CYCLE
-HOUR    :int = 0
-TIME    :int = 0
-WP_NAME :str = 'name'
-SFX_GRP :str = None
 NEXT_WP :int = 0 # Index of the next waypoint
+WP_NAME :str = 'name'
+HOUR  :float = 0.0 # Fast time clock
+TIME    :int = 0
+SFX_GRP :str = None
+CLIP  :tuple = None
 STEP_R  :int = 0 # how much in pwm steps does each color change per CLOCK_CYCLE. pos or neg
 STEP_G  :int = 0
 STEP_B  :int = 0
 STEP_W  :int = 0
 STEP_C  :int = 0
-STEP_H  :int = 0 # Increment the hour
+STEP_H:float = 0.0 # Increment the hour
 ################## EFFECT BUFFER ######################
 
 
@@ -376,7 +377,7 @@ SFX_LIBRARY = {  # File    Name,       Duration, Description
                 
                } # The name is conformed to the soundboard specification
 
-WELCOME_CLIP = 'clip10'
+CLIP = 'clip10' # Welcome clip
 
 # SFX Groups
 A1 = [ # silence

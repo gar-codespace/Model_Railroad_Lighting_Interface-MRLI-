@@ -228,7 +228,7 @@ def edit_turn_left():
     setattr(entities, color, pwm_color_value) # writes the new value to entities.<color>
 
     pwm_color_value = model.pwm_percent(pwm_color_value)
-    entities.WORKING_BUFFER[color][index] = pwm_color_value[0] # writes the new value into the STATIC_BUFFER
+    entities.WORKING_BUFFER[color][index] = pwm_color_value # writes the new value into the STATIC_BUFFER
     lighting.set_led_values()
 
     return view.get_status_list()
@@ -245,7 +245,7 @@ def edit_turn_right():
     setattr(entities, color, pwm_color_value) # writes the new value to entities.<color>
     
     pwm_color_value = model.pwm_percent(pwm_color_value)
-    entities.WORKING_BUFFER[color][index] = pwm_color_value[0] # writes the new value into the STATIC_BUFFER
+    entities.WORKING_BUFFER[color][index] = pwm_color_value # writes the new value into the STATIC_BUFFER
     lighting.set_led_values()
 
     return view.get_status_list()
