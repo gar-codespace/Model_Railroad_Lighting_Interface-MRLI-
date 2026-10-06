@@ -153,10 +153,19 @@ def animated_run_vfx():
 
 def animated_first_line():
     '''The first line of the status screen.'''
+    '''Can't import datetime for some reason.'''
 
     first_line = f'   WP: {entities.WP_NAME}'
+
     if entities.HOUR:
-        first_line = f' Hour: {entities.HOUR}'
+
+        if int(entities.HOUR) >= 24:
+            entities.HOUR = 0
+
+        hour = f'0{int(entities.HOUR)}'[-2:]
+        minute = f'0{int((entities.HOUR - int(entities.HOUR))*60.0)}'[-2:]
+
+        first_line = f' Hour: {hour}:{minute}'
 
     return first_line
 

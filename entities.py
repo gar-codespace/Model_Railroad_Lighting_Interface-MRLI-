@@ -23,6 +23,7 @@ from random import randint as RANDINT
 import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
+# from datetime import datetime
 
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
@@ -265,7 +266,7 @@ ALL_DAY = { # simulates an entire day
 'CLOCK_OFFSET' : .864,
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
 'GROUP':  (    'A5',    'A5',    'A5',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A4',    'A5'), # sound effects group
-'HOUR':   (    2300,     100,     300,     500,     700,     900,    1100,    1300,    1500,    1700,    1900,    2100),
+'HOUR':   (      23,       1,       3,       5,       7,       9,      11,      13,      15,      17,      19,      21),
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
 

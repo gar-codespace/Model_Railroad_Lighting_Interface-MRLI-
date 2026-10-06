@@ -67,7 +67,7 @@ def lighting_effect_boiler_plate(index):
     model.get_waypoint_duration(index)
     model.get_next_waypoint(index)
     model.get_color_steps(index)
-    model.set_hour(index)
+    model.get_hour_steps(index)
 
     set_led_banks()
     set_led_values()

@@ -75,21 +75,6 @@ def get_next_waypoint(index):
 
         entities.NEXT_WP = int(next_index)
 
-def set_hour(index):
-    '''Display the time of day if appropriate.'''
-
-    x = entities.TIME / entities.WP_DUR # real world minutes per cycle
-
-
-
-
-
-    print(x)
-
-
-
-
-
 def get_color_steps(index):
     
     entities.STEP_R = get_color_delta(index, 'RED') / entities.WP_DUR
@@ -111,6 +96,11 @@ def get_color_delta(index:int, color:str):
 
     return int(color_delta)
 
+def get_hour_steps(index):
+    '''Display the time of day if appropriate.'''
+
+    entities.STEP_H = (entities.TIME / entities.WP_DUR) / 60  # ( minutes / )
+
 def increment_colors():
 
         entities.RED -= entities.STEP_R
@@ -118,6 +108,8 @@ def increment_colors():
         entities.BLUE -= entities.STEP_B
         entities.WARM -= entities.STEP_W
         entities.COOL -= entities.STEP_C
+
+        entities.HOUR += entities.STEP_H # This is in the wrong place
 
         entities.WP_DUR -= 1
 
