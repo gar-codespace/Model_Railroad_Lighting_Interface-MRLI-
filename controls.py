@@ -100,11 +100,10 @@ class UserInterface:
             except:
                 pass
                 
-
             try: # Run a visual effect if there is one
                 attrib = f'{entities.MACHINE_STATE}_run_vfx'
                 getattr(states, attrib)() # IE states.animated_run_vfx()
-                self.run_vfx(sound_clip)
+                self.run_vfx()
             except:
                 pass
 
@@ -178,10 +177,10 @@ class UserInterface:
 
 ################ visual effects method #################
 
-    def run_vfx(self, sound_clip):
+    def run_vfx(self):
         '''Runs the associated visual effect if it exists.'''
 
-        vfx = entities.AMBIENCE[sound_clip][3]
+        vfx = entities.AMBIENCE[entities.CLIP][3]
 
         try:
             attrib = f'run_{vfx}'
