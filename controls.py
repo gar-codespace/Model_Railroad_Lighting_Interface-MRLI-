@@ -68,6 +68,7 @@ class UserInterface:
 
         while True:
 
+            self.main_display.contrast(entities.MDB)
             try: # set next waypoint
                 attrib = f'{entities.MACHINE_STATE}_set_next_waypoint'
                 getattr(states, attrib)() # IE aniamated_set_next_waypoint()
@@ -159,7 +160,6 @@ class UserInterface:
         except:
             pass
 
-        self.main_display.contrast(entities.MAIN_DISPLAY_BRIGHTNESS)
         self.main_display.show()
 
 ################ sound method #################

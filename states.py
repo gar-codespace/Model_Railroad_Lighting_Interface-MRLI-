@@ -107,8 +107,8 @@ def effects_play_sound():
 def animated_click():
     '''Pause effect.'''
 
+    entities.MDB = entities.MAIN_DISPLAY_DIM
     entities.MACHINE_STATE = States.PAUSED
-    entities.MAIN_DISPLAY_BRIGHTNESS = entities.MAIN_DISPLAY_DIM
 
     return view.get_status_list()
 
@@ -324,7 +324,7 @@ def paused_click():
     '''Unpause animated effect.'''
 
     entities.MACHINE_STATE = States.ANIMATED
-    entities.MAIN_DISPLAY_BRIGHTNESS = entities.MAIN_DISPLAY_BRIGHT
+    entities.MDB = entities.MAIN_DISPLAY_BRIGHT
 
     return view.get_status_list()
 
