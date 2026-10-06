@@ -41,13 +41,13 @@ def set_up_effect():
         entities.CLOCK_CYCLE = entities.WORKING_BUFFER['CLOCK_CYCLE']
         entities.CLOCK_OFFSET = entities.WORKING_BUFFER['CLOCK_OFFSET']
 
-    index = entities.CURRENT_EFFECT[2]
-    lighting_effect_boiler_plate(index)
+    entities.CUR_WP = entities.CURRENT_EFFECT[2]
+
+    lighting_effect_boiler_plate(entities.CUR_WP)
 
 def set_next_waypoint():
 
-    index = entities.NEXT_WP
-    lighting_effect_boiler_plate(index)
+    lighting_effect_boiler_plate(entities.NEXT_WP)
 
 def lighting_effect_boiler_plate(index):
     '''Common to set_up_effect and set_next_waypoint.'''
@@ -67,7 +67,7 @@ def lighting_effect_boiler_plate(index):
     model.get_waypoint_duration(index)
     model.get_next_waypoint(index)
     model.get_color_steps(index)
-    model.get_hour_steps(index)
+    model.get_hour_steps()
 
     set_led_banks()
     set_led_values()

@@ -209,6 +209,7 @@ BANK_2  :int = 1
 BANK_3  :int = 1
 BANK_4  :int = 1
 SCENIC  :int = 1
+CUR_WP  :int = None
 WP_DUR  :int = 1 # waypoint_duration is the number of times the effect will await, given a delay of entities.CLOCK_CYCLE
 NEXT_WP :int = 0 # Index of the next waypoint
 WP_NAME :str = 'name'
