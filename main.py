@@ -19,7 +19,7 @@ async def main():
         
         await entities.UASYNCIO.gather(
                                       ui.run_lighting_effect(),
-                                      ui.run_sound_effects(),
+                                      ui.play_ambient_sounds(),
                                       ui.get_encoder().async_tick(),
                                       ui.get_all_the_buttons(),
                                       )

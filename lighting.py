@@ -2,6 +2,7 @@
 This library creates and runs both animated and static lighting effects.
 Static effects are all grouped together in one dictionary called entities.SINGLES.
 Each animated effect gets its own dictionary.
+Special VFX functions are here as well.
 '''
 
 import entities
@@ -58,8 +59,8 @@ def lighting_effect_boiler_plate(index):
     get_hour(index)
     if not current_waypoint_name == entities.WP_NAME:
         print(f'Current effect waypoint: {entities.WP_NAME}')
-        print(f'Current sound fx group: {entities.CLIP_G}')
-        print(f'Current hour: {entities.HOUR}')
+        print(f'Current ambient sound group: {entities.CLIP_G}')
+        # print(f'Current hour: {entities.HOUR}')
 
     set_up_colors(index)
     set_up_banks(index)
@@ -164,5 +165,5 @@ def run_bolt():
         entities.PWM(c).duty_u16(int(i[0]))
         entities.UTIME.sleep_ms(i[1])
 
-    print(sub_set)
+    # print(sub_set)
     

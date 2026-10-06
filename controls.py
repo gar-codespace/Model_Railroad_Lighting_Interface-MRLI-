@@ -7,8 +7,9 @@ import sound
 
 
 class UserInterface:
-    '''The user interface initializes with the welcome screen displayed
-    and entities.WELCOME_CLIP is played.
+    '''
+    The user interface initializes with the welcome screen displayed
+    and a 'welcome' sound clip is played as well.
     '''
 
     def __init__(self):
@@ -18,7 +19,8 @@ class UserInterface:
         model.set_relay_pins()
     # Sets pico pins to pwm
         model.set_pwm_led_pins()
-    # Front panel buttons        
+    # Front panel buttons
+    # TODO maybe change buttons from poling to irq
         pin = entities.PIN(entities.PICO_PIN['CONFIRM'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.bC = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_confirm_release, name='STANDBY')
         # pin = entities.PIN(entities.PICO_PIN['BACK'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
@@ -85,7 +87,7 @@ class UserInterface:
 
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
-    def run_sound_effects(self): # How does this work without async?
+    def play_ambient_sounds(self): # How does this work without async?
         '''Sound effect clips don't play when the state is WELCOME, PAUSED or STANDBY.'''
 
         while True:

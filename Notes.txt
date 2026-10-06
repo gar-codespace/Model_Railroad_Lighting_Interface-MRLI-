@@ -14,7 +14,7 @@ Static effects have only one waypoint, therefore the end is the same as the begi
 
 Sound effects:
 
-The controls.run_sound_effects() method is an asyncio loop. It never stops running so silence is accomplished bu sending
+The controls.play_ambient_sounds() method is an asyncio loop. It never stops running so silence is accomplished bu sending
 a silent clip to the player. Sound effects are combined together in groups. A sound effect group is assigned to every waypoint,
 animated and static. The code randomly selects a sound effect from the group and adds a pad of random length to the end of the
 sound effect. The sound effect length and pad are used as the asyncio wait. Sound effects are pushed to the player,
@@ -30,7 +30,7 @@ The lightning visual effect uses only the cool LEDs. A bunch of tuples are descr
 
 Operations:
 
-When the machine is paused, the machines state is set to PAUSED and the animated pauses. Set next waypoint and increment waypoint have no method for PAUSED, so that even though the the asyncio while loop keeps going, no action is taken. Same for run_sound_effects(). Since there is no paused_play_sound() method, the currently playing clip will finish and no new one will be played.
+When the machine is paused, the machines state is set to PAUSED and the animated pauses. Set next waypoint and increment waypoint have no method for PAUSED, so that even though the the asyncio while loop keeps going, no action is taken. Same for play_ambient_sounds(). Since there is no paused_play_sound() method, the currently playing clip will finish and no new one will be played.
 
 When the maching is put in standby, the animated effect keeps running in the background. The LED banks are turned off so the machine looks like it's turned off. Sound effects are treated the same as PAUSED.
 

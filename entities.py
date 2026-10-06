@@ -3,7 +3,7 @@ All the settings for the program are here.
 All the imports are in one place.
 '''
 
-__version__ = '20260901.1.1'
+__version__ = '20261001.1.1'
 __repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
 
 ###### PICK A DISPLAY DRIVER ######
@@ -28,7 +28,7 @@ import uasyncio as UASYNCIO
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 from hw_button import Button
 DISPLAY_DRIVER = __import__(DISPLAY_LIBRARY).Driver_I2C
-SOUND_FX_DRIVER = __import__(SOUND_LIBRARY).SoundFX
+SOUND_BOARD_DRIVER = __import__(SOUND_LIBRARY).SoundFX
 
 ################## HARDWARE ######################
 
@@ -329,7 +329,7 @@ CLOUDY = { # Simulates a cloudy day
 PAD_MIN = 2000 # Pad is the time between sound effects in ms
 PAD_MAX = 20000 # maximum time between sfx (ms)
 
-AMBIENCE = {  # File    Name,       Duration, Description   VFX Vol flag
+AMBIENCE = {  # File    Name,       Duration, Description   VFX   Vol flag
                 'clip00':('SILENCE0OGG', 10, 'Silence',     None),
                 'clip01':('GULLS001OGG', 16, 'Seagulls 1',  None),
                 'clip02':('GULLS002OGG',  9, 'Seagulls 2',  None),
