@@ -96,12 +96,19 @@ def get_color_delta(index:int, color:str):
 
     return int(color_delta)
 
+
+
+
 def get_hour_steps(index):
     '''Display the time of day if appropriate.'''
 
     entities.STEP_H = (entities.TIME / entities.WP_DUR) / 60  # ( minutes / )
 
-def increment_colors():
+
+
+
+
+def increment_waypoint():
 
         entities.RED -= entities.STEP_R
         entities.GREEN -= entities.STEP_G
@@ -109,8 +116,7 @@ def increment_colors():
         entities.WARM -= entities.STEP_W
         entities.COOL -= entities.STEP_C
 
-        entities.HOUR += entities.STEP_H # This is in the wrong place
-
+        entities.HOUR += entities.STEP_H
         entities.WP_DUR -= 1
 
 def get_menu_first_item():

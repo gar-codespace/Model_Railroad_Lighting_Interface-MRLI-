@@ -10,7 +10,7 @@ def get_ambient_sound_board(board:dict, bus:dict) -> object:
 def get_ambient_clip() -> tuple:
     '''Randomly pick a sound clip from the sfx group.'''
     
-    sfx_group = getattr(entities, entities.SFX_GRP)
+    sfx_group = getattr(entities, entities.CLIP_G)
     select = entities.RANDINT(0, len(sfx_group) - 1)
 
     entities.CLIP = sfx_group[select]

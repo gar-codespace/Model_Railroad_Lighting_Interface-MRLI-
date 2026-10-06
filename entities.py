@@ -23,7 +23,6 @@ from random import randint as RANDINT
 import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
-# from datetime import datetime
 
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
@@ -213,10 +212,10 @@ SCENIC  :int = 1
 WP_DUR  :int = 1 # waypoint_duration is the number of times the effect will await, given a delay of entities.CLOCK_CYCLE
 NEXT_WP :int = 0 # Index of the next waypoint
 WP_NAME :str = 'name'
-HOUR  :float = 0.0 # Fast time clock
+HOUR  :float = 0.0 # Fast time clock display
 TIME    :int = 0
-SFX_GRP :str = None
-CLIP  :tuple = None
+CLIP  :tuple = None # sound clip
+CLIP_G  :str = None # the name of the group, not the members
 STEP_R  :int = 0 # how much in pwm steps does each color change per CLOCK_CYCLE. pos or neg
 STEP_G  :int = 0
 STEP_B  :int = 0
@@ -266,16 +265,14 @@ ALL_DAY = { # simulates an entire day
 'CLOCK_OFFSET' : .864,
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
 'GROUP':  (    'A5',    'A5',    'A5',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A4',    'A5'), # sound effects group
-'HOUR':   (      23,       1,       3,       5,       7,       9,      11,      13,      15,      17,      19,      21),
+'HOUR':   (      23,       1,       3,       5,       7,       9,      11,      13,      15,      17,      19,      21), # the time of day
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
-
 'RED':    [    0.00,    0.00,    0.00,    .000,    .004,    0.02,    0.00,    0.00,    0.00,    .003,    .006,    .003],
 'GREEN':  [    0.00,    0.00,    0.00,    0.00,    .006,    0.02,    0.00,    0.00,    0.00,    .002,    .004,    .002],
 'BLUE':   [    .001,   .0005,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00,    0.00],
 'WARM':   [    0.00,    0.00,    0.00,    .000,    .005,    0.12,    0.18,    0.18,    0.22,    0.10,    .005,    .003],
 'COOL':   [    .001,    .001,    .001,    0.00,    0.00,    0.01,    0.02,    0.03,    0.02,    .001,    0.00,    .000],
-
 'BANK_0': [       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1],
 'BANK_1': [       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0],
 'BANK_2': [       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1,       1],
@@ -313,13 +310,11 @@ CLOUDY = { # Simulates a cloudy day
 'HOUR':   (       0,        0,        0,         0),
 'TIME':   (       4,      3.5,      2.5,       3.5), # duration of waypoint in real time minutes
 'RANDOM': (      .7,       .7,       .7,        .7),
-
 'RED':    [    0.00,     0.00,     0.00,      0.00],
 'GREEN':  [    0.00,     0.00,     0.00,      0.00],
 'BLUE':   [    0.00,     0.00,     0.00,      0.00],
 'WARM':   [     .22,      .22,     .045,      .045],
 'COOL':   [     .02,      .02,     .026,      .026],
-
 'BANK_0': [       1,        1,        1,         1],
 'BANK_1': [       0,        0,        0,         0],
 'BANK_2': [       1,        1,        1,         1],

@@ -121,7 +121,7 @@ def animated_click2():
 
 def animated_increment_waypoint():
 
-    model.increment_colors()
+    model.increment_waypoint()
 
 def animated_set_next_waypoint():
 

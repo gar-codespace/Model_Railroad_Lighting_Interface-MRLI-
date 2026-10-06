@@ -16,7 +16,7 @@ def run_startup_effect(): # Special case, runs only on startup.
     entities.WORKING_BUFFER = entities.SINGLES
     entities.WP_DUR = entities.STARTUP_EFFECT_LENGTH / entities.DEFAULT_CYCLE
     entities.NEXT_WP = end_index
-    entities.SFX_GRP =  entities.WORKING_BUFFER['GROUP'][end_index]
+    entities.CLIP_G =  entities.WORKING_BUFFER['GROUP'][end_index]
 
     set_up_colors(begin_index)
     set_led_values()
@@ -26,7 +26,7 @@ def run_startup_effect(): # Special case, runs only on startup.
     model.get_color_steps(begin_index)
     while entities.WP_DUR > 0:
 
-        model.increment_colors()
+        model.increment_waypoint()
         set_led_values()
 
         entities.UTIME.sleep_ms(entities.DEFAULT_CYCLE)
@@ -58,7 +58,7 @@ def lighting_effect_boiler_plate(index):
     get_hour(index)
     if not current_waypoint_name == entities.WP_NAME:
         print(f'Current effect waypoint: {entities.WP_NAME}')
-        print(f'Current sound fx group: {entities.SFX_GRP}')
+        print(f'Current sound fx group: {entities.CLIP_G}')
         print(f'Current hour: {entities.HOUR}')
 
     set_up_colors(index)
@@ -78,7 +78,7 @@ def get_waypoint_name(index):
 
 def get_sfx_group(index):
 
-    entities.SFX_GRP = entities.WORKING_BUFFER['GROUP'][index]
+    entities.CLIP_G = entities.WORKING_BUFFER['GROUP'][index]
 
 def get_hour(index):
 
