@@ -99,14 +99,10 @@ def get_color_delta(index:int, color:str):
 def get_hour_steps():
     '''Display the time of day if appropriate.'''
 
-
-    # entities.CUR_WP
     if entities.WORKING_BUFFER['HOUR'][entities.CUR_WP]:
-        entities.STEP_H = (entities.TIME / entities.WP_DUR) / 60  # ( minutes / )
+        entities.STEP_H = (entities.TIME / entities.WP_DUR) / 60
     else:
         entities.STEP_H = 0
-
-
 
 def increment_waypoint():
 

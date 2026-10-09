@@ -1,10 +1,11 @@
 '''
 Hardware library for the rotary encoder.
-https://github.com/TTitanUA/micropython_rotary_encoder/tree/main
-rolled up rotary_encoder_rp2.py into this file
+Rolled up rotary_encoder_rp2.py into this file
 timeout is now based on entities.DEFAULT_CYCLE
 Move imports to entities
 '''
+__author__ = 'https://github.com/TTitanUA/micropython_rotary_encoder/tree/main'
+
 
 import entities
 

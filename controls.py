@@ -40,7 +40,7 @@ class UserInterface:
 
         pin = entities.PIN(entities.PICO_PIN['SCENIC_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         bS = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='SCENIC')
-
+    # Encoder
         self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
@@ -91,7 +91,7 @@ class UserInterface:
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
     def play_ambient_sounds(self): # How does this work without async?
-        '''Sound effect clips don't play when the state is WELCOME, PAUSED or STANDBY.'''
+        '''Ambient sound clips don't play when the state is WELCOME, PAUSED or STANDBY.'''
 
         while True:
 
@@ -241,6 +241,6 @@ class UserInterface:
         try:
             attrib = f'{entities.MACHINE_STATE}_bank' # IE states.edit_bank(name, index)
             getattr(states, attrib)(name, index)
-            print(f'{message}: {name}')
+            # print(f'{message}: {name}')
         except:
             pass

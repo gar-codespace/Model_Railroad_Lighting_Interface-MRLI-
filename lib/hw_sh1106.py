@@ -1,9 +1,9 @@
 '''
-Hardware library for an SH1106 OLED.
-MicroPython SH1106 OLED driver, I2C interfaces
-https://github.com/CrispStrobe/sh1106-py
+Hardware library for an SH1106 OLED, I2C interface
 imports moved to entities
 '''
+__author__ = 'https://github.com/CrispStrobe/sh1106-py'
+
 
 import entities
 

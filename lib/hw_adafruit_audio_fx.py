@@ -10,7 +10,7 @@ so there is no RX pin on the Pico, and duplex becomes a toggle.
 Move imports to entities
 '''
 '''
-The structure of 'board' looks like this:
+Board parameters:
 SB0 = { # Adafruit Sound FX Board
         'VOLUME':100,
         'MIN_VOL':0,
@@ -21,10 +21,12 @@ SB0 = { # Adafruit Sound FX Board
         }
 '''
 '''
-If the UART pin is connected to ground to set the board to uart mode,
-reset dous not work, so the reset pin is useless. Only power cycling
+TODO If the UART pin is connected to ground to set the board to uart mode,
+reset does not work, so the reset pin is useless. Only power cycling
 will reset the board when it is in UART mode.
 '''
+__author__ = 'Greg Ritacco'
+
 
 import entities
 
