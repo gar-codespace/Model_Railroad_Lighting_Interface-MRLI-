@@ -21,7 +21,6 @@ async def main():
                                       ui.run_lighting_effect(),
                                       ui.play_ambient_sounds(),
                                       ui.get_encoder().async_tick(),
-                                      ui.get_all_the_buttons(),
                                       )
 
 entities.UASYNCIO.run(main())

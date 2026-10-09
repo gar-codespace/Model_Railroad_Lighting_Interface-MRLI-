@@ -1,19 +1,11 @@
 '''
 Hardware library for the fromt panel buttons.
-https://github.com/ubidefeo/MicroPython-Button
 Move imports to entities
-
-params looks like this:
-BUTTON0 = { # Generic push button, normally open
-            'NORMALLY_OPEN':True,
-            'DEBOUNCE_TIME':50,
-            'PRESSED':'pressed',
-            'RELEASED':'released',
-            }
-
 '''
+__author__ = 'https://github.com/ubidefeo/MicroPython-Button'
 
 import entities
+
 
 class Button:
 

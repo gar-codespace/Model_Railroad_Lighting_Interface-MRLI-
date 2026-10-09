@@ -27,6 +27,7 @@ import uasyncio as UASYNCIO
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 from hw_button import Button
+from hw_irq_button import IrqButton
 DISPLAY_DRIVER = __import__(DISPLAY_LIBRARY).Driver_I2C
 SOUND_BOARD_DRIVER = __import__(SOUND_LIBRARY).SoundFX
 
@@ -129,6 +130,12 @@ BUTTON0 = {
             'RELEASED':'button released'
             }
 
+BUTTON_IRQ = {
+            'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
+            'DEBOUNCE_TIME':50,
+            'PRESSED':'button pressed',
+            'RELEASED':'button released'
+            }
 
 ################## SOFTWARE ######################
 

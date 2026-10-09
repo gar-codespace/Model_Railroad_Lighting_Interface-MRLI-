@@ -20,27 +20,30 @@ class UserInterface:
     # Sets pico pins to pwm
         model.set_pwm_led_pins()
     # Front panel buttons
-    # TODO maybe change buttons from poling to irq
         pin = entities.PIN(entities.PICO_PIN['CONFIRM'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.bC = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_confirm_release, name='STANDBY')
-        # pin = entities.PIN(entities.PICO_PIN['BACK'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        # self.bB = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_back_release, name=None)
+        bC = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_confirm_release, name='STANDBY')
+
         pin = entities.PIN(entities.PICO_PIN['BANK_0_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b0 = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='BANK_0')
+        b0 = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_0')
+
         pin = entities.PIN(entities.PICO_PIN['BANK_1_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b1 = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='BANK_1')
+        b1 = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_1')
+
         pin = entities.PIN(entities.PICO_PIN['BANK_2_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b2 = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='BANK_2')
+        b2 = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_2')
+
         pin = entities.PIN(entities.PICO_PIN['BANK_3_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b3 = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='BANK_3')
+        b3 = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_3')
+
         pin = entities.PIN(entities.PICO_PIN['BANK_4_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b4 = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='BANK_4')
+        b4 = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_4')
+
         pin = entities.PIN(entities.PICO_PIN['SCENIC_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.bS = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='SCENIC')
-    # Encoder
-        self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], entities.PIN.IN, entities.PIN.PULL_UP)
-        self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], entities.PIN.IN, entities.PIN.PULL_UP)
-        self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], entities.PIN.IN, entities.PIN.PULL_UP)
+        bS = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='SCENIC')
+
+        self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
     # I2C
         sda = entities.PIN(entities.PICO_PIN['SDA'])
         scl = entities.PIN(entities.PICO_PIN['SCL'])
@@ -113,7 +116,9 @@ class UserInterface:
             await entities.UASYNCIO.sleep_ms(wait)
 
     def get_encoder(self):
-        '''The await part is in async_tick.'''
+        '''The await part is in async_tick.
+        TODO move this to an irq trigger
+        '''
 
         encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_trb,
                                             pin_dt=self.encoder_tra,
@@ -126,22 +131,6 @@ class UserInterface:
         encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.cb_multi_click)
 
         return encoder 
-
-    def get_all_the_buttons(self): # How does this work without async?
-        '''Consolidate all the front panel buttons into one loop.'''
-
-        while(True):
-
-            self.bC.update()
-            # self.bB.update()
-            self.b0.update()
-            self.b1.update()
-            self.b2.update()
-            self.b3.update()
-            self.b4.update()
-            self.bS.update() # that's an s not a 5
-
-            await entities.UASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
 
 ################ display method #################
 
