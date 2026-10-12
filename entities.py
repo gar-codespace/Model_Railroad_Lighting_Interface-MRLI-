@@ -123,11 +123,18 @@ SB0 = {
 
 ################## PUSH BUTTON PARAMETERS ######################
 
-BUTTON_IRQ = {
-            'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
+IRQ_BUTTON_0 = {
+            'INITIATE_TRIGGER':'falling', # pick one
+            # 'INITIATE_TRIGGER':'rising',
+            # 'INITIATE_TRIGGER':'high',
+            # 'INITIATE_TRIGGER':'low'
+
+            'RISING | FALLING':True, # one or the other
+            'HIGH | LOW':False,
+
+            'PRESS_MSG':'button pressed',
+            'RELEASE_MSG':'button released',
             'MULTI_PRESS_TIME':50,
-            'PRESSED':'button pressed',
-            'RELEASED':'button released'
             }
 
 ################## SOFTWARE ######################
