@@ -45,23 +45,23 @@ class UserInterface:
         self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
     # I2C
-        sda = entities.PIN(entities.PICO_PIN['SDA'])
-        scl = entities.PIN(entities.PICO_PIN['SCL'])
+        self.sda = entities.PIN(entities.PICO_PIN['SDA'])
+        self.scl = entities.PIN(entities.PICO_PIN['SCL'])
     # UART
-        tx = entities.PIN(entities.PICO_PIN['TX'])
-        rx = None
+        self.tx = entities.PIN(entities.PICO_PIN['TX'])
+        self.rx = None
         # reset_pin = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
-# Initialize The Machine
-        model.get_menu_first_item()
-        entities.WORKING_BUFFER = entities.SINGLES
-        self.standby_toggle: str
 
-        i2c_bus = model.get_i2c(entities.I2C0, sda=sda, scl=scl)
+    def boot(self):
+# Initialize The Machine
+        i2c_bus = model.get_i2c(entities.I2C0, sda=self.sda, scl=self.scl)
         self.main_display = view.get_display(entities.MAIN_DISPLAY, i2c_bus)
 
-        uart_bus = model.get_uart(entities.UART0, tx=tx, rx=rx)
+        uart_bus = model.get_uart(entities.UART0, tx=self.tx, rx=self.rx)
         self.ambient_sound_board = sound.get_ambient_sound_board(entities.SB0, uart_bus)
 # Start The Machine
+        entities.WORKING_BUFFER = entities.SINGLES
+        model.get_menu_first_item()
         self.update_display(view.get_welcome_list())
         self.play_ambient_sound()
         lighting.run_startup_effect()

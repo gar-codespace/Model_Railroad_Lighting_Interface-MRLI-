@@ -14,6 +14,7 @@ import controls
 async def main():
 
     ui = controls.UserInterface()
+    ui.boot()
 
     while True:
         
