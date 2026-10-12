@@ -19,27 +19,27 @@ class UserInterface:
         model.set_relay_pins()
     # Sets pico pins to pwm
         model.set_pwm_led_pins()
-    # Front panel buttons
+    # Front panel buttons use IRQ
         pin = entities.PIN(entities.PICO_PIN['CONFIRM'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        bC = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_confirm_release, name='STANDBY')
+        entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_confirm_release, name='STANDBY')
 
         pin = entities.PIN(entities.PICO_PIN['BANK_0_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        b0 = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_0')
+        entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_0')
 
         pin = entities.PIN(entities.PICO_PIN['BANK_1_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        b1 = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_1')
+        entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_1')
 
         pin = entities.PIN(entities.PICO_PIN['BANK_2_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        b2 = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_2')
+        entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_2')
 
         pin = entities.PIN(entities.PICO_PIN['BANK_3_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        b3 = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_3')
+        entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_3')
 
         pin = entities.PIN(entities.PICO_PIN['BANK_4_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        b4 = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_4')
+        entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='BANK_4')
 
         pin = entities.PIN(entities.PICO_PIN['SCENIC_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        bS = entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='SCENIC')
+        entities.IrqButton(params=entities.BUTTON_IRQ, pin=pin, cb_release=self.cb_bank_release, name='SCENIC')
     # Encoder
         self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
@@ -104,7 +104,7 @@ class UserInterface:
                 duration = self.play_ambient_sound()
             except:
                 pass
-                
+        # TODO this seems to be in the wrong place
             try: # Run a visual effect if there is one
                 attrib = f'{entities.MACHINE_STATE}_run_vfx'
                 getattr(states, attrib)() # IE states.animated_run_vfx()
@@ -117,6 +117,7 @@ class UserInterface:
 
     def get_encoder(self):
         '''The await part is in async_tick.
+        TODO can this be simpler
         TODO move this to an irq trigger
         '''
 

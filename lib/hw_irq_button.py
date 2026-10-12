@@ -1,12 +1,12 @@
 '''
-Hardware library for the fromt panel buttons.
+Hardware library for the front panel buttons.
 Move imports to entities
 '''
 '''
 Parameters are:
 BUTTON_IRQ = {
             'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED TODO Does this matter?
-            'MULTI_PRESS_TIME':50,
+            'MULTI_PRESS_TIME':50, TODO implement multi press
             'PRESSED':'button pressed',
             'RELEASED':'button released'
             }
@@ -42,7 +42,7 @@ class IrqButton:
       self.button_state = 0
       self.release_callback()
 
-    entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
+    entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE) # Adds some more stability
     pin.irq(handler=self.interrupt)
 
   def press_callback(self):
