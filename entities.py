@@ -92,15 +92,13 @@ UART0 = {
           'BAUD_RATE':9600
         }
 
-################## OLED CONFIGURATIONS ######################
+################## DISPLAY ######################
 
 OLED0 = {
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
         }
-
-################## MAIN DISPLAY ######################
 
 MAIN_DISPLAY = OLED0
 MAIN_DISPLAY_BRIGHT = 70
@@ -113,28 +111,23 @@ MAIN_FORMAT =  {
                 'X_OFFSET': 4
                 }
 
-################## SOUND HARDWARE ######################
+################## SOUND ######################
 
-# Adafruit Sound FX Board
 SB0 = {
+       'BOARD': 'Adafruit Sound FX Board',
        'WAIT':50,
        'DUPLEX':False
        }
 
+SOUND_BOARD = SB0
+
 ################## PUSH BUTTON PARAMETERS ######################
 
 IRQ_BUTTON_0 = {
-            'INITIATE_TRIGGER':'falling', # pick one
-            # 'INITIATE_TRIGGER':'rising',
-            # 'INITIATE_TRIGGER':'high',
-            # 'INITIATE_TRIGGER':'low'
-
-            'RISING | FALLING':True, # one or the other
-            'HIGH | LOW':False,
-
+            'TRIGGER_ON_FALLING':True,
             'PRESS_MSG':'button pressed',
             'RELEASE_MSG':'button released',
-            'MULTI_PRESS_TIME':50,
+            'MULTI_PRESS_TIME':50, # future expansion
             }
 
 ################## SOFTWARE ######################

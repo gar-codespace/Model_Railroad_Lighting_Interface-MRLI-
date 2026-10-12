@@ -40,7 +40,7 @@ class UserInterface:
 
         pin = entities.PIN(entities.PICO_PIN['SCENIC_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         entities.IrqButton(params=entities.IRQ_BUTTON_0, pin=pin, cb_release=self.cb_bank_release, name='SCENIC')
-    # Encoder
+    # Encoder uses polling
         self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
@@ -53,13 +53,12 @@ class UserInterface:
         # reset_pin = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
 
     def boot(self):
-# Initialize The Machine
+    # Initialize The Machine
         i2c_bus = model.get_i2c(entities.I2C0, sda=self.sda, scl=self.scl)
         self.main_display = view.get_display(entities.MAIN_DISPLAY, i2c_bus)
-
         uart_bus = model.get_uart(entities.UART0, tx=self.tx, rx=self.rx)
-        self.ambient_sound_board = sound.get_ambient_sound_board(entities.SB0, uart_bus)
-# Start The Machine
+        self.ambient_sound_board = sound.get_ambient_sound_board(entities.SOUND_BOARD, uart_bus)
+    # Start The Machine
         entities.WORKING_BUFFER = entities.SINGLES
         model.get_menu_first_item()
         self.update_display(view.get_welcome_list())
