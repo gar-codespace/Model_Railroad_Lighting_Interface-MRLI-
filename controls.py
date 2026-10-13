@@ -6,7 +6,7 @@ import lighting
 import sound
 
 
-class UserInterface:
+class Machine:
     '''
     The user interface initializes with the welcome screen displayed
     and a 'welcome' sound clip is played as well.

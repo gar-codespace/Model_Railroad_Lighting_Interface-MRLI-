@@ -13,15 +13,15 @@ import controls
 
 async def main():
 
-    ui = controls.UserInterface()
-    ui.boot()
+    mech = controls.Machine()
+    mech.boot()
 
     while True:
         
         await entities.UASYNCIO.gather(
-                                      ui.run_lighting_effect(),
-                                      ui.play_ambient_sounds(),
-                                      ui.get_encoder().async_tick(),
+                                      mech.run_lighting_effect(),
+                                      mech.play_ambient_sounds(),
+                                      mech.get_encoder().async_tick(),
                                       )
 
 entities.UASYNCIO.run(main())
