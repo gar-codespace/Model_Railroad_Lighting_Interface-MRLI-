@@ -8,12 +8,12 @@ Copyright 2026 Greg Ritacco
 
 
 import entities
-import controls
+import controller
 
 
 async def main():
 
-    mech = controls.Machine()
+    mech = controller.Machine()
     mech.boot()
 
     while True:
