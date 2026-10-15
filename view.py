@@ -3,13 +3,38 @@ import model
 import states
 
 
-def get_display(board, bus) -> object:
+class Display:
 
-    width = board['WIDTH']
-    height = board['HEIGHT']
-    addr = board['ADDRESS']
+    def __init__(self, I2C):
 
-    return entities.DISPLAY_DRIVER(width, height, bus, addr)
+        self.i2c = I2C
+
+    def get_main_display(self):
+
+        width = entities.MAIN_DISPLAY['WIDTH']
+        height = entities.MAIN_DISPLAY['HEIGHT']
+        addr = entities.MAIN_DISPLAY['ADDRESS']
+        self.main_display = entities.DISPLAY_DRIVER(width, height, self.i2c, addr)
+
+    def update_main_display(self, content: list = entities.WELCOME_SCREEN):
+
+        self.main_display.fill(0)
+        self.main_display.contrast(entities.MDB)
+
+        line_y = 3 # vertically center the text in the display
+        for i in range(entities.MAIN_FORMAT['ROWS']):
+            self.main_display.text(content[i], entities.MAIN_FORMAT['X_OFFSET'], line_y)
+            line_y += entities.MAIN_FORMAT['LINE_HEIGHT']
+
+        try: # add the hilight rectangle
+            attrib = f'{entities.MACHINE_STATE}_get_hilight'
+            h = getattr(states, attrib)()
+            self.main_display.rect(0, h, 128, 12, 1)
+        except:
+            pass
+
+        self.main_display.show()
+
 
 def get_welcome_list() -> list:
 
@@ -48,7 +73,6 @@ def get_status_list() -> list:
     status_screen.append(first_line)
     
     value = model.pwm_percent(entities.RED)
-    # status_screen.append(f'  Red: {value[1]}%')
     status_screen.append(f'  Red: {value:.4%}')
 
     value = model.pwm_percent(entities.GREEN)

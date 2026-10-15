@@ -1,11 +1,28 @@
 import entities
 
-def get_ambient_sound_board(board:dict, bus:dict) -> object:
 
-    ambient_sound_board = entities.SOUND_BOARD_DRIVER(board, bus)
-    # ambient_sound_board.set_volume()
+class Sound:
 
-    return ambient_sound_board
+    def __init__(self, UART):
+
+        self.uart = UART
+
+    def get_ambient_sound_board(self):
+
+        self.ambient_sound_board = entities.SOUND_BOARD_DRIVER(entities.SOUND_BOARD, self.uart)
+
+    def play_ambient_sound(self):
+
+        clip = entities.AMBIENCE[entities.CLIP][0]
+        duration = entities.AMBIENCE[entities.CLIP][1] * 1000 # ms
+        description = entities.AMBIENCE[entities.CLIP][2]
+
+        self.ambient_sound_board.play_now(clip)
+
+        print(f'Ambient Clip: {clip} - {description}')
+
+        return duration
+
 
 def get_ambient_clip() -> tuple:
     '''Randomly pick a sound clip from the ambient sounds group.'''

@@ -183,7 +183,7 @@ EDIT_SCREEN_ITEMS = [
                  'WARM',
                  'COOL'
                 ]
-EDIT_PWM_TICKS = 100 # How many ticks per indent of the rotary encoder when changing color values.
+EDIT_PWM_TICKS = 10 # How many ticks per indent of the rotary encoder when changing color values.
                 # Smaller is finer control.
 
 ################## BUFFERS ######################
@@ -293,7 +293,7 @@ STORMY = { # Simulates a stormy night
 'GREEN':  [    0.00,       0.00,     0.00,      0.00],
 'BLUE':   [   .0035,      .0035,    .0035,     .0035],
 'WARM':   [    0.00,       0.00,     0.00,      0.00],
-'COOL':   [    .000,       .000,    .0008,     .0008],
+'COOL':   [    .000,       .000,    .0009,     .0009],
 'BANK_0': [       0,          0,        0,         0],
 'BANK_1': [       0,          0,        0,         0],
 'BANK_2': [       0,          0,        0,         0],

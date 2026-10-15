@@ -137,6 +137,20 @@ def shut_off_led_banks():
     entities.PIN(entities.PICO_PIN['BANK_4_R']).value(0)
     entities.PIN(entities.PICO_PIN['SCENIC_R']).value(0)
 
+################ visual effects method #################
+
+def run_vfx():
+    '''Runs the associated visual effect if it exists.'''
+
+    vfx = entities.AMBIENCE[entities.CLIP][3]
+    run_bolt()
+
+    try:
+        attrib = f'run_{vfx}'
+        getattr(attrib)() # IE run_bolt()
+    except:
+        pass
+
 ########## VISUAL EFFECTS ###########
 '''
 For now there is only one but there could be more.
