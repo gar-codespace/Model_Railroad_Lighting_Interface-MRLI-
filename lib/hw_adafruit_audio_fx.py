@@ -4,21 +4,15 @@ This library is a much less enthusiastic version of:
 https://github.com/mmabey/Adafruit_Soundboard_uPy/tree/master
 
 I have taylored it to the specific requirements of my project.
-For this project it is not necessary to receive any replies from the sound card,
-so there is no RX pin on the Pico, and duplex becomes a toggle.
-
-Move imports to entities
+For this project the RX pin on the Pico is optional.
 '''
 '''
 Board parameters:
-SB0 = { # Adafruit Sound FX Board
-        'VOLUME':100,
-        'MIN_VOL':0,
-        'MAX_VOL':204,
-        'MIN_WAIT':30, # milleseconds
-        'DUPLEX':False,
-        'RESET_PIN':object
-        }
+SB0 = {
+       'BOARD': 'Adafruit Sound FX Board',
+       'WAIT':50,
+       'DUPLEX':False
+       }
 '''
 '''
 TODO If the UART pin is connected to ground to set the board to uart mode,

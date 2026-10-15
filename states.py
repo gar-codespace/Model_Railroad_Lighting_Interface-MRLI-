@@ -110,7 +110,7 @@ def animated_click():
     entities.MDB = entities.MAIN_DISPLAY_DIM
     entities.MACHINE_STATE = States.PAUSED
 
-    return view.get_status_list()
+    # return view.get_status_list()
 
 def animated_click2():
     '''Return to the effects menu.'''

@@ -72,7 +72,7 @@ class Machine:
 
         while True:
 
-            self.main_display.contrast(entities.MDB)
+            # self.main_display.contrast(entities.MDB)
             try: # set next waypoint
                 attrib = f'{entities.MACHINE_STATE}_set_next_waypoint'
                 getattr(states, attrib)() # IE aniamated_set_next_waypoint()
@@ -117,7 +117,6 @@ class Machine:
     def get_encoder(self):
         '''The await part is in async_tick.
         TODO can this be simpler
-        TODO move this to an irq trigger
         '''
 
         encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_trb,
@@ -137,6 +136,7 @@ class Machine:
     def update_display(self, content: list = entities.WELCOME_SCREEN):
 
         self.main_display.fill(0)
+        self.main_display.contrast(entities.MDB)
 
         line_y = 3 # vertically center the text in the display
         for i in range(entities.MAIN_FORMAT['ROWS']):

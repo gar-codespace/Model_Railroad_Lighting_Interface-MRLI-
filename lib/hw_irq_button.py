@@ -9,7 +9,6 @@ IRQ_BUTTON_0 = {
             'TRIGGER_ON_FALLING':True,
             'PRESS_MSG':'button pressed',
             'RELEASE_MSG':'button released',
-            'MULTI_PRESS_TIME':50, # future expansion
             }
 '''
 

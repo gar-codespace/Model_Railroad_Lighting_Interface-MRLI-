@@ -9,7 +9,7 @@ This program creates lighting effects suitable for a model railroad or diorama.
 It controls up to 5 banks of rgbwc LEDs and controls the on or off value of the layouts scenic lights.  
 There is also an audio module that is used for ambient sounds.  
 Front panel controls feature six buttons and a combined OLED and rotary encoder with two additional buttons.  
-Five aof the six buttons toggle the LED strips on or off, the sixth button toggles the layouts scenic lights on or off.  
+Five of the six buttons toggle the LED strips on or off, the sixth button toggles the layouts scenic lights on or off.  
 The rotary encoder and OLED display are used for navigation.  
 There are two additional buttons included with the encoder module. The one marked control toggles the machine in and out of standby state.  
 The button marked Back is not used.  
