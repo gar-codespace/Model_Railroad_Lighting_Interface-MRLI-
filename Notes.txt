@@ -1,12 +1,12 @@
 Animated Effects:
 
-The controls.run_lighting_effect() method is an asyncio loop, it never stops. So in that
-sense lighting effects are never stopped. When a new one is chosen, it elbows the current
-one out of the way and start running beginning at the selected waypoint. The first try block sets the waypoints.The second try block increments the color changes, it tries to run states.animated_increment_waypoint().
+The controller.run_lighting_effect() method is an asyncio loop. So in that
+sense a lighting effects is always running. When a new one is chosen, it elbows the current
+one out of the way and starts running beginning at the selected waypoint. The first try-block sets the waypoints. The second try-block increments the color changes, it tries to run states.animated_increment_waypoint().
 
-When entities.WP_DUR is counted down to zero, the first try block will run the states.aniamated_set_next_waypoint() method. This method will populate entities.WP_DUR.entities.WP_NAME, entities.NEXT_WP (an index) and entities.CLIP_G. It will also populate the five entities.STEP<color> values. In the future, LED banks might be toggled here as well, but for now they don't change during an animated effect. An animated effect will loop back to the first waypoint after it completes the last waypoint, so in effect animated effects have no end.
+When entities.WP_DUR is counted down to zero, the first try-block will run the states.aniamated_set_next_waypoint() method. This method will populate entities.WP_DUR, entities.WP_NAME, entities.NEXT_WP (an index) and entities.CLIP_G. It will also populate the five entities.STEP<color> values. In the future, LED banks might be toggled here as well, but for now they don't change during an animated effect. An animated effect will loop back to the first waypoint after it completes the last waypoint.
 
-There were two ways to code an animated effect, either hold the await constant and have different increments for each color, or have all colors have the same increment and have a different await for each color (5 asyncio loops). In testing the first one was better, the color transitions could be controlled to eliminate noticible stepping as the effect progressed.
+There were two ways to code an animated effect, either hold the await constant and have different increments for each color, or have all colors have the same increment and have a different await for each color (5 asyncio loops). In testing the first one was better, the color transitions could be controlled to eliminate noticeable stepping as the effect progressed.
 
 Static Effects:
 
@@ -14,11 +14,7 @@ Static effects have only one waypoint, therefore the end is the same as the begi
 
 Sound effects:
 
-The controls.play_ambient_sounds() method is an asyncio loop. It never stops running so silence is accomplished bu sending
-a silent clip to the player. Sound effects are combined together in groups. A sound effect group is assigned to every waypoint,
-animated and static. The code randomly selects a sound effect from the group and adds a pad of random length to the end of the
-sound effect. The sound effect length and pad are used as the asyncio wait. Sound effects are pushed to the player,
-messages are sent back from the player but I don't use them.
+The controller.play_ambient_sounds() method is an asyncio loop. Since it never stops running silence is accomplished bu sending a silent clip to the player. Sound effects are combined together in groups. A sound effect group is assigned to every waypoint, animated and static. The code randomly selects a sound effect from the group and adds a pad of random length to the end of the sound effect. The sound effect length and pad are used as the asyncio wait. Sound effects are pushed to the player, messages are sent back from the player but I don't use them.
 
 Visual effects:
 
@@ -30,7 +26,7 @@ The lightning visual effect uses only the cool LEDs. A bunch of tuples are descr
 
 Operations:
 
-When the machine is paused, the machines state is set to PAUSED and the animated pauses. Set next waypoint and increment waypoint have no method for PAUSED, so that even though the the asyncio while loop keeps going, no action is taken. Same for play_ambient_sounds(). Since there is no paused_play_sound() method, the currently playing clip will finish and no new one will be played.
+When the machine is paused, the machines state is set to PAUSED and the animation pauses. Set next waypoint and increment waypoint have no method for PAUSED, so that even though the asyncio-while loop keeps going, no action is taken. Same for play_ambient_sounds(). Since there is no paused_play_sound() method, the currently playing clip will finish and no new one will be played.
 
 When the maching is put in standby, the animated effect keeps running in the background. The LED banks are turned off so the machine looks like it's turned off. Sound effects are treated the same as PAUSED.
 

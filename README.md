@@ -45,13 +45,14 @@ board is sent to an Adafruit amplifier card, which is run in analog mode. Volume
   
 ## Hardware  
 Raspberry Pi Pico or Pico 2  
-Generic display module (Amazon: AITRIP 1PCS 0.96 Inch OLED Display Module with Buttons EC11 Rotary Encoder IIC Interface LCD Screen Compatible with Arduino(White Color))  
-Generic display module (Amazon: 1.3 inch White OLED Display Screen Combined with EC11 Rotary Encoder Module IIC Interface for arduino)  
+Generic display module:  
+(Amazon: AITRIP 1PCS 0.96 Inch OLED Display Module with Buttons EC11 Rotary Encoder IIC Interface LCD Screen Compatible with Arduino(White Color))  
+or (Amazon: 1.3 inch White OLED Display Screen Combined with EC11 Rotary Encoder Module IIC Interface for arduino)  
 Power Converter (Amazon: DC to DC Power Converter Buck Module 12V 16V (8V to 22V) Buck to 3.3V 2A 3A Max IP67 Waterproof with Overcurrent Overheat Short-Circuit Undervoltage Protection )  
 Adafruit STEMMA Relays  
 Adafruit Sound Effects Board
 Adafruit Stereo 20W Class D Audio Amplifier - MAX9744  
-Plugs, switches, buttons etc. 
+Plugs, switches, buttons, enclosure etc. 
   
 ## Operation  
 This project is built upon a state machine pattern, with a bit of MVC mixed in. It is always running a lighting effect, and sound effects are run when the machine is in certain states.  
@@ -63,7 +64,7 @@ ANIMATED - Displays the values of the RGBWC colors as they change.
 PAUSED - The animated effect is paused.  
 STATIC - Displays a selectable list of the RGBWC colors.  
 EDIT - Changable value of the selected color.  
-STANDBY - Mutes the display, sound, and RGBWC lights.  The effect is not paused.  
+STANDBY - Mutes the display, sound, and RGBWC lights.  The lighting effect is not paused.  
 
 ## Navigation  
 In display state WELCOME:  
@@ -92,7 +93,7 @@ In display state STATIC:
 
 In display state EDIT:  
   Rotate encoder: change color value  
-  Single press encoder: return to display state STATIC   
+  Single press encoder: save change and return to display state STATIC   
   Double press encoder: None  
   LED bank buttons: toggle LEDs  
   
@@ -108,8 +109,7 @@ In display state PAUSED:
   Double press encoder: None  
   LED bank buttons: None  
 
-In any state the standby button will toggle STANDBY  
-  
+In any state the standby button will toggle STANDBY    
  
 ## Third Party Developers
 Thank you for providing these hardware libraries.    
@@ -125,12 +125,5 @@ OLED Display Library:
 https://github.com/stlehmann/micropython-ssd1306/blob/master/ssd1306.py  
 https://github.com/CrispStrobe/sh1106-py  
   
-Button library:  
-https://github.com/ubidefeo/MicroPython-Button  
-  
 Adafruit Sound FX Card:   
 https://github.com/mmabey/Adafruit_Soundboard_uPy  
-
-## License
-The scripts included in this program are © 2026 Greg Ritacco.  
-Other then that, there are no restrictions on use.  
