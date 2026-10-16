@@ -84,21 +84,24 @@ class Machine:
 
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
-    def play_ambient_sounds(self): # How does this work without async?
-        '''Ambient sound clips don't play when the state is WELCOME, PAUSED or STANDBY.'''
+    def play_ambient_effects(self): # How does this work without async?
+        '''
+        Ambient effects are designed to enhance the lighting effects.
+        Ambient sound clips don't play when the state is WELCOME, PAUSED or STANDBY.
+        '''
 
         while True:
 
             sound.get_ambient_clip()
             duration = 1000
 
-            try: # Play the sound clip
+            try: # Play a sound clip
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound()
                 duration = self.sound.play_ambient_sound()
             except:
                 pass
-# TODO this seems to be in the wrong place
+
             try: # Run a visual effect if there is one
                 attrib = f'{entities.MACHINE_STATE}_run_vfx'
                 getattr(states, attrib)() # IE states.animated_run_vfx()
