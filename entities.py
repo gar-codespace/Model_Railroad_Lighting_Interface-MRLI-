@@ -101,6 +101,7 @@ OLED0 = {
         }
 
 MAIN_DISPLAY = OLED0
+MAIN_DISPLAY_LENGTH = 15 # Characters per line
 MAIN_DISPLAY_BRIGHT = 70
 MAIN_DISPLAY_DIM = 1
 MDB = MAIN_DISPLAY_BRIGHT
@@ -144,31 +145,28 @@ MACHINE_STATE = None
 STANDBY_TOGGLE = None
 STARTUP_EFFECT_LENGTH = 5000 # Milliseconds
 
-WELCOME_SCREEN = ['   M.U.T.T.',
-                  ' Metropolitan',
-                  '    Union',
-                  '   Transfer',
-                  '   Terminal'
-                  ] # 6 lines maximum, 15 char per line
+WELCOME_SCREEN = ['M.U.T.T.', 'Metropolitan', 'Union ', 'Transfer', 'Terminal'] # 6 lines maximum, 15 char per line
 
 EFFECTS_MENU = { #     Name             Type    Index
-             0: ('| Maintenance',   'STATIC',  1),
-             1: ('| Daytime',       'STATIC',  2),
-             2: ('| Overcast',      'STATIC',  3),
-             3: ('| Twilight',      'STATIC',  5),
-             4: ('| Nightime',      'STATIC',  4),
-             5: ('> 11PM',         'ALL_DAY',  0),
-             6: ('> 3AM',          'ALL_DAY',  2),
-             7: ('> 7AM',          'ALL_DAY',  4),
-             8: ('> 11AM',         'ALL_DAY',  6),
-             9: ('> 3PM',          'ALL_DAY',  8),
-            10: ('> 7PM',          'ALL_DAY', 10),
-            11: ('> A Cloudy Day',  'CLOUDY',  0),
-            12: ('> Stormy Night',  'STORMY',  0)
+             0: ('Maintenance',   'STATIC',  1),
+             1: ('Daytime',       'STATIC',  2),
+             2: ('Overcast',      'STATIC',  3),
+             3: ('Twilight',      'STATIC',  5),
+             4: ('Nightime',      'STATIC',  4),
+             5: ('11PM',         'ALL_DAY',  0),
+             6: ('3AM',          'ALL_DAY',  2),
+             7: ('7AM',          'ALL_DAY',  4),
+             8: ('11AM',         'ALL_DAY',  6),
+             9: ('3PM',          'ALL_DAY',  8),
+            10: ('7PM',          'ALL_DAY', 10),
+            11: ('A Cloudy Day',  'CLOUDY',  0),
+            12: ('Stormy Night',  'STORMY',  0)
             } # In the order they show on the display
 EFFECTS_HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 EFFECTS_HILIGHTED_EFFECT = 1 # EFFECTS_MENU key
 EFFECTS_MENU_FIRST_ITEM: int # calculated on startup by model.get_menu_first_item()
+EFFECTS_MENU_STATIC_SYMBOL = '|'
+EFFECTS_MENU_ANIMATED_SYMBOL = '>'
 
 CURRENT_EFFECT = EFFECTS_MENU[EFFECTS_HILIGHTED_EFFECT] # Must be a STATIC effect
 

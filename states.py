@@ -155,7 +155,8 @@ def animated_first_line():
     '''The first line of the status screen.'''
     '''Can't import datetime for some reason.'''
 
-    first_line = f'   WP: {entities.WP_NAME}'
+    line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s' # Center on screen
+    text = f'WP: {entities.WP_NAME}'
 
     if entities.HOUR:
 
@@ -165,9 +166,9 @@ def animated_first_line():
         hour = f'0{int(entities.HOUR)}'[-2:]
         minute = f'0{int((entities.HOUR - int(entities.HOUR))*60.0)}'[-2:]
 
-        first_line = f' Hour: {hour}:{minute}'
+        text = f'Hour: {hour}:{minute}'
 
-    return first_line
+    return f'{text:{line_format}}'
 
 
 ########### MACHINE_STATE: STATIC
@@ -233,9 +234,10 @@ def static_play_sound():
 def static_first_line():
     '''The first line of the status screen.'''
 
-    name = entities.CURRENT_EFFECT[0].lstrip('| ')
+    name = entities.CURRENT_EFFECT[0]
+    line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s' # Center on screen
 
-    return f'{name:^15s}'
+    return f'{name:{line_format}}'
 
 
 ########### MACHINE_STATE: EDIT
@@ -312,9 +314,10 @@ def edit_play_sound():
 def edit_first_line():
     '''The first line of the status screen.'''
 
-    name = entities.CURRENT_EFFECT[0].lstrip('| ')
+    name = entities.CURRENT_EFFECT[0]
+    line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s' # Center on screen
 
-    return f'{name:^15s}'
+    return f'{name:{line_format}}'
 
 
 ########### MACHINE_STATE: PAUSED

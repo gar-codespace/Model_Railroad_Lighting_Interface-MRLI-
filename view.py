@@ -39,10 +39,11 @@ class Display:
 def get_welcome_list() -> list:
 
     welcome_list: list = []
+    line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s'
 
-    for i in range(0, entities.MAIN_FORMAT['ROWS']):
+    for i in range(entities.MAIN_FORMAT['ROWS']):
         try:
-            welcome_list.append(entities.WELCOME_SCREEN[i])
+            welcome_list.append(f'{entities.WELCOME_SCREEN[i]:{line_format}}')
         except:
             welcome_list.append('')
 
@@ -57,7 +58,12 @@ def get_effects_list() -> list:
 
     menu_list: list = []
     for i in range(0, entities.MAIN_FORMAT['ROWS']):
-        menu_list.append(entities.EFFECTS_MENU.get(index_subset[i])[0])
+        line_prefix = entities.EFFECTS_MENU_ANIMATED_SYMBOL
+        if entities.EFFECTS_MENU.get(index_subset[i])[1] == 'STATIC':
+            line_prefix = entities.EFFECTS_MENU_STATIC_SYMBOL
+        line = f'{line_prefix} {entities.EFFECTS_MENU.get(index_subset[i])[0]}'
+        print(entities.EFFECTS_MENU.get(index_subset[i])[0])
+        menu_list.append(line)
 
     return menu_list
 
