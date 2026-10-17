@@ -19,7 +19,7 @@ class Sound:
 
         self.ambient_sound_board.play_now(clip)
 
-        print(f'Ambient Clip: {clip} - {description}')
+        print(f'Ambient Sound Clip: {description}')
 
         return duration
 

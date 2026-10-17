@@ -49,16 +49,16 @@ class Machine:
     def boot(self):
 # Initialize The Machine
         i2c_bus = model.get_i2c(entities.I2C0, sda=self.sda, scl=self.scl)
-        self.display = view.Display(i2c_bus)
-        self.display.get_main_display()
+        self.main_display = view.Display(i2c_bus)
+        self.main_display.get_main_display()
         uart_bus = model.get_uart(entities.UART0, tx=self.tx, rx=self.rx)
         self.sound = sound.Sound(uart_bus)
         self.sound.get_ambient_sound_board()
 # Start The Machine
         entities.WORKING_BUFFER = entities.SINGLES
         model.get_menu_first_item()
-        self.display.update_main_display(view.get_welcome_list())
-        self.sound.play_ambient_sound()
+        self.main_display.update_main_display(view.get_welcome_list())
+        self.sound.play_ambient_sound() # Plays entities.CLIP, default is 'Welcome'
         lighting.run_startup_effect()
 
 ################ methods in main - UASYNCIO.gather ##################
@@ -78,7 +78,7 @@ class Machine:
                 attrib = f'{entities.MACHINE_STATE}_increment_waypoint'
                 getattr(states, attrib)() # IE animated_increment_waypoint()
                 lighting.set_led_values()
-                self.display.update_main_display(view.get_status_list())
+                self.main_display.update_main_display(view.get_status_list())
             except:
                 pass
 
@@ -87,7 +87,7 @@ class Machine:
     def play_ambient_effects(self): # How does this work without async?
         '''
         Ambient effects are designed to enhance the lighting effects.
-        Ambient sound clips don't play when the state is WELCOME, PAUSED or STANDBY.
+        Ambient sound clips don't play when the state is WELCOME, EFFECTS, PAUSED or STANDBY.
         '''
 
         while True:
@@ -134,7 +134,7 @@ class Machine:
         try:
             attrib = f'{entities.MACHINE_STATE}_turn_left'
             display_content = getattr(states, attrib)() # IE states.welcome_turn_left()
-            self.display.update_main_display(display_content)
+            self.main_display.update_main_display(display_content)
         except:
             pass
 
@@ -143,7 +143,7 @@ class Machine:
         try:
             attrib = f'{entities.MACHINE_STATE}_turn_right'
             display_content = getattr(states, attrib)() # IE states.welcome_turn_right()
-            self.display.update_main_display(display_content)
+            self.main_display.update_main_display(display_content)
         except:
             pass        
 
@@ -152,7 +152,7 @@ class Machine:
         try:
             attrib = f'{entities.MACHINE_STATE}_click'
             display_content = getattr(states, attrib)() # IE states.welcome_click()
-            self.display.update_main_display(display_content)
+            self.main_display.update_main_display(display_content)
         except:
             pass
 
@@ -161,7 +161,7 @@ class Machine:
         try:
             attrib = f'{entities.MACHINE_STATE}_click2'
             display_content = getattr(states, attrib)() # IE states.welcome_click2()
-            self.display.update_main_display(display_content)
+            self.main_display.update_main_display(display_content)
         except:
             pass
 
@@ -171,7 +171,7 @@ class Machine:
         try:
             attrib = f'{entities.MACHINE_STATE}_toggle' # IE states.standby_toggle()
             display_content = getattr(states, attrib)()
-            self.display.update_main_display(display_content)
+            self.main_display.update_main_display(display_content)
         except:
             pass
 

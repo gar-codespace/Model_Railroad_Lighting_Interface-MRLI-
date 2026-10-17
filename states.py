@@ -97,8 +97,8 @@ def effects_toggle():
 
     return view.get_empty_list()
 
-def effects_play_sound():
-    '''Sound FX clips play in this state.'''
+# def effects_play_sound():
+#     '''Sound FX clips play in this state.'''
 
 
 ########### MACHINE_STATE: ANIMATED

@@ -57,12 +57,11 @@ def get_effects_list() -> list:
     entities.EFFECTS_HILIGHTED_EFFECT = index_subset[entities.EFFECTS_HIGHLIGHT_ROW]
 
     menu_list: list = []
-    for i in range(0, entities.MAIN_FORMAT['ROWS']):
+    for i in range(entities.MAIN_FORMAT['ROWS']):
         line_prefix = entities.EFFECTS_MENU_ANIMATED_SYMBOL
         if entities.EFFECTS_MENU.get(index_subset[i])[1] == 'STATIC':
             line_prefix = entities.EFFECTS_MENU_STATIC_SYMBOL
         line = f'{line_prefix} {entities.EFFECTS_MENU.get(index_subset[i])[0]}'
-        print(entities.EFFECTS_MENU.get(index_subset[i])[0])
         menu_list.append(line)
 
     return menu_list
