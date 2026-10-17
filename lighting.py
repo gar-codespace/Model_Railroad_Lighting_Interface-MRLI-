@@ -143,11 +143,10 @@ def run_vfx():
     '''Runs the associated visual effect if it exists.'''
 
     vfx = entities.AMBIENCE[entities.CLIP][3]
-    run_bolt()
 
     try:
         attrib = f'run_{vfx}'
-        getattr(attrib)() # IE run_bolt()
+        getattr(VFX, attrib)() # IE run_bolt()
     except:
         pass
 
@@ -156,28 +155,30 @@ def run_vfx():
 For now there is only one but there could be more.
 '''
 
-def run_bolt():
-    '''
-    Simulated lightning.
-    sub_set is a list of random length between 5 and 10 made up
-    from randomly selected tuples from entities.LIGHTNING
-    '''
+class VFX:
 
-# create a list of random length
-    sample_count = len(entities.LIGHTNING) - 1 # The number of entries in entities.LIGHTNING
-    sub_set_length = entities.RANDINT(5, 10) # A random number for the length of the subset
-    sub_set = []
-# Populate the random list with randomly chosen tuples.
-    for _ in range(0, sub_set_length):
-        pick_one = entities.RANDINT(0, sample_count) # Random integer
-        sub_set.append(entities.LIGHTNING[pick_one]) # An entry from entities.LIGHTNING picked at random
+    def run_bolt():
+        '''
+        Simulated lightning.
+        sub_set is a list of random length between 5 and 10 made up
+        from randomly selected tuples from entities.LIGHTNING
+        '''
 
-# Run the randomly created list
-    c = entities.PICO_PIN['COOL']
-    for i in sub_set:
+    # create a list of random length
+        sample_count = len(entities.LIGHTNING) - 1 # The number of entries in entities.LIGHTNING
+        sub_set_length = entities.RANDINT(5, 10) # A random number for the length of the subset
+        sub_set = []
+    # Populate the random list with randomly chosen tuples.
+        for _ in range(sub_set_length):
+            pick_one = entities.RANDINT(0, sample_count) # Random integer
+            sub_set.append(entities.LIGHTNING[pick_one]) # An entry from entities.LIGHTNING picked at random
 
-        entities.PWM(c).duty_u16(int(i[0]))
-        entities.UTIME.sleep_ms(i[1])
+    # Run the randomly created list
+        c = entities.PICO_PIN['COOL']
+        for i in sub_set:
 
-    # print(sub_set)
+            entities.PWM(c).duty_u16(int(i[0]))
+            entities.UTIME.sleep_ms(i[1])
+
+        # print(sub_set)
     

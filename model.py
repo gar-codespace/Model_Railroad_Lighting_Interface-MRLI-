@@ -28,7 +28,7 @@ def pwm_percent(pwm):
 def get_index_double():
     '''IE [0, 1, 2, 3, 4, 0, 1, 2, 3 , 4]'''
     
-    index_double = tuple(range(0, len(entities.EFFECTS_MENU)))
+    index_double = tuple(range(len(entities.EFFECTS_MENU)))
     index_double = index_double + index_double
 
     return index_double
