@@ -3,9 +3,6 @@ All the settings for the program are here.
 All the imports are in one place.
 '''
 
-__version__ = '20261001.1.1'
-__repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
-
 ###### PICK A DISPLAY DRIVER ######
 
 # Choose this for the 1.3 inch display
@@ -134,14 +131,14 @@ IRQ_BUTTON_0 = {
 
 ################## TIME BASE ######################
 
-FAST_TIME_CLOCK = 8 # used in model railroading to compress time.
-DEFAULT_CYCLE = 20 # milliseconds used for other awaits
-START_TIME = 0 # Used for the waypoint duration measurement.
-END_TIME = 0 # Used for the waypoint duration measurement.
+FAST_TIME_CLOCK:int = 8 # used in model railroading to compress time.
+DEFAULT_CYCLE:int = 20 # milliseconds used for other awaits
+START_TIME:int = 0 # Used for the waypoint duration measurement.
+END_TIME:int = 0 # Used for the waypoint duration measurement.
 
 ################## NAVIGATION ######################
 
-MACHINE_STATE = None
+MACHINE_STATE  = None
 STANDBY_TOGGLE = None
 STARTUP_EFFECT_LENGTH = 5000 # Milliseconds
 
@@ -164,10 +161,9 @@ EFFECTS_MENU = { #     Name             Type    Index
             } # In the order they show on the display
 EFFECTS_HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
 EFFECTS_HILIGHTED_EFFECT = 1 # EFFECTS_MENU key
-EFFECTS_MENU_FIRST_ITEM: int # calculated on startup by model.get_menu_first_item()
+EFFECTS_MENU_FIRST_ITEM:int # calculated on startup by model.get_menu_first_item()
 EFFECTS_MENU_STATIC_SYMBOL = '|'
 EFFECTS_MENU_ANIMATED_SYMBOL = '>'
-
 CURRENT_EFFECT = EFFECTS_MENU[EFFECTS_HILIGHTED_EFFECT] # Must be a STATIC effect
 
 STATIC_SELECT_ROW = 3 # In STATIC state, the encoder moves the rectangle up and down
@@ -193,8 +189,8 @@ WORKING_BUFFER = {} # Either the static dictionary or one of the animated dictio
 # In STATIC state user inputs are written here.
 # The slower the clock cycle, the more accurate the delay.
 CLOCK_CYCLE = 500 # Milliseconds. WP_DUR * CLOCK_CYCLE = total time of the waypoint
-CLOCK_OFFSET = 1 # Adjustment to keep the effect times closer to what they should be.
-                 # Adjusts for asyncio overhead slowing down the effects.
+CLOCK_OFFSET = 1 # Adjusts for asyncio overhead slowing down the effects.
+                 
 RED     :int = 32500 # PWM value
 GREEN   :int = 32500
 BLUE    :int = 32500

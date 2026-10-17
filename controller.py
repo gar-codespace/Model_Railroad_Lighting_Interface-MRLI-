@@ -59,7 +59,7 @@ class Machine:
         model.get_menu_first_item()
         self.main_display.update_main_display(view.get_welcome_list())
         self.sound.play_ambient_sound() # Plays entities.CLIP, default is 'Welcome'
-        lighting.run_startup_effect()
+        lighting.fade_up_lights()
 
 ################ methods in main - UASYNCIO.gather ##################
 
@@ -77,7 +77,7 @@ class Machine:
             try: # only update colors when an animated effect is running
                 attrib = f'{entities.MACHINE_STATE}_increment_waypoint'
                 getattr(states, attrib)() # IE animated_increment_waypoint()
-                lighting.set_led_values()
+                lighting.set_pwm_values()
                 self.main_display.update_main_display(view.get_status_list())
             except:
                 pass

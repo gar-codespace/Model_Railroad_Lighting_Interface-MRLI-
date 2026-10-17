@@ -5,6 +5,7 @@ import lighting
 
 
 class States:
+    '''String enum seems like overkill.'''
 
     WELCOME = 'welcome'
     EFFECTS = 'effects'
@@ -152,7 +153,7 @@ def animated_run_vfx():
     '''Visual effects run in this state.'''
 
 def animated_first_line():
-    '''The first line of the status screen.'''
+    '''The first line of the status screen is the time or waypoint name.'''
     '''Can't import datetime for some reason.'''
 
     line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s' # Center on screen
@@ -232,7 +233,7 @@ def static_play_sound():
     '''Sound FX clips play in this state.'''
 
 def static_first_line():
-    '''The first line of the status screen.'''
+    '''The first line of the status screen is the waypoint name.'''
 
     name = entities.CURRENT_EFFECT[0]
     line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s' # Center on screen
@@ -256,7 +257,7 @@ def edit_turn_left():
 
     pwm_color_value = model.pwm_percent(pwm_color_value)
     entities.WORKING_BUFFER[color][index] = pwm_color_value # writes the new value into the STATIC_BUFFER
-    lighting.set_led_values()
+    lighting.set_pwm_values()
 
     return view.get_status_list()
 
@@ -273,7 +274,7 @@ def edit_turn_right():
     
     pwm_color_value = model.pwm_percent(pwm_color_value)
     entities.WORKING_BUFFER[color][index] = pwm_color_value # writes the new value into the STATIC_BUFFER
-    lighting.set_led_values()
+    lighting.set_pwm_values()
 
     return view.get_status_list()
 
@@ -312,7 +313,7 @@ def edit_play_sound():
     '''Sound FX clips play in this state.'''
 
 def edit_first_line():
-    '''The first line of the status screen.'''
+    '''The first line of the status screen is the waypoint name.'''
 
     name = entities.CURRENT_EFFECT[0]
     line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s' # Center on screen
@@ -339,7 +340,7 @@ def standby_toggle():
     '''Takes the machine out of standby.'''
 
     entities.MACHINE_STATE = entities.STANDBY_TOGGLE
-    lighting.set_led_banks()
+    lighting.set_bank_relays()
 
     if entities.MACHINE_STATE == 'effects':
         return view.get_effects_list()

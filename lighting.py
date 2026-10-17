@@ -1,5 +1,4 @@
 '''
-This library creates and runs both animated and static lighting effects.
 Static effects are all grouped together in one dictionary called entities.SINGLES.
 Each animated effect gets its own dictionary.
 Special VFX functions are here as well.
@@ -8,8 +7,11 @@ Special VFX functions are here as well.
 import entities
 import model
 
-def run_startup_effect(): # Special case, runs only on startup.
-    '''Effect fades up LEDs from dark (STATIC.Stby) to the the values of EFFECTS_HILIGHTED_EFFECT.'''
+def fade_up_lights():
+    '''
+    Special case, runs only on startup.
+    This effect fades up LEDs from dark (STATIC.Stby) to the the values of EFFECTS_HILIGHTED_EFFECT.
+    '''
 
     begin_index = 0
     end_index = entities.CURRENT_EFFECT[2]
@@ -19,16 +21,16 @@ def run_startup_effect(): # Special case, runs only on startup.
     entities.NEXT_WP = end_index
     entities.CLIP_G =  entities.WORKING_BUFFER['GROUP'][end_index]
 
-    set_up_colors(begin_index)
-    set_led_values()
+    set_color_values(begin_index)
+    set_pwm_values()
     set_up_banks(end_index)
-    set_led_banks()
+    set_bank_relays()
 
     model.get_color_steps(begin_index)
     while entities.WP_DUR > 0:
 
         model.increment_waypoint()
-        set_led_values()
+        set_pwm_values()
 
         entities.UTIME.sleep_ms(entities.DEFAULT_CYCLE)
 
@@ -58,11 +60,10 @@ def lighting_effect_boiler_plate(index):
     get_sfx_group(index)
     get_hour(index)
     if not current_waypoint_name == entities.WP_NAME:
-        print(f'Current effect waypoint: {entities.WP_NAME}')
-        print(f'Current ambient sound group: {entities.CLIP_G}')
-        # print(f'Current hour: {entities.HOUR}')
+        print(f'Effect waypoint: {entities.WP_NAME}')
+        print(f'Ambient sound group: {entities.CLIP_G}')
 
-    set_up_colors(index)
+    set_color_values(index)
     set_up_banks(index)
 
     model.get_waypoint_duration(index)
@@ -70,8 +71,8 @@ def lighting_effect_boiler_plate(index):
     model.get_color_steps(index)
     model.get_hour_steps()
 
-    set_led_banks()
-    set_led_values()
+    set_bank_relays()
+    set_pwm_values()
 
 def get_waypoint_name(index):
 
@@ -86,7 +87,7 @@ def get_hour(index):
     entities.HOUR = entities.WORKING_BUFFER['HOUR'][index]
     entities.TIME = entities.WORKING_BUFFER['TIME'][index]
 
-def set_up_colors(index):
+def set_color_values(index):
     
     entities.RED   = int(entities.WORKING_BUFFER['RED'][index] * entities.PWM_STEPS)
     entities.GREEN = int(entities.WORKING_BUFFER['GREEN'][index] * entities.PWM_STEPS)
@@ -103,8 +104,7 @@ def set_up_banks(index):
     entities.BANK_4 = entities.WORKING_BUFFER['BANK_4'][index]
     entities.SCENIC = entities.WORKING_BUFFER['SCENIC'][index]
 
-def set_led_banks():
-    '''Sets the led bank relays from the value in the buffer.'''
+def set_bank_relays():
 
     entities.PIN(entities.PICO_PIN['BANK_0_R']).value(entities.BANK_0)
     entities.PIN(entities.PICO_PIN['BANK_1_R']).value(entities.BANK_1)
@@ -113,20 +113,18 @@ def set_led_banks():
     entities.PIN(entities.PICO_PIN['BANK_4_R']).value(entities.BANK_4)
     entities.PIN(entities.PICO_PIN['SCENIC_R']).value(entities.SCENIC)
 
-def set_led_values():
-    '''Sets the led pwm values from the value in the Effect Buffer.'''
+def set_pwm_values():
 
-    r = entities.PICO_PIN['RED']
-    g = entities.PICO_PIN['GREEN']
-    b = entities.PICO_PIN['BLUE']
-    w = entities.PICO_PIN['WARM']
-    c = entities.PICO_PIN['COOL']
-
-    entities.PWM(r).duty_u16(int(entities.RED))
-    entities.PWM(g).duty_u16(int(entities.GREEN))
-    entities.PWM(b).duty_u16(int(entities.BLUE))
-    entities.PWM(w).duty_u16(int(entities.WARM))
-    entities.PWM(c).duty_u16(int(entities.COOL))
+    pin = entities.PICO_PIN['RED']
+    entities.PWM(pin).duty_u16(int(entities.RED))
+    pin = entities.PICO_PIN['GREEN']
+    entities.PWM(pin).duty_u16(int(entities.GREEN))
+    pin = entities.PICO_PIN['BLUE']
+    entities.PWM(pin).duty_u16(int(entities.BLUE))
+    pin = entities.PICO_PIN['WARM']
+    entities.PWM(pin).duty_u16(int(entities.WARM))
+    pin = entities.PICO_PIN['COOL']
+    entities.PWM(pin).duty_u16(int(entities.COOL))
 
 def shut_off_led_banks():
 
@@ -153,6 +151,7 @@ def run_vfx():
 ########## VISUAL EFFECTS ###########
 '''
 For now there is only one but there could be more.
+Putting the VFX in class VFX is the easy way to get getattr(VFX, attrib)() to work.
 '''
 
 class VFX:
@@ -179,6 +178,5 @@ class VFX:
 
             entities.PWM(c).duty_u16(int(i[0]))
             entities.UTIME.sleep_ms(i[1])
-
         # print(sub_set)
     
