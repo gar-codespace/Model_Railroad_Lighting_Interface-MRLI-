@@ -2,7 +2,7 @@ import entities
 
 
 def set_relay_pins():
-    '''The STEMMA relay from Adafruit that turns the led banks or scenic lighting on or off.'''
+    '''The STEMMA relay from Adafruit.'''
 
     entities.PIN(entities.PICO_PIN['BANK_0_R'], entities.PIN.OUT)
     entities.PIN(entities.PICO_PIN['BANK_1_R'], entities.PIN.OUT)
@@ -12,7 +12,6 @@ def set_relay_pins():
     entities.PIN(entities.PICO_PIN['SCENIC_R'], entities.PIN.OUT)
 
 def set_pwm_led_pins():
-    '''Initializes the PWM pins.'''
 
     entities.PWM(entities.PIN(entities.PICO_PIN['RED']), freq=entities.PWM_FREQ)
     entities.PWM(entities.PIN(entities.PICO_PIN['GREEN']), freq=entities.PWM_FREQ)
@@ -20,13 +19,13 @@ def set_pwm_led_pins():
     entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
     entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
 
-def pwm_percent(pwm):
+def pwm_percent(pwm) ->float:
     '''Convert a pwm value to decimal percentage.'''
 
     return pwm / entities.PWM_STEPS
 
-def get_index_double():
-    '''IE [0, 1, 2, 3, 4, 0, 1, 2, 3 , 4]'''
+def get_index_double() ->tuple:
+    '''IE (0, 1, 2, 3, 4, 0, 1, 2, 3 , 4)'''
     
     index_double = tuple(range(len(entities.EFFECTS_MENU)))
     index_double = index_double + index_double
@@ -35,7 +34,7 @@ def get_index_double():
 
 def get_waypoint_duration(index):
     '''
-    The duration of the waypoint is the number of times the while loop is run.
+    The duration of the waypoint is the number of times the 'while loop' is run.
     When tested, the Picos clock was consistantly off from real time,
     due to the overhead from asyncio, so the CLOCK_OFFSET adjusts for that.
     '''
@@ -76,6 +75,7 @@ def get_next_waypoint(index):
         entities.NEXT_WP = int(next_index)
 
 def get_color_steps(index):
+    '''How much each pwm color changes per cycle.'''
     
     entities.STEP_R = get_color_delta(index, 'RED') / entities.WP_DUR
     entities.STEP_G = get_color_delta(index, 'GREEN') / entities.WP_DUR
@@ -116,7 +116,7 @@ def increment_waypoint():
         entities.WP_DUR -= 1
 
 def get_menu_first_item():
-    '''Abstracted to adjust for menu layout changes.'''
+    '''Abstracted to adjust for effects menu layout changes.'''
 
     index_double = get_index_double()
 

@@ -1,3 +1,7 @@
+'''
+These are the functions called from the callbacks in controller.Machine.
+'''
+
 import entities
 import model
 import view

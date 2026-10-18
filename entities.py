@@ -13,7 +13,7 @@ DISPLAY_LIBRARY = 'hw_sh1106'
 
 SOUND_LIBRARY = 'hw_adafruit_audio_fx'
 
-# packaged libraries
+# packaged libraries are kept to a minimum
 from machine import Pin as PIN, I2C, Timer as TIMER, PWM, UART
 from micropython import const as CONST
 from random import randint as RANDINT
@@ -23,7 +23,6 @@ import uasyncio as UASYNCIO
 
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
-# from hw_button import Button
 from hw_irq_button import IrqButton
 DISPLAY_DRIVER = __import__(DISPLAY_LIBRARY).Driver_I2C
 SOUND_BOARD_DRIVER = __import__(SOUND_LIBRARY).SoundFX
@@ -138,10 +137,10 @@ END_TIME:int = 0 # Used for the waypoint duration measurement.
 
 ################## NAVIGATION ######################
 
-MACHINE_STATE  = None
-STANDBY_TOGGLE = None
-STARTUP_EFFECT_LENGTH = 5000 # Milliseconds
+MACHINE_STATE:str  = None
+STANDBY_TOGGLE:str = None
 
+STARTUP_EFFECT_DURATION = 5000 # Milliseconds
 WELCOME_SCREEN = ['M.U.T.T.', 'Metropolitan', 'Union ', 'Transfer', 'Terminal'] # 6 lines maximum, 15 char per line
 
 EFFECTS_MENU = { #     Name             Type    Index
@@ -159,12 +158,12 @@ EFFECTS_MENU = { #     Name             Type    Index
             11: ('A Cloudy Day',  'CLOUDY',  0),
             12: ('Stormy Night',  'STORMY',  0)
             } # In the order they show on the display
-EFFECTS_HIGHLIGHT_ROW = 2 # which row is hilighted when scrolling effects
-EFFECTS_HILIGHTED_EFFECT = 1 # EFFECTS_MENU key
+EFFECTS_HIGHLIGHT_ROW = 2 # which row is hilighted
+EFFECTS_HILIGHTED_EFFECT = 1 # EFFECTS_MENU key and default effect
 EFFECTS_MENU_FIRST_ITEM:int # calculated on startup by model.get_menu_first_item()
 EFFECTS_MENU_STATIC_SYMBOL = '|'
 EFFECTS_MENU_ANIMATED_SYMBOL = '>'
-CURRENT_EFFECT = EFFECTS_MENU[EFFECTS_HILIGHTED_EFFECT] # Must be a STATIC effect
+CURRENT_EFFECT = EFFECTS_MENU[EFFECTS_HILIGHTED_EFFECT] # Must be a STATIC effect. Also used as the default effect.
 
 STATIC_SELECT_ROW = 3 # In STATIC state, the encoder moves the rectangle up and down
 
@@ -338,7 +337,7 @@ AMBIENCE = {  # File    Name,       Duration, Description   VFX   Vol flag
                 'clip12':('TRAIN001OGG', 12, 'Train 1',     None),
                 'clip13':('TRAIN002OGG', 12, 'Train 2',     None),
                 'clip14':('TRAIN002OGG',  9, 'Train 3',     None),
-                'clip15':('HORN0001OGG',  5, 'Horn 1',      None),
+                'clip15':('HORN0001OGG',  5, 'Horn 1',      None), # Not used
                 'clip16':('HORN0002OGG',  5, 'Horn 2',      None),
                 'clip17':('HORN0003OGG',  5, 'Horn 3',      None),
                 'clip18':('CRICKET1OGG',  8, 'Cricket 1',   None),
@@ -362,7 +361,7 @@ AMBIENCE = {  # File    Name,       Duration, Description   VFX   Vol flag
                 'clip36':('HORN0005OGG',  5, 'Horn 5',      None,1),
                 'clip37':('GEESE001OGG',  7, 'Geese 1',     None),
                 'clip38':('GEESE002OGG',  7, 'Geese 2',     None),
-                
+                'clip39':('GULLS006OGG',  8, 'Seagulls 6',  None), # Same as Seagulls 1
                } # The name is conformed to the soundboard specification
 
 CLIP = 'clip10' # Welcome clip
@@ -386,7 +385,7 @@ A3 = [ # Daytime
       'clip12', # Train 
       'clip13', # Train 
       'clip14', # Train 
-      'clip15', # Horn
+      'clip39', # Horn
       'clip16', # Horn
       'clip17', # Horn
       'clip35', # Horn
@@ -402,7 +401,7 @@ A4 = [ # Twlight, same as day + crickets + morning + geese - gulls
       'clip12', # Train 
       'clip13', # Train 
       'clip14', # Train 
-      'clip15', # Horn
+      'clip39', # Horn
       'clip16', # Horn
       'clip17', # Horn
       'clip18', # Cricket
@@ -424,7 +423,7 @@ A5 = [ # Night time, daytime - gulls + crickets + owles
       'clip12', # Train
       'clip13', # Train
       'clip14', # Train
-      'clip15', # Horn
+      'clip39', # Horn
       'clip16', # Horn
       'clip17', # Horn
       'clip18', # Cricket
@@ -449,7 +448,7 @@ D2 = [ # Stormy
       'clip12', # Train
       'clip13', # Train
       'clip14', # Train
-      'clip15', # Horn
+      'clip39', # Horn
       'clip16', # Horn
       'clip17', # Horn
       'clip11', # Brody

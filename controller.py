@@ -99,6 +99,7 @@ class Machine:
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound()
                 duration = self.sound.play_ambient_sound()
+                print(f'Ambient Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}')
             except:
                 pass
 

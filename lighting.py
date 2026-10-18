@@ -10,14 +10,14 @@ import model
 def fade_up_lights():
     '''
     Special case, runs only on startup.
-    This effect fades up LEDs from dark (STATIC.Stby) to the the values of EFFECTS_HILIGHTED_EFFECT.
+    This effect fades up LEDs from dark (SINGLES.Stby) to the the values of entities.CURRENT_EFFECT.
     '''
 
     begin_index = 0
     end_index = entities.CURRENT_EFFECT[2]
 
     entities.WORKING_BUFFER = entities.SINGLES
-    entities.WP_DUR = entities.STARTUP_EFFECT_LENGTH / entities.DEFAULT_CYCLE
+    entities.WP_DUR = entities.STARTUP_EFFECT_DURATION / entities.DEFAULT_CYCLE
     entities.NEXT_WP = end_index
     entities.CLIP_G =  entities.WORKING_BUFFER['GROUP'][end_index]
 
@@ -59,9 +59,10 @@ def lighting_effect_boiler_plate(index):
     get_waypoint_name(index)
     get_sfx_group(index)
     get_hour(index)
+    # TODO move this to controller
     if not current_waypoint_name == entities.WP_NAME:
-        print(f'Effect waypoint: {entities.WP_NAME}')
-        print(f'Ambient sound group: {entities.CLIP_G}')
+        print(f'Effect Waypoint: {entities.WP_NAME}')
+        print(f'Ambient Sound Group: {entities.CLIP_G}')
 
     set_color_values(index)
     set_up_banks(index)
@@ -150,8 +151,8 @@ def run_vfx():
 
 ########## VISUAL EFFECTS ###########
 '''
-For now there is only one but there could be more.
 Putting the VFX in class VFX is the easy way to get getattr(VFX, attrib)() to work.
+Additional visual effects can be added to this class.
 '''
 
 class VFX:
@@ -178,5 +179,4 @@ class VFX:
 
             entities.PWM(c).duty_u16(int(i[0]))
             entities.UTIME.sleep_ms(i[1])
-        # print(sub_set)
     

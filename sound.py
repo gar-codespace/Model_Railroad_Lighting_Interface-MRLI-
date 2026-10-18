@@ -11,15 +11,12 @@ class Sound:
 
         self.ambient_sound_board = entities.SOUND_BOARD_DRIVER(entities.SOUND_BOARD, self.uart)
 
-    def play_ambient_sound(self):
+    def play_ambient_sound(self) ->int:
 
         clip = entities.AMBIENCE[entities.CLIP][0]
         duration = entities.AMBIENCE[entities.CLIP][1] * 1000 # ms
-        description = entities.AMBIENCE[entities.CLIP][2]
 
         self.ambient_sound_board.play_now(clip)
-
-        print(f'Ambient Sound Clip: {description}')
 
         return duration
 
