@@ -88,7 +88,7 @@ class Machine:
     def play_ambient_effects(self): # How does this work without async?
         '''
         Ambient effects are designed to enhance the lighting effects.
-        Ambient sound clips don't play when the state is WELCOME, EFFECTS, PAUSED or STANDBY.
+        Ambient sound clips only play when the state is ANIMATED, STATIC, or EDIT.
         '''
 
         while True:

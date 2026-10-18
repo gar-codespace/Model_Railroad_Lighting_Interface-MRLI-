@@ -132,8 +132,9 @@ IRQ_BUTTON_0 = {
 
 FAST_TIME_CLOCK:int = 8 # used in model railroading to compress time.
 DEFAULT_CYCLE:int = 20 # milliseconds used for other awaits
-START_TIME:int = 0 # Used for the waypoint duration measurement.
-END_TIME:int = 0 # Used for the waypoint duration measurement.
+WAYPOINT_START:int = 0 # Used for the waypoint duration measurement.
+WAYPOINT_END:int = 0 # Used for the waypoint duration measurement.
+WAYPOINT_RUN_TIME:int = 0 # Time the waypoint actually ran (sec)
 
 ################## NAVIGATION ######################
 

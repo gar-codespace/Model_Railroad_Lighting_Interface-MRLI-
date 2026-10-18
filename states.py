@@ -82,7 +82,7 @@ def effects_click():
         entities.MACHINE_STATE = States.ANIMATED
 
     lighting.set_up_effect()
-    entities.START_TIME = entities.UTIME.time()
+    entities.WAYPOINT_START = entities.UTIME.time()
 
     return view.get_status_list()
 
@@ -132,15 +132,13 @@ def animated_set_next_waypoint():
 
     if entities.WP_DUR <= 1:
             
-        entities.END_TIME = entities.UTIME.time()
-        measured_time = entities.END_TIME - entities.START_TIME
-        entities.PROGRESS_MESSAGE = f'Measured duration: {measured_time} seconds'
-        view.put_progress_message() # Move this to controller
-        
+        entities.WAYPOINT_END = entities.UTIME.time()
+        entities.WAYPOINT_RUN_TIME = entities.WAYPOINT_END - entities.WAYPOINT_START
+
         lighting.set_next_waypoint()
         model.set_hour() # If that feature is utilized
 
-        entities.START_TIME = entities.UTIME.time()
+        entities.WAYPOINT_START = entities.UTIME.time()
   
 def animated_toggle():
     '''Puts machine in standby.'''

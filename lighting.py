@@ -50,9 +50,6 @@ def set_up_effect():
 
 def set_next_waypoint():
 
-    # print(entities.PROGRESS_MESSAGE)
-    # entities.PROGRESS_MESSAGE = None
-
     lighting_effect_boiler_plate(entities.NEXT_WP)
 
 def lighting_effect_boiler_plate(index):
@@ -63,11 +60,10 @@ def lighting_effect_boiler_plate(index):
     get_sfx_group(index)
     get_hour(index)
 
-    # TODO move this to controller
     if not current_waypoint_name == entities.WP_NAME:
-        entities.PROGRESS_MESSAGE = f'Waypoint: {entities.WP_NAME}, Sound Group: {entities.CLIP_G}'
-        # print(entities.PROGRESS_MESSAGE)
-        # entities.PROGRESS_MESSAGE = None
+        entities.PROGRESS_MESSAGE = f'Waypoint Run Time: {entities.WAYPOINT_RUN_TIME} (sec)\n\
+New Waypoint: {entities.WP_NAME}\n\
+Sound Group: {entities.CLIP_G}'
 
     set_color_values(index)
     set_up_banks(index)
