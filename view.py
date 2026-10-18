@@ -97,3 +97,10 @@ def get_status_list() -> list:
 def get_empty_list() -> list:
 
     return ['' for _ in range(entities.MAIN_FORMAT['ROWS'])]
+
+def put_progress_message():
+    '''Write machine progress somewhere, screen, log, Etc.'''
+
+    if entities.PROGRESS_MESSAGE:
+        print(entities.PROGRESS_MESSAGE)
+    entities.PROGRESS_MESSAGE = None

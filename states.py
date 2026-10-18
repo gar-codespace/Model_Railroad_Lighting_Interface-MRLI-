@@ -134,8 +134,9 @@ def animated_set_next_waypoint():
             
         entities.END_TIME = entities.UTIME.time()
         measured_time = entities.END_TIME - entities.START_TIME
-        print(f'Measured duration: {measured_time} seconds')
-
+        entities.PROGRESS_MESSAGE = f'Measured duration: {measured_time} seconds'
+        view.put_progress_message() # Move this to controller
+        
         lighting.set_next_waypoint()
         model.set_hour() # If that feature is utilized
 

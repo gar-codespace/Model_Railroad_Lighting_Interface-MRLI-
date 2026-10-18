@@ -69,6 +69,7 @@ class Machine:
         while True:
 
             try: # set next waypoint
+                view.put_progress_message()
                 attrib = f'{entities.MACHINE_STATE}_set_next_waypoint'
                 getattr(states, attrib)() # IE aniamated_set_next_waypoint()
             except:
@@ -99,7 +100,10 @@ class Machine:
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound()
                 duration = self.sound.play_ambient_sound()
-                print(f'Ambient Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}')
+
+                entities.PROGRESS_MESSAGE = f'Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}'
+                view.put_progress_message()
+
             except:
                 pass
 

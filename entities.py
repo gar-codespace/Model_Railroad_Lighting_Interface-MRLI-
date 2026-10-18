@@ -139,6 +139,7 @@ END_TIME:int = 0 # Used for the waypoint duration measurement.
 
 MACHINE_STATE:str  = None
 STANDBY_TOGGLE:str = None
+PROGRESS_MESSAGE:str = None
 
 STARTUP_EFFECT_DURATION = 5000 # Milliseconds
 WELCOME_SCREEN = ['M.U.T.T.', 'Metropolitan', 'Union ', 'Transfer', 'Terminal'] # 6 lines maximum, 15 char per line
@@ -436,7 +437,6 @@ A5 = [ # Night time, daytime - gulls + crickets + owles
       ]
 
 D2 = [ # Stormy
-      'clip26', # Thunder
       'clip27', # Thunder
       'clip28', # Thunder
       'clip29', # Thunder
