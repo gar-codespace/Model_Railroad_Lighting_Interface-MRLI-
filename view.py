@@ -18,11 +18,11 @@ I2C0 = {
 
 class Display:
 
-    def __init__(self, board, bus):
+    def __init__(self, board:dict, bus:dict):
 
         self.bus:object = None
 
-        self.bus = board['BUS']
+        self.bus_type = board['BUS']
         self.address = board['ADDRESS']
         self.width = board['WIDTH']
         self.height = board['HEIGHT']
@@ -33,7 +33,7 @@ class Display:
     def get_bus(self, pin0, pin1) -> object:
         '''Decorate this for different bus types.'''
 
-        if self.bus == 'i2c':
+        if self.bus_type == 'i2c':
             self.bus = entities.I2C(id=self.id, sda=pin0, scl=pin1, freq=self.freq)
 
     def get_device_id(self):

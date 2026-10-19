@@ -16,14 +16,12 @@ UART0 = {
 
 class Sound:
 
-    def __init__(self, board, bus):
+    def __init__(self, board:dict, bus:dict):
 
         self.board = board
 
         self.bus:object = None
         self.type = board['TYPE']
-        self.wait = board['WAIT']
-        self.duplex = board['DUPLEX']
 
         self.id = bus['ID']
         self.freq = bus['FREQ']
