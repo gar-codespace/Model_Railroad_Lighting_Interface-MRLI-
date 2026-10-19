@@ -13,6 +13,12 @@ class Display:
 
         self.i2c = entities.I2C(id = specs['ID'], sda = sda, scl = scl, freq = specs['FREQ'])
 
+    def get_device_id(self):
+        '''Use the device id to automatically choose the display driver'''
+
+    def set_display_driver(self):
+        ...
+
     def get_main_display(self):
 
         width = entities.MAIN_DISPLAY['WIDTH']
