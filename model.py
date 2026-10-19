@@ -122,18 +122,3 @@ def get_menu_first_item():
 
     position = len(entities.EFFECTS_MENU) + entities.EFFECTS_HILIGHTED_EFFECT
     entities.EFFECTS_MENU_FIRST_ITEM = index_double[position - entities.EFFECTS_HIGHLIGHT_ROW]
-
-def get_i2c(specs:dict, sda, scl) -> object:
-
-    i2c = entities.I2C(id = specs['ID'], sda = sda, scl = scl, freq = specs['FREQ'])
-
-    return i2c
-
-def get_uart(specs:dict, tx=None, rx=None) -> object:
-
-    id = specs['ID']
-    baud = specs['BAUD_RATE']
-
-    uart = entities.UART(id, baudrate=baud, tx=tx, rx=rx)
-
-    return uart

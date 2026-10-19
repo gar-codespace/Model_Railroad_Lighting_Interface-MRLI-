@@ -3,9 +3,16 @@ import entities
 
 class Sound:
 
-    def __init__(self, UART):
+    def __init__(self):
 
-        self.uart = UART
+        self.uart:object = None
+
+    def get_uart(self, specs:dict, tx=None, rx=None):
+
+        id = specs['ID']
+        baud = specs['BAUD_RATE']
+
+        self.uart = entities.UART(id, baudrate=baud, tx=tx, rx=rx)
 
     def get_ambient_sound_board(self):
 
