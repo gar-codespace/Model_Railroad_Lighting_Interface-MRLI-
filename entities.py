@@ -130,11 +130,11 @@ IRQ_BUTTON_0 = {
 
 ################## TIME BASE ######################
 
-FAST_TIME_CLOCK:int = 8 # used in model railroading to compress time.
-DEFAULT_CYCLE:int = 20 # milliseconds used for other awaits
-WAYPOINT_START:int = 0 # Used for the waypoint duration measurement.
-WAYPOINT_END:int = 0 # Used for the waypoint duration measurement.
-WAYPOINT_RUN_TIME:int = 0 # Time the waypoint actually ran (sec)
+FAST_TIME_CLOCK = 8 # used in model railroading to compress time.
+DEFAULT_CYCLE = 20 # milliseconds used for other awaits
+WAYPOINT_START = 0 # Used for the waypoint duration measurement.
+WAYPOINT_END = 0 # Used for the waypoint duration measurement.
+WAYPOINT_RUN_TIME = 0 # Time the waypoint actually ran (sec)
 
 ################## NAVIGATION ######################
 
@@ -190,7 +190,7 @@ WORKING_BUFFER = {} # Either the static dictionary or one of the animated dictio
 # In STATIC state user inputs are written here.
 # The slower the clock cycle, the more accurate the delay.
 CLOCK_CYCLE = 500 # Milliseconds. WP_DUR * CLOCK_CYCLE = total time of the waypoint
-CLOCK_OFFSET = 1 # Adjusts for asyncio overhead slowing down the effects.
+CLOCK_OFFSET = 1 # Adjusts for asyncio overhead slowing down the effects. Smaller = faster.
                  
 RED     :int = 32500 # PWM value
 GREEN   :int = 32500
@@ -257,7 +257,7 @@ SINGLES = {
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day
 'CLOCK_CYCLE'  : 250,
-'CLOCK_OFFSET' : .864,
+'CLOCK_OFFSET' : .860,
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
 'GROUP':  (    'A5',    'A5',    'A5',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A4',    'A5'), # sound effects group
 'HOUR':   (      23,       1,       3,       5,       7,       9,      11,      13,      15,      17,      19,      21), # the time of day
@@ -437,28 +437,26 @@ A5 = [ # Night time, daytime - gulls + crickets + owles
       'clip36', # Horn
       ]
 
-D2 = [ # Stormy
+D1 = [ # Stormy
       'clip27', # Thunder
+      'clip27', # Thunder
+      'clip28', # Thunder
       'clip28', # Thunder
       'clip29', # Thunder
       'clip30', # Wind
       'clip31', # Wind
+      'clip31', # Wind
       'clip32', # Bells 
       'clip33', # Bells 
-      'clip34', # Bells 
       'clip12', # Train
       'clip13', # Train
       'clip14', # Train
-      'clip39', # Horn
-      'clip16', # Horn
-      'clip17', # Horn
       'clip11', # Brody
       'clip35', # Horn
       'clip36', # Horn
       ]
 
-D1 = [ # Stormy test
-      'clip26',
+D2 = [ # Stormy test
       'clip27',
       'clip28',
       'clip29',

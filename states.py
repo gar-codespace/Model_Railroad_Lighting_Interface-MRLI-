@@ -102,9 +102,6 @@ def effects_toggle():
 
     return view.get_empty_list()
 
-# def effects_play_sound():
-#     '''Sound FX clips play in this state.'''
-
 
 ########### MACHINE_STATE: ANIMATED
 
@@ -114,8 +111,6 @@ def animated_click():
 
     entities.MDB = entities.MAIN_DISPLAY_DIM
     entities.MACHINE_STATE = States.PAUSED
-
-    # return view.get_status_list()
 
 def animated_click2():
     '''Return to the effects menu.'''
@@ -136,7 +131,6 @@ def animated_set_next_waypoint():
         entities.WAYPOINT_RUN_TIME = entities.WAYPOINT_END - entities.WAYPOINT_START
 
         lighting.set_next_waypoint()
-        model.set_hour() # If that feature is utilized
 
         entities.WAYPOINT_START = entities.UTIME.time()
   
@@ -160,7 +154,7 @@ def animated_first_line():
     '''Can't import datetime for some reason.'''
 
     line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s' # Center on screen
-    text = f'WP: {entities.WP_NAME}'
+    text = f'   WP: {entities.WP_NAME}'
 
     if entities.HOUR:
 
@@ -170,10 +164,10 @@ def animated_first_line():
         hour = f'0{int(entities.HOUR)}'[-2:]
         minute = f'0{int((entities.HOUR - int(entities.HOUR))*60.0)}'[-2:]
 
-        text = f'Hour: {hour}:{minute}'
+        text = f' Hour: {hour}:{minute}'
 
-    return f'{text:{line_format}}'
-
+    # return f'{text:{line_format}}'
+    return text
 
 ########### MACHINE_STATE: STATIC
 
