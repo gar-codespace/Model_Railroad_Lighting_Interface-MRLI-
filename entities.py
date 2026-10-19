@@ -90,13 +90,14 @@ UART0 = {
 
 ################## DISPLAY ######################
 
-OLED0 = {
+OLED0 = { # Main Display
+        'BOARD':'Integrated display module',
+        'BUS':'i2c',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
         }
 
-MAIN_DISPLAY = OLED0
 MAIN_DISPLAY_LENGTH = 15 # Characters per line
 MAIN_DISPLAY_BRIGHT = 70
 MAIN_DISPLAY_DIM = 1

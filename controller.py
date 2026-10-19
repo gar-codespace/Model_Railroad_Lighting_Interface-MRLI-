@@ -48,9 +48,9 @@ class Machine:
 
     def boot(self):
 # Initialize The Machine
-        self.main_display = view.Display()
-        self.main_display.get_i2c(entities.I2C0, sda=self.sda, scl=self.scl)
-        self.main_display.get_main_display()
+        self.main_display = view.Display(entities.OLED0, entities.I2C0)
+        self.main_display.get_bus(pin0=self.sda, pin1=self.scl)
+        self.main_display.get_display()
 
         self.sound = sound.Sound(entities.SB0, entities.UART0)
         self.sound.get_bus(pin0=self.tx, pin1=self.rx)
@@ -58,7 +58,7 @@ class Machine:
 # Start The Machine
         entities.WORKING_BUFFER = entities.SINGLES
         model.get_menu_first_item()
-        self.main_display.update_main_display(view.get_welcome_list())
+        self.main_display.update_display(view.get_welcome_list())
         self.sound.play_ambient_sound() # Plays entities.CLIP, default is 'Welcome'
         lighting.fade_up_lights()
 
@@ -80,7 +80,7 @@ class Machine:
                 attrib = f'{entities.MACHINE_STATE}_increment_waypoint'
                 getattr(states, attrib)() # IE animated_increment_waypoint()
                 lighting.set_pwm_values()
-                self.main_display.update_main_display(view.get_status_list())
+                self.main_display.update_display(view.get_status_list())
             except:
                 pass
 
@@ -140,7 +140,7 @@ class Machine:
         try:
             attrib = f'{entities.MACHINE_STATE}_turn_left'
             display_content = getattr(states, attrib)() # IE states.welcome_turn_left()
-            self.main_display.update_main_display(display_content)
+            self.main_display.update_display(display_content)
         except:
             pass
 
@@ -149,7 +149,7 @@ class Machine:
         try:
             attrib = f'{entities.MACHINE_STATE}_turn_right'
             display_content = getattr(states, attrib)() # IE states.welcome_turn_right()
-            self.main_display.update_main_display(display_content)
+            self.main_display.update_display(display_content)
         except:
             pass        
 
@@ -158,7 +158,7 @@ class Machine:
         try:
             attrib = f'{entities.MACHINE_STATE}_click'
             display_content = getattr(states, attrib)() # IE states.welcome_click()
-            self.main_display.update_main_display(display_content)
+            self.main_display.update_display(display_content)
         except:
             pass
 
@@ -167,7 +167,7 @@ class Machine:
         try:
             attrib = f'{entities.MACHINE_STATE}_click2'
             display_content = getattr(states, attrib)() # IE states.welcome_click2()
-            self.main_display.update_main_display(display_content)
+            self.main_display.update_display(display_content)
         except:
             pass
 
@@ -177,7 +177,7 @@ class Machine:
         try:
             attrib = f'{entities.MACHINE_STATE}_toggle' # IE states.standby_toggle()
             display_content = getattr(states, attrib)()
-            self.main_display.update_main_display(display_content)
+            self.main_display.update_display(display_content)
         except:
             pass
 

@@ -1,17 +1,40 @@
 import entities
 import model
 import states
-
+'''
+board parameters:
+OLED0 = {
+        'BOARD':'Integrated display module',
+        'ADDRESS': CONST(0x3C),
+        'WIDTH': 128,
+        'HEIGHT': 64,
+        }
+bus parameters:
+I2C0 = {
+          'ID':0,
+          'FREQ':400000
+        }
+'''
 
 class Display:
 
-    def __init__(self):
+    def __init__(self, board, bus):
 
-        self.i2c:object = None
+        self.bus:object = None
 
-    def get_i2c(self, specs:dict, sda, scl) -> object:
+        self.bus = board['BUS']
+        self.address = board['ADDRESS']
+        self.width = board['WIDTH']
+        self.height = board['HEIGHT']
 
-        self.i2c = entities.I2C(id = specs['ID'], sda = sda, scl = scl, freq = specs['FREQ'])
+        self.id = bus['ID']
+        self.freq = bus['FREQ']
+
+    def get_bus(self, pin0, pin1) -> object:
+        '''Decorate this for different bus types.'''
+
+        if self.bus == 'i2c':
+            self.bus = entities.I2C(id=self.id, sda=pin0, scl=pin1, freq=self.freq)
 
     def get_device_id(self):
         '''Use the device id to automatically choose the display driver'''
@@ -19,14 +42,11 @@ class Display:
     def set_display_driver(self):
         ...
 
-    def get_main_display(self):
+    def get_display(self):
 
-        width = entities.MAIN_DISPLAY['WIDTH']
-        height = entities.MAIN_DISPLAY['HEIGHT']
-        addr = entities.MAIN_DISPLAY['ADDRESS']
-        self.main_display = entities.DISPLAY_DRIVER(width, height, self.i2c, addr)
+        self.main_display = entities.DISPLAY_DRIVER(self.width, self.height, self.bus, self.address)
 
-    def update_main_display(self, content: list = entities.WELCOME_SCREEN):
+    def update_display(self, content: list = entities.WELCOME_SCREEN):
 
         self.main_display.fill(0)
         self.main_display.contrast(entities.MDB)
