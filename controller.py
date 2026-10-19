@@ -52,8 +52,8 @@ class Machine:
         self.main_display.get_i2c(entities.I2C0, sda=self.sda, scl=self.scl)
         self.main_display.get_main_display()
 
-        self.sound = sound.Sound()
-        self.sound.get_uart(entities.UART0, tx=self.tx, rx=self.rx)
+        self.sound = sound.Sound(entities.SB0, entities.UART0)
+        self.sound.get_bus(pin0=self.tx, pin1=self.rx)
         self.sound.get_ambient_sound_board()
 # Start The Machine
         entities.WORKING_BUFFER = entities.SINGLES

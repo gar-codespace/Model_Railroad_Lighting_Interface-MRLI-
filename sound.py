@@ -1,22 +1,44 @@
 import entities
 
+'''
+parameters of sound_board:
+SB0 = {
+       'BOARD': 'Adafruit Sound FX Board',
+       'TYPE':'uart',
+       'WAIT':50,
+       'DUPLEX':False
+       }
+UART0 = {
+          'ID':0,
+          'BAUD_RATE':9600
+        }
+'''
 
 class Sound:
 
-    def __init__(self):
+    def __init__(self, board, bus):
 
-        self.uart:object = None
+        self.board = board
 
-    def get_uart(self, specs:dict, tx=None, rx=None):
+        self.bus:object = None
+        self.type = board['TYPE']
+        self.wait = board['WAIT']
+        self.duplex = board['DUPLEX']
 
-        id = specs['ID']
-        baud = specs['BAUD_RATE']
+        self.id = bus['ID']
+        self.freq = bus['FREQ']
 
-        self.uart = entities.UART(id, baudrate=baud, tx=tx, rx=rx)
+    def get_bus(self, pin0=None, pin1=None):
+        '''This can be decorated for different bus types.'''
+
+        if self.type == 'uart':
+            id = self.id
+            baud = self.freq
+            self.bus = entities.UART(id, baudrate=baud, tx=pin0, rx=pin1)
 
     def get_ambient_sound_board(self):
 
-        self.ambient_sound_board = entities.SOUND_BOARD_DRIVER(entities.SOUND_BOARD, self.uart)
+        self.ambient_sound_board = entities.SOUND_BOARD_DRIVER(self.board, self.bus)
 
     def play_ambient_sound(self) ->int:
 

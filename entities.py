@@ -85,7 +85,7 @@ I2C0 = {
 
 UART0 = {
           'ID':0,
-          'BAUD_RATE':9600
+          'FREQ':9600
         }
 
 ################## DISPLAY ######################
@@ -112,11 +112,10 @@ MAIN_FORMAT =  {
 
 SB0 = {
        'BOARD': 'Adafruit Sound FX Board',
+       'TYPE':'uart',
        'WAIT':50,
        'DUPLEX':False
        }
-
-SOUND_BOARD = SB0
 
 ################## PUSH BUTTON PARAMETERS ######################
 
