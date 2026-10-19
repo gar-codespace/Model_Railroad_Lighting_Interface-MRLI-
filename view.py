@@ -5,9 +5,13 @@ import states
 
 class Display:
 
-    def __init__(self, I2C):
+    def __init__(self):
 
-        self.i2c = I2C
+        self.i2c:object = None
+
+    def get_i2c(self, specs:dict, sda, scl) -> object:
+
+        self.i2c = entities.I2C(id = specs['ID'], sda = sda, scl = scl, freq = specs['FREQ'])
 
     def get_main_display(self):
 

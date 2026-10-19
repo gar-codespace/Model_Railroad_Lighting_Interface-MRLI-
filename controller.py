@@ -48,9 +48,10 @@ class Machine:
 
     def boot(self):
 # Initialize The Machine
-        i2c_bus = model.get_i2c(entities.I2C0, sda=self.sda, scl=self.scl)
-        self.main_display = view.Display(i2c_bus)
+        self.main_display = view.Display()
+        self.main_display.get_i2c(entities.I2C0, sda=self.sda, scl=self.scl)
         self.main_display.get_main_display()
+
         uart_bus = model.get_uart(entities.UART0, tx=self.tx, rx=self.rx)
         self.sound = sound.Sound(uart_bus)
         self.sound.get_ambient_sound_board()
