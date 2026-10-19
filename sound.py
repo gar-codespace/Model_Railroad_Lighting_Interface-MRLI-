@@ -16,12 +16,13 @@ UART0 = {
 
 class Sound:
 
-    def __init__(self, board:dict, bus:dict):
+    def __init__(self, board:dict, bus:dict, reset:object=None):
 
         self.board = board
 
         self.bus:object = None
         self.type = board['TYPE']
+        self.reset = reset
 
         self.id = bus['ID']
         self.freq = bus['FREQ']
@@ -36,7 +37,7 @@ class Sound:
 
     def get_ambient_sound_board(self):
 
-        self.ambient_sound_board = entities.SOUND_BOARD_DRIVER(self.board, self.bus)
+        self.ambient_sound_board = entities.SOUND_BOARD_DRIVER(self.board, self.bus, self.reset)
 
     def play_ambient_sound(self) ->int:
 

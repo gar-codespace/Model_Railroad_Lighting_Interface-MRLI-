@@ -44,7 +44,8 @@ class Machine:
     # UART
         self.tx = entities.PIN(entities.PICO_PIN['TX'])
         self.rx = None
-        # reset_pin = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
+        self.reset = None
+        # self.reset = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
 
     def boot(self):
 # Initialize The Machine
@@ -52,7 +53,7 @@ class Machine:
         self.main_display.get_bus(pin0=self.sda, pin1=self.scl)
         self.main_display.get_display()
 
-        self.sound = sound.Sound(entities.SB0, entities.UART0)
+        self.sound = sound.Sound(entities.SB0, entities.UART0, self.reset)
         self.sound.get_bus(pin0=self.tx, pin1=self.rx)
         self.sound.get_ambient_sound_board()
 # Start The Machine

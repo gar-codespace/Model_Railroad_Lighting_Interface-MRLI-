@@ -42,12 +42,13 @@ class CMD:
 
 class SoundFX:
 
-    def __init__(self, board:dict, bus:object):
+    def __init__(self, board:dict, bus:object, reset:object=None):
 
         self.uart = bus
         self.board = board
         self.duplex = board['DUPLEX']
         self.wait = board['WAIT']
+        self.reset = reset
     
     def _flush_uart_input(self):
         '''Read any available data from the UART bus until none is left.'''
@@ -64,13 +65,13 @@ class SoundFX:
             return self.uart.read()
 
     def reset_board(self):
-        '''Does not work when the board is in uart mode.'''
+        '''Retest this.'''
 
-        if self.reset_pin:
-            self.reset_pin.value(0)
-            self.reset_pin(entities.PIN.OUT)
+        if self.reset:
+            self.reset.value(0)
+            self.reset(entities.PIN.OUT)
             entities.UTIME.sleep_ms(self.wait)
-            self.reset_pin(entities.PIN.IN)
+            self.reset(entities.PIN.IN)
             entities.UTIME.sleep_ms(1000)  # Give the board some time to boot
 
         return self._get_reply()
