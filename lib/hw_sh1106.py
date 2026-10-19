@@ -7,6 +7,7 @@ __author__ = 'https://github.com/CrispStrobe/sh1106-py'
 
 import entities
 
+
 # SH1106 Commands
 SET_CONTRAST = entities.CONST(0x81)
 SET_ENTIRE_ON = entities.CONST(0xA4)

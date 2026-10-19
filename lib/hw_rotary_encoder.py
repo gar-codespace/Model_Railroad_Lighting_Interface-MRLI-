@@ -9,6 +9,7 @@ __author__ = 'https://github.com/TTitanUA/micropython_rotary_encoder/tree/main'
 
 import entities
 
+
 class RotaryEncoderEvent:
     ANY = 1
     CLICK = 2

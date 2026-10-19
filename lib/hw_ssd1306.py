@@ -7,6 +7,7 @@ __author__ = 'https://github.com/stlehmann/micropython-ssd1306/blob/master/ssd13
 
 import entities
 
+
 # register definitions
 SET_CONTRAST = entities.CONST(0x81)
 SET_ENTIRE_ON = entities.CONST(0xA4)

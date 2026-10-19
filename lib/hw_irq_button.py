@@ -1,6 +1,7 @@
 '''
 Hardware library for the front panel buttons.
-Apparently a trigger is not needed, it does it anyway.
+Apparently a trigger is not needed, it does it anyway
+on rising and falling, whether you want it to or not.
 Also, HIGH and LOW don't seem to be implemented on the Pico.
 '''
 '''
@@ -11,7 +12,6 @@ IRQ_BUTTON_0 = {
             'RELEASE_MSG':'button released',
             }
 '''
-
 __author__ = 'Greg Ritacco'
 
 

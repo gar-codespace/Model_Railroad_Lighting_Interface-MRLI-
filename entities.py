@@ -318,10 +318,11 @@ CLOUDY = { # Simulates a cloudy day
 'SCENIC': [       0,        0,        0,         0],
 }
 
-################## SOUND EFFECTS DEFINITIONS ######################
+################## AMBIENT SOUND DEFINITIONS ######################
 
-PAD_MIN = 2000 # Pad is the time between sound effects in ms
-PAD_MAX = 20000 # maximum time between sfx (ms)
+PAD_MIN = 2000 # Pad is the time between ambient sound (ms)
+PAD_MAX = 20000 # maximum time between ambient sounds (ms)
+CLIP = 'clip10' # Welcome clip
 
 AMBIENCE = {  # File    Name,       Duration, Description   VFX   Vol flag
                 'clip00':('SILENCE0OGG', 10, 'Silence',     None),
@@ -366,8 +367,6 @@ AMBIENCE = {  # File    Name,       Duration, Description   VFX   Vol flag
                 'clip39':('GULLS006OGG',  8, 'Seagulls 6',  None), # Same as Seagulls 1
                } # The name is conformed to the soundboard specification
 
-CLIP = 'clip10' # Welcome clip
-
 # SFX Groups
 A1 = [ # silence
       'clip00'
@@ -387,7 +386,7 @@ A3 = [ # Daytime
       'clip12', # Train 
       'clip13', # Train 
       'clip14', # Train 
-      'clip39', # Horn
+      'clip39', # Seagulls
       'clip16', # Horn
       'clip17', # Horn
       'clip35', # Horn
@@ -403,7 +402,7 @@ A4 = [ # Twlight, same as day + crickets + morning + geese - gulls
       'clip12', # Train 
       'clip13', # Train 
       'clip14', # Train 
-      'clip39', # Horn
+      'clip39', # Seagulls
       'clip16', # Horn
       'clip17', # Horn
       'clip18', # Cricket
@@ -425,15 +424,14 @@ A5 = [ # Night time, daytime - gulls + crickets + owles
       'clip12', # Train
       'clip13', # Train
       'clip14', # Train
-      'clip39', # Horn
       'clip16', # Horn
       'clip17', # Horn
       'clip18', # Cricket
       'clip19', # Cricket
+      'clip19', # Cricket
       'clip22', # Night
       'clip23', # Owl
       'clip24', # Owl
-      'clip35', # Horn
       'clip36', # Horn
       ]
 
