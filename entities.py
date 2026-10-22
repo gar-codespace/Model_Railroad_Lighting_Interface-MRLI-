@@ -3,16 +3,6 @@ All the settings for the program are here.
 All the imports are in one place.
 '''
 
-###### PICK A DISPLAY DRIVER ######
-
-# Choose this for the 1.3 inch display
-DISPLAY_LIBRARY = 'hw_sh1106'
-
-# Choose this for the 0.9 inch display
-#DISPLAY_LIBRARY = 'hw_ssd1306'
-
-SOUND_LIBRARY = 'hw_adafruit_audio_fx'
-
 # packaged libraries are kept to a minimum
 from machine import Pin as PIN, I2C, Timer as TIMER, PWM, UART
 from micropython import const as CONST
@@ -24,8 +14,12 @@ import uasyncio as UASYNCIO
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 from hw_irq_button import IrqButton
-DISPLAY_DRIVER0 = __import__(DISPLAY_LIBRARY).Driver_I2C
-SOUND_BOARD_DRIVER = __import__(SOUND_LIBRARY).SoundFX
+
+###### PICK A DISPLAY DRIVER ######
+DISPLAY_DRIVER0 = __import__('hw_sh1106').Driver_I2C # Big OLED
+# DISPLAY_DRIVER1 = __import__('hw_ssd1306').Driver_I2C # Small OLED
+
+SOUND_BOARD_DRIVER = __import__('hw_adafruit_audio_fx').SoundFX
 
 ################## HARDWARE ######################
 
@@ -79,6 +73,7 @@ PICO_PIN = {
 ################## SERIAL COMMUNICATION PROTOCOLS ######################
 
 I2C0 = {
+          'TYPE':'i2c',
           'ID':0,
           'FREQ':400000
         }
@@ -92,13 +87,21 @@ UART0 = {
 
 OLED0 = { # Main Display
         'BOARD':'Integrated display module',
-        'BUS':'i2c',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
         }
 
-MDD = DISPLAY_DRIVER0
+MAIN_DISPLAY0 = { # Big OLED
+            'BUS':'I2C0',
+            'PARAMS':'OLED0',
+            'DRIVER':'DISPLAY_DRIVER0'
+            }
+MAIN_DISPLAY1 = { # Small OLED
+            'BUS':'I2C0',
+            'PARAMS':'OLED0',
+            'DRIVER':'DISPLAY_DRIVER1'
+            }
 MAIN_DISPLAY_LENGTH = 15 # Characters per line
 MAIN_DISPLAY_BRIGHT = 70
 MAIN_DISPLAY_DIM = 1

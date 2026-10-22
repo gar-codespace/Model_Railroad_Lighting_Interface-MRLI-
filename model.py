@@ -123,11 +123,17 @@ def get_menu_first_item():
     position = len(entities.EFFECTS_MENU) + entities.EFFECTS_HILIGHTED_EFFECT
     entities.EFFECTS_MENU_FIRST_ITEM = index_double[position - entities.EFFECTS_HIGHLIGHT_ROW]
 
-def get_i2c(bus, pin0, pin1):
+def get_i2c(params):
+    '''I2C is the only bus so far.'''
 
-    id = bus['ID']
-    freq = bus['FREQ']
+    sda = entities.PIN(entities.PICO_PIN['SDA'])
+    scl = entities.PIN(entities.PICO_PIN['SCL'])
+    id = params['ID']
+    freq = params['FREQ']
 
-    i2c = entities.I2C(id=id, sda=pin0, scl=pin1, freq=freq)
+    i2c = entities.I2C(id=id, sda=sda, scl=scl, freq=freq)
 
     return i2c
+
+def get_spi(params):
+    ...

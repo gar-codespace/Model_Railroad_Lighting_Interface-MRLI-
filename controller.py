@@ -44,15 +44,17 @@ class Machine:
     # UART
         self.tx = entities.PIN(entities.PICO_PIN['TX'])
         self.rx = None
-    #sound fx card
+    # Specific to the Adafruit SFX board
         self.reset = None
-        # self.reset = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the Adafruit SFX board
+        # self.reset = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN)
 
     def boot(self):
 # Initialize The Machine
-        i2c0 = model.get_i2c(bus=entities.I2C0, pin0=self.sda, pin1=self.scl) # abstract to get_bus
-        self.main_display = view.Display(entities.OLED0, i2c0)
-        self.main_display.get_display('MDD')
+        
+        self.main_display = view.Display(entities.MAIN_DISPLAY0) # Big OLED
+        # self.main_display = view.Display(entities.MAIN_DISPLAY1) # Small OLED
+        self.main_display.get_bus()
+        self.main_display.get_display()
 
         self.sound = sound.Sound(entities.SB0, entities.UART0)
         self.sound.get_bus(pin0=self.tx, pin1=self.rx)

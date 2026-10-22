@@ -2,35 +2,48 @@ import entities
 import model
 import states
 '''
-board parameters:
-OLED0 = {
+specs:
+MAIN_DISPLAY = {
+            'BUS':'I2C0',
+            'PARAMS':'OLED0',
+            'DRIVER':'DISPLAY_DRIVER0'
+            }
+I2C0 = {
+          'TYPE':'i2c',
+          'ID':0,
+          'FREQ':400000
+        }
+OLED0 = { # Main Display
         'BOARD':'Integrated display module',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
         }
-bus parameters:
-I2C0 = {
-          'ID':0,
-          'FREQ':400000
-        }
 '''
 
 class Display:
 
-    def __init__(self, board:dict, bus:object):
+    def __init__(self, specs:dict):
 
-        self.address = board['ADDRESS']
-        self.width = board['WIDTH']
-        self.height = board['HEIGHT']
+        self.bus_params = getattr(entities, specs['BUS'])
+        self.display_type = getattr(entities, specs['PARAMS'])
+        self.driver = getattr(entities, specs['DRIVER'])
 
-        self.bus = bus
+        self.bus:object = None
+        self.display:object = None
+        self.width = self.display_type['WIDTH']
+        self.height = self.display_type['HEIGHT']
+        self.addr = self.display_type['ADDRESS']
 
-    def get_display(self, driver:str):
+    def get_bus(self):
 
-        library = getattr(entities, driver)
-        self.display = library(width=self.width, height=self.height, i2c=self.bus, addr=self.address)
+        attr = f'get_{self.bus_params['TYPE']}'
+        self.bus = getattr(model, attr)(self.bus_params)
 
+    def get_display(self):
+
+        self.display = self.driver(width=self.width, height=self.height, bus=self.bus, addr=self.addr)
+        
     def update_display(self, content: list = entities.WELCOME_SCREEN):
 
         self.display.fill(0)
