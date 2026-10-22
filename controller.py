@@ -44,6 +44,7 @@ class Machine:
     # UART
         self.tx = entities.PIN(entities.PICO_PIN['TX'])
         self.rx = None
+    #sound fx card
         self.reset = None
         # self.reset = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
 
@@ -181,6 +182,8 @@ class Machine:
             self.main_display.update_display(display_content)
         except:
             pass
+
+        self.sound.play_sound_now() # Plays the standby clips
 
     def cb_back_release(self, name, message):
         ...

@@ -45,6 +45,7 @@ def welcome_click():
 def welcome_toggle():
     '''Puts machine in standby.'''
 
+    entities.CLIP = entities.STANDBY_IN_CLIP
     entities.STANDBY_TOGGLE = States.EFFECTS
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
@@ -96,6 +97,7 @@ def effects_get_hilight():
 def effects_toggle():
     '''Puts machine in standby.'''
 
+    entities.CLIP = entities.STANDBY_IN_CLIP
     entities.STANDBY_TOGGLE = States.EFFECTS
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
@@ -137,6 +139,7 @@ def animated_set_next_waypoint():
 def animated_toggle():
     '''Puts machine in standby.'''
 
+    entities.CLIP = entities.STANDBY_IN_CLIP
     entities.STANDBY_TOGGLE = States.ANIMATED
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
@@ -212,6 +215,7 @@ def static_get_hilight():
 def static_toggle():
     '''Puts machine in standby.'''
 
+    entities.CLIP = entities.STANDBY_IN_CLIP
     entities.STANDBY_TOGGLE = States.STATIC
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
@@ -292,6 +296,7 @@ def edit_get_hilight():
 def edit_toggle():
     '''Puts machine in standby.'''
 
+    entities.CLIP = entities.STANDBY_IN_CLIP
     entities.STANDBY_TOGGLE = States.EFFECTS
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
@@ -336,6 +341,7 @@ def paused_click():
 def standby_toggle():
     '''Takes the machine out of standby.'''
 
+    entities.CLIP = entities.STANDBY_OUT_CLIP
     entities.MACHINE_STATE = entities.STANDBY_TOGGLE
     lighting.set_bank_relays()
 

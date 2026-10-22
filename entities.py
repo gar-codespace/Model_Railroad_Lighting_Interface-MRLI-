@@ -322,7 +322,10 @@ CLOUDY = { # Simulates a cloudy day
 
 PAD_MIN = 2000 # Pad is the time between ambient sound (ms)
 PAD_MAX = 20000 # maximum time between ambient sounds (ms)
-CLIP = 'clip10' # Welcome clip
+WELCOME_CLIP = 'clip10' # Welcome clip
+STANDBY_IN_CLIP = 'clip23'
+STANDBY_OUT_CLIP = 'clip09'
+CLIP = WELCOME_CLIP
 
 AMBIENCE = {  # File    Name,       Duration, Description   VFX   Vol flag
                 'clip00':('SILENCE0OGG', 10, 'Silence',     None),
