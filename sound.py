@@ -16,24 +16,27 @@ UART0 = {
 
 class Sound:
 
-    def __init__(self, board:dict, bus:dict, reset:object=None):
+    def __init__(self, board:dict, protocol:dict):
 
         self.board = board
 
         self.bus:object = None
         self.type = board['TYPE']
-        self.reset = reset
+        self.reset:object = None # A physical pin on the pico if used
 
-        self.id = bus['ID']
-        self.freq = bus['FREQ']
+        self.id = protocol['ID']
+        self.freq = protocol['FREQ']
 
     def get_bus(self, pin0=None, pin1=None):
-        '''This can be decorated for different bus types.'''
 
         if self.type == 'uart':
             id = self.id
             baud = self.freq
             self.bus = entities.UART(id, baudrate=baud, tx=pin0, rx=pin1)
+
+    def set_reset_pin(self, reset=None):
+
+        self.reset = reset
 
     def get_ambient_sound_board(self):
 

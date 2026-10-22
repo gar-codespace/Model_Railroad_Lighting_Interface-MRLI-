@@ -46,7 +46,7 @@ class Machine:
         self.rx = None
     #sound fx card
         self.reset = None
-        # self.reset = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the SFX board
+        # self.reset = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN) # Specific to the Adafruit SFX board
 
     def boot(self):
 # Initialize The Machine
@@ -54,8 +54,9 @@ class Machine:
         self.main_display.get_bus(pin0=self.sda, pin1=self.scl)
         self.main_display.get_display()
 
-        self.sound = sound.Sound(entities.SB0, entities.UART0, self.reset)
+        self.sound = sound.Sound(entities.SB0, entities.UART0)
         self.sound.get_bus(pin0=self.tx, pin1=self.rx)
+        self.sound.set_reset_pin(self.reset)
         self.sound.get_ambient_sound_board()
 # Start The Machine
         entities.WORKING_BUFFER = entities.SINGLES
