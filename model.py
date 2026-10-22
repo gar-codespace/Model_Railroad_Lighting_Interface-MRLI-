@@ -122,3 +122,12 @@ def get_menu_first_item():
 
     position = len(entities.EFFECTS_MENU) + entities.EFFECTS_HILIGHTED_EFFECT
     entities.EFFECTS_MENU_FIRST_ITEM = index_double[position - entities.EFFECTS_HIGHLIGHT_ROW]
+
+def get_i2c(bus, pin0, pin1):
+
+    id = bus['ID']
+    freq = bus['FREQ']
+
+    i2c = entities.I2C(id=id, sda=pin0, scl=pin1, freq=freq)
+
+    return i2c

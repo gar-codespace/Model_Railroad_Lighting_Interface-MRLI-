@@ -18,52 +18,37 @@ I2C0 = {
 
 class Display:
 
-    def __init__(self, board:dict, bus:dict):
+    def __init__(self, board:dict, bus:object):
 
-        self.bus:object = None
-
-        self.bus_type = board['BUS']
         self.address = board['ADDRESS']
         self.width = board['WIDTH']
         self.height = board['HEIGHT']
 
-        self.id = bus['ID']
-        self.freq = bus['FREQ']
+        self.bus = bus
 
-    def get_bus(self, pin0, pin1) -> object:
-        '''Decorate this for different bus types.'''
+    def get_display(self, driver:str):
 
-        if self.bus_type == 'i2c':
-            self.bus = entities.I2C(id=self.id, sda=pin0, scl=pin1, freq=self.freq)
-
-    def get_device_id(self):
-        '''Use the device id to automatically choose the display driver'''
-
-    def set_display_driver(self):
-        ...
-
-    def get_display(self):
-
-        self.main_display = entities.DISPLAY_DRIVER(self.width, self.height, self.bus, self.address)
+        library = getattr(entities, driver)
+        self.display = library(width=self.width, height=self.height, i2c=self.bus, addr=self.address)
 
     def update_display(self, content: list = entities.WELCOME_SCREEN):
 
-        self.main_display.fill(0)
-        self.main_display.contrast(entities.MDB)
+        self.display.fill(0)
+        self.display.contrast(entities.MDB)
 
         line_y = 3 # vertically center the text in the display
         for i in range(entities.MAIN_FORMAT['ROWS']):
-            self.main_display.text(content[i], entities.MAIN_FORMAT['X_OFFSET'], line_y)
+            self.display.text(content[i], entities.MAIN_FORMAT['X_OFFSET'], line_y)
             line_y += entities.MAIN_FORMAT['LINE_HEIGHT']
 
         try: # add the hilight rectangle
             attrib = f'{entities.MACHINE_STATE}_get_hilight'
             h = getattr(states, attrib)()
-            self.main_display.rect(0, h, 128, 12, 1)
+            self.display.rect(0, h, 128, 12, 1)
         except:
             pass
 
-        self.main_display.show()
+        self.display.show()
 
 
 def get_welcome_list() -> list:

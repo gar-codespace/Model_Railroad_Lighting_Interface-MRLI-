@@ -50,9 +50,9 @@ class Machine:
 
     def boot(self):
 # Initialize The Machine
-        self.main_display = view.Display(entities.OLED0, entities.I2C0)
-        self.main_display.get_bus(pin0=self.sda, pin1=self.scl)
-        self.main_display.get_display()
+        i2c0 = model.get_i2c(bus=entities.I2C0, pin0=self.sda, pin1=self.scl) # abstract to get_bus
+        self.main_display = view.Display(entities.OLED0, i2c0)
+        self.main_display.get_display('MDD')
 
         self.sound = sound.Sound(entities.SB0, entities.UART0)
         self.sound.get_bus(pin0=self.tx, pin1=self.rx)
@@ -103,7 +103,7 @@ class Machine:
             try: # Play a sound clip
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound()
-                duration = self.sound.play_sound_now()
+                duration = self.sound.play_sound()
 
                 entities.PROGRESS_MESSAGE = f'Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}'
                 view.put_progress_message()

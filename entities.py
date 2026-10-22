@@ -24,7 +24,7 @@ import uasyncio as UASYNCIO
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 from hw_irq_button import IrqButton
-DISPLAY_DRIVER = __import__(DISPLAY_LIBRARY).Driver_I2C
+DISPLAY_DRIVER0 = __import__(DISPLAY_LIBRARY).Driver_I2C
 SOUND_BOARD_DRIVER = __import__(SOUND_LIBRARY).SoundFX
 
 ################## HARDWARE ######################
@@ -98,6 +98,7 @@ OLED0 = { # Main Display
         'HEIGHT': 64,
         }
 
+MDD = DISPLAY_DRIVER0
 MAIN_DISPLAY_LENGTH = 15 # Characters per line
 MAIN_DISPLAY_BRIGHT = 70
 MAIN_DISPLAY_DIM = 1
