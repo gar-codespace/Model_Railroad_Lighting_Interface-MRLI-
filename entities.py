@@ -57,10 +57,10 @@ PICO_PIN = {
         'TRA':18, # encoder
         'TRB':19, # encoder
 
-        'SDA':20, # I2C
-        'SCL':21, # I2C
+        'COM0':20, # I2C SDA
+        'COM1':21, # I2C SCL
 
-        'TX'   :0, # UART
+        'TX'   :0, # UART TX
 
         'available':1,
         'available':2,
@@ -75,6 +75,8 @@ PICO_PIN = {
 I2C0 = {
           'TYPE':'i2c',
           'ID':0,
+          'SDA':'COM0',
+          'SCL':'COM1',
           'FREQ':400000
         }
 

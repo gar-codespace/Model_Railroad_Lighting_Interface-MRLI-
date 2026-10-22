@@ -126,8 +126,8 @@ def get_menu_first_item():
 def get_i2c(params):
     '''I2C is the only bus so far.'''
 
-    sda = entities.PIN(entities.PICO_PIN['SDA'])
-    scl = entities.PIN(entities.PICO_PIN['SCL'])
+    sda = entities.PIN(entities.PICO_PIN[params['SDA']])
+    scl = entities.PIN(entities.PICO_PIN[params['SCL']])
     id = params['ID']
     freq = params['FREQ']
 

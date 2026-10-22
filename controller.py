@@ -38,9 +38,6 @@ class Machine:
         self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-    # I2C
-        self.sda = entities.PIN(entities.PICO_PIN['SDA'])
-        self.scl = entities.PIN(entities.PICO_PIN['SCL'])
     # UART
         self.tx = entities.PIN(entities.PICO_PIN['TX'])
         self.rx = None
