@@ -60,7 +60,7 @@ class Machine:
         entities.WORKING_BUFFER = entities.SINGLES
         model.get_menu_first_item()
         self.main_display.update_display(view.get_welcome_list())
-        self.sound.play_ambient_sound() # Plays entities.CLIP, default is 'Welcome'
+        self.sound.play_sound() # Plays entities.CLIP, default is 'Welcome'
         lighting.fade_up_lights()
 
 ################ methods in main - UASYNCIO.gather ##################
@@ -101,7 +101,7 @@ class Machine:
             try: # Play a sound clip
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound()
-                duration = self.sound.play_ambient_sound()
+                duration = self.sound.play_sound_now()
 
                 entities.PROGRESS_MESSAGE = f'Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}'
                 view.put_progress_message()
