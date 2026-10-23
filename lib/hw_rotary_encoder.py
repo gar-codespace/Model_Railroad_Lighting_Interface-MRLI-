@@ -15,7 +15,7 @@ class RotaryEncoderEvent:
     CLICK = 2
     MULTIPLE_CLICK = 3
     HELD = 4
-    RELEASED = 5
+    RELEASED_MSG = 5
     TURN_LEFT = 6
     TURN_LEFT_FAST = 7
     TURN_LEFT_HOLD = 8
@@ -172,7 +172,7 @@ class RotaryEncoder:
             # button release
             if self._sw_held:
                 self._sw_held = False
-                self._flag_last_event = RotaryEncoderEvent.RELEASED
+                self._flag_last_event = RotaryEncoderEvent.RELEASED_MSG
                 self._sw_prev_state = __sw_l_s
             # maybe a multiple click, need wait for the next event
             elif entities.UTIME.ticks_diff(timestamp, __sw_l_e_ms) < __sw_s_ms:

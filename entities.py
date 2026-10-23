@@ -13,7 +13,8 @@ import uasyncio as UASYNCIO
 
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
-from hw_irq_button import IrqButton
+# from hw_irq_button import IrqButton
+from hw_polling_button import Button
 
 ###### PICK A DISPLAY DRIVER ######
 DISPLAY_DRIVER0 = __import__('hw_sh1106').Driver_I2C # Big OLED
@@ -132,10 +133,11 @@ SOUND_CARD0 = {
             }
 ################## PUSH BUTTON PARAMETERS ######################
 
-IRQ_BUTTON_0 = {
-            'TRIGGER_ON_FALLING':True,
-            'PRESS_MSG':'button pressed',
-            'RELEASE_MSG':'button released',
+BUTTON0 = {
+            'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
+            'DEBOUNCE_TIME':50,
+            'PRESSED_MSG':'button pressed',
+            'RELEASED_MSG':'button released'
             }
 
 ################## SOFTWARE ######################
