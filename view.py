@@ -11,6 +11,8 @@ MAIN_DISPLAY = {
 I2C0 = {
           'TYPE':'i2c',
           'ID':0,
+          'SDA':'COM0',
+          'SCL':'COM1',
           'FREQ':400000
         }
 OLED0 = { # Main Display

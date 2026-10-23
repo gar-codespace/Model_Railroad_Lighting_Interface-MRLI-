@@ -6,14 +6,7 @@ https://github.com/mmabey/Adafruit_Soundboard_uPy/tree/master
 I have taylored it to the specific requirements of my project.
 For this project the RX pin on the Pico is optional.
 '''
-'''
-Board parameters:
-SB0 = {
-       'BOARD': 'Adafruit Sound FX Board',
-       'WAIT':50,
-       'DUPLEX':False
-       }
-'''
+
 '''
 TODO If the UART pin is connected to ground to set the board to uart mode,
 reset does not work. Only power cycling

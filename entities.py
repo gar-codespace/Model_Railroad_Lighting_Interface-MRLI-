@@ -19,7 +19,7 @@ from hw_irq_button import IrqButton
 DISPLAY_DRIVER0 = __import__('hw_sh1106').Driver_I2C # Big OLED
 # DISPLAY_DRIVER1 = __import__('hw_ssd1306').Driver_I2C # Small OLED
 
-SOUND_BOARD_DRIVER = __import__('hw_adafruit_audio_fx').SoundFX
+SOUND_DRIVER0 = __import__('hw_adafruit_audio_fx').SoundFX
 
 ################## HARDWARE ######################
 
@@ -59,11 +59,9 @@ PICO_PIN = {
 
         'COM0':20, # I2C SDA
         'COM1':21, # I2C SCL
-
-        'TX'   :0, # UART TX
-
-        'available':1,
-        'available':2,
+        'COM2':0, # UART TX
+        'COM3':1, # UART RX
+        'COM4':2, # Sound FX card reset pin
 
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
@@ -81,7 +79,10 @@ I2C0 = {
         }
 
 UART0 = {
+          'TYPE':'uart',
           'ID':0,
+          'TX':'COM2',
+          'RX':'COM3',
           'FREQ':9600
         }
 
@@ -119,11 +120,16 @@ MAIN_FORMAT =  {
 
 SB0 = {
        'BOARD': 'Adafruit Sound FX Board',
-       'TYPE':'uart',
        'WAIT':50,
-       'DUPLEX':False
+       'DUPLEX':False,
+       'RESET':False,
        }
 
+SOUND_CARD0 = {
+            'BUS':'UART0',
+            'PARAMS':'SB0',
+            'DRIVER':'SOUND_DRIVER0'
+            }
 ################## PUSH BUTTON PARAMETERS ######################
 
 IRQ_BUTTON_0 = {
@@ -444,7 +450,7 @@ A5 = [ # Night time, daytime - gulls + crickets + owles
       'clip36', # Horn
       ]
 
-D1 = [ # Stormy
+D11 = [ # Stormy
       'clip27', # Thunder
       'clip27', # Thunder
       'clip28', # Thunder
@@ -463,7 +469,7 @@ D1 = [ # Stormy
       'clip36', # Horn
       ]
 
-D2 = [ # Stormy test
+D1 = [ # Stormy test
       'clip27',
       'clip28',
       'clip29',

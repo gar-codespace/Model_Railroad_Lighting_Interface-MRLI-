@@ -137,3 +137,14 @@ def get_i2c(params):
 
 def get_spi(params):
     ...
+
+def get_uart(params):
+
+    tx = entities.PIN(entities.PICO_PIN[params['TX']])
+    rx = entities.PIN(entities.PICO_PIN[params['RX']])
+    id = params['ID']
+    baud = params['FREQ']
+
+    uart = entities.UART(id, baudrate=baud, tx=tx, rx=rx)
+
+    return uart

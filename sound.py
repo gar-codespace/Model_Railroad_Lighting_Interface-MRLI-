@@ -1,46 +1,56 @@
 import entities
+import model
 
 '''
-parameters of sound_board:
+specs:
+SOUND_CARD0 = {
+            'BUS':'uart0',
+            'PARAMS':'SB0',
+            'DRIVER':'SOUND_DRIVER0'
+            }
+UART0 = {
+          'TYPE':'uart',
+          'ID':0,
+          'TX':'COM2',
+          'RX':COM3,
+          'FREQ':9600
+        }
 SB0 = {
        'BOARD': 'Adafruit Sound FX Board',
-       'TYPE':'uart',
        'WAIT':50,
        'DUPLEX':False
        }
-UART0 = {
-          'ID':0,
-          'BAUD_RATE':9600
-        }
 '''
 
 class Sound:
 
-    def __init__(self, board:dict, protocol:dict):
+    def __init__(self, specs:dict):
 
-        self.board = board
+        self.bus_params = getattr(entities, specs['BUS'])
+        self.display_type = getattr(entities, specs['PARAMS'])
+        self.driver = getattr(entities, specs['DRIVER'])
 
         self.bus:object = None
-        self.type = board['TYPE']
-        self.reset:object = None # A physical pin on the pico if used
+        self.board:object = None
 
-        self.id = protocol['ID']
-        self.freq = protocol['FREQ']
+        self.reset = self._set_reset_pin
 
-    def get_bus(self, pin0=None, pin1=None):
+    def _set_reset_pin(self):
 
-        if self.type == 'uart':
-            id = self.id
-            baud = self.freq
-            self.bus = entities.UART(id, baudrate=baud, tx=pin0, rx=pin1)
+        pin = None
+        if self.display_type['RESET']:
+            pin = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN)
 
-    def set_reset_pin(self, reset=None):
+        return pin
 
-        self.reset = reset
+    def get_bus(self):
 
-    def get_ambient_sound_board(self):
+        attr = f'get_{self.bus_params['TYPE']}'
+        self.bus = getattr(model, attr)(self.bus_params)
 
-        self.ambient_sound_board = entities.SOUND_BOARD_DRIVER(self.board, self.bus, self.reset)
+    def get_sound_board(self):
+
+        self.sound_board = self.driver(self.display_type, self.bus, reset=self.reset)
 
     def _get_clip(self):
 
@@ -59,7 +69,7 @@ class Sound:
         clip = self._get_clip()
         duration = self._get_duration()
 
-        self.ambient_sound_board.play(clip)
+        self.sound_board.play(clip)
 
         return duration
 
@@ -68,13 +78,13 @@ class Sound:
         clip = self._get_clip()
         duration = self._get_duration()
 
-        self.ambient_sound_board.play_now(clip)
+        self.sound_board.play_now(clip)
 
         return duration
 
     def stop_sound(self):
 
-        self.ambient_sound_board.stop()
+        self.sound_board.stop()
 
         return
     

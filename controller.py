@@ -38,25 +38,17 @@ class Machine:
         self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-    # UART
-        self.tx = entities.PIN(entities.PICO_PIN['TX'])
-        self.rx = None
-    # Specific to the Adafruit SFX board
-        self.reset = None
-        # self.reset = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN)
 
     def boot(self):
-# Initialize The Machine
-        
+# Initialize The Machine        
         self.main_display = view.Display(entities.MAIN_DISPLAY0) # Big OLED
         # self.main_display = view.Display(entities.MAIN_DISPLAY1) # Small OLED
         self.main_display.get_bus()
         self.main_display.get_display()
 
-        self.sound = sound.Sound(entities.SB0, entities.UART0)
-        self.sound.get_bus(pin0=self.tx, pin1=self.rx)
-        self.sound.set_reset_pin(self.reset)
-        self.sound.get_ambient_sound_board()
+        self.sound = sound.Sound(entities.SOUND_CARD0)
+        self.sound.get_bus()
+        self.sound.get_sound_board()
 # Start The Machine
         entities.WORKING_BUFFER = entities.SINGLES
         model.get_menu_first_item()
@@ -127,7 +119,7 @@ class Machine:
                                             pin_dt=self.encoder_tra,
                                             pin_sw=self.encoder_psh
                                             )
-        # subscribe to events
+    # subscribe to events
         encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.cb_turn_left)
         encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.cb_turn_right)
         encoder.on(entities.RotaryEncoderEvent.CLICK, self.cb_single_click)
