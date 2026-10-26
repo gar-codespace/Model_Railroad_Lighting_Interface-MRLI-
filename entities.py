@@ -131,10 +131,13 @@ SOUND_CARD0 = {
             'PARAMS':'SB0',
             'DRIVER':'SOUND_DRIVER0'
             }
+
 ################## PUSH BUTTON PARAMETERS ######################
 
 BUTTON0 = {
             'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
+            'TRIGGER_TYPE':'HI2LO',
+            # 'TRIGGER_TYPE':'LO2HI',
             'DEBOUNCE_TIME':50,
             'PRESSED_MSG':'button pressed',
             'RELEASED_MSG':'button released'
