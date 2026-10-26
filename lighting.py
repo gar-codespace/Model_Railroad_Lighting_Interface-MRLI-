@@ -21,6 +21,8 @@ def fade_up_lights():
     entities.NEXT_WP = end_index
     entities.CLIP_G =  entities.WORKING_BUFFER['GROUP'][end_index]
 
+    entities.PROGRESS_MESSAGE = f'Welcome'
+
     set_color_values(begin_index)
     set_pwm_values()
     set_up_banks(end_index)
@@ -147,6 +149,7 @@ def run_vfx():
     try:
         attrib = f'run_{vfx}'
         getattr(VFX, attrib)() # IE run_bolt()
+        entities.PROGRESS_MESSAGE = f'Visual Effect: {vfx}'
     except:
         pass
 

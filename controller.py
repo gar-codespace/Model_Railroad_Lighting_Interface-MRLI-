@@ -62,6 +62,7 @@ class Machine:
         self.main_display.update_display(view.get_welcome_list())
         self.sound.play_sound() # Plays entities.CLIP, default is 'Welcome'
         lighting.fade_up_lights()
+        view.put_progress_message()
 
 ################ methods in main - await entities.UASYNCIO.gather ##################
 # How do these work without using async def ...?
@@ -102,8 +103,6 @@ class Machine:
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound(), used as a boolean
                 duration = self.sound.play_sound()
-
-                entities.PROGRESS_MESSAGE = f'Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}'
                 view.put_progress_message()
 
             except:
@@ -113,6 +112,7 @@ class Machine:
                 attrib = f'{entities.MACHINE_STATE}_run_vfx'
                 getattr(states, attrib)() # IE states.animated_run_vfx(), used as a boolean
                 lighting.run_vfx()
+                view.put_progress_message()
             except:
                 pass
 

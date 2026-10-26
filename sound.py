@@ -95,6 +95,7 @@ def get_ambient_clip() -> tuple:
     select = entities.RANDINT(0, len(ambient_group) - 1)
 
     entities.CLIP = ambient_group[select]
+    entities.PROGRESS_MESSAGE = f'Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}'
 
 def get_pad() -> int:
     '''A random ammount of time between sound clips (ms).'''
