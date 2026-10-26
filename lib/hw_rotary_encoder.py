@@ -359,14 +359,18 @@ class RotaryEncoderRP2(RotaryEncoder):
         """
         self.timer = entities.TIMER(-1, period=timeout, mode=entities.TIMER.PERIODIC, callback=lambda t: self.__tick())
 
-    def raw_tick(self):
-        """raw_tick is used to process the encoder events. It should be run by the main loop manually. """
+    def poll(self):
+        """poll is used to process the encoder events. It should be run by the main loop manually. """
         self.__tick()
 
     def _enable_irq(self):
+        '''For this version of uPython, trigger is passed in automatically.'''
         if self.pin_clk is not None and self.pin_dt is not None:
-            self.pin_clk.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._enc_irq_handler)
-            self.pin_dt.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._enc_irq_handler)
+            # self.pin_clk.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._enc_irq_handler)
+            # self.pin_dt.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._enc_irq_handler)
+            self.pin_clk.irq(handler=self._enc_irq_handler)
+            self.pin_dt.irq(handler=self._enc_irq_handler)
 
         if self.pin_sw is not None:
-            self.pin_sw.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._sw_irq_handler)
+            # self.pin_sw.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._sw_irq_handler)
+            self.pin_sw.irq(handler=self._sw_irq_handler)

@@ -73,7 +73,7 @@ class Machine:
 
             try: # set next waypoint only for animated effects
                 attrib = f'{entities.MACHINE_STATE}_set_next_waypoint'
-                getattr(states, attrib)() # IE aniamated_set_next_waypoint()
+                getattr(states, attrib)() # IE states.aniamated_set_next_waypoint()
             except:
                 pass
 
@@ -122,20 +122,26 @@ class Machine:
     def poll_encoder(self):
         '''The await loop is in async_tick.'''
 
-        return self.encoder 
+        while(True):
 
-    def poll_the_buttons(self):
+            self.encoder.poll()
+            await entities.UASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
+            
+
+    def poll_the_inputs(self):
+        '''Front panel controls.'''
 
         while(True):
 
-            self.bC.update()
-            # self.bB.update()
-            self.b0.update()
-            self.b1.update()
-            self.b2.update()
-            self.b3.update()
-            self.b4.update()
-            self.bS.update() # that's an s not a 5
+            self.encoder.poll()
+            self.bC.poll()
+            # self.bB.poll()
+            self.b0.poll()
+            self.b1.poll()
+            self.b2.poll()
+            self.b3.poll()
+            self.b4.poll()
+            self.bS.poll() # that's an s not a 5
 
             await entities.UASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
 

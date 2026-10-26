@@ -76,6 +76,6 @@ class Button:
     
     self.previous_debounced_state = self.current_debounced_state
 
-  def update(self):
+  def poll(self):
     self.debounce()
     self.check_debounce_state()
