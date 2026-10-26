@@ -2,6 +2,10 @@
 These are the functions called from the callbacks in controller.Machine.
 '''
 
+'''
+TODO Abstract standby toggle.
+'''
+
 import entities
 import model
 import view
@@ -83,12 +87,12 @@ def effects_click():
 
     entities.CURRENT_EFFECT = entities.EFFECTS_MENU.get(entities.EFFECTS_HILIGHTED_EFFECT)
     entities.MACHINE_STATE = States.STATIC
-    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
     if not entities.CURRENT_EFFECT[1] == 'STATIC':
         entities.MACHINE_STATE = States.ANIMATED
 
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
     lighting.set_up_effect()
-    entities.WAYPOINT_START = entities.UTIME.time()
+    entities.WAYPOINT_START = entities.UTIME.time() # Waypoint duration timer.
 
     return view.get_status_list()
 

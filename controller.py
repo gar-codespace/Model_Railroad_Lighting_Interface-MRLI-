@@ -117,16 +117,7 @@ class Machine:
                 pass
 
             wait = duration + sound.get_pad()
-            await entities.UASYNCIO.sleep_ms(wait)
-
-    def poll_encoder(self):
-        '''The await loop is in async_tick.'''
-
-        while(True):
-
-            self.encoder.poll()
-            await entities.UASYNCIO.sleep_ms(entities.DEFAULT_CYCLE)
-            
+            await entities.UASYNCIO.sleep_ms(wait)            
 
     def poll_the_inputs(self):
         '''Front panel controls.'''
@@ -184,7 +175,7 @@ class Machine:
             pass
 
     def cb_confirm_release(self, name, message):
-        '''Toggle standby.'''
+        '''The 'confirm' button on the module, toggles standby.'''
 
         try:
             attrib = f'{entities.MACHINE_STATE}_toggle' # IE states.standby_toggle()
