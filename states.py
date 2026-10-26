@@ -27,6 +27,15 @@ class States:
 entities.MACHINE_STATE = States.WELCOME
 entities.STANDBY_TOGGLE = States.WELCOME
 
+def into_standby():
+
+    entities.CLIP = entities.STANDBY_IN_CLIP
+    lighting.shut_off_led_banks()
+
+    entities.STANDBY_TOGGLE = entities.MACHINE_STATE
+    entities.MACHINE_STATE = States.STANDBY
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
+
 
 ########### MACHINE_STATE: WELCOME
 
@@ -52,11 +61,12 @@ def welcome_click():
 def welcome_toggle():
     '''Puts machine in standby.'''
 
-    entities.CLIP = entities.STANDBY_IN_CLIP
-    entities.STANDBY_TOGGLE = States.EFFECTS
-    entities.MACHINE_STATE = States.STANDBY
-    lighting.shut_off_led_banks()
-    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
+    entities.MACHINE_STATE = States.EFFECTS
+    into_standby()
+    # entities.CLIP = entities.STANDBY_IN_CLIP
+    # entities.STANDBY_TOGGLE = States.EFFECTS
+    # lighting.shut_off_led_banks()
+    # entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -106,11 +116,13 @@ def effects_get_hilight():
 def effects_toggle():
     '''Puts machine in standby.'''
 
-    entities.CLIP = entities.STANDBY_IN_CLIP
-    entities.STANDBY_TOGGLE = States.EFFECTS
-    entities.MACHINE_STATE = States.STANDBY
-    lighting.shut_off_led_banks()
-    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
+    into_standby()
+
+    # entities.CLIP = entities.STANDBY_IN_CLIP
+    # entities.STANDBY_TOGGLE = States.EFFECTS
+    # entities.MACHINE_STATE = States.STANDBY
+    # lighting.shut_off_led_banks()
+    # entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -151,11 +163,13 @@ def animated_set_next_waypoint():
 def animated_toggle():
     '''Puts machine in standby.'''
 
-    entities.CLIP = entities.STANDBY_IN_CLIP
-    entities.STANDBY_TOGGLE = States.ANIMATED
-    entities.MACHINE_STATE = States.STANDBY
-    lighting.shut_off_led_banks()
-    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
+    into_standby()
+
+    # entities.CLIP = entities.STANDBY_IN_CLIP
+    # entities.STANDBY_TOGGLE = States.ANIMATED
+    # entities.MACHINE_STATE = States.STANDBY
+    # lighting.shut_off_led_banks()
+    # entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -230,11 +244,13 @@ def static_get_hilight():
 def static_toggle():
     '''Puts machine in standby.'''
 
-    entities.CLIP = entities.STANDBY_IN_CLIP
-    entities.STANDBY_TOGGLE = States.STATIC
-    entities.MACHINE_STATE = States.STANDBY
-    lighting.shut_off_led_banks()
-    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
+    into_standby()
+
+    # entities.CLIP = entities.STANDBY_IN_CLIP
+    # entities.STANDBY_TOGGLE = States.STATIC
+    # entities.MACHINE_STATE = States.STANDBY
+    # lighting.shut_off_led_banks()
+    # entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -313,11 +329,13 @@ def edit_get_hilight():
 def edit_toggle():
     '''Puts machine in standby.'''
 
-    entities.CLIP = entities.STANDBY_IN_CLIP
-    entities.STANDBY_TOGGLE = States.EFFECTS
-    entities.MACHINE_STATE = States.STANDBY
-    lighting.shut_off_led_banks()
-    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
+    into_standby()
+
+    # entities.CLIP = entities.STANDBY_IN_CLIP
+    # entities.STANDBY_TOGGLE = States.EFFECTS
+    # entities.MACHINE_STATE = States.STANDBY
+    # lighting.shut_off_led_banks()
+    # entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -361,8 +379,8 @@ def standby_toggle():
     '''Takes the machine out of standby.'''
 
     entities.CLIP = entities.STANDBY_OUT_CLIP
-    entities.MACHINE_STATE = entities.STANDBY_TOGGLE
     lighting.set_bank_relays()
+    entities.MACHINE_STATE = entities.STANDBY_TOGGLE
     entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     if entities.MACHINE_STATE == 'effects':
