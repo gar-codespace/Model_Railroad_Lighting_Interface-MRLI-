@@ -29,16 +29,19 @@ entities.STANDBY_TOGGLE = States.WELCOME
 
 def welcome_turn_left():
     entities.MACHINE_STATE = States.EFFECTS
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_effects_list()
 
 def welcome_turn_right():
     entities.MACHINE_STATE = States.EFFECTS
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_effects_list()
 
 def welcome_click():
     entities.MACHINE_STATE = States.EFFECTS
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_effects_list()
 
@@ -49,6 +52,7 @@ def welcome_toggle():
     entities.STANDBY_TOGGLE = States.EFFECTS
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -79,6 +83,7 @@ def effects_click():
 
     entities.CURRENT_EFFECT = entities.EFFECTS_MENU.get(entities.EFFECTS_HILIGHTED_EFFECT)
     entities.MACHINE_STATE = States.STATIC
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
     if not entities.CURRENT_EFFECT[1] == 'STATIC':
         entities.MACHINE_STATE = States.ANIMATED
 
@@ -101,6 +106,7 @@ def effects_toggle():
     entities.STANDBY_TOGGLE = States.EFFECTS
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -113,11 +119,13 @@ def animated_click():
 
     entities.MDB = entities.MAIN_DISPLAY_DIM
     entities.MACHINE_STATE = States.PAUSED
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
 def animated_click2():
     '''Return to the effects menu.'''
     
     entities.MACHINE_STATE = States.EFFECTS
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_effects_list()
 
@@ -143,6 +151,7 @@ def animated_toggle():
     entities.STANDBY_TOGGLE = States.ANIMATED
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -195,6 +204,7 @@ def static_click():
     '''Select a color to edit.'''
 
     entities.MACHINE_STATE = States.EDIT
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_status_list()
 
@@ -202,6 +212,7 @@ def static_click2():
     '''Return to the effects menu.'''
     
     entities.MACHINE_STATE = States.EFFECTS
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_effects_list()
 
@@ -219,6 +230,7 @@ def static_toggle():
     entities.STANDBY_TOGGLE = States.STATIC
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -283,6 +295,7 @@ def edit_click():
     '''Return to the static menu.'''
 
     entities.MACHINE_STATE = States.STATIC
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_status_list()
 
@@ -300,6 +313,7 @@ def edit_toggle():
     entities.STANDBY_TOGGLE = States.EFFECTS
     entities.MACHINE_STATE = States.STANDBY
     lighting.shut_off_led_banks()
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -331,6 +345,7 @@ def paused_click():
 
     entities.MACHINE_STATE = States.ANIMATED
     entities.MDB = entities.MAIN_DISPLAY_BRIGHT
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_status_list()
 
@@ -344,6 +359,7 @@ def standby_toggle():
     entities.CLIP = entities.STANDBY_OUT_CLIP
     entities.MACHINE_STATE = entities.STANDBY_TOGGLE
     lighting.set_bank_relays()
+    entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     if entities.MACHINE_STATE == 'effects':
         return view.get_effects_list()

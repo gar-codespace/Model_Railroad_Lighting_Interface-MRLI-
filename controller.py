@@ -72,7 +72,6 @@ class Machine:
         while True:
 
             try: # set next waypoint only for animated effects
-                view.put_progress_message()
                 attrib = f'{entities.MACHINE_STATE}_set_next_waypoint'
                 getattr(states, attrib)() # IE aniamated_set_next_waypoint()
             except:
@@ -86,6 +85,7 @@ class Machine:
             except:
                 pass
 
+            view.put_progress_message()
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
     def play_ambient_effects(self):
