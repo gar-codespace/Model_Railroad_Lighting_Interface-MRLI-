@@ -37,12 +37,17 @@ class Machine:
         pin = entities.PIN(entities.PICO_PIN['SCENIC_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.bS = entities.Button(params=entities.BUTTON0, pin=pin, cb_release=self.cb_bank_release, name='SCENIC')
     # Encoder uses polling
-        self.encoder_tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.encoder_trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.encoder_psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        self.encoder = entities.RotaryEncoderRP2(pin_clk=trb, pin_dt=tra, pin_sw=psh)
+        self.encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.cb_turn_left)
+        self.encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.cb_turn_right)
+        self.encoder.on(entities.RotaryEncoderEvent.CLICK, self.cb_single_click)
+        self.encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.cb_multi_click)
 
     def boot(self):
-# Initialize The Machine        
+# Initialize The Machine
         self.main_display = view.Display(entities.MAIN_DISPLAY0) # Big OLED
         # self.main_display = view.Display(entities.MAIN_DISPLAY1) # Small OLED
         self.main_display.get_bus()
@@ -58,23 +63,23 @@ class Machine:
         self.sound.play_sound() # Plays entities.CLIP, default is 'Welcome'
         lighting.fade_up_lights()
 
-################ methods in main - UASYNCIO.gather ##################
+################ methods in main - await entities.UASYNCIO.gather ##################
+# How do these work without using async def ...?
 
-    def run_lighting_effect(self): # How does this work without async?
-        '''A lighting effect is always being run.'''
+    def run_lighting_effect(self):
 
         while True:
 
-            try: # set next waypoint
+            try: # set next waypoint only for animated effects
                 view.put_progress_message()
                 attrib = f'{entities.MACHINE_STATE}_set_next_waypoint'
                 getattr(states, attrib)() # IE aniamated_set_next_waypoint()
             except:
                 pass
 
-            try: # only update colors when an animated effect is running
+            try: # increment_waypoint only for animated effects
                 attrib = f'{entities.MACHINE_STATE}_increment_waypoint'
-                getattr(states, attrib)() # IE animated_increment_waypoint()
+                getattr(states, attrib)() # IE states.animated_increment_waypoint()
                 lighting.set_pwm_values()
                 self.main_display.update_display(view.get_status_list())
             except:
@@ -82,7 +87,7 @@ class Machine:
 
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
-    def play_ambient_effects(self): # How does this work without async?
+    def play_ambient_effects(self):
         '''
         Ambient effects are designed to enhance the lighting effects.
         Ambient sound clips only play when the state is ANIMATED, STATIC, or EDIT.
@@ -93,9 +98,9 @@ class Machine:
             sound.get_ambient_clip()
             duration = 1000
 
-            try: # Play a sound clip
+            try: # Play an ambient sound clip
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
-                getattr(states, attrib)() # IE states.animated_play_sound()
+                getattr(states, attrib)() # IE states.animated_play_sound(), used as a boolean
                 duration = self.sound.play_sound()
 
                 entities.PROGRESS_MESSAGE = f'Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}'
@@ -104,9 +109,9 @@ class Machine:
             except:
                 pass
 
-            try: # Run a visual effect if there is one
+            try: # Run an ambient visual effect
                 attrib = f'{entities.MACHINE_STATE}_run_vfx'
-                getattr(states, attrib)() # IE states.animated_run_vfx()
+                getattr(states, attrib)() # IE states.animated_run_vfx(), used as a boolean
                 lighting.run_vfx()
             except:
                 pass
@@ -114,23 +119,12 @@ class Machine:
             wait = duration + sound.get_pad()
             await entities.UASYNCIO.sleep_ms(wait)
 
-    def get_encoder(self):
-        '''The await part is in async_tick.'''
+    def poll_encoder(self):
+        '''The await loop is in async_tick.'''
 
-        encoder = entities.RotaryEncoderRP2(pin_clk=self.encoder_trb,
-                                            pin_dt=self.encoder_tra,
-                                            pin_sw=self.encoder_psh
-                                            )
-    # subscribe to events
-        encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.cb_turn_left)
-        encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.cb_turn_right)
-        encoder.on(entities.RotaryEncoderEvent.CLICK, self.cb_single_click)
-        encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.cb_multi_click)
+        return self.encoder 
 
-        return encoder 
-
-    def get_all_the_buttons(self): # How does this work without async?
-        '''Consolidate all the front panel buttons into one loop.'''
+    def poll_the_buttons(self):
 
         while(True):
 

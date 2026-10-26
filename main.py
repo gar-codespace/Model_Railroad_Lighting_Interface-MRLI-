@@ -24,8 +24,8 @@ async def main():
         await entities.UASYNCIO.gather(
                                       mech.run_lighting_effect(),
                                       mech.play_ambient_effects(),
-                                      mech.get_encoder().async_tick(),
-                                      mech.get_all_the_buttons()
+                                      mech.poll_encoder().async_tick(),
+                                      mech.poll_the_buttons()
                                       )
 
 entities.UASYNCIO.run(main())
