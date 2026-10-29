@@ -61,9 +61,11 @@ PICO_PIN = {
         'COM0':20, # I2C SDA
         'COM1':21, # I2C SCL
         'COM2':0, # UART TX
-        'COM3':1, # UART RX
-        'COM4':2, # Sound FX card reset pin
+      #   'COM3':1,
+      #   'RESET':2,
 
+        'AVAILABLE':1,
+        'AVAILABLE':2,
         'RESERVED':23, # WiFi
         'RESERVED':24, # WiFi
         'LED':'LED',
@@ -83,7 +85,7 @@ UART0 = {
           'TYPE':'uart',
           'ID':0,
           'TX':'COM2',
-          'RX':'COM3',
+          'RX':None,
           'FREQ':9600
         }
 
@@ -113,8 +115,8 @@ DISPLAY_DIM = 1
 MAIN_DISPLAY_BRIGHT = DISPLAY_BRIGHT
 MAIN_FORMAT =  {
                 'LINE_HEIGHT': 10, # Pixels
-                'CHAR_PER_ROW':15,
                 'ROWS': 6,
+                'CHAR_PER_ROW':15,
                 'X_OFFSET': 4, # Pixels
                 }
 
@@ -156,7 +158,7 @@ WAYPOINT_RUN_TIME = 0 # Time the waypoint actually ran (sec)
 
 MACHINE_STATE:str  = None
 STANDBY_TOGGLE:str = None
-PROGRESS_MESSAGE:str = None
+PROGRESS_MESSAGE:str = f'Model Railroad Lighting Automation v20261001.1.1'
 
 STARTUP_EFFECT_DURATION = 5000 # Milliseconds
 WELCOME_SCREEN = ['M.U.T.T.', 'Metropolitan', 'Union ', 'Transfer', 'Terminal'] # 6 lines maximum, 15 char per line
@@ -338,11 +340,14 @@ CLOUDY = { # Simulates a cloudy day
 
 PAD_MIN = 2000 # Pad is the time between ambient sound (ms)
 PAD_MAX = 20000 # maximum time between ambient sounds (ms)
-WELCOME_CLIP = 'clip10' # Welcome clip
+WELCOME_CLIP = 'clip10'
 STANDBY_IN_CLIP = 'clip23'
 STANDBY_OUT_CLIP = 'clip09'
+PAUSE_CLIP = None
+UNPAUSE_CLIP = None
 CLIP = WELCOME_CLIP
 
+# The library of sound effects:
 AMBIENCE = {  # File    Name,       Duration, Description   VFX   Vol flag
                 'clip00':('SILENCE0OGG', 10, 'Silence',     None),
                 'clip01':('GULLS001OGG', 16, 'Seagulls 1',  None),

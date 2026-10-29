@@ -18,7 +18,8 @@ UART0 = {
 SB0 = {
        'BOARD': 'Adafruit Sound FX Board',
        'WAIT':50,
-       'DUPLEX':False
+       'DUPLEX':False,
+       'RESET':False,
        }
 '''
 
@@ -51,6 +52,9 @@ class Sound:
     def get_sound_board(self):
 
         self.sound_board = self.driver(self.display_type, self.bus, reset=self.reset)
+
+    def reset_sound_board(self):
+        ...
 
     def _get_clip(self):
 

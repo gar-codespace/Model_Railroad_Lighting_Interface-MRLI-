@@ -50,11 +50,14 @@ class Machine:
 # Initialize The Machine
         self.main_display = view.Display(entities.MAIN_DISPLAY0) # Big OLED
         # self.main_display = view.Display(entities.MAIN_DISPLAY1) # Small OLED
+        view.put_progress_message()
         self.main_display.get_bus()
+        view.put_progress_message()
         self.main_display.get_display()
 
         self.sound = sound.Sound(entities.SOUND_CARD0)
         self.sound.get_bus()
+        view.put_progress_message()
         self.sound.get_sound_board()
 # Start The Machine
         entities.WORKING_BUFFER = entities.SINGLES
@@ -62,7 +65,6 @@ class Machine:
         self.main_display.update_display(view.get_welcome_list())
         self.sound.play_sound() # Plays entities.CLIP, default is 'Welcome'
         lighting.fade_up_lights()
-        view.put_progress_message()
 
 ################ methods in main - await entities.UASYNCIO.gather ##################
 # How do these work without using async def ...?
@@ -104,7 +106,6 @@ class Machine:
                 sound.get_ambient_clip()
                 duration = self.sound.play_sound()
                 view.put_progress_message()
-
             except:
                 pass
 

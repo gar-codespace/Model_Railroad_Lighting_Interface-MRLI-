@@ -13,6 +13,16 @@ reset does not work. Only power cycling
 will reset the board when it is in UART mode.
 Look into this some more.
 '''
+'''
+board:
+SB0 = {
+       'BOARD': 'Adafruit Sound FX Board',
+       'WAIT':50,
+       'DUPLEX':False,
+       'RESET':False,
+       }
+'''
+
 __author__ = 'Greg Ritacco'
 
 
@@ -35,7 +45,7 @@ class CMD:
 
 class SoundFX:
 
-    def __init__(self, board:dict, bus:object, reset:object=None):
+    def __init__(self, board:dict, bus:object, reset:entities.PIN=None):
 
         self.uart = bus
         self.board = board
@@ -58,7 +68,7 @@ class SoundFX:
             return self.uart.read()
 
     def reset_board(self):
-        '''Retest this.'''
+        '''TODO Retest this.'''
 
         if self.reset:
             self.reset.value(0)

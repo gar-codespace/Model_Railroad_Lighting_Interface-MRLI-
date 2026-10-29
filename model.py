@@ -124,7 +124,7 @@ def get_menu_first_item():
     entities.EFFECTS_MENU_FIRST_ITEM = index_double[position - entities.EFFECTS_HIGHLIGHT_ROW]
 
 def get_i2c(params):
-    '''I2C is the only bus so far.'''
+    '''I2C is used for the display.'''
 
     sda = entities.PIN(entities.PICO_PIN[params['SDA']])
     scl = entities.PIN(entities.PICO_PIN[params['SCL']])
@@ -132,6 +132,7 @@ def get_i2c(params):
     freq = params['FREQ']
 
     i2c = entities.I2C(id=id, sda=sda, scl=scl, freq=freq)
+    entities.PROGRESS_MESSAGE = f'I2C config: {i2c}'
 
     return i2c
 
@@ -140,11 +141,19 @@ def get_spi(params):
 
 def get_uart(params):
 
-    tx = entities.PIN(entities.PICO_PIN[params['TX']])
-    rx = entities.PIN(entities.PICO_PIN[params['RX']])
+    try:
+        tx = entities.PIN(entities.PICO_PIN[params['TX']])
+    except:
+        tx = None
+    try:
+        rx = entities.PIN(entities.PICO_PIN[params['RX']])
+    except:
+        rx = None
+
     id = params['ID']
     baud = params['FREQ']
 
     uart = entities.UART(id, baudrate=baud, tx=tx, rx=rx)
+    entities.PROGRESS_MESSAGE = f'UART config: {uart}'
 
     return uart
