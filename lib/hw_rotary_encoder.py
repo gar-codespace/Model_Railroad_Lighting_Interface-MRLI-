@@ -352,12 +352,12 @@ class RotaryEncoderRP2(RotaryEncoder):
             self.__tick()
             await entities.UASYNCIO.sleep_ms(timeout)
 
-    def timer_tick(self, timeout=1):
-        """
-            timer_tick is used to process the encoder events. It automatically creates the system irq timer.
-            :link https://docs.micropython.org/en/latest/rp2/quickref.html#timers
-        """
-        self.timer = entities.TIMER(-1, period=timeout, mode=entities.TIMER.PERIODIC, callback=lambda t: self.__tick())
+    # def timer_tick(self, timeout=1):
+    #     """
+    #         timer_tick is used to process the encoder events. It automatically creates the system irq timer.
+    #         :link https://docs.micropython.org/en/latest/rp2/quickref.html#timers
+    #     """
+    #     self.timer = entities.TIMER(-1, period=timeout, mode=entities.TIMER.PERIODIC, callback=lambda t: self.__tick())
 
     def poll(self):
         """poll is used to process the encoder events. It should be run by the main loop manually. """

@@ -48,9 +48,9 @@ class Machine:
 
     def boot(self):
 # Initialize The Machine
+        view.put_progress_message()
         self.main_display = view.Display(entities.MAIN_DISPLAY0) # Big OLED
         # self.main_display = view.Display(entities.MAIN_DISPLAY1) # Small OLED
-        view.put_progress_message()
         self.main_display.get_bus()
         view.put_progress_message()
         self.main_display.get_display()

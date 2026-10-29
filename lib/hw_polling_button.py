@@ -19,7 +19,7 @@ import entities
 
 class Button:
 
-  def __init__(self, params:dict, pin:entities.PIN, cb_press:function=None, cb_release:function=None, name:str=None):
+  def __init__(self, params:dict, pin:entities.PIN, cb_press:callable=None, cb_release:callable=None, name:str=None):
 
   # Setttings
     self.pin = pin
