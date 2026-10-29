@@ -133,7 +133,7 @@ def effects_toggle():
 def animated_click():
     '''Pause effect.'''
 
-    entities.MDB = entities.MAIN_DISPLAY_DIM
+    entities.MAIN_DISPLAY_BRIGHT = entities.DISPLAY_DIM
     entities.MACHINE_STATE = States.PAUSED
     entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
@@ -363,7 +363,7 @@ def paused_click():
     '''Unpause animated effect.'''
 
     entities.MACHINE_STATE = States.ANIMATED
-    entities.MDB = entities.MAIN_DISPLAY_BRIGHT
+    entities.MAIN_DISPLAY_BRIGHT = entities.DISPLAY_BRIGHT
     entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_status_list()

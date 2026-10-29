@@ -96,12 +96,12 @@ class Machine:
 
         while True:
 
-            sound.get_ambient_clip()
             duration = 1000
 
             try: # Play an ambient sound clip
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound(), used as a boolean
+                sound.get_ambient_clip()
                 duration = self.sound.play_sound()
                 view.put_progress_message()
 

@@ -49,7 +49,7 @@ class Display:
     def update_display(self, content: list = entities.WELCOME_SCREEN):
 
         self.display.fill(0)
-        self.display.contrast(entities.MDB)
+        self.display.contrast(entities.MAIN_DISPLAY_BRIGHT)
 
         line_y = 3 # vertically center the text in the display
         for i in range(entities.MAIN_FORMAT['ROWS']):
