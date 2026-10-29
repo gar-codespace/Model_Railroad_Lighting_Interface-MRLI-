@@ -6,8 +6,6 @@ Move imports to entities
 params:
 BUTTON0 = {
             'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
-            'TRIGGER_TYPE':'HI2LO',
-            # 'TRIGGER_TYPE':'LO2HI',
             'DEBOUNCE_TIME':50,
             'PRESSED_MSG':'button pressed',
             'RELEASED_MSG':'button released'
@@ -26,10 +24,10 @@ class Button:
   # Setttings
     self.pin = pin
     self.name = name
-    self.pressed_msg = params['PRESSED_MSG']
-    self.released_msg = params['RELEASED_MSG']
     self.cb_press = cb_press # pressed callback
+    self.pressed_msg = params['PRESSED_MSG']
     self.cb_release = cb_release # released callback
+    self.released_msg = params['RELEASED_MSG']
   # Debounce logic
     self.rest_state = params['NORMALLY_OPEN']
     self.previous_state = params['NORMALLY_OPEN']

@@ -69,7 +69,8 @@ class Display:
 def get_welcome_list() -> list:
 
     welcome_list: list = []
-    line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s'
+    char_per_row = entities.MAIN_FORMAT['CHAR_PER_ROW']
+    line_format = f'^{char_per_row}s'
 
     for i in range(entities.MAIN_FORMAT['ROWS']):
         try:

@@ -106,15 +106,16 @@ MAIN_DISPLAY1 = { # Small OLED
             'PARAMS':'OLED0',
             'DRIVER':'DISPLAY_DRIVER1'
             }
-MAIN_DISPLAY_LENGTH = 15 # Characters per line
+
 MAIN_DISPLAY_BRIGHT = 70
 MAIN_DISPLAY_DIM = 1
 MDB = MAIN_DISPLAY_BRIGHT
 
 MAIN_FORMAT =  {
-                'LINE_HEIGHT': 10,
+                'LINE_HEIGHT': 10, # Pixels
+                'CHAR_PER_ROW':15,
                 'ROWS': 6,
-                'X_OFFSET': 4
+                'X_OFFSET': 4, # Pixels
                 }
 
 ################## SOUND ######################
@@ -136,8 +137,6 @@ SOUND_CARD0 = {
 
 BUTTON0 = {
             'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
-            'TRIGGER_TYPE':'HI2LO',
-            # 'TRIGGER_TYPE':'LO2HI',
             'DEBOUNCE_TIME':50,
             'PRESSED_MSG':'button pressed',
             'RELEASED_MSG':'button released'

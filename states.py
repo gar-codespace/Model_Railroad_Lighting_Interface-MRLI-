@@ -183,7 +183,8 @@ def animated_first_line():
     '''The first line of the status screen is the time or waypoint name.'''
     '''Can't import datetime for some reason.'''
 
-    line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s' # Center on screen
+    char_per_row = entities.MAIN_FORMAT['CHAR_PER_ROW']
+    line_format = f'^{char_per_row}s' # Center on screen
     text = f'   WP: {entities.WP_NAME}'
 
     if entities.HOUR:
@@ -269,7 +270,8 @@ def static_first_line():
     '''The first line of the status screen is the waypoint name.'''
 
     name = entities.CURRENT_EFFECT[0]
-    line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s' # Center on screen
+    char_per_row = entities.MAIN_FORMAT['CHAR_PER_ROW']
+    line_format = f'^{char_per_row}s' # Center on screen
 
     return f'{name:{line_format}}'
 
@@ -331,12 +333,6 @@ def edit_toggle():
 
     into_standby()
 
-    # entities.CLIP = entities.STANDBY_IN_CLIP
-    # entities.STANDBY_TOGGLE = States.EFFECTS
-    # entities.MACHINE_STATE = States.STANDBY
-    # lighting.shut_off_led_banks()
-    # entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
-
     return view.get_empty_list()
 
 def edit_bank(name, index):
@@ -354,7 +350,8 @@ def edit_first_line():
     '''The first line of the status screen is the waypoint name.'''
 
     name = entities.CURRENT_EFFECT[0]
-    line_format = f'^{entities.MAIN_DISPLAY_LENGTH}s' # Center on screen
+    char_per_row = entities.MAIN_FORMAT['CHAR_PER_ROW']
+    line_format = f'^{char_per_row}s' # Center on screen
 
     return f'{name:{line_format}}'
 
