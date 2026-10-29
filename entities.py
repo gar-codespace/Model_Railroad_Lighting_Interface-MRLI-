@@ -140,8 +140,10 @@ SOUND_CARD0 = {
 BUTTON0 = {
             'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
             'DEBOUNCE_TIME':50,
+            'MULTI_TIME':200,
             'PRESSED_MSG':'button pressed',
-            'RELEASED_MSG':'button released'
+            'RELEASED_MSG':'button released',
+            'MULTI_MSG':'multiple presses',
             }
 
 ################## SOFTWARE ######################

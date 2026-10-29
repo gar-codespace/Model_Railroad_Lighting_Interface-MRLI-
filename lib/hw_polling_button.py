@@ -7,27 +7,36 @@ params:
 BUTTON0 = {
             'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
             'DEBOUNCE_TIME':50,
+            'MULTI_TIME':200,
             'PRESSED_MSG':'button pressed',
-            'RELEASED_MSG':'button released'
+            'RELEASED_MSG':'button released',
+            'MULTI_MSG':'multiple presses',
             }
 '''
 
-__author__ = 'https://github.com/ubidefeo/MicroPython-Button'
+__fork__ = 'https://github.com/ubidefeo/MicroPython-Button'
+__author__ = 'Greg Ritacco'
 
 import entities
 
 
 class Button:
 
-  def __init__(self, params:dict, pin:entities.PIN, cb_press:callable=None, cb_release:callable=None, name:str=None):
+  PRESS:bool = False
+  RELEASE:bool = False
+  MULTI:bool = False
+
+  def __init__(self, params:dict, pin:entities.PIN, name:str=None):
 
   # Setttings
     self.pin = pin
     self.name = name
-    self.cb_press = cb_press # pressed callback
+    self.cb_press:callable = None # pressed callback
+    self.cb_release:callable = None # released callback
+    self.cb_multi:callable = None # Multi press callback
     self.pressed_msg = params['PRESSED_MSG']
-    self.cb_release = cb_release # released callback
     self.released_msg = params['RELEASED_MSG']
+    self.multi_msg = params['MULTI_MSG']
   # Debounce logic
     self.rest_state = params['NORMALLY_OPEN']
     self.previous_state = params['NORMALLY_OPEN']
@@ -35,19 +44,27 @@ class Button:
     self.previous_debounced_state = params['NORMALLY_OPEN']
     self.current_debounced_state = params['NORMALLY_OPEN']
     self.debounce_time = params['DEBOUNCE_TIME']
+    self.multi_time = params['MULTI_TIME']
     self.last_check_tick = entities.UTIME.ticks_ms()
 
+  def on(self, event:str, callback:callable):
+    '''Registers an event with a callback.'''
+
+    setattr(self, event, True)
+    attrib = f'cb_{event.lower()}'
+    setattr(self, attrib, callback)
+
   def press_callback(self):
-    try:
+    if self.PRESS:
       self.cb_press(self.name, self.pressed_msg)
-    except:
-      pass
 
   def release_callback(self):
-    try:
+    if self.RELEASE:
       self.cb_release(self.name, self.released_msg)
-    except:
-      pass
+
+  def multi_callback(self):
+    if self.MULTI:
+      self.cb_multi(self.name, self.multi_msg)
 
   def debounce(self):
 
@@ -62,7 +79,10 @@ class Button:
       self.current_debounced_state = self.current_state
     self.previous_state = self.current_state
 
-  def check_debounce_state(self):
+  def multi_press(self):
+    ...
+
+  def single_press(self):
 
     if self.current_debounced_state == self.previous_debounced_state:
       return
@@ -76,4 +96,5 @@ class Button:
 
   def poll(self):
     self.debounce()
-    self.check_debounce_state()
+    self.multi_press()
+    self.single_press()
