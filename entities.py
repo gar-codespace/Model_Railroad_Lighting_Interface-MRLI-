@@ -4,7 +4,7 @@ All the imports are in one place.
 '''
 
 # packaged libraries are kept to a minimum
-from machine import Pin as PIN, I2C, Timer as TIMER, PWM, UART
+from machine import Pin as PIN, Timer as TIMER, I2C, PWM, UART
 from micropython import const as CONST
 from random import randint as RANDINT
 import utime as UTIME

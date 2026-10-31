@@ -44,8 +44,11 @@ class Button:
     self.previous_debounced_state = params['NORMALLY_OPEN']
     self.current_debounced_state = params['NORMALLY_OPEN']
     self.debounce_time = params['DEBOUNCE_TIME']
-    self.multi_time = params['MULTI_TIME']
     self.last_check_tick = entities.UTIME.ticks_ms()
+
+    self.multi_time = params['MULTI_TIME']
+    self.start_multi = entities.UTIME.ticks_ms()
+    self.stop_multi = entities.UTIME.ticks_ms()
 
   def on(self, event:str, callback:callable):
     '''Registers an event with a callback.'''
@@ -55,14 +58,17 @@ class Button:
     setattr(self, attrib, callback)
 
   def press_callback(self):
+
     if self.PRESS:
       self.cb_press(self.name, self.pressed_msg)
 
   def release_callback(self):
+
     if self.RELEASE:
       self.cb_release(self.name, self.released_msg)
 
   def multi_callback(self):
+
     if self.MULTI:
       self.cb_multi(self.name, self.multi_msg)
 
@@ -80,21 +86,39 @@ class Button:
     self.previous_state = self.current_state
 
   def multi_press(self):
-    ...
-
-  def single_press(self):
 
     if self.current_debounced_state == self.previous_debounced_state:
       return
+    
+    diff = entities.UTIME.ticks_diff(self.stop_multi, self.start_multi)
 
+    if diff < 0 and abs(diff) <= self.multi_time:
+      print('multi press')
+
+
+  def single_press(self):
+
+  # Did anything change?
+    if self.current_debounced_state == self.previous_debounced_state:
+      return
+
+  # Is the button pressed?
     if self.current_debounced_state != self.rest_state:
       self.press_callback()
-    else:
+      self.previous_debounced_state = self.current_debounced_state
+      return
+
+  # The button must be released
+    entities.UTIME.sleep_ms(1000)
+    self.debounce()
+
+    if self.current_debounced_state == self.rest_state:
       self.release_callback()
-    
+      
+    print(self.pin.value())
     self.previous_debounced_state = self.current_debounced_state
 
   def poll(self):
     self.debounce()
-    self.multi_press()
+    # self.multi_press()
     self.single_press()
