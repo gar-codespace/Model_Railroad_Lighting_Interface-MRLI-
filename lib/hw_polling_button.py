@@ -24,7 +24,6 @@ import entities
 
 class Button:
 
-  PRESS:bool = False
   RELEASE:bool = False
   MULTI:bool = False
   LONG:bool = False
@@ -34,12 +33,12 @@ class Button:
   # Callback setttings
     self.pin = pin
     self.name = name
-    self.cb_press:callable = None # pressed callback
     self.cb_release:callable = None # released callback
     self.cb_multi:callable = None # Multi press callback
-    self.pressed_msg = params['PRESSED_MSG']
+    self.cb_long:callable = None # long press callback
     self.released_msg = params['RELEASED_MSG']
     self.multi_msg = params['MULTI_MSG']
+    self.long_msg = params['LONG_MSG']
   # _debounce
     self.rest_state = params['NORMALLY_OPEN']
     self.previous_state = params['NORMALLY_OPEN']
@@ -52,8 +51,11 @@ class Button:
     # self.multi_time = params['MULTI_TIME']
     self.multi_count:int = 0
     self.multi_tick:int = 0
+    self.multi_threshold = params['MULTI_TIME'] / entities.DEFAULT_CYCLE
     self.press_count:int = 0
-    self.threshold = params['MULTI_TIME'] / entities.DEFAULT_CYCLE
+    self.long_count:int = 0
+    self.long_tick:int = 0
+    self.long_threshold = params['LONG_TIME'] / entities.DEFAULT_CYCLE
 
   def on(self, event:str, callback:callable):
     '''Registers an event with a callback.'''
@@ -76,23 +78,35 @@ class Button:
     self.previous_state = self.current_state
 
   def _multi_counter(self):
-    '''Start on release, stop on press.'''
+    '''Single or multiple releases.'''
 
+# Start on release, stop on press.
     self.multi_count += self.multi_tick
-    if self.multi_count >= self.threshold:
+    if self.multi_count >= self.multi_threshold:
       self._rubric(self.press_count)
+      # print(f'press count: {self.press_count}')
       self.multi_tick = 0
       self.multi_count = 0
       self.press_count = 0
+      self.long_tick = 0
+      self.long_count = 0
 
   def _long_counter(self):
-    '''Start on press, stop on release.'''
+    '''Long press.'''
+    
+# Start on press, stop on release.
+    self.long_count += self.long_tick
+    if self.long_count >= self.long_threshold:
+      self._rubric(0) # Catches single or multi
+      self.multi_tick = 0
+      self.multi_count = 0
+      self.press_count = 0
+      self.long_tick = 0
+      self.long_count = 0
+      # print('long press')
 
   def _rubric(self, count:int):
     '''Picks the appropriate callback.'''
-
-    if count == 0 and self.PRESS:
-      self.cb_press(self.name, self.pressed_msg)
 
     if count == 1 and self.RELEASE:
       self.cb_release(self.name, self.released_msg)
@@ -101,8 +115,8 @@ class Button:
         self.cb_multi(self.name, self.multi_msg)
         # self.cb_multi(self.name, count)
 
-    if count < 0 and self.LONG:
-      ...
+    if count == 0 and self.LONG:
+      self.cb_long(self.name, self.released_msg)
 
   def _parse_input(self):
 
@@ -111,12 +125,15 @@ class Button:
       return
   # On Press
     if self.current_debounced_state != self.rest_state:
+      self.long_tick = 1
       self.multi_tick = 0 # Stops the _multi_counter
       self.press_count += 1
-      self._rubric(0)
+      self._rubric(0) # Catches the long press
       self.previous_debounced_state = self.current_debounced_state
       return
   # On release
+    self.long_tick = 0
+    self.long_count = 0
     self.multi_tick = 1 # Starts the _multi_counter
     self.previous_debounced_state = self.current_debounced_state
 
