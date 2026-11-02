@@ -1,15 +1,19 @@
 '''
 Hardware library for the fromt panel buttons.
+Catches single release, multi release and long press.
 Move imports to entities
 '''
 '''
+usage:
+pin = entities.PIN(entities.PICO_PIN['CONFIRM'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+self.bC = entities.Button(params=entities.BUTTON0, pin=pin, name='STANDBY')
+self.bC.on(event='RELEASE', callback=self.cb_confirm_release)
 params:
 BUTTON0 = {
             'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
-            'DEBOUNCE_TIME':50,
-            'MULTI_TIME':200,
-            'LONG_TIME':1000,
-            'PRESSED_MSG':'button pressed',
+            'DEBOUNCE_TIME':40,
+            'MULTI_TIME':350,
+            'LONG_TIME':800,
             'RELEASED_MSG':'button released',
             'MULTI_MSG':'multiple presses',
             'LONG_MSG':'long press'
@@ -24,6 +28,7 @@ import entities
 
 class Button:
 
+# Events
   RELEASE:bool = False
   MULTI:bool = False
   LONG:bool = False
@@ -34,12 +39,12 @@ class Button:
     self.pin = pin
     self.name = name
     self.cb_release:callable = None # released callback
-    self.cb_multi:callable = None # Multi press callback
+    self.cb_multi:callable = None # Multi release callback
     self.cb_long:callable = None # long press callback
     self.released_msg = params['RELEASED_MSG']
     self.multi_msg = params['MULTI_MSG']
     self.long_msg = params['LONG_MSG']
-  # _debounce
+  # Debounce
     self.rest_state = params['NORMALLY_OPEN']
     self.previous_state = params['NORMALLY_OPEN']
     self.current_state = params['NORMALLY_OPEN']
@@ -48,7 +53,6 @@ class Button:
     self.debounce_time = params['DEBOUNCE_TIME']
     self.last_check_tick = entities.UTIME.ticks_ms()
   # Parse
-    # self.multi_time = params['MULTI_TIME']
     self.multi_count:int = 0
     self.multi_tick:int = 0
     self.multi_threshold = params['MULTI_TIME'] / entities.DEFAULT_CYCLE
@@ -76,6 +80,24 @@ class Button:
       self.last_check_tick = ms_now
       self.current_debounced_state = self.current_state
     self.previous_state = self.current_state
+
+  def _parse_input(self):
+
+  # Did anything change?
+    if self.current_debounced_state == self.previous_debounced_state:
+      return
+  # On Press
+    if self.current_debounced_state != self.rest_state:
+      self.long_tick = 1
+      self.multi_tick = 0 # Stops the _multi_counter
+      self.press_count += 1
+      self.previous_debounced_state = self.current_debounced_state
+      return
+  # On release
+    self.long_tick = 0
+    self.long_count = 0
+    self.multi_tick = 1 # Starts the _multi_counter
+    self.previous_debounced_state = self.current_debounced_state
 
   def _multi_counter(self):
     '''Single or multiple releases.'''
@@ -112,29 +134,11 @@ class Button:
       self.cb_release(self.name, self.released_msg)
 
     if count > 1 and self.MULTI:
-        self.cb_multi(self.name, self.multi_msg)
+        self.cb_multi(self.name, self.multi_msg) # one or the other
         # self.cb_multi(self.name, count)
 
     if count == 0 and self.LONG:
-      self.cb_long(self.name, self.released_msg)
-
-  def _parse_input(self):
-
-  # Did anything change?
-    if self.current_debounced_state == self.previous_debounced_state:
-      return
-  # On Press
-    if self.current_debounced_state != self.rest_state:
-      self.long_tick = 1
-      self.multi_tick = 0 # Stops the _multi_counter
-      self.press_count += 1
-      self.previous_debounced_state = self.current_debounced_state
-      return
-  # On release
-    self.long_tick = 0
-    self.long_count = 0
-    self.multi_tick = 1 # Starts the _multi_counter
-    self.previous_debounced_state = self.current_debounced_state
+      self.cb_long(self.name, self.long_msg)
 
   def poll(self):
     self._debounce()
