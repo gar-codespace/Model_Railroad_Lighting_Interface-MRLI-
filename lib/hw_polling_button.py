@@ -83,7 +83,7 @@ class Button:
 # Start on release, stop on press.
     self.multi_count += self.multi_tick
     if self.multi_count >= self.multi_threshold:
-      self._rubric(self.press_count)
+      self._rubric(self.press_count) # Catches single or multi
       # print(f'press count: {self.press_count}')
       self.multi_tick = 0
       self.multi_count = 0
@@ -97,13 +97,13 @@ class Button:
 # Start on press, stop on release.
     self.long_count += self.long_tick
     if self.long_count >= self.long_threshold:
-      self._rubric(0) # Catches single or multi
+      self._rubric(0) # catches the long press
       self.multi_tick = 0
       self.multi_count = 0
       self.press_count = 0
       self.long_tick = 0
       self.long_count = 0
-      # print('long press')
+      print('long press')
 
   def _rubric(self, count:int):
     '''Picks the appropriate callback.'''
@@ -128,7 +128,6 @@ class Button:
       self.long_tick = 1
       self.multi_tick = 0 # Stops the _multi_counter
       self.press_count += 1
-      self._rubric(0) # Catches the long press
       self.previous_debounced_state = self.current_debounced_state
       return
   # On release
