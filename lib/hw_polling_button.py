@@ -8,9 +8,11 @@ BUTTON0 = {
             'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
             'DEBOUNCE_TIME':50,
             'MULTI_TIME':200,
+            'LONG_TIME':1000,
             'PRESSED_MSG':'button pressed',
             'RELEASED_MSG':'button released',
             'MULTI_MSG':'multiple presses',
+            'LONG_MSG':'long press'
             }
 '''
 
@@ -25,10 +27,11 @@ class Button:
   PRESS:bool = False
   RELEASE:bool = False
   MULTI:bool = False
+  LONG:bool = False
 
   def __init__(self, params:dict, pin:entities.PIN, name:str=None):
 
-  # Setttings
+  # Callback setttings
     self.pin = pin
     self.name = name
     self.cb_press:callable = None # pressed callback
@@ -37,7 +40,7 @@ class Button:
     self.pressed_msg = params['PRESSED_MSG']
     self.released_msg = params['RELEASED_MSG']
     self.multi_msg = params['MULTI_MSG']
-  # Debounce logic
+  # _debounce
     self.rest_state = params['NORMALLY_OPEN']
     self.previous_state = params['NORMALLY_OPEN']
     self.current_state = params['NORMALLY_OPEN']
@@ -45,10 +48,12 @@ class Button:
     self.current_debounced_state = params['NORMALLY_OPEN']
     self.debounce_time = params['DEBOUNCE_TIME']
     self.last_check_tick = entities.UTIME.ticks_ms()
-
-    self.multi_time = params['MULTI_TIME']
-    self.start_multi = entities.UTIME.ticks_ms()
-    self.stop_multi = entities.UTIME.ticks_ms()
+  # Parse
+    # self.multi_time = params['MULTI_TIME']
+    self.multi_count:int = 0
+    self.multi_tick:int = 0
+    self.press_count:int = 0
+    self.threshold = params['MULTI_TIME'] / entities.DEFAULT_CYCLE
 
   def on(self, event:str, callback:callable):
     '''Registers an event with a callback.'''
@@ -57,22 +62,7 @@ class Button:
     attrib = f'cb_{event.lower()}'
     setattr(self, attrib, callback)
 
-  def press_callback(self):
-
-    if self.PRESS:
-      self.cb_press(self.name, self.pressed_msg)
-
-  def release_callback(self):
-
-    if self.RELEASE:
-      self.cb_release(self.name, self.released_msg)
-
-  def multi_callback(self):
-
-    if self.MULTI:
-      self.cb_multi(self.name, self.multi_msg)
-
-  def debounce(self):
+  def _debounce(self):
 
     ms_now = entities.UTIME.ticks_ms()
     self.current_state = self.pin.value()
@@ -85,40 +75,53 @@ class Button:
       self.current_debounced_state = self.current_state
     self.previous_state = self.current_state
 
-  def multi_press(self):
+  def _multi_counter(self):
+    '''Start on release, stop on press.'''
 
-    if self.current_debounced_state == self.previous_debounced_state:
-      return
-    
-    diff = entities.UTIME.ticks_diff(self.stop_multi, self.start_multi)
+    self.multi_count += self.multi_tick
+    if self.multi_count >= self.threshold:
+      self._rubric(self.press_count)
+      self.multi_tick = 0
+      self.multi_count = 0
+      self.press_count = 0
 
-    if diff < 0 and abs(diff) <= self.multi_time:
-      print('multi press')
+  def _long_counter(self):
+    '''Start on press, stop on release.'''
 
+  def _rubric(self, count:int):
+    '''Picks the appropriate callback.'''
 
-  def single_press(self):
+    if count == 0 and self.PRESS:
+      self.cb_press(self.name, self.pressed_msg)
+
+    if count == 1 and self.RELEASE:
+      self.cb_release(self.name, self.released_msg)
+
+    if count > 1 and self.MULTI:
+        self.cb_multi(self.name, self.multi_msg)
+        # self.cb_multi(self.name, count)
+
+    if count < 0 and self.LONG:
+      ...
+
+  def _parse_input(self):
 
   # Did anything change?
     if self.current_debounced_state == self.previous_debounced_state:
       return
-
-  # Is the button pressed?
+  # On Press
     if self.current_debounced_state != self.rest_state:
-      self.press_callback()
+      self.multi_tick = 0 # Stops the _multi_counter
+      self.press_count += 1
+      self._rubric(0)
       self.previous_debounced_state = self.current_debounced_state
       return
-
-  # The button must be released
-    entities.UTIME.sleep_ms(1000)
-    self.debounce()
-
-    if self.current_debounced_state == self.rest_state:
-      self.release_callback()
-      
-    print(self.pin.value())
+  # On release
+    self.multi_tick = 1 # Starts the _multi_counter
     self.previous_debounced_state = self.current_debounced_state
 
   def poll(self):
-    self.debounce()
-    # self.multi_press()
-    self.single_press()
+    self._debounce()
+    self._parse_input()
+    self._multi_counter()
+    self._long_counter()
