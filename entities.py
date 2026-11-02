@@ -135,6 +135,19 @@ SOUND_CARD0 = {
             'DRIVER':'SOUND_DRIVER0'
             }
 
+################## ENCODER PARAMETERS ######################
+
+ENCODER0 = {
+            'DEBOUNCE_MS':50, # filter out pin jitter
+            'ENCODER_STEP':1, # filter out pin jitter
+            'HALF_STEP':False,# support increment every click for KY040 encoder
+            'HOLD_MS':1000, # detect a long press
+            'STEP_MS':200, # detect a multiple press
+            'FAST_MS':50, # detect a fast encoder turn
+            'CLICK_MS':400, # detect a single click
+            }
+
+
 ################## PUSH BUTTON PARAMETERS ######################
 
 BUTTON0 = {
