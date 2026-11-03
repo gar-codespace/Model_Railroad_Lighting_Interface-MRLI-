@@ -4,10 +4,6 @@ It's probably suitable for any LED application where granular control and multip
 I think this project would also be suitable for fish and reptile lighting when the project is synced to a real world clock.  
 The code runs on a Rasberry Pi Pico 2.  
   
-
-
-
-
 ![Prototype - front](pics/pic1.jpg)  
 Prototype - front  
 ![Prototype - interior](pics/pic2.jpg)  
@@ -21,20 +17,19 @@ Sound effects can trigger visual effects, allowing for synchronization between t
 Front panel controls feature six buttons and a combined OLED and rotary encoder with two additional buttons.  
 Five of the six buttons toggle the LED strips on or off, the sixth button toggles the layouts scenic lights on or off.  
 The rotary encoder and OLED display are used for navigation.  
-There are two additional buttons included with the encoder module. The one marked control toggles the machine in and out of standby state.  
-The button marked Back is not used.  
+There are two additional buttons included with the encoder module. The one marked 'control' toggles the machine in and out of standby state.  
+The button marked 'back' is not used.  
 This is a stand-alone project, it does not utilize the WiFi feature of the Pico.  
 This program controls strip LEDs, not individually programmible LED strips.  
 
 ## Lighting Effects  
-Different animated lighting effects can be defined by the user.  
+Different types of lighting effects can be defined by the user.  
 Programatically the code conceptualizes two kinds of lighting effects, STATIC and ANIMATED.  
 Animated effects move from what's being called a waypoint to the next sequential waypoint.  
 At the last waypoint, the effect loops and begins again at the first waypoint.  
 A waypoint is similar to what a keyframe is in cartoon animation.  
-Each color changes from waypoint to waypoint in a linear manner, there is no 
-'ease in' or 'ease out' like there is in cartoon animation.  
-Static effects have only one waypoint and thus their values do not change over time, but they can be edited at the front panel.   
+Each color changes from waypoint to waypoint in a linear manner, there is no 'ease in' or 'ease out' like there is in cartoon animation.  
+Static effects have only one waypoint and thus their values do not change over time, but they can be edited at the front panel.  
 
 ## Static Lighting Effects  
 The LED values for static lighting effects can be changed by the user. The changes are stored
@@ -49,12 +44,17 @@ There is also a RANDOM value in the effects definition expressed as a decimal pe
 the waypoint by a random ammount. Color changes are not effected by the RANDOM value, only the waypoint length.   
   
 ## Ambient Sounds  
-There is also an on-board sound effects card from Adafruit, which is using the UART protocol. Sound
-effects are placed in groups and a group is assigned to each waypoint. The output from the sound effects
-board is sent to an Adafruit amplifier card, which is run in analog mode. Volume is controlled via a pot.  
+There is also an on-board sound effects card from Adafruit, which is using the UART protocol.  
+Sound effects are placed in groups and a group is assigned to each waypoint.  
+Sound effects are played sequentially and are randomly selected from the group.  
+The output from the sound effects board is sent to an Adafruit amplifier card, which is run in analog mode. Volume is controlled via a pot.  
   
+## Visual Effects
+For now there is only one visual effect - lightning.  
+Visual effects are triggered by and thus synchronized to sound effects.  
+
 ## Hardware  
-Raspberry Pi Pico or Pico 2  
+Raspberry Pi Pico 2  
 Generic display module:  
 (Amazon: AITRIP 1PCS 0.96 Inch OLED Display Module with Buttons EC11 Rotary Encoder IIC Interface LCD Screen Compatible with Arduino(White Color))  
 or (Amazon: 1.3 inch White OLED Display Screen Combined with EC11 Rotary Encoder Module IIC Interface for arduino)  
@@ -65,7 +65,7 @@ Adafruit Stereo 20W Class D Audio Amplifier - MAX9744
 Plugs, switches, buttons, enclosure etc. 
   
 ## Operation  
-This project is built upon a state machine pattern, with a bit of MVC mixed in. It is always running a lighting effect, and sound effects are run when the machine is in certain states.  
+This project is built as a state machine, with a bit of MVC mixed in. It is always running a lighting effect, and sound effects are run when the machine is in certain states.  
   
 The machine operates in one of 7 states:  
 WELCOME - The initial screen presented at startup.  
@@ -74,7 +74,7 @@ ANIMATED - Displays the values of the RGBWC colors as they change.
 PAUSED - The animated effect is paused.  
 STATIC - Displays a selectable list of the RGBWC colors.  
 EDIT - Changable value of the selected color.  
-STANDBY - Mutes the display, sound, and RGBWC lights.  The lighting effect is not paused.  
+STANDBY - Mutes the display, sound, and RGBWC lights.  
 
 ## Navigation  
 In display state WELCOME:  
