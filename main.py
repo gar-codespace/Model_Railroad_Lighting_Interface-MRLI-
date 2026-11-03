@@ -11,12 +11,12 @@ __repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
 
 
 import entities
-import controller
+import machine
 
 
 async def main():
 
-    mech = controller.Machine()
+    mech = machine.Controller()
     mech.boot()
 
     while True:
