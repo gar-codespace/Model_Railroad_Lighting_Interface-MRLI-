@@ -1,13 +1,17 @@
-## Diorama Lighting Automation 
-This is the Micropython code for my model railroad layout lighting automation project.  
+## Model Railroad Lighting Interface (MRLI) 
+This is the Micropython code for my model railroad layout lighting interface project.  
 It's probably suitable for any LED application where granular control and multiple settings are required.  
 I think this project would also be suitable for fish and reptile lighting when the project is synced to a real world clock.  
-The code runs on a Rasberry Pi Pico or Pico 2.  
+The code runs on a Rasberry Pi Pico 2.  
+  
+![alt text](https://github.com/gar-codespace/Model_Railroad_Lighting_Interface-MRLI-/tree/main/pics/pic1.jpg)  
+![alt text](https://github.com/gar-codespace/Model_Railroad_Lighting_Interface-MRLI-/tree/main/pics/pic2.jpg)  
   
 ## Features
 This program creates lighting effects suitable for a model railroad or diorama.  
 It controls up to 5 banks of rgbwc LEDs and controls the on or off value of the layouts scenic lights.  
 There is also an audio module that is used for ambient sounds.  
+Sound effects can trigger visual effects, allowing for synchronization between the two.  
 Front panel controls feature six buttons and a combined OLED and rotary encoder with two additional buttons.  
 Five of the six buttons toggle the LED strips on or off, the sixth button toggles the layouts scenic lights on or off.  
 The rotary encoder and OLED display are used for navigation.  
