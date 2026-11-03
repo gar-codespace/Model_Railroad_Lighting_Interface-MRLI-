@@ -1,5 +1,5 @@
 '''
-Model Railroad Lighting Automation
+Model Railroad Lighting Automation (MRLA)
 Code to automate control of 5 banks of RGBWC strip lights
 and toggle a scenic lighting bus.
 Written to run on a Raspi Pico 2. WiFi not utilized.
@@ -11,20 +11,20 @@ __repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
 
 
 import entities
-import machine
+import controller
 
 
 async def main():
 
-    mech = machine.Controller()
-    mech.boot()
+    mrla = controller.Mech()
+    mrla.boot()
 
     while True:
         
         await entities.UASYNCIO.gather(
-                                      mech.run_lighting_effect(),
-                                      mech.play_ambient_effects(),
-                                      mech.poll_the_inputs(),
+                                      mrla.run_lighting_effect(),
+                                      mrla.play_ambient_effects(),
+                                      mrla.poll_the_inputs(),
                                       )
 
 entities.UASYNCIO.run(main())

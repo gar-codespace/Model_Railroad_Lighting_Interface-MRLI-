@@ -100,6 +100,8 @@ class RotaryEncoder:
                     self._listeners[event].remove(callback)
 
     def _sw_irq_handler(self, pin):
+        '''Debounce'''
+
         timestamp = entities.UTIME.ticks_ms()
         c_s = pin.value() == 0
 
@@ -168,6 +170,8 @@ class RotaryEncoder:
                 self._sw_prev_state = __sw_l_s
 
     def _enc_irq_handler(self, pin):
+        '''Debounce'''
+        
         new_status = (self.pin_dt.value() << 1) | self.pin_clk.value()
         if new_status == self._enc_last_status:
             return

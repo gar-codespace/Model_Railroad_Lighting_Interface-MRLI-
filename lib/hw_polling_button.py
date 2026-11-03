@@ -125,7 +125,6 @@ class Button:
       self.press_count = 0
       self.long_tick = 0
       self.long_count = 0
-      print('long press')
 
   def _rubric(self, count:int):
     '''Picks the appropriate callback.'''
@@ -136,9 +135,11 @@ class Button:
     if count > 1 and self.MULTI:
         self.cb_multi(self.name, self.multi_msg) # one or the other
         # self.cb_multi(self.name, count)
+        print('multi press')
 
     if count == 0 and self.LONG:
       self.cb_long(self.name, self.long_msg)
+      print('long press')
 
   def poll(self):
     self._debounce()
