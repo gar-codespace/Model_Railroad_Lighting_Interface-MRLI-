@@ -4,8 +4,12 @@ It's probably suitable for any LED application where granular control and multip
 I think this project would also be suitable for fish and reptile lighting when the project is synced to a real world clock.  
 The code runs on a Rasberry Pi Pico 2.  
   
-![alt text](https://github.com/gar-codespace/Model_Railroad_Lighting_Interface-MRLI-/tree/main/pics/pic1.jpg)  
-![alt text](https://github.com/gar-codespace/Model_Railroad_Lighting_Interface-MRLI-/tree/main/pics/pic2.jpg)  
+
+
+
+
+![alt text](https://github.com/gar-codespace/Model_Railroad_Lighting_Interface-MRLI-/tree/main/pics/pic1.jpg?raw=true)  
+![alt text](https://github.com/gar-codespace/Model_Railroad_Lighting_Interface-MRLI-/tree/main/pics/pic2.jpg?raw=true)  
   
 ## Features
 This program creates lighting effects suitable for a model railroad or diorama.  
@@ -28,7 +32,7 @@ At the last waypoint, the effect loops and begins again at the first waypoint.
 A waypoint is similar to what a keyframe is in cartoon animation.  
 Each color changes from waypoint to waypoint in a linear manner, there is no 
 'ease in' or 'ease out' like there is in cartoon animation.  
-Static effects have only one waypoint and thus their values do not change over time.   
+Static effects have only one waypoint and thus their values do not change over time, but they can be edited at the front panel.   
 
 ## Static Lighting Effects  
 The LED values for static lighting effects can be changed by the user. The changes are stored
