@@ -8,8 +8,10 @@ The code runs on a Rasberry Pi Pico 2.
 
 
 
-![Alt text](pics/pic1.jpg)  
-![alt text](https://github.com/gar-codespace/Model_Railroad_Lighting_Interface-MRLI-/tree/main/pics/pic2.jpg?raw=true)  
+![Prototype - front](pics/pic1.jpg)  
+Prototype - front  
+![Prototype - interior](pics/pic2.jpg)  
+Prototype - interior  
   
 ## Features
 This program creates lighting effects suitable for a model railroad or diorama.  
