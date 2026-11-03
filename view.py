@@ -1,6 +1,3 @@
-import entities
-import model
-import states
 '''
 specs:
 MAIN_DISPLAY = {
@@ -22,6 +19,11 @@ OLED0 = { # Main Display
         'HEIGHT': 64,
         }
 '''
+
+import entities
+import model
+import states
+
 
 class Display:
 

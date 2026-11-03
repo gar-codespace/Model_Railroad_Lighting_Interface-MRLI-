@@ -9,8 +9,8 @@ import model
 
 def fade_up_lights():
     '''
-    Special case, runs only on startup.
-    This effect fades up LEDs from dark (SINGLES.Stby) to the the values of entities.CURRENT_EFFECT.
+    Edge case, runs only on startup.
+    This effect fades up LEDs from dark (SINGLES.Dark) to the the values of entities.CURRENT_EFFECT.
     '''
 
     begin_index = 0
@@ -128,7 +128,7 @@ def set_pwm_values():
     pin = entities.PICO_PIN['COOL']
     entities.PWM(pin).duty_u16(int(entities.COOL))
 
-def shut_off_led_banks():
+def set_banks_to_0():
 
     entities.PIN(entities.PICO_PIN['BANK_0_R']).value(0)
     entities.PIN(entities.PICO_PIN['BANK_1_R']).value(0)
@@ -140,7 +140,9 @@ def shut_off_led_banks():
 ################ visual effects method #################
 
 def run_vfx():
-    '''Runs the associated visual effect if it exists.'''
+    '''Runs the associated visual effect if it exists.
+    Sound effects trigger visual effects.
+    '''
 
     vfx = entities.AMBIENCE[entities.CLIP][3]
 

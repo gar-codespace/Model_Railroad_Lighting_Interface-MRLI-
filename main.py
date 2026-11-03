@@ -1,7 +1,8 @@
 '''
-Model Railroad Lighting Automation (MRLA)
-Code to automate control of 5 banks of RGBWC strip lights
-and toggle a scenic lighting bus.
+Model Railroad Lighting Interface (MRLI)
+Code to control of 5 banks of RGBWC strip lights & toggle a scenic lighting bus.
+Includes sound effects.
+Includes visual effects.
 Written to run on a Raspi Pico 2. WiFi not utilized.
 Copyright 2026 Greg Ritacco
 '''
@@ -16,15 +17,15 @@ import controller
 
 async def main():
 
-    mrla = controller.Mech()
-    mrla.boot()
+    mrli = controller.Mech()
+    mrli.boot()
 
     while True:
         
         await entities.UASYNCIO.gather(
-                                      mrla.run_lighting_effect(),
-                                      mrla.play_ambient_effects(),
-                                      mrla.poll_the_inputs(),
+                                      mrli.run_lighting_effect(),
+                                      mrli.play_ambient_effects(),
+                                      mrli.poll_the_controls(),
                                       )
 
 entities.UASYNCIO.run(main())

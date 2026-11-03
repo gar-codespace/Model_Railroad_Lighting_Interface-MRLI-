@@ -1,10 +1,7 @@
 '''
-These are the functions called from the callbacks in controller.Machine.
+These are the functions called from the callbacks in controller.Mech.
 '''
 
-'''
-TODO Abstract standby toggle.
-'''
 
 import entities
 import model
@@ -30,7 +27,7 @@ entities.STANDBY_TOGGLE = States.WELCOME
 def into_standby():
 
     entities.CLIP = entities.STANDBY_IN_CLIP
-    lighting.shut_off_led_banks()
+    lighting.set_banks_to_0()
 
     entities.STANDBY_TOGGLE = entities.MACHINE_STATE
     entities.MACHINE_STATE = States.STANDBY
@@ -63,10 +60,6 @@ def welcome_toggle():
 
     entities.MACHINE_STATE = States.EFFECTS
     into_standby()
-    # entities.CLIP = entities.STANDBY_IN_CLIP
-    # entities.STANDBY_TOGGLE = States.EFFECTS
-    # lighting.shut_off_led_banks()
-    # entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -118,12 +111,6 @@ def effects_toggle():
 
     into_standby()
 
-    # entities.CLIP = entities.STANDBY_IN_CLIP
-    # entities.STANDBY_TOGGLE = States.EFFECTS
-    # entities.MACHINE_STATE = States.STANDBY
-    # lighting.shut_off_led_banks()
-    # entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
-
     return view.get_empty_list()
 
 
@@ -164,12 +151,6 @@ def animated_toggle():
     '''Puts machine in standby.'''
 
     into_standby()
-
-    # entities.CLIP = entities.STANDBY_IN_CLIP
-    # entities.STANDBY_TOGGLE = States.ANIMATED
-    # entities.MACHINE_STATE = States.STANDBY
-    # lighting.shut_off_led_banks()
-    # entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 
@@ -246,12 +227,6 @@ def static_toggle():
     '''Puts machine in standby.'''
 
     into_standby()
-
-    # entities.CLIP = entities.STANDBY_IN_CLIP
-    # entities.STANDBY_TOGGLE = States.STATIC
-    # entities.MACHINE_STATE = States.STANDBY
-    # lighting.shut_off_led_banks()
-    # entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'
 
     return view.get_empty_list()
 

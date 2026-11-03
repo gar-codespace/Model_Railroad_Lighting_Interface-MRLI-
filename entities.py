@@ -268,7 +268,7 @@ The random value is a float between 0 and 1. 0 is not random, 1 is maximum rando
 SINGLES = {
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : 1,
-'NAME':   ( 'Stby', 'Maint',   'Day',   'Ovcst', 'Night', 'Twili'), # Waypoint name
+'NAME':   ( 'Dark', 'Maint',   'Day',   'Ovcst', 'Night', 'Twili'), # Waypoint name
 'GROUP':  (   'A1',    'A1',    'A3',      'A3',    'A5',    'A4'), # sound effects group
 'HOUR':   (      0,       0,       0,         0,       0,       0),
 'TIME':   (      0,       0,       0,         0,       0,       0), # duration of waypoint
@@ -278,7 +278,7 @@ SINGLES = {
 'BLUE':   [      0,       0,       0,         0,   .0035,       0],
 'WARM':   [      0,     .99,     .22,      .002,       0,    .005],
 'COOL':   [      0,     .99,     .02,      .002,   .0008,       0],
-'BANK_0': [      1,       1,       1,         1,       0,      0,],
+'BANK_0': [      0,       1,       1,         1,       0,      0,],
 'BANK_1': [      0,       1,       0,         0,       0,      0,],
 'BANK_2': [      0,       1,       1,         0,       0,      0,],
 'BANK_3': [      0,       0,       1,         0,       0,      0,],

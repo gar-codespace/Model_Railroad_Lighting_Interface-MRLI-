@@ -1,6 +1,3 @@
-import entities
-import model
-
 '''
 specs:
 SOUND_CARD0 = {
@@ -22,6 +19,10 @@ SB0 = {
        'RESET':False,
        }
 '''
+
+import entities
+import model
+
 
 class Sound:
 
@@ -91,7 +92,8 @@ class Sound:
         self.sound_board.stop()
 
         return
-    
+
+
 def get_ambient_clip() -> tuple:
     '''Randomly pick a sound clip from the ambient sounds group.'''
     

@@ -8,7 +8,7 @@ import sound
 
 class Mech:
     '''
-    The user interface initializes with the welcome screen displayed
+    MRLI initializes with the welcome screen displayed
     and a 'welcome' sound clip is played.
     '''
 
@@ -45,7 +45,7 @@ class Mech:
         # pin = entities.PIN(entities.PICO_PIN['BACK'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         # self.bB = entities.Button(params=entities.BUTTON0, pin=pin, name=None)
         # self.bB.on(event='RELEASE', callback=self.cb_bank_release)
-    # Encoder uses polling
+    # Encoder uses polling and irq
         tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
@@ -56,7 +56,7 @@ class Mech:
         self.encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.cb_multi_click)
 
     def boot(self):
-# Initialize The Machine
+# Initialize the interface
         view.put_progress_message()
         self.main_display = view.Display(entities.MAIN_DISPLAY0) # Big OLED
         # self.main_display = view.Display(entities.MAIN_DISPLAY1) # Small OLED
@@ -68,7 +68,7 @@ class Mech:
         self.sound.get_bus()
         view.put_progress_message()
         self.sound.get_sound_board()
-# Start The Machine
+# Start the interface
         entities.WORKING_BUFFER = entities.SINGLES
         model.get_menu_first_item()
         self.main_display.update_display(view.get_welcome_list())
@@ -109,7 +109,7 @@ class Mech:
 
             duration = 1000
 
-            try: # Play an ambient sound clip
+            try: # Play a sound clip
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound(), used as a boolean
                 sound.get_ambient_clip()
@@ -118,7 +118,7 @@ class Mech:
             except:
                 pass
 
-            try: # Run an ambient visual effect
+            try: # Run a visual effect
                 attrib = f'{entities.MACHINE_STATE}_run_vfx'
                 getattr(states, attrib)() # IE states.animated_run_vfx(), used as a boolean
                 lighting.run_vfx()
@@ -129,8 +129,7 @@ class Mech:
             wait = duration + sound.get_pad()
             await entities.UASYNCIO.sleep_ms(wait)            
 
-    def poll_the_inputs(self):
-        '''Front panel controls.'''
+    def poll_the_controls(self):
 
         while(True):
 
@@ -185,7 +184,7 @@ class Mech:
             pass
 
     def cb_confirm_release(self, name, message):
-        '''The 'confirm' button on the module, toggles standby.'''
+        '''The 'confirm' button on the display module, toggles standby.'''
 
         try:
             attrib = f'{entities.MACHINE_STATE}_toggle' # IE states.standby_toggle()
@@ -197,7 +196,7 @@ class Mech:
         self.sound.play_sound_now() # Plays the standby clips
 
     def cb_back_release(self, name, message):
-        ...
+        '''The 'back' button on the display module.'''
 
     def cb_bank_release(self, name, message):
         '''The scenic and 5 LED bank buttons.'''
