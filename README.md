@@ -8,7 +8,7 @@ The code runs on a Rasberry Pi Pico 2.
 
 
 
-![alt text](https://github.com/gar-codespace/Model_Railroad_Lighting_Interface-MRLI-/tree/main/pics/pic1.jpg?raw=true)  
+![Alt text](pics/pic1.jpg)  
 ![alt text](https://github.com/gar-codespace/Model_Railroad_Lighting_Interface-MRLI-/tree/main/pics/pic2.jpg?raw=true)  
   
 ## Features
