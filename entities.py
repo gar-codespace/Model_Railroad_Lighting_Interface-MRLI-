@@ -14,7 +14,7 @@ import uasyncio as UASYNCIO
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
 # from hw_irq_button import IrqButton
-from hw_polling_button import Button
+from hw_push_button import Button
 
 ###### PICK A DISPLAY DRIVER ######
 DISPLAY_DRIVER0 = __import__('hw_sh1106').Driver_I2C # Big OLED
