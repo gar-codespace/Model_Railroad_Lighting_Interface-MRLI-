@@ -1,16 +1,20 @@
 '''
 Hardware library for the fromt panel buttons.
 Catches single release, multi release and long press.
+Button actions are triggered by either:
+a) an IRQ event: 'IRQ_TRIGGER':True
+b) continuous polling: 'IRQ_TRIGGER':False
 Move imports to entities
 '''
 '''
-usage:
+usage example:
 pin = entities.PIN(entities.PICO_PIN['CONFIRM'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
 self.bC = entities.Button(params=entities.BUTTON0, pin=pin, name='STANDBY')
 self.bC.on(event='RELEASE', callback=self.cb_confirm_release)
 params:
 BUTTON0 = {
-            'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
+            'IRQ_TRIGGER':True, # False for asyncio trigger
+            'REST_STATE':True, # False for pin set low
             'DEBOUNCE_TIME':40,
             'MULTI_TIME':350,
             'LONG_TIME':800,
@@ -21,6 +25,7 @@ BUTTON0 = {
 '''
 
 __fork__ = 'https://github.com/ubidefeo/MicroPython-Button'
+__reference__ = 'https://github.com/TTitanUA/micropython_rotary_encoder/tree/main'
 __author__ = 'Greg Ritacco'
 
 import entities
@@ -37,22 +42,28 @@ class Button:
 
   # Callback setttings
     self.pin = pin
+    self.pin.irq(handler=self._irq_handler)
     self.name = name
+    self.irq_polling = params['IRQ_TRIGGER']
     self.cb_release:callable = None # released callback
     self.cb_multi:callable = None # Multi release callback
     self.cb_long:callable = None # long press callback
     self.released_msg = params['RELEASED_MSG']
     self.multi_msg = params['MULTI_MSG']
     self.long_msg = params['LONG_MSG']
-  # Debounce
-    self.rest_state = params['NORMALLY_OPEN']
-    self.previous_state = params['NORMALLY_OPEN']
-    self.current_state = params['NORMALLY_OPEN']
-    self.previous_debounced_state = params['NORMALLY_OPEN']
-    self.current_debounced_state = params['NORMALLY_OPEN']
+  # async polling
+    self.rest_state = params['REST_STATE']
+    self.previous_state = params['REST_STATE']
+    self.current_state = params['REST_STATE']
+    self.previous_debounced_state = params['REST_STATE']
+    self.current_debounced_state = params['REST_STATE']
     self.debounce_time = params['DEBOUNCE_TIME']
     self.last_check_tick = entities.UTIME.ticks_ms()
-  # Parse
+  #IRQ polling
+    self.tick_increment = 0
+    self.tick_count = 0
+    self.debounce_threshold = params['DEBOUNCE_TIME'] / entities.DEFAULT_CYCLE
+  # Parsing logic
     self.multi_count:int = 0
     self.multi_tick:int = 0
     self.multi_threshold = params['MULTI_TIME'] / entities.DEFAULT_CYCLE
@@ -68,7 +79,33 @@ class Button:
     attrib = f'cb_{event.lower()}'
     setattr(self, attrib, callback)
 
-  def _debounce(self):
+  def _irq_handler(self, pin):
+
+    self.tick_increment = 1
+
+  def _irq_parse(self):
+
+  # On Press
+    if self.current_debounced_state != self.rest_state:
+      self.long_tick = 1
+      self.multi_tick = 0 # Stops the _multi_counter
+      self.press_count += 1
+      return
+  # On release
+    self.long_tick = 0
+    self.long_count = 0
+    self.multi_tick = 1 # Starts the _multi_counter
+
+  def _irq_counter(self):
+
+    self.tick_count += self.tick_increment
+    if self.tick_count >= self.debounce_threshold:
+      self.tick_increment = 0
+      self.tick_count = 0
+      self.current_debounced_state = self.pin.value()
+      self._irq_parse()
+
+  def _uasyncio_debounce(self):
 
     ms_now = entities.UTIME.ticks_ms()
     self.current_state = self.pin.value()
@@ -81,7 +118,7 @@ class Button:
       self.current_debounced_state = self.current_state
     self.previous_state = self.current_state
 
-  def _parse_input(self):
+  def _uasyncio_parse(self):
 
   # Did anything change?
     if self.current_debounced_state == self.previous_debounced_state:
@@ -135,14 +172,27 @@ class Button:
     if count > 1 and self.MULTI:
         self.cb_multi(self.name, self.multi_msg) # one or the other
         # self.cb_multi(self.name, count)
-        print('multi press')
 
     if count == 0 and self.LONG:
       self.cb_long(self.name, self.long_msg)
-      print('long press')
 
   def poll(self):
-    self._debounce()
-    self._parse_input()
+
+    if self.irq_polling:
+      self.irq_poll()
+    else:
+      self.asyncio_poll()
+
+# Picks one of these to put into an uasyncio loop
+  def irq_poll(self):
+    '''IRQ triggers the button action.'''
+    self._irq_counter()
+    self._multi_counter()
+    self._long_counter()
+
+  def asyncio_poll(self):
+    '''uasyncio polling triggers the button action'''
+    self._uasyncio_debounce()
+    self._uasyncio_parse()
     self._multi_counter()
     self._long_counter()

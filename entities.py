@@ -151,7 +151,8 @@ ENCODER0 = {
 ################## PUSH BUTTON PARAMETERS ######################
 
 BUTTON0 = {
-            'NORMALLY_OPEN':True, # False for NORMALLY_CLOSED
+            'IRQ_TRIGGER':True, # False for asyncio trigger
+            'REST_STATE':True, # False for pin set low
             'DEBOUNCE_TIME':40,
             'MULTI_TIME':350,
             'LONG_TIME':800,
