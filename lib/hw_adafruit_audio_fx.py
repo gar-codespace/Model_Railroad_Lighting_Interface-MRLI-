@@ -1,9 +1,5 @@
 '''
 Hardware library for the Adafruit Audio FX Sound Board.
-This library is a much less enthusiastic version of:
-https://github.com/mmabey/Adafruit_Soundboard_uPy/tree/master
-
-I have taylored it to the specific requirements of my project.
 For this project the RX pin on the Pico is optional.
 '''
 
@@ -23,6 +19,7 @@ SB0 = {
        }
 '''
 
+__fork__ = 'https://github.com/mmabey/Adafruit_Soundboard_uPy/tree/master'
 __author__ = 'Greg Ritacco'
 
 
