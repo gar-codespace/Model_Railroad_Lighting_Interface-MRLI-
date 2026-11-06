@@ -3,6 +3,8 @@ All the settings for the program are here.
 All the imports are in one place.
 '''
 
+__version__ = '20261001.1.1'
+
 # packaged libraries are kept to a minimum
 from machine import Pin as PIN, Timer as TIMER, I2C, PWM, UART
 from micropython import const as CONST
@@ -147,7 +149,6 @@ ENCODER0 = {
             'CLICK_MS':400, # detect a single click
             }
 
-
 ################## PUSH BUTTON PARAMETERS ######################
 
 BUTTON0 = {
@@ -169,13 +170,13 @@ FAST_TIME_CLOCK = 8 # used in model railroading to compress time.
 DEFAULT_CYCLE = 20 # milliseconds used for other awaits
 WAYPOINT_START = 0 # Used for the waypoint duration measurement.
 WAYPOINT_END = 0 # Used for the waypoint duration measurement.
-WAYPOINT_RUN_TIME = 0 # Time the waypoint actually ran (sec)
+WAYPOINT_RUN_TIME = 0 # Time the waypoint actually ran (seconds)
 
 ################## NAVIGATION ######################
 
 MACHINE_STATE:str  = None
 STANDBY_TOGGLE:str = None
-PROGRESS_MESSAGE:str = f'Model Railroad Lighting Automation v20261001.1.1'
+PROGRESS_MESSAGE:str = f'Model Railroad Lighting Automation\nVersion: {__version__}'
 
 STARTUP_EFFECT_DURATION = 5000 # Milliseconds
 WELCOME_SCREEN = ['M.U.T.T.', 'Metropolitan', 'Union ', 'Transfer', 'Terminal'] # 6 lines maximum, 15 char per line
