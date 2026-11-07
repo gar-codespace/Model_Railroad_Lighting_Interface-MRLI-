@@ -14,6 +14,7 @@ ENCODER0 = {
             'STEP_MS':200, # detect a multiple press
             'FAST_MS':50, # detect a fast encoder turn
             'CLICK_MS':400, # detect a single click
+            'ONE_STEP_MS':15 # It is a crunch, but it works for now
             }
 '''
 
@@ -41,34 +42,36 @@ class RotaryEncoderEvent:
 
 
 class RotaryEncoder:
-    """Base class"""
+    '''Base class'''
+
+    _listeners:dict = {}
 # Parsing and debounce logic
-    _enc_last_event_ms: int = 0
-    _enc_last_dir: int = 0
-    _enc_last_status: int = 0
-    _flag_last_event: int = 0
-    _sw_last_event_ms: int = 0
-    _sw_prev_event_ms: int = 0
-    _sw_prev_state: bool = False
-    _sw_last_state: bool = False
-    _sw_held_with_encoder: bool = False
-    _sw_held: bool = False
-    _sw_clicks: int = 0
-    _listeners: dict = {}
+    _enc_last_event_ms:int = 0
+    _enc_last_direction:int = 0
+    _enc_last_status:int = 0
+    _flag_last_event:int = 0
+    _sw_last_event_ms:int = 0
+    _sw_prev_event_ms:int = 0
+    _sw_prev_state:bool = False
+    _sw_last_state:bool = False
+    _sw_held_with_encoder:bool = False
+    _sw_held:bool = False
+    _sw_clicks:int = 0
 
     def __init__(
             self,
-            pin_clk: entities.PIN = None,
-            pin_dt: entities.PIN = None,
-            pin_sw: entities.PIN = None,
+            pin_clk:entities.PIN = None,
+            pin_dt:entities.PIN = None,
+            pin_sw:entities.PIN = None,
         # Passed in by params
-            debounce_ms: int = 0,
-            encoder_step: int = 0,
-            half_step: bool = False, # support increment every click for KY040 encoder
-            hold_ms: int = 0,
-            step_ms: int = 0,
-            fast_ms: int = 0,
-            click_ms: int = 0
+            debounce_ms:int = 0,
+            encoder_step:int = 0,
+            half_step:bool = False, # support increment every click for KY040 encoder
+            hold_ms:int = 0,
+            step_ms:int = 0,
+            fast_ms:int = 0,
+            click_ms:int = 0,
+            one_step_ms:int = 0
     ):
         self.pin_clk = pin_clk
         self.pin_dt = pin_dt
@@ -80,18 +83,19 @@ class RotaryEncoder:
         self.sw_step_ms = step_ms
         self.enc_fast_ms = fast_ms
         self.sw_click_ms = click_ms
+        self.one_step_ms = one_step_ms
 
-    def on(self, event: int, callback: callable):
+    def on(self, event:int, callback:callable):
         if event not in self._listeners:
             self._listeners[event] = []
 
         self._listeners[event].append(callback)
 
-    def off(self, event: int, callback: callable):
+    def off(self, event:int, callback:callable):
         if event in self._listeners:
             self._listeners[event].remove(callback)
 
-    def off_all(self, event: int, callback: callable = None):
+    def off_all(self, event:int, callback:callable = None):
         if event in self._listeners:
             if callback is None:
                 self._listeners[event] = []
@@ -192,48 +196,50 @@ class RotaryEncoder:
 
         self._enc_last_status = new_status
 
-    def _enc_process_event(self, direction: int):
-        self._enc_last_dir += direction
+    def _enc_process_event(self, direction:int):
+        self._enc_last_direction += direction
         self._enc_last_event_ms = entities.UTIME.ticks_ms()
 
     def _enc_tick_process_turn_event(self):
-    # local cache
-        __e_l_d = self._enc_last_dir
+    # __e_l_d = neg int on left turn, pos int on right turn
 
-        # @FIXME: It is a crunch, but it works for now
-        # 15ms it's a time for one step
-        if self.enc_fast_ms == 0:
-            fast_turn_count = 1000
+        __e_l_d = self._enc_last_direction
+        __o_s_m = self.one_step_ms
+
+        if not self.enc_fast_ms:
+            fast_turn_count = 4
         else:
-            fast_turn_count = (self.enc_fast_ms // 15)
+            fast_turn_count = (self.enc_fast_ms // __o_s_m)
 
-        if __e_l_d > 0:
-            if __e_l_d > fast_turn_count:
-                if self._sw_held_with_encoder:
-                    self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT_FAST_HOLD
-                else:
-                    self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT_FAST
+        if __e_l_d == 1:
+            if self._sw_held_with_encoder:
+                self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT_HOLD
             else:
-                if self._sw_held_with_encoder:
-                    self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT_HOLD
-                else:
-                    self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT
-        else:
-            if __e_l_d < -fast_turn_count:
-                if self._sw_held_with_encoder:
-                    self._flag_last_event = RotaryEncoderEvent.TURN_LEFT_FAST_HOLD
-                else:
-                    self._flag_last_event = RotaryEncoderEvent.TURN_LEFT_FAST
-            else:
-                if self._sw_held_with_encoder:
-                    self._flag_last_event = RotaryEncoderEvent.TURN_LEFT_HOLD
-                else:
-                    self._flag_last_event = RotaryEncoderEvent.TURN_LEFT
+                self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT
 
-        self._enc_last_dir = 0
+        if __e_l_d == -1:
+            if self._sw_held_with_encoder:
+                self._flag_last_event = RotaryEncoderEvent.TURN_LEFT_HOLD
+            else:
+                self._flag_last_event = RotaryEncoderEvent.TURN_LEFT
+
+        if __e_l_d > fast_turn_count:
+            if self._sw_held_with_encoder:
+                self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT_FAST_HOLD
+            else:
+                self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT_FAST
+
+        if __e_l_d < -fast_turn_count:
+            if self._sw_held_with_encoder:
+                self._flag_last_event = RotaryEncoderEvent.TURN_LEFT_FAST_HOLD
+            else:
+                self._flag_last_event = RotaryEncoderEvent.TURN_LEFT_FAST
+
+        self._enc_last_direction = 0
 
     def __encoder_has_event(self):
-        return self._enc_last_dir >= self.enc_step or self._enc_last_dir <= -self.enc_step
+        
+        return self._enc_last_direction >= self.enc_step or self._enc_last_direction <= -self.enc_step
 
     def __tick(self):
         self._sw_tick_process_event()
@@ -266,19 +272,19 @@ class RotaryEncoder:
                 listener(self._sw_clicks)
 
             except Exception as e:
-                print(f"RotaryEncoder callback error. Event: {self._flag_last_event}, Listener: {listener}, Error: {e}")
+                print(f'RotaryEncoder callback error. Event:{self._flag_last_event}, Listener:{listener}, Error:{e}')
 
 
 class RotaryEncoderRP2(RotaryEncoder):
-    timer: entities.TIMER = None
-    alive: bool = True
+    timer:entities.TIMER = None
+    alive:bool = True
 
     def __init__(
             self,
             params:dict,
-            pin_clk: entities.PIN = None,
-            pin_dt: entities.PIN = None,
-            pin_sw: entities.PIN = None,
+            pin_clk:entities.PIN = None,
+            pin_dt:entities.PIN = None,
+            pin_sw:entities.PIN = None,
 
     ):
         super().__init__(
@@ -292,6 +298,7 @@ class RotaryEncoderRP2(RotaryEncoder):
             step_ms=params['STEP_MS'],
             fast_ms=params['FAST_MS'],
             click_ms=params['CLICK_MS'],
+            one_step_ms=params['ONE_STEP_MS']
         )
 
         self._enable_irq()
@@ -308,33 +315,30 @@ class RotaryEncoderRP2(RotaryEncoder):
             # self.pin_sw.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._sw_irq_handler)
             self.pin_sw.irq(handler=self._sw_irq_handler)
 
-    def __delete__(self, instance):
+    def delete(self):
+        '''Deactivate timer_tick'''
+
         self.alive = False
 
-        if self.timer is not None:
+        if self.timer:
             self.timer.deinit()
 
-    def toggle_async(self):
-        '''activated async_tick on or off.'''
-
-        self.alive != self.alive
-
 # Call one of these, depending upon how this library is being used.
-    async def async_tick(self, timeout=1):
-        """async_tick is used to process the encoder events. It should be run by entities.UASYNCIO."""
-        timeout = entities.DEFAULT_CYCLE
+    async def async_tick(self, timeout=20):
+        '''async_tick is used to process the encoder events. It should be run by entities.UASYNCIO.'''
+
         while True:
             if self.alive:
                 self.__tick()
             await entities.UASYNCIO.sleep_ms(timeout)
 
-    def timer_tick(self, timeout=1):
-        """
+    def timer_tick(self, timeout=20):
+        '''
             timer_tick is used to process the encoder events. It automatically creates the system irq timer.
             :link https://docs.micropython.org/en/latest/rp2/quickref.html#timers
-        """
-        self.timer = entities.TIMER(-1, period=timeout, mode=entities.TIMER.PERIODIC, callback=lambda t: self.__tick())
+        '''
+        self.timer = entities.TIMER(-1, period=timeout, mode=entities.TIMER.PERIODIC, callback=lambda t:self.__tick())
 
     def poll(self):
-        """poll should be used in an external uasyncio loop. """
+        '''poll should be used in an external uasyncio loop.'''
         self.__tick()

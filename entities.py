@@ -147,6 +147,7 @@ ENCODER0 = {
             'STEP_MS':200, # detect a multiple press
             'FAST_MS':50, # detect a fast encoder turn
             'CLICK_MS':400, # detect a single click
+            'ONE_STEP_MS':15 # It is a crunch, but it works for now
             }
 
 ################## PUSH BUTTON PARAMETERS ######################
