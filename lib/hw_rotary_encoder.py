@@ -21,6 +21,10 @@ ENCODER0 = {
 __fork__ = 'https://github.com/TTitanUA/micropython_rotary_encoder/tree/main'
 __refactor__ = 'Greg Ritacco'
 
+
+# TODO still a lot of nesting
+
+
 import entities
 
 
@@ -117,7 +121,7 @@ class RotaryEncoder:
         self._sw_last_event_ms = timestamp
 
     def _sw_tick_process_event(self):
-    # local cache
+
         __sw_l_s = self._sw_last_state
         __sw_h_w_e = self._sw_held_with_encoder
         __sw_s_ms = self.sw_step_ms
@@ -139,39 +143,48 @@ class RotaryEncoder:
 
         timestamp = entities.UTIME.ticks_ms()
 
-    # button pressed
+    # button press
         if __sw_l_s:
-    # button held
+        # button held
             if entities.UTIME.ticks_diff(entities.UTIME.ticks_ms(), __sw_l_e_ms) > self.sw_hold_ms and not self._sw_held:
                 self._sw_held = True
                 self._flag_last_event = RotaryEncoderEvent.HELD
-    # it's a multiple click
+        # it's a multiple click
             elif entities.UTIME.ticks_diff(__sw_l_e_ms, self._sw_prev_event_ms) < __sw_s_ms:
                 self._sw_prev_event_ms = 1
-        else:
+
+            return
+        
     # button release
-            if self._sw_held:
-                self._sw_held = False
-                self._flag_last_event = RotaryEncoderEvent.RELEASED_MSG
-                self._sw_prev_state = __sw_l_s
+        if self._sw_held:
+            self._sw_held = False
+            self._flag_last_event = RotaryEncoderEvent.RELEASED_MSG
+            self._sw_prev_state = __sw_l_s
+
+            return
+
     # maybe a multiple click, need wait for the next event
-            elif entities.UTIME.ticks_diff(timestamp, __sw_l_e_ms) < __sw_s_ms:
-                if __sw_p_e_ms == 1:
-                    if self._sw_clicks == 0:
-                        self._sw_clicks = 1
-                    self._sw_clicks += 1
-                self._sw_prev_event_ms = timestamp
-    # maybe a single click
-            elif entities.UTIME.ticks_diff(timestamp, __sw_l_e_ms) < self.sw_click_ms:
-                # it's a single click
+        diff = entities.UTIME.ticks_diff(timestamp, __sw_l_e_ms)
+        if diff < __sw_s_ms:
+            if __sw_p_e_ms == 1:
                 if self._sw_clicks == 0:
-                    self._flag_last_event = RotaryEncoderEvent.CLICK
-                else:
-                    self._flag_last_event = RotaryEncoderEvent.MULTIPLE_CLICK
-                self._sw_prev_state = __sw_l_s
-    # some old event, skip it
+                    self._sw_clicks = 1
+                self._sw_clicks += 1
+            self._sw_prev_event_ms = timestamp
+
+            return
+        
+    # maybe a single click
+        diff = entities.UTIME.ticks_diff(timestamp, __sw_l_e_ms)
+        if diff < self.sw_click_ms:
+            if self._sw_clicks == 0:
+                self._flag_last_event = RotaryEncoderEvent.CLICK
             else:
-                self._sw_prev_state = __sw_l_s
+                self._flag_last_event = RotaryEncoderEvent.MULTIPLE_CLICK
+            self._sw_prev_state = __sw_l_s
+    # some old event, skip it
+        # else:
+        #     self._sw_prev_state = __sw_l_s
 
     def _enc_irq_handler(self, pin):
         '''Debounce'''
@@ -238,7 +251,7 @@ class RotaryEncoder:
         self._enc_last_direction = 0
 
     def __encoder_has_event(self):
-        
+
         return self._enc_last_direction >= self.enc_step or self._enc_last_direction <= -self.enc_step
 
     def __tick(self):
