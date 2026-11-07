@@ -90,22 +90,17 @@ class RotaryEncoder:
         self.one_step_ms = one_step_ms
 
     def on(self, event:int, callback:callable):
+
         if event not in self._listeners:
             self._listeners[event] = []
 
         self._listeners[event].append(callback)
 
-    def off(self, event:int, callback:callable):
-        if event in self._listeners:
-            self._listeners[event].remove(callback)
+    def off(self, event:int):
+        self._listeners.pop(event, None)
 
-    def off_all(self, event:int, callback:callable = None):
-        if event in self._listeners:
-            if callback is None:
-                self._listeners[event] = []
-            else:
-                while callback in self._listeners[event]:
-                    self._listeners[event].remove(callback)
+    def off_all(self, event:int):
+        self._listeners = {}
 
     def _sw_irq_handler(self, pin):
         '''Debounce'''
