@@ -28,9 +28,10 @@ __refactor__ = 'Greg Ritacco'
 import entities
 
 
-class RotaryEncoderEvent:
+class RotaryEncoder:
+    '''Base class'''
 
-    # ANY = 1
+# Events
     CLICK = 2
     MULTIPLE_CLICK = 3
     HELD = 4
@@ -43,10 +44,6 @@ class RotaryEncoderEvent:
     TURN_RIGHT_FAST = 11
     TURN_RIGHT_HOLD = 12
     TURN_RIGHT_FAST_HOLD = 13
-
-
-class RotaryEncoder:
-    '''Base class'''
 
     _listeners:dict = {}
 # Parsing and debounce logic
@@ -143,7 +140,7 @@ class RotaryEncoder:
         # button held
             if entities.UTIME.ticks_diff(entities.UTIME.ticks_ms(), __sw_l_e_ms) > self.sw_hold_ms and not self._sw_held:
                 self._sw_held = True
-                self._flag_last_event = RotaryEncoderEvent.HELD
+                self._flag_last_event = self.HELD
         # it's a multiple click
             elif entities.UTIME.ticks_diff(__sw_l_e_ms, self._sw_prev_event_ms) < __sw_s_ms:
                 self._sw_prev_event_ms = 1
@@ -153,7 +150,7 @@ class RotaryEncoder:
     # button release
         if self._sw_held:
             self._sw_held = False
-            self._flag_last_event = RotaryEncoderEvent.RELEASED_MSG
+            self._flag_last_event = self.RELEASED_MSG
             self._sw_prev_state = __sw_l_s
 
             return
@@ -173,9 +170,9 @@ class RotaryEncoder:
         diff = entities.UTIME.ticks_diff(timestamp, __sw_l_e_ms)
         if diff < self.sw_click_ms:
             if self._sw_clicks == 0:
-                self._flag_last_event = RotaryEncoderEvent.CLICK
+                self._flag_last_event = self.CLICK
             else:
-                self._flag_last_event = RotaryEncoderEvent.MULTIPLE_CLICK
+                self._flag_last_event = self.MULTIPLE_CLICK
             self._sw_prev_state = __sw_l_s
     # some old event, skip it
         # else:
@@ -221,27 +218,27 @@ class RotaryEncoder:
 
         if __e_l_d == 1:
             if self._sw_held_with_encoder:
-                self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT_HOLD
+                self._flag_last_event = self.TURN_RIGHT_HOLD
             else:
-                self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT
+                self._flag_last_event = self.TURN_RIGHT
 
         if __e_l_d == -1:
             if self._sw_held_with_encoder:
-                self._flag_last_event = RotaryEncoderEvent.TURN_LEFT_HOLD
+                self._flag_last_event = self.TURN_LEFT_HOLD
             else:
-                self._flag_last_event = RotaryEncoderEvent.TURN_LEFT
+                self._flag_last_event = self.TURN_LEFT
 
         if __e_l_d > fast_turn_count:
             if self._sw_held_with_encoder:
-                self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT_FAST_HOLD
+                self._flag_last_event = self.TURN_RIGHT_FAST_HOLD
             else:
-                self._flag_last_event = RotaryEncoderEvent.TURN_RIGHT_FAST
+                self._flag_last_event = self.TURN_RIGHT_FAST
 
         if __e_l_d < -fast_turn_count:
             if self._sw_held_with_encoder:
-                self._flag_last_event = RotaryEncoderEvent.TURN_LEFT_FAST_HOLD
+                self._flag_last_event = self.TURN_LEFT_FAST_HOLD
             else:
-                self._flag_last_event = RotaryEncoderEvent.TURN_LEFT_FAST
+                self._flag_last_event = self.TURN_LEFT_FAST
 
         self._enc_last_direction = 0
 
@@ -262,7 +259,7 @@ class RotaryEncoder:
 
         self.__call_listeners()
 
-        if self._flag_last_event == RotaryEncoderEvent.MULTIPLE_CLICK:
+        if self._flag_last_event == self.MULTIPLE_CLICK:
             self._sw_clicks = 0
 
         self._flag_last_event = 0
@@ -280,7 +277,7 @@ class RotaryEncoder:
                 listener(self._sw_clicks)
 
             except Exception as e:
-                print(f'RotaryEncoder callback error. Event:{self._flag_last_event}, Listener:{listener}, Error:{e}')
+                print(f'Name:{__name__}.__call_listeners(), Listener:{listener}, Error:{e}')
 
 
 class RotaryEncoderRP2(RotaryEncoder):
@@ -293,8 +290,8 @@ class RotaryEncoderRP2(RotaryEncoder):
             pin_clk:entities.PIN = None,
             pin_dt:entities.PIN = None,
             pin_sw:entities.PIN = None,
+            ):
 
-    ):
         super().__init__(
             pin_clk=pin_clk,
             pin_dt=pin_dt,
@@ -307,7 +304,7 @@ class RotaryEncoderRP2(RotaryEncoder):
             fast_ms=params['FAST_MS'],
             click_ms=params['CLICK_MS'],
             one_step_ms=params['ONE_STEP_MS']
-        )
+            )
 
         self._enable_irq()
 
@@ -323,8 +320,7 @@ class RotaryEncoderRP2(RotaryEncoder):
             # self.pin_sw.irq(trigger=entities.PIN.IRQ_FALLING | entities.PIN.IRQ_RISING, handler=self._sw_irq_handler)
             self.pin_sw.irq(handler=self._sw_irq_handler)
 
-    def delete(self):
-        '''Deactivate timer_tick'''
+    def deactivate(self):
 
         self.alive = False
 
@@ -332,8 +328,10 @@ class RotaryEncoderRP2(RotaryEncoder):
             self.timer.deinit()
 
 # Call one of these, depending upon how this library is being used.
+# __tick() is used to process the encoder events.
+
     async def async_tick(self, timeout=20):
-        '''async_tick is used to process the encoder events. It should be run by entities.UASYNCIO.'''
+        '''This should be run by entities.UASYNCIO.'''
 
         while True:
             if self.alive:
@@ -341,12 +339,10 @@ class RotaryEncoderRP2(RotaryEncoder):
             await entities.UASYNCIO.sleep_ms(timeout)
 
     def timer_tick(self, timeout=20):
-        '''
-            timer_tick is used to process the encoder events. It automatically creates the system irq timer.
-            :link https://docs.micropython.org/en/latest/rp2/quickref.html#timers
-        '''
+        '''https://docs.micropython.org/en/latest/rp2/quickref.html#timers'''
+        
         self.timer = entities.TIMER(-1, period=timeout, mode=entities.TIMER.PERIODIC, callback=lambda t:self.__tick())
 
     def poll(self):
-        '''poll should be used in an external uasyncio loop.'''
+        '''This should be used in an external uasyncio loop.'''
         self.__tick()

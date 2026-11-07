@@ -50,10 +50,10 @@ class Mech:
         trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder = entities.RotaryEncoderRP2(params=entities.ENCODER0, pin_clk=trb, pin_dt=tra, pin_sw=psh)
-        self.encoder.on(entities.RotaryEncoderEvent.TURN_LEFT, self.cb_turn_left)
-        self.encoder.on(entities.RotaryEncoderEvent.TURN_RIGHT, self.cb_turn_right)
-        self.encoder.on(entities.RotaryEncoderEvent.CLICK, self.cb_single_click)
-        self.encoder.on(entities.RotaryEncoderEvent.MULTIPLE_CLICK, self.cb_multi_click)
+        self.encoder.on(self.encoder.TURN_LEFT, self.cb_turn_left)
+        self.encoder.on(self.encoder.TURN_RIGHT, self.cb_turn_right)
+        self.encoder.on(self.encoder.CLICK, self.cb_single_click)
+        self.encoder.on(self.encoder.MULTIPLE_CLICK, self.cb_multi_click)
 
     def boot(self):
 # Initialize the interface

@@ -14,7 +14,7 @@ import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
 
 # hardware libraries (3rd party)
-from hw_rotary_encoder import RotaryEncoder, RotaryEncoderEvent, RotaryEncoderRP2
+from hw_rotary_encoder import RotaryEncoderRP2
 # from hw_irq_button import IrqButton
 from hw_push_button import Button
 
