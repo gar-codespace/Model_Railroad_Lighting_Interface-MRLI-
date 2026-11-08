@@ -6,7 +6,8 @@ All the imports are in one place.
 __version__ = '20261001.1.1'
 
 # packaged libraries are kept to a minimum
-from machine import Pin as PIN, Timer as TIMER, I2C, PWM, UART
+from machine import Pin as PIN, I2C, PWM, UART
+# from machine import Timer as TIMER # Used whit hw_rotary_encoder
 from micropython import const as CONST
 from random import randint as RANDINT
 import utime as UTIME
@@ -15,7 +16,6 @@ import uasyncio as UASYNCIO
 
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoderRP2
-# from hw_irq_button import IrqButton
 from hw_push_button import Button
 
 ###### PICK A DISPLAY DRIVER ######

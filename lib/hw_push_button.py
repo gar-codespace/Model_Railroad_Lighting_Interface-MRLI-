@@ -11,7 +11,13 @@ usage example:
 pin = entities.PIN(entities.PICO_PIN['CONFIRM'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
 self.bC = entities.Button(params=entities.BUTTON0, pin=pin, name='STANDBY')
 self.bC.on(event='RELEASE', callback=self.cb_confirm_release)
-params:
+
+entities.py:
+from machine import Pin as PIN
+import utime as UTIME
+
+DEFAULT_CYCLE = 20
+
 BUTTON0 = {
             'IRQ_TRIGGER':True, # False for asyncio trigger
             'REST_STATE':True, # False for pin set low

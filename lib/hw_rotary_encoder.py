@@ -5,7 +5,24 @@ timeout is now based on entities.DEFAULT_CYCLE
 Move imports to entities
 '''
 '''
-params:
+usage example:
+
+tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+self.encoder = entities.RotaryEncoderRP2(params=entities.ENCODER0, pin_clk=trb, pin_dt=tra, pin_sw=psh)
+self.encoder.on(self.encoder.TURN_LEFT, self.cb_turn_left)
+self.encoder.on(self.encoder.TURN_RIGHT, self.cb_turn_right)
+self.encoder.on(self.encoder.CLICK, self.cb_single_click)
+self.encoder.on(self.encoder.MULTIPLE_CLICK, self.cb_multi_click)
+
+entities.py:
+
+from machine import Pin as PIN
+from machine import Timer as TIMER
+import uasyncio as UASYNCIO
+import utime as UTIME
+
 ENCODER0 = {
             'DEBOUNCE_MS':50, # filter out pin jitter
             'ENCODER_STEP':1, # filter out pin jitter
