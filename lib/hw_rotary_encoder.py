@@ -149,14 +149,14 @@ class RotaryEncoder:
         __sw_p_e_ms = self._sw_prev_event_ms
 
     # button event already processed
-        if __sw_l_s == self._sw_prev_state:
+        if self._sw_last_state == self._sw_prev_state:
             return
 
     # process encoder event with held button
-        if __sw_h_w_e and __sw_l_s:
+        if self._sw_held_with_encoder and self._sw_last_state:
             return
 
-        elif __sw_h_w_e and not __sw_l_s:
+        elif self._sw_held_with_encoder and not self._sw_last_state:
             self._sw_held_with_encoder = False
             self._sw_last_event_ms = 0
             return
@@ -164,47 +164,44 @@ class RotaryEncoder:
         timestamp = entities.UTIME.ticks_ms()
 
     # button press
-        if __sw_l_s:
+        if self._sw_last_state:
+            diff_held = entities.UTIME.ticks_diff(entities.UTIME.ticks_ms(), self._sw_last_event_ms)
+            diff_multi = entities.UTIME.ticks_diff(self._sw_last_event_ms, self._sw_prev_event_ms)
         # button held
-            if entities.UTIME.ticks_diff(entities.UTIME.ticks_ms(), __sw_l_e_ms) > self.sw_hold_ms and not self._sw_held:
+            if diff_held > self.sw_hold_ms and not self._sw_held:
                 self._sw_held = True
                 self._flag_last_event = self.LONG
         # it's a multiple click
-            elif entities.UTIME.ticks_diff(__sw_l_e_ms, self._sw_prev_event_ms) < __sw_s_ms:
+            elif diff_multi < self.sw_step_ms:
                 self._sw_prev_event_ms = 1
 
             return
-        
+
     # button release
         if self._sw_held:
             self._sw_held = False
             self._flag_last_event = self.RELEASE_MSG
-            self._sw_prev_state = __sw_l_s
+            self._sw_prev_state = self._sw_last_state
 
             return
 
-    # maybe a multiple click, need wait for the next event
-        diff = entities.UTIME.ticks_diff(timestamp, __sw_l_e_ms)
-        if diff < __sw_s_ms:
-            if __sw_p_e_ms == 1:
+        diff = entities.UTIME.ticks_diff(timestamp, self._sw_last_event_ms)
+    # maybe a multiple click, need to wait for the next event
+        if diff < self.sw_step_ms:
+            if self._sw_prev_event_ms == 1:
                 if self._sw_clicks == 0:
                     self._sw_clicks = 1
                 self._sw_clicks += 1
             self._sw_prev_event_ms = timestamp
 
-            return
-        
+            return        
     # maybe a single click
-        diff = entities.UTIME.ticks_diff(timestamp, __sw_l_e_ms)
         if diff < self.sw_click_ms:
             if self._sw_clicks == 0:
                 self._flag_last_event = self.CLICK
             else:
                 self._flag_last_event = self.MULTI
-            self._sw_prev_state = __sw_l_s
-    # some old event, skip it
-        # else:
-        #     self._sw_prev_state = __sw_l_s
+            self._sw_prev_state = self._sw_last_state
 
     def _enc_irq_handler(self, pin):
         '''Debounce'''
