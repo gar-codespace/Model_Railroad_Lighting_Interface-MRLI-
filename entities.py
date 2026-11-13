@@ -54,7 +54,7 @@ PICO_PIN = {
         'BANK_2_B':14,
         'BANK_1_B':15,
         'BANK_0_B':16,
-        'CONFIRM' :22, # encoder
+        'CONF_0_B':22, # encoder button
         
         'PSH':17, # encoder
         'TRA':18, # encoder
@@ -143,18 +143,17 @@ ENCODER0 = {
             'DEBOUNCE_MS':50, # filter out pin jitter
             'ENCODER_STEP':1, # filter out pin jitter
             'HALF_STEP':False,# support increment every click for KY040 encoder
-            'HOLD_MS':1000, # detect a long press
-            'STEP_MS':200, # detect a multiple press
-            'FAST_MS':50, # detect a fast encoder turn
+            'ONE_STEP_MS':15, # It is a crunch, but it works for now
             'CLICK_MS':400, # detect a single click
-            'ONE_STEP_MS':15 # It is a crunch, but it works for now
+            'STEP_MS':200, # detect a multiple press
+            'LONG_MS':1000, # detect a long press
+            'FAST_MS':50, # detect a fast encoder turn
             }
 
 ################## PUSH BUTTON PARAMETERS ######################
 
 BUTTON0 = {
             'IRQ_TRIGGER':True, # False for asyncio trigger
-            'REST_STATE':True, # False for pin set low
             'DEBOUNCE_TIME':40,
             'MULTI_TIME':350,
             'LONG_TIME':800,

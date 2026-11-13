@@ -20,7 +20,7 @@ class Mech:
     # Sets pico pins to pwm
         model.set_pwm_led_pins()
     # Front panel buttons use polling
-        pin = entities.PIN(entities.PICO_PIN['CONFIRM'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+        pin = entities.PIN(entities.PICO_PIN['CONF_0_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.bC = entities.Button(params=entities.BUTTON0, pin=pin, name='STANDBY')
         pin = entities.PIN(entities.PICO_PIN['BANK_0_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.b0 = entities.Button(params=entities.BUTTON0, pin=pin, name='BANK_0')
@@ -35,25 +35,22 @@ class Mech:
         pin = entities.PIN(entities.PICO_PIN['SCENIC_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.bS = entities.Button(params=entities.BUTTON0, pin=pin, name='SCENIC')
 
-        self.bC.on(event='RELEASE', callback=self.cb_confirm_release)
+        self.bC.on(event='RELEASE', callback=self.cb_conf_release)
         self.b0.on(event='RELEASE', callback=self.cb_bank_release)
         self.b1.on(event='RELEASE', callback=self.cb_bank_release)
         self.b2.on(event='RELEASE', callback=self.cb_bank_release)
         self.b3.on(event='RELEASE', callback=self.cb_bank_release)
         self.b4.on(event='RELEASE', callback=self.cb_bank_release)
         self.bS.on(event='RELEASE', callback=self.cb_bank_release)
-        # pin = entities.PIN(entities.PICO_PIN['BACK'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        # self.bB = entities.Button(params=entities.BUTTON0, pin=pin, name=None)
-        # self.bB.on(event='RELEASE', callback=self.cb_bank_release)
     # Encoder uses polling and irq
         tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.encoder = entities.RotaryEncoderRP2(params=entities.ENCODER0, pin_clk=trb, pin_dt=tra, pin_sw=psh)
-        self.encoder.on(self.encoder.TURN_LEFT, self.cb_turn_left)
-        self.encoder.on(self.encoder.TURN_RIGHT, self.cb_turn_right)
-        self.encoder.on(self.encoder.CLICK, self.cb_single_click)
-        self.encoder.on(self.encoder.MULTIPLE_CLICK, self.cb_multi_click)
+        self.encoder.on(self.encoder.CW, self.cb_clock_wise)
+        self.encoder.on(self.encoder.ACW, self.cb_anti_clock_wise)
+        self.encoder.on(self.encoder.CLICK, self.cb_click)
+        self.encoder.on(self.encoder.MULTI, self.cb_multi)
 
     def boot(self):
 # Initialize the interface
@@ -135,7 +132,6 @@ class Mech:
 
             self.encoder.poll()
             self.bC.poll()
-            # self.bB.poll()
             self.b0.poll()
             self.b1.poll()
             self.b2.poll()
@@ -147,16 +143,7 @@ class Mech:
 
 ################# callbacks ##################
 
-    def cb_turn_left(self, clicks):
-        
-        try:
-            attrib = f'{entities.MACHINE_STATE}_turn_left'
-            display_content = getattr(states, attrib)() # IE states.welcome_turn_left()
-            self.main_display.update_display(display_content)
-        except:
-            pass
-
-    def cb_turn_right(self, clicks):
+    def cb_clock_wise(self, clicks):
 
         try:
             attrib = f'{entities.MACHINE_STATE}_turn_right'
@@ -165,7 +152,16 @@ class Mech:
         except:
             pass        
 
-    def cb_single_click(self, clicks):
+    def cb_anti_clock_wise(self, clicks):
+        
+        try:
+            attrib = f'{entities.MACHINE_STATE}_turn_left'
+            display_content = getattr(states, attrib)() # IE states.welcome_turn_left()
+            self.main_display.update_display(display_content)
+        except:
+            pass
+
+    def cb_click(self, clicks):
 
         try:
             attrib = f'{entities.MACHINE_STATE}_click'
@@ -174,7 +170,7 @@ class Mech:
         except:
             pass
 
-    def cb_multi_click(self, clicks):
+    def cb_multi(self, clicks):
  
         try:
             attrib = f'{entities.MACHINE_STATE}_click2'
@@ -183,7 +179,7 @@ class Mech:
         except:
             pass
 
-    def cb_confirm_release(self, name, message):
+    def cb_conf_release(self, name, message):
         '''The 'confirm' button on the display module, toggles standby.'''
 
         try:

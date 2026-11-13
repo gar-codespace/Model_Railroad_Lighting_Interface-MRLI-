@@ -1,38 +1,37 @@
 '''
 Hardware library for the rotary encoder.
 Rolled up rotary_encoder_rp2.py into this file
-timeout is now based on entities.DEFAULT_CYCLE
 Move imports to entities
-'''
-'''
-usage example:
 
-tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-self.encoder = entities.RotaryEncoderRP2(params=entities.ENCODER0, pin_clk=trb, pin_dt=tra, pin_sw=psh)
-self.encoder.on(self.encoder.TURN_LEFT, self.cb_turn_left)
-self.encoder.on(self.encoder.TURN_RIGHT, self.cb_turn_right)
-self.encoder.on(self.encoder.CLICK, self.cb_single_click)
-self.encoder.on(self.encoder.MULTIPLE_CLICK, self.cb_multi_click)
+usage example:
+controller.py
+
+    tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+    trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+    psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
+    self.encoder = entities.RotaryEncoderRP2(params=entities.ENCODER0, pin_clk=trb, pin_dt=tra, pin_sw=psh)
+    self.encoder.on(self.encoder.CW, self.cb_clock_wise)
+    self.encoder.on(self.encoder.ACW, self.cb_anti_clock_wise)
+    self.encoder.on(self.encoder.CLICK, self.cb_click)
+    self.encoder.on(self.encoder.MULTI, self.cb_multi)
 
 entities.py:
 
-from machine import Pin as PIN
-from machine import Timer as TIMER
-import uasyncio as UASYNCIO
-import utime as UTIME
+    from machine import Pin as PIN
+    from machine import Timer as TIMER
+    import uasyncio as UASYNCIO
+    import utime as UTIME
 
-ENCODER0 = {
-            'DEBOUNCE_MS':50, # filter out pin jitter
-            'ENCODER_STEP':1, # filter out pin jitter
-            'HALF_STEP':False,# support increment every click for KY040 encoder
-            'HOLD_MS':1000, # detect a long press
-            'STEP_MS':200, # detect a multiple press
-            'FAST_MS':50, # detect a fast encoder turn
-            'CLICK_MS':400, # detect a single click
-            'ONE_STEP_MS':15 # It is a crunch, but it works for now
-            }
+    ENCODER0 = {
+                'DEBOUNCE_MS':50, # filter out pin jitter
+                'ENCODER_STEP':1, # filter out pin jitter
+                'HALF_STEP':False,# support increment every click for KY040 encoder
+                'ONE_STEP_MS':15, # It is a crunch, but it works for now
+                'CLICK_MS':400, # detect a single click
+                'STEP_MS':200, # detect a multiple press
+                'LONG_MS':1000, # detect a long press
+                'FAST_MS':50, # detect a fast encoder turn
+                }
 '''
 
 __fork__ = 'https://github.com/TTitanUA/micropython_rotary_encoder/tree/main'
@@ -50,17 +49,17 @@ class RotaryEncoder:
 
 # Events
     CLICK = 2
-    MULTIPLE_CLICK = 3
-    HELD = 4
-    RELEASED_MSG = 5
-    TURN_LEFT = 6
-    TURN_LEFT_FAST = 7
-    TURN_LEFT_HOLD = 8
-    TURN_LEFT_FAST_HOLD = 9
-    TURN_RIGHT = 10
-    TURN_RIGHT_FAST = 11
-    TURN_RIGHT_HOLD = 12
-    TURN_RIGHT_FAST_HOLD = 13
+    MULTI = 3
+    LONG = 4
+    RELEASE_MSG = 5
+    CW = 10
+    CW_FAST = 11
+    CW_HOLD = 12
+    CW_FAST_HOLD = 13
+    ACW = 6
+    ACW_FAST = 7
+    ACW_HOLD = 8
+    ACW_FAST_HOLD = 9
 
     _listeners:dict = {}
 # Parsing and debounce logic
@@ -110,7 +109,7 @@ class RotaryEncoder:
 
         self._listeners[event].append(callback)
 
-    def off(self, event:int):
+    def off(self, event:int): # TODO This is wrong, fixit
         self._listeners.pop(event, None)
 
     def off_all(self, event:int):
@@ -122,7 +121,8 @@ class RotaryEncoder:
         timestamp = entities.UTIME.ticks_ms()
         c_s = pin.value() == 0
 
-        if self._sw_last_state == c_s or entities.UTIME.ticks_diff(timestamp, self._sw_last_event_ms) < self.sw_debounce_ms:
+        diff = entities.UTIME.ticks_diff(timestamp, self._sw_last_event_ms)
+        if self._sw_last_state == c_s or diff < self.sw_debounce_ms:
             return
 
         self._sw_prev_state = self._sw_last_state
@@ -157,7 +157,7 @@ class RotaryEncoder:
         # button held
             if entities.UTIME.ticks_diff(entities.UTIME.ticks_ms(), __sw_l_e_ms) > self.sw_hold_ms and not self._sw_held:
                 self._sw_held = True
-                self._flag_last_event = self.HELD
+                self._flag_last_event = self.LONG
         # it's a multiple click
             elif entities.UTIME.ticks_diff(__sw_l_e_ms, self._sw_prev_event_ms) < __sw_s_ms:
                 self._sw_prev_event_ms = 1
@@ -167,7 +167,7 @@ class RotaryEncoder:
     # button release
         if self._sw_held:
             self._sw_held = False
-            self._flag_last_event = self.RELEASED_MSG
+            self._flag_last_event = self.RELEASE_MSG
             self._sw_prev_state = __sw_l_s
 
             return
@@ -189,7 +189,7 @@ class RotaryEncoder:
             if self._sw_clicks == 0:
                 self._flag_last_event = self.CLICK
             else:
-                self._flag_last_event = self.MULTIPLE_CLICK
+                self._flag_last_event = self.MULTI
             self._sw_prev_state = __sw_l_s
     # some old event, skip it
         # else:
@@ -235,27 +235,27 @@ class RotaryEncoder:
 
         if __e_l_d == 1:
             if self._sw_held_with_encoder:
-                self._flag_last_event = self.TURN_RIGHT_HOLD
+                self._flag_last_event = self.CW_HOLD
             else:
-                self._flag_last_event = self.TURN_RIGHT
+                self._flag_last_event = self.CW
 
         if __e_l_d == -1:
             if self._sw_held_with_encoder:
-                self._flag_last_event = self.TURN_LEFT_HOLD
+                self._flag_last_event = self.ACW_HOLD
             else:
-                self._flag_last_event = self.TURN_LEFT
+                self._flag_last_event = self.ACW
 
         if __e_l_d > fast_turn_count:
             if self._sw_held_with_encoder:
-                self._flag_last_event = self.TURN_RIGHT_FAST_HOLD
+                self._flag_last_event = self.CW_FAST_HOLD
             else:
-                self._flag_last_event = self.TURN_RIGHT_FAST
+                self._flag_last_event = self.CW_FAST
 
         if __e_l_d < -fast_turn_count:
             if self._sw_held_with_encoder:
-                self._flag_last_event = self.TURN_LEFT_FAST_HOLD
+                self._flag_last_event = self.ACW_FAST_HOLD
             else:
-                self._flag_last_event = self.TURN_LEFT_FAST
+                self._flag_last_event = self.ACW_FAST
 
         self._enc_last_direction = 0
 
@@ -276,7 +276,7 @@ class RotaryEncoder:
 
         self.__call_listeners()
 
-        if self._flag_last_event == self.MULTIPLE_CLICK:
+        if self._flag_last_event == self.MULTI:
             self._sw_clicks = 0
 
         self._flag_last_event = 0
@@ -316,7 +316,7 @@ class RotaryEncoderRP2(RotaryEncoder):
             debounce_ms=params['DEBOUNCE_MS'],
             encoder_step=params['ENCODER_STEP'],
             half_step=params['HALF_STEP'],
-            hold_ms=params['HOLD_MS'],
+            hold_ms=params['LONG_MS'],
             step_ms=params['STEP_MS'],
             fast_ms=params['FAST_MS'],
             click_ms=params['CLICK_MS'],

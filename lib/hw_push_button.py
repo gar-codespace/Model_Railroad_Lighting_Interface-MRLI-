@@ -5,8 +5,7 @@ Button actions are triggered by either:
 a) an IRQ event: 'IRQ_TRIGGER':True
 b) continuous polling: 'IRQ_TRIGGER':False
 Move imports to entities
-'''
-'''
+
 usage example:
 pin = entities.PIN(entities.PICO_PIN['CONFIRM'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
 self.bC = entities.Button(params=entities.BUTTON0, pin=pin, name='STANDBY')
@@ -20,7 +19,6 @@ DEFAULT_CYCLE = 20
 
 BUTTON0 = {
             'IRQ_TRIGGER':True, # False for asyncio trigger
-            'REST_STATE':True, # False for pin set low
             'DEBOUNCE_TIME':40,
             'MULTI_TIME':350,
             'LONG_TIME':800,
@@ -58,11 +56,11 @@ class Button:
     self.multi_msg = params['MULTI_MSG']
     self.long_msg = params['LONG_MSG']
   # async polling
-    self.rest_state = params['REST_STATE']
-    self.previous_state = params['REST_STATE']
-    self.current_state = params['REST_STATE']
-    self.previous_debounced_state = params['REST_STATE']
-    self.current_debounced_state = params['REST_STATE']
+    self.rest_state = pin.value()
+    self.previous_state = pin.value()
+    self.current_state = pin.value()
+    self.previous_debounced_state = pin.value()
+    self.current_debounced_state = pin.value()
     self.debounce_time = params['DEBOUNCE_TIME']
     self.last_check_tick = entities.UTIME.ticks_ms()
   #IRQ polling
