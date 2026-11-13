@@ -48,18 +48,18 @@ class RotaryEncoder:
     '''Base class'''
 
 # Events
-    CLICK = 2
-    MULTI = 3
-    LONG = 4
-    RELEASE_MSG = 5
-    CW = 10
-    CW_FAST = 11
-    CW_HOLD = 12
-    CW_FAST_HOLD = 13
-    ACW = 6
-    ACW_FAST = 7
-    ACW_HOLD = 8
-    ACW_FAST_HOLD = 9
+    CLICK = 'click'
+    MULTI = 'multi'
+    LONG = 'long'
+    RELEASE_MSG = 'rel'
+    CW = 'cw'
+    CW_FAST = 'cwf'
+    CW_HOLD = 'cwh'
+    CW_FAST_HOLD = 'cwfh'
+    ACW = 'acw'
+    ACW_FAST = 'acwf'
+    ACW_HOLD = 'acwh'
+    ACW_FAST_HOLD = 'acwfh'
 
     _listeners:dict = {}
 # Parsing and debounce logic
@@ -103,16 +103,27 @@ class RotaryEncoder:
         self.one_step_ms = one_step_ms
 
     def on(self, event:int, callback:callable):
+        '''Registers an event with a list of callbacks.'''
 
         if event not in self._listeners:
             self._listeners[event] = []
 
         self._listeners[event].append(callback)
 
-    def off(self, event:int): # TODO This is wrong, fixit
+    def off_callback(self, event:int, callback:callable):
+        '''Remove a specific callback for an event.'''
+
+        if event in self._listeners:
+            self._listeners[event].remove(callback)
+
+    def off_event(self, event:int):
+        '''Remove all the callbacks for an event.'''
+        
         self._listeners.pop(event, None)
 
-    def off_all(self, event:int):
+    def off_all(self):
+        '''Remove all the callbacks for all the events.'''
+
         self._listeners = {}
 
     def _sw_irq_handler(self, pin):
