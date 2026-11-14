@@ -37,10 +37,6 @@ entities.py:
 __fork__ = 'https://github.com/TTitanUA/micropython_rotary_encoder/tree/main'
 __refactor__ = 'Greg Ritacco'
 
-
-# TODO still a lot of nesting
-
-
 import entities
 
 
@@ -73,7 +69,7 @@ class RotaryEncoder:
     _sw_last_state:bool = False
     _sw_held_with_encoder:bool = False
     _sw_held:bool = False
-    _sw_clicks:int = 0
+    _sw_clicks:int = 1
 
     def __init__(
             self,
@@ -95,7 +91,7 @@ class RotaryEncoder:
         self.pin_sw = pin_sw
         self.sw_debounce_ms = debounce_ms
         self.enc_step = encoder_step
-        self.half_step=half_step
+        self.half_step = half_step
         self.sw_hold_ms = hold_ms
         self.sw_step_ms = step_ms
         self.enc_fast_ms = fast_ms
@@ -189,15 +185,13 @@ class RotaryEncoder:
     # maybe a multiple click, need to wait for the next event
         if diff < self.sw_step_ms:
             if self._sw_prev_event_ms == 1:
-                if self._sw_clicks == 0:
-                    self._sw_clicks = 1
                 self._sw_clicks += 1
             self._sw_prev_event_ms = timestamp
 
             return        
-    # maybe a single click
+    # single or multi click
         if diff < self.sw_click_ms:
-            if self._sw_clicks == 0:
+            if self._sw_clicks == 1:
                 self._flag_last_event = self.CLICK
             else:
                 self._flag_last_event = self.MULTI
@@ -285,7 +279,7 @@ class RotaryEncoder:
         self.__call_listeners()
 
         if self._flag_last_event == self.MULTI:
-            self._sw_clicks = 0
+            self._sw_clicks = 1
 
         self._flag_last_event = 0
 
