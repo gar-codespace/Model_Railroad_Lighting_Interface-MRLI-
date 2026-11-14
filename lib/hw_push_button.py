@@ -2,11 +2,12 @@
 Hardware library for the fromt panel buttons.
 Catches single release, multi release and long press.
 Button actions are triggered by either:
-a) an IRQ event: 'IRQ_TRIGGER':True
+a) an IRQ event: 'IRQ_TRIGGER':True (uPython automatically triggers on rising and falling)
 b) continuous polling: 'IRQ_TRIGGER':False
-Move imports to entities
+Moved imports to entities.
 
 usage example:
+controller.py
 pin = entities.PIN(entities.PICO_PIN['CONFIRM'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
 self.bC = entities.Button(params=entities.BUTTON0, pin=pin, name='STANDBY')
 self.bC.on(event='RELEASE', callback=self.cb_confirm_release)
@@ -44,10 +45,10 @@ class Button:
 
   def __init__(self, params:dict, pin:entities.PIN, name:str=None):
 
-  # Callback setttings
-    self.callbacks:dict = {}
-    self._flag_last_event:str = None
-
+# Callback management
+    self._callbacks:dict = {}
+    self._working_event:str = None
+ # Callback setttings
     self.pin = pin
     self.pin.irq(handler=self._irq_handler)
     self.name = name
@@ -58,172 +59,172 @@ class Button:
     self.released_msg = params['RELEASED_MSG']
     self.multi_msg = params['MULTI_MSG']
     self.long_msg = params['LONG_MSG']
-  # async polling
-    self.rest_state = pin.value()
-    self.previous_state = pin.value()
-    self.current_state = pin.value()
-    self.previous_debounced_state = pin.value()
-    self.current_debounced_state = pin.value()
+# async polling
     self.debounce_time = params['DEBOUNCE_TIME']
-    self.last_check_tick = entities.UTIME.ticks_ms()
-  #IRQ polling
-    self.tick_increment = 0
-    self.tick_count = 0
+    self._rest_state = pin.value()
+    self._previous_state = pin.value()
+    self._current_state = pin.value()
+    self._previous_debounced_state = pin.value()
+    self._current_debounced_state = pin.value()
+    self._last_check_tick = entities.UTIME.ticks_ms()
+# IRQ polling
     self.debounce_threshold = params['DEBOUNCE_TIME'] / entities.DEFAULT_CYCLE
-  # Parsing logic
-    self.multi_count:int = 0
-    self.multi_tick:int = 0
+    self._tick_increment = 0
+    self._tick_count = 0
+# Parsing logic
     self.multi_threshold = params['MULTI_TIME'] / entities.DEFAULT_CYCLE
-    self.press_count:int = 0
-    self.long_count:int = 0
-    self.long_tick:int = 0
+    self._multi_count:int = 0
+    self._multi_tick:int = 0
+    self._press_count:int = 0
     self.long_threshold = params['LONG_TIME'] / entities.DEFAULT_CYCLE
+    self._long_count:int = 0
+    self._long_tick:int = 0
 
   def on(self, event:str, callback:callable):
       '''Registers an event with a list of callbacks.'''
 
-      if event not in self.callbacks:
-          self.callbacks[event] = []
+      if event not in self._callbacks:
+          self._callbacks[event] = []
 
-      self.callbacks[event].append(callback)
+      self._callbacks[event].append(callback)
         
   def off_callback(self, event:str, callback:callable):
       '''Remove a specific callback for an event.'''
 
-      if event in self.callbacks:
-          self.callbacks[event].remove(callback)
+      if event in self._callbacks:
+          self._callbacks[event].remove(callback)
 
   def off_event(self, event:int):
       '''Remove all the callbacks for an event.'''
       
-      self.callbacks.pop(event, None)
+      self._callbacks.pop(event, None)
 
   def off_all(self):
       '''Remove all the callbacks for all the events.'''
 
-      self.callbacks = {}
+      self._callbacks = {}
 
   def _irq_handler(self, pin):
+    '''uPython wants pin.'''
 
-    self.tick_increment = 1
+    self._tick_increment = 1
 
   def _irq_parse(self):
 
   # On Press
-    if self.current_debounced_state != self.rest_state:
-      self.long_tick = 1
-      self.multi_tick = 0 # Stops the _multi_counter
-      self.press_count += 1
+    if self._current_debounced_state != self._rest_state:
+      self._long_tick = 1
+      self._multi_tick = 0 # Stops the _multi_counter
+      self._press_count += 1
       return
   # On release
-    self.long_tick = 0
-    self.long_count = 0
-    self.multi_tick = 1 # Starts the _multi_counter
+    self._long_tick = 0
+    self._long_count = 0
+    self._multi_tick = 1 # Starts the _multi_counter
 
   def _irq_counter(self):
 
-    self.tick_count += self.tick_increment
-    if self.tick_count >= self.debounce_threshold:
-      self.tick_increment = 0
-      self.tick_count = 0
-      self.current_debounced_state = self.pin.value()
+    self._tick_count += self._tick_increment
+    if self._tick_count >= self.debounce_threshold:
+      self._tick_increment = 0
+      self._tick_count = 0
+      self._current_debounced_state = self.pin.value()
       self._irq_parse()
 
   def _uasyncio_debounce(self):
 
     ms_now = entities.UTIME.ticks_ms()
-    self.current_state = self.pin.value()
-    state_changed = self.current_state != self.previous_state
+    self._current_state = self.pin.value()
+    state_changed = self._current_state != self._previous_state
     if state_changed:
-      self.last_check_tick = ms_now
-    state_stable = (ms_now - self.last_check_tick) > self.debounce_time
+      self._last_check_tick = ms_now
+    state_stable = (ms_now - self._last_check_tick) > self.debounce_time
     if state_stable and not state_changed:
-      self.last_check_tick = ms_now
-      self.current_debounced_state = self.current_state
-    self.previous_state = self.current_state
+      self._last_check_tick = ms_now
+      self._current_debounced_state = self._current_state
+    self._previous_state = self._current_state
 
   def _uasyncio_parse(self):
 
   # Did anything change?
-    if self.current_debounced_state == self.previous_debounced_state:
+    if self._current_debounced_state == self._previous_debounced_state:
       return
   # On Press
-    if self.current_debounced_state != self.rest_state:
-      self.long_tick = 1
-      self.multi_tick = 0 # Stops the _multi_counter
-      self.press_count += 1
-      self.previous_debounced_state = self.current_debounced_state
+    if self._current_debounced_state != self._rest_state:
+      self._long_tick = 1
+      self._multi_tick = 0 # Stops the _multi_counter
+      self._press_count += 1
+      self._previous_debounced_state = self._current_debounced_state
       return
   # On release
-    self.long_tick = 0
-    self.long_count = 0
-    self.multi_tick = 1 # Starts the _multi_counter
-    self.previous_debounced_state = self.current_debounced_state
+    self._long_tick = 0
+    self._long_count = 0
+    self._multi_tick = 1 # Starts the _multi_counter
+    self._previous_debounced_state = self._current_debounced_state
 
   def _multi_counter(self):
     '''Single or multiple releases.'''
 
 # Start on release, stop on press.
-    self.multi_count += self.multi_tick
-    if self.multi_count >= self.multi_threshold:
-      if self.press_count == 1:
-        self._flag_last_event = self.RELEASE
-      else:
-        self._flag_last_event = self.MULTI
-      self._call_listeners(name=self.name, message=self.released_msg)
-      self.multi_tick = 0
-      self.multi_count = 0
-      self.press_count = 0
-      self.long_tick = 0
-      self.long_count = 0
+    self._multi_count += self._multi_tick
+    if self._multi_count >= self.multi_threshold:
+      if self._press_count == 1:
+        self._working_event = self.RELEASE
+        self._run_callbacks(name=self.name, message=self.released_msg)
+      if self._press_count > 1:
+        self._working_event = self.MULTI
+        self._run_callbacks(name=self.name, message=self.multi_msg)
+      self._multi_tick = 0
+      self._multi_count = 0
+      self._press_count = 0
+      self._long_tick = 0
+      self._long_count = 0
 
   def _long_counter(self):
     '''Long press.'''
     
 # Start on press, stop on release.
-    self.long_count += self.long_tick
-    if self.long_count >= self.long_threshold:
-      self._flag_last_event = self.LONG
-      self._call_listeners(name=self.name, message=self.released_msg)
-      self.multi_tick = 0
-      self.multi_count = 0
-      self.press_count = 0
-      self.long_tick = 0
-      self.long_count = 0
+    self._long_count += self._long_tick
+    if self._long_count >= self.long_threshold:
+      self._working_event = self.LONG
+      self._run_callbacks(name=self.name, message=self.long_msg)
+      self._multi_tick = 0
+      self._multi_count = 0
+      self._press_count = 0
+      self._long_tick = 0
+      self._long_count = 0
 
-  def _call_listeners(self, name:str, message:str):
+  def _run_callbacks(self, name:str, message:str):
 
-      print(f'Event: {self._flag_last_event}')
-
-      if not self._flag_last_event:
+      if not self._working_event:
           return
 
-      if self._flag_last_event not in self.callbacks:
+      if self._working_event not in self._callbacks:
           return
       
-      for listener in self.callbacks[self._flag_last_event]:
+      for callback in self._callbacks[self._working_event]:
           try:
-              listener(name, message)
+              callback(name, message)
 
           except Exception as e:
-              print(f'Name:{__name__}.__call_listeners(), Listener:{listener}, Error:{e}')
+              print(f'Name:{__name__}._callbacks(), Listener:{callback}, Error:{e}')
 
   def poll(self):
 
     if self.irq_polling:
-      self.irq_poll()
+      self._irq_poll()
     else:
-      self.asyncio_poll()
+      self._asyncio_poll()
 
-# Picks one of these to put into an uasyncio loop
-  def irq_poll(self):
+# Poll() picks one of these to put into an uasyncio loop
+  def _irq_poll(self):
     '''IRQ triggers the button action.'''
     self._irq_counter()
     self._multi_counter()
     self._long_counter()
 
-  def asyncio_poll(self):
-    '''uasyncio polling triggers the button action'''
+  def _asyncio_poll(self):
+    '''uasyncio polling triggers the button action.'''
     self._uasyncio_debounce()
     self._uasyncio_parse()
     self._multi_counter()
