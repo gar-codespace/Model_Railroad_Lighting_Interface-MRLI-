@@ -38,13 +38,16 @@ import entities
 class Button:
 
 # Events
-  RELEASE:bool = False
-  MULTI:bool = False
-  LONG:bool = False
+  RELEASE = 'release'
+  MULTI = 'multi'
+  LONG = 'long'
 
   def __init__(self, params:dict, pin:entities.PIN, name:str=None):
 
   # Callback setttings
+    self.callbacks:dict = {}
+    self._flag_last_event:str = None
+
     self.pin = pin
     self.pin.irq(handler=self._irq_handler)
     self.name = name
@@ -77,11 +80,28 @@ class Button:
     self.long_threshold = params['LONG_TIME'] / entities.DEFAULT_CYCLE
 
   def on(self, event:str, callback:callable):
-    '''Registers an event with a callback.'''
+      '''Registers an event with a list of callbacks.'''
 
-    setattr(self, event, True)
-    attrib = f'cb_{event.lower()}'
-    setattr(self, attrib, callback)
+      if event not in self.callbacks:
+          self.callbacks[event] = []
+
+      self.callbacks[event].append(callback)
+        
+  def off_callback(self, event:str, callback:callable):
+      '''Remove a specific callback for an event.'''
+
+      if event in self.callbacks:
+          self.callbacks[event].remove(callback)
+
+  def off_event(self, event:int):
+      '''Remove all the callbacks for an event.'''
+      
+      self.callbacks.pop(event, None)
+
+  def off_all(self):
+      '''Remove all the callbacks for all the events.'''
+
+      self.callbacks = {}
 
   def _irq_handler(self, pin):
 
@@ -146,8 +166,11 @@ class Button:
 # Start on release, stop on press.
     self.multi_count += self.multi_tick
     if self.multi_count >= self.multi_threshold:
-      self._rubric(self.press_count) # Catches single or multi
-      # print(f'press count: {self.press_count}')
+      if self.press_count == 1:
+        self._flag_last_event = self.RELEASE
+      else:
+        self._flag_last_event = self.MULTI
+      self._call_listeners(name=self.name, message=self.released_msg)
       self.multi_tick = 0
       self.multi_count = 0
       self.press_count = 0
@@ -160,25 +183,30 @@ class Button:
 # Start on press, stop on release.
     self.long_count += self.long_tick
     if self.long_count >= self.long_threshold:
-      self._rubric(0) # catches the long press
+      self._flag_last_event = self.LONG
+      self._call_listeners(name=self.name, message=self.released_msg)
       self.multi_tick = 0
       self.multi_count = 0
       self.press_count = 0
       self.long_tick = 0
       self.long_count = 0
 
-  def _rubric(self, count:int):
-    '''Picks the appropriate callback.'''
+  def _call_listeners(self, name:str, message:str):
 
-    if count == 1 and self.RELEASE:
-      self.cb_release(self.name, self.released_msg)
+      print(f'Event: {self._flag_last_event}')
 
-    if count > 1 and self.MULTI:
-        self.cb_multi(self.name, self.multi_msg) # one or the other
-        # self.cb_multi(self.name, count)
+      if not self._flag_last_event:
+          return
 
-    if count == 0 and self.LONG:
-      self.cb_long(self.name, self.long_msg)
+      if self._flag_last_event not in self.callbacks:
+          return
+      
+      for listener in self.callbacks[self._flag_last_event]:
+          try:
+              listener(name, message)
+
+          except Exception as e:
+              print(f'Name:{__name__}.__call_listeners(), Listener:{listener}, Error:{e}')
 
   def poll(self):
 

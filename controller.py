@@ -35,13 +35,22 @@ class Mech:
         pin = entities.PIN(entities.PICO_PIN['SCENIC_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.bS = entities.Button(params=entities.BUTTON0, pin=pin, name='SCENIC')
 
-        self.bC.on(event='RELEASE', callback=self.cb_conf_release)
-        self.b0.on(event='RELEASE', callback=self.cb_bank_release)
-        self.b1.on(event='RELEASE', callback=self.cb_bank_release)
-        self.b2.on(event='RELEASE', callback=self.cb_bank_release)
-        self.b3.on(event='RELEASE', callback=self.cb_bank_release)
-        self.b4.on(event='RELEASE', callback=self.cb_bank_release)
-        self.bS.on(event='RELEASE', callback=self.cb_bank_release)
+        self.bC.on(event=self.bC.RELEASE, callback=self.cb_conf_release)
+        self.b0.on(event=self.b0.RELEASE, callback=self.cb_bank_release)
+        self.b1.on(event=self.b1.RELEASE, callback=self.cb_bank_release)
+        self.b2.on(event=self.b2.RELEASE, callback=self.cb_bank_release)
+        self.b3.on(event=self.b3.RELEASE, callback=self.cb_bank_release)
+        self.b4.on(event=self.b4.RELEASE, callback=self.cb_bank_release)
+        self.bS.on(event=self.bS.RELEASE, callback=self.cb_bank_release)
+
+
+        self.bS.on(event=self.bS.MULTI, callback=self.test1)
+        self.bS.on(event=self.bS.LONG, callback=self.test2)
+        self.bS.on(event=self.bS.RELEASE, callback=self.test3)
+        # self.bS.off_event(event=self.bS.RELEASE)
+
+
+
     # Encoder uses polling and irq
         tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
@@ -204,3 +213,12 @@ class Mech:
             getattr(states, attrib)(name, index)
         except:
             pass
+
+    def test1(self, name, message):
+        print('test1')
+
+    def test2(self, name, message):
+        print('test2')
+
+    def test3(self, name, message):
+        print('test3')

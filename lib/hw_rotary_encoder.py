@@ -62,7 +62,7 @@ class RotaryEncoder:
     _enc_last_event_ms:int = 0
     _enc_last_direction:int = 0
     _enc_last_status:int = 0
-    _flag_last_event:int = 0
+    _flag_last_event:int = 0 # TODO fix this
     _sw_last_event_ms:int = 0
     _sw_prev_event_ms:int = 0
     _sw_prev_state:bool = False
@@ -98,7 +98,7 @@ class RotaryEncoder:
         self.sw_click_ms = click_ms
         self.one_step_ms = one_step_ms
 
-    def on(self, event:int, callback:callable):
+    def on(self, event:int, callback:callable): # TODO event:str
         '''Registers an event with a list of callbacks.'''
 
         if event not in self._listeners:
