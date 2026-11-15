@@ -7,7 +7,7 @@ __version__ = '20261001.1.1'
 
 # packaged libraries are kept to a minimum
 from machine import Pin as PIN, I2C, PWM, UART
-# from machine import Timer as TIMER # Used whit hw_rotary_encoder
+# from machine import Timer as TIMER # Used with hw_rotary_encoder
 from micropython import const as CONST
 from random import randint as RANDINT
 import utime as UTIME
@@ -105,6 +105,7 @@ MAIN_DISPLAY0 = { # Big OLED
             'PARAMS':'OLED0',
             'DRIVER':'DISPLAY_DRIVER0'
             }
+
 MAIN_DISPLAY1 = { # Small OLED
             'BUS':'I2C0',
             'PARAMS':'OLED0',
@@ -215,18 +216,17 @@ EDIT_SCREEN_ITEMS = [
                  'COOL'
                 ]
 EDIT_PWM_TICKS = 10 # How many ticks per indent of the rotary encoder when changing color values.
-                # Smaller is finer control.
+                    # Smaller is finer control.
 
 ################## BUFFERS ######################
 
 WORKING_BUFFER = {} # Either the static dictionary or one of the animated dictionaries is copied into this.
 
 ################## EFFECT BUFFER ######################
-# The running effect writes to and reads from this buffer.
-# In STATIC state user inputs are written here.
-# The slower the clock cycle, the more accurate the delay.
-CLOCK_CYCLE = 500 # Milliseconds. WP_DUR * CLOCK_CYCLE = total time of the waypoint
-CLOCK_OFFSET = 1 # Adjusts for asyncio overhead slowing down the effects. Smaller = faster.
+'''See Notes.txt'''
+
+CLOCK_CYCLE = 500 # Milliseconds. WP_DUR * CLOCK_CYCLE = waypoint time
+CLOCK_OFFSET = 1 # Adjusts for asyncio overhead. Smaller = faster.
                  
 RED     :int = 32500 # PWM value
 GREEN   :int = 32500
@@ -240,7 +240,7 @@ BANK_3  :int = 1
 BANK_4  :int = 1
 SCENIC  :int = 1
 CUR_WP  :int = None
-WP_DUR  :int = 1 # waypoint_duration is the number of times the effect will await, given a delay of entities.CLOCK_CYCLE
+WP_DUR  :int = 1
 NEXT_WP :int = 0 # Index of the next waypoint
 WP_NAME :str = 'name'
 HOUR  :float = 0.0 # Fast time clock display
@@ -257,15 +257,7 @@ STEP_H:float = 0.0 # Increment the hour
 
 
 ################## LIGHTING EFFECT DEFINITIONS ######################
-
-'''
-In the dictionary for each effect, the duration of the effect is given in real time minutes,
-the time the effect actually takes in the real world.
-The duration is then adjusted for model railroad 'scale' and converted to milliseconds.
-
-SINGLES effects have one waypoint. The duration is defined as 0, since 'infinately long' seems rediculous.
-The random value is a float between 0 and 1. 0 is not random, 1 is maximum randomness.
-'''
+'''See Notes.txt'''
 
 SINGLES = {
 'CLOCK_CYCLE'  : 250,
@@ -293,7 +285,7 @@ SINGLES = {
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = { # simulates an entire day
 'CLOCK_CYCLE'  : 250,
-'CLOCK_OFFSET' : .860,
+'CLOCK_OFFSET' : .858, # Smaller is faster
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
 'GROUP':  (    'A5',    'A5',    'A5',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A4',    'A5'), # sound effects group
 'HOUR':   (      23,       1,       3,       5,       7,       9,      11,      13,      15,      17,      19,      21), # the time of day
@@ -399,11 +391,11 @@ AMBIENCE = {  # File    Name,       Duration, Description   VFX   Vol flag
                 'clip29':('THUNDER4OGG', 19, 'Thunder 4', 'bolt'),
                 'clip30':('WIND0001OGG', 19, 'Wind 1',      None),
                 'clip31':('WIND0002OGG', 19, 'Wind 2',      None),
-                'clip32':('BELLS004OGG',  7, 'Bells 4',     None,1),
-                'clip33':('BELLS005OGG',  7, 'Bells 5',     None,1),
-                'clip34':('BELLS006OGG',  6, 'Bells 6',     None,1),
-                'clip35':('HORN0004OGG',  5, 'Horn 4',      None,1),
-                'clip36':('HORN0005OGG',  5, 'Horn 5',      None,1),
+                'clip32':('BELLS004OGG',  7, 'Bells 4',     None, 1),
+                'clip33':('BELLS005OGG',  7, 'Bells 5',     None, 1),
+                'clip34':('BELLS006OGG',  6, 'Bells 6',     None, 1),
+                'clip35':('HORN0004OGG',  5, 'Horn 4',      None, 1),
+                'clip36':('HORN0005OGG',  5, 'Horn 5',      None, 1),
                 'clip37':('GEESE001OGG',  7, 'Geese 1',     None),
                 'clip38':('GEESE002OGG',  7, 'Geese 2',     None),
                 'clip39':('GULLS006OGG',  8, 'Seagulls 6',  None), # Same as Seagulls 1
@@ -503,6 +495,7 @@ D1 = [ # Stormy test
       ]
 
 ################## VISUAL EFFECTS ######################
+'''Possibly confusing: LIGHTING and LIGHTNING look very similar.'''
 
 LIGHTNING = [# pwm, MS
              (1400, 40),

@@ -19,7 +19,7 @@ class Mech:
         model.set_relay_pins()
     # Sets pico pins to pwm
         model.set_pwm_led_pins()
-    # Front panel buttons use polling
+    # Front panel buttons use irq polling
         pin = entities.PIN(entities.PICO_PIN['CONF_0_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         self.bC = entities.Button(params=entities.BUTTON0, pin=pin, name='STANDBY')
         pin = entities.PIN(entities.PICO_PIN['BANK_0_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
@@ -43,7 +43,7 @@ class Mech:
         self.b4.on(event=self.b4.RELEASE, callback=self.cb_bank_release)
         self.bS.on(event=self.bS.RELEASE, callback=self.cb_bank_release)
         
-    # Encoder uses polling and irq
+    # Encoder uses irq polling
         tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)

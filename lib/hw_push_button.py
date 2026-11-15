@@ -2,7 +2,7 @@
 Hardware library for the fromt panel buttons.
 Catches single release, multi release and long press.
 Button actions are triggered by either:
-a) an IRQ event: 'IRQ_TRIGGER':True (uPython automatically triggers on rising and falling)
+a) an IRQ event: 'IRQ_TRIGGER':True
 b) continuous polling: 'IRQ_TRIGGER':False
 Moved imports to entities.
 
@@ -50,7 +50,7 @@ class Button:
     self._working_event:str = None
 # Callback setttings
     self.pin = pin
-    self.pin.irq(handler=self._irq_handler)
+    self.pin.irq(handler=self._irq_handler) # uPython automatically triggers on rising and falling
     self.name = name
     self.irq_polling = params['IRQ_TRIGGER']
     self.cb_release:callable = None # released callback

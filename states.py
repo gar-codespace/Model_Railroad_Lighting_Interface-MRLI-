@@ -24,7 +24,7 @@ class States:
 entities.MACHINE_STATE = States.WELCOME
 entities.STANDBY_TOGGLE = States.WELCOME
 
-def into_standby():
+def _into_standby():
 
     entities.CLIP = entities.STANDBY_IN_CLIP
     lighting.set_banks_to_0()
@@ -59,7 +59,7 @@ def welcome_toggle():
     '''Puts machine in standby.'''
 
     entities.MACHINE_STATE = States.EFFECTS
-    into_standby()
+    _into_standby()
 
     return view.get_empty_list()
 
@@ -109,7 +109,7 @@ def effects_get_hilight():
 def effects_toggle():
     '''Puts machine in standby.'''
 
-    into_standby()
+    _into_standby()
 
     return view.get_empty_list()
 
@@ -150,7 +150,7 @@ def animated_set_next_waypoint():
 def animated_toggle():
     '''Puts machine in standby.'''
 
-    into_standby()
+    _into_standby()
 
     return view.get_empty_list()
 
@@ -180,6 +180,7 @@ def animated_first_line():
 
     # return f'{text:{line_format}}'
     return text
+
 
 ########### MACHINE_STATE: STATIC
 
@@ -226,7 +227,7 @@ def static_get_hilight():
 def static_toggle():
     '''Puts machine in standby.'''
 
-    into_standby()
+    _into_standby()
 
     return view.get_empty_list()
 
@@ -306,7 +307,7 @@ def edit_get_hilight():
 def edit_toggle():
     '''Puts machine in standby.'''
 
-    into_standby()
+    _into_standby()
 
     return view.get_empty_list()
 

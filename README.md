@@ -91,7 +91,7 @@ In display state EFFECTS:
   
 In display state ANIMATED:  
   Rotate encoder: None  
-  Single press encoder: display state PAUSED  
+  Single press encoder: toggle display state PAUSED  
   Double press encoder: return to display state EFFECTS  
   LED bank buttons: None  
 
