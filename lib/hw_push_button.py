@@ -48,7 +48,7 @@ class Button:
 # Callback management
     self._callbacks:dict = {}
     self._working_event:str = None
- # Callback setttings
+# Callback setttings
     self.pin = pin
     self.pin.irq(handler=self._irq_handler)
     self.name = name
@@ -165,7 +165,7 @@ class Button:
   def _multi_counter(self):
     '''Single or multiple releases.'''
 
-# Start on release, stop on press.
+  # Start on release, stop on press.
     self._multi_count += self._multi_tick
     if self._multi_count >= self.multi_threshold:
       if self._press_count == 1:
@@ -183,7 +183,7 @@ class Button:
   def _long_counter(self):
     '''Long press.'''
     
-# Start on press, stop on release.
+  # Start on press, stop on release.
     self._long_count += self._long_tick
     if self._long_count >= self.long_threshold:
       self._working_event = self.LONG
