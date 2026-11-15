@@ -1,6 +1,20 @@
 '''
 Hardware library for an SH1106 OLED, I2C interface
 imports moved to entities
+
+params:
+OLED0 = {
+        'NAME':'Main Display',
+        'SIZE':'1.3',
+        'BUS':'i2c',
+        'CONTROLLER':'sh1106',
+        'INTREGATION':'1 EC11, 2 push',
+        'ADDRESS': CONST(0x3C),
+        'WIDTH': 128,
+        'HEIGHT': 64,
+        'ROTATE': False,
+        'EXTERNAL_VCC':False,
+        }
 '''
 __author__ = 'https://github.com/CrispStrobe/sh1106-py'
 
@@ -32,43 +46,33 @@ SH1106_SET_HIGH_COL = entities.CONST(0x10)
 class Driver_I2C(entities.FRAMEBUF.FrameBuffer):
     '''SH1106 OLED driver for I2C interface'''
     
-    def __init__(self, width=None, height=None, bus=None, addr=None, external_vcc=False):
+    def __init__(self, params:dict=None, bus:object=None):
+        self.params = params
         self.i2c = bus
-        self.addr = addr
-        self.external_vcc = external_vcc
-        self.width = width
-        self.height = height
-        self.pages = self.height // 8
-        self.buffer = bytearray(self.pages * self.width)
-        super().__init__(self.buffer, self.width, self.height, entities.FRAMEBUF.MONO_VLSB)
-        self.init_display()
+        self.addr = self.params['ADDRESS']
+        self.external_vcc = self.params['EXTERNAL_VCC']
+        self.rotate = self.params['ROTATE']
+        self.width = self.params['WIDTH']
+        self.height = self.params['HEIGHT']
+        self.pages = self.params['HEIGHT'] // 8
+        self.buffer = bytearray(self.pages * self.params['WIDTH'])
+        super().__init__(self.buffer, self.params['WIDTH'], self.params['HEIGHT'], entities.FRAMEBUF.MONO_VLSB)
+        self._init_display()
 
-    def write_cmd(self, cmd):
-        '''Write a single command'''
-        self.i2c.writeto(self.addr, bytearray([0x80, cmd]))
+    def _init_display(self):
 
-    def write_data(self, buf):
-        '''Write data buffer'''
-        chunk_size = 32  # I2C buffer limit
-        for i in range(0, len(buf), chunk_size):
-            chunk = buf[i:i+chunk_size]
-            data = bytearray([0x40]) + chunk
-            self.i2c.writeto(self.addr, data)
-
-    def init_display(self):
-        '''Initialize the SH1106 display'''
         init_commands = [
             SET_DISP | 0x00,          # Display OFF
             SET_DISP_CLK_DIV, 0x80,   # Set clock divide ratio
-            SET_MUX_RATIO, self.height - 1,  # Set multiplex ratio
+            SET_MUX_RATIO, self.params['WIDTH'] - 1,  # Set multiplex ratio
             SET_DISP_OFFSET, 0x00,    # Set display offset
             SET_DISP_START_LINE | 0x00,  # Set start line address
-            SET_CHARGE_PUMP, 0x10 if self.external_vcc else 0x14,  # Charge pump
+            SET_CHARGE_PUMP, 0x10 if self.params['EXTERNAL_VCC'] else 0x14,  # Charge pump
             SET_SEG_REMAP | 0x01,     # Set segment re-map
             SET_COM_OUT_DIR | 0x08,   # Set COM output scan direction
             SET_COM_PIN_CFG, 0x12,    # Set COM pins configuration
             SET_CONTRAST, 0x80,       # Set contrast
-            SET_PRECHARGE, 0x22 if self.external_vcc else 0xF1,  # Set pre-charge period
+            SET_PRECHARGE, 0x22 if self.params['EXTERNAL_VCC'] else 0xF1,  # Set pre-charge period
             SET_VCOM_DESEL, 0x40,     # Set VCOMH deselect level
             SET_ENTIRE_ON,            # Resume to RAM content display
             SET_NORM_INV,             # Set normal display
@@ -76,51 +80,67 @@ class Driver_I2C(entities.FRAMEBUF.FrameBuffer):
         ]
         
         for cmd in init_commands:
-            self.write_cmd(cmd)
+            self._write_cmd(cmd)
             entities.UTIME.sleep_ms(1)
-        
+
         self.fill(0)
         self.show()
+        print(f'{self.params['NAME']}: {self.params['SIZE']}, {self.params['BUS']}, {self.params['CONTROLLER']}')
+
+    def _write_cmd(self, cmd):
+        '''Write a single command'''
+        self.i2c.writeto(self.addr, bytearray([0x80, cmd]))
+
+    def _write_data(self, buf):
+        '''Write data buffer'''
+        chunk_size = 32  # I2C buffer limit
+        for i in range(0, len(buf), chunk_size):
+            chunk = buf[i:i+chunk_size]
+            data = bytearray([0x40]) + chunk
+            self.i2c.writeto(self.addr, data)
 
     def show(self):
         '''Update display - SH1106 uses page-by-page addressing'''
         for page in range(self.pages):
             # Set page address
-            self.write_cmd(SH1106_SET_PAGE_ADDR | page)
+            self._write_cmd(SH1106_SET_PAGE_ADDR | page)
             
             # Set column address (SH1106 has 2-pixel offset for 128px displays)
             col_offset = 2 if self.width == 128 else 0
-            self.write_cmd(SH1106_SET_LOW_COL | (col_offset & 0x0F))
-            self.write_cmd(SH1106_SET_HIGH_COL | (col_offset >> 4))
+            self._write_cmd(SH1106_SET_LOW_COL | (col_offset & 0x0F))
+            self._write_cmd(SH1106_SET_HIGH_COL | (col_offset >> 4))
             
             # Write page data
             start = page * self.width
             end = start + self.width
             page_data = self.buffer[start:end]
-            self.write_data(page_data)
+            self._write_data(page_data)
 
     def poweroff(self):
         '''Turn off the display'''
-        self.write_cmd(SET_DISP | 0x00)
+        self._write_cmd(SET_DISP | 0x00)
 
     def poweron(self):
         '''Turn on the display'''
-        self.write_cmd(SET_DISP | 0x01)
+        self._write_cmd(SET_DISP | 0x01)
 
     def contrast(self, contrast):
         '''Set display contrast (0-255)'''
-        self.write_cmd(SET_CONTRAST)
-        self.write_cmd(contrast)
+        self._write_cmd(SET_CONTRAST)
+        self._write_cmd(contrast)
 
-    def invert(self, invert):
+    def invert(self, invert:bool):
         '''Invert display colors'''
-        self.write_cmd(SET_NORM_INV | (invert & 1))
+        self._write_cmd(SET_NORM_INV | (invert & 1))
 
-    def rotate(self, rotate):
+    def rotate_disp(self):
         '''Rotate display 180 degrees'''
-        if rotate:
-            self.write_cmd(SET_COM_OUT_DIR)
-            self.write_cmd(SET_SEG_REMAP)
-        else:
-            self.write_cmd(SET_COM_OUT_DIR | 0x08)
-            self.write_cmd(SET_SEG_REMAP | 0x01)
+        if self.rotate:
+            self._write_cmd(SET_COM_OUT_DIR)
+            self._write_cmd(SET_SEG_REMAP)
+            self.rotate = False
+            return
+
+        self._write_cmd(SET_COM_OUT_DIR | 0x08)
+        self._write_cmd(SET_SEG_REMAP | 0x01)
+        self.rotate = True

@@ -93,22 +93,41 @@ UART0 = {
 
 ################## DISPLAY ######################
 
-OLED0 = { # Main Display
-        'BOARD':'Integrated display module',
+OLED0 = {
+        'NAME':'Main Display',
+        'SIZE':'1.3 inch',
+        'BUS':'i2c',
+        'CONTROLLER':'sh1106',
+        'INTREGATION':'1 EC11, 2 push',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
+        'ROTATE': False,
+        'EXTERNAL_VCC':False,
+        }
+
+OLED1 = { 
+        'NAME':'Main Display',
+        'SIZE':'0.9',
+        'BUS':'i2c',
+        'CONTROLLER':'ssd1306',
+        'INTREGATION':'1 EC11, 2 push',
+        'ADDRESS': CONST(0x3C),
+        'WIDTH': 128,
+        'HEIGHT': 64,
+        'ROTATE': False,
+        'EXTERNAL_VCC':False,
         }
 
 MAIN_DISPLAY0 = { # Big OLED
-            'BUS':'I2C0',
+            'COM':'I2C0',
             'PARAMS':'OLED0',
             'DRIVER':'DISPLAY_DRIVER0'
             }
 
 MAIN_DISPLAY1 = { # Small OLED
-            'BUS':'I2C0',
-            'PARAMS':'OLED0',
+            'COM':'I2C0',
+            'PARAMS':'OLED1',
             'DRIVER':'DISPLAY_DRIVER1'
             }
 

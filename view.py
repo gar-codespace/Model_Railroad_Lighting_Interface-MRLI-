@@ -1,7 +1,7 @@
 '''
 specs:
 MAIN_DISPLAY = {
-            'BUS':'I2C0',
+            'COM':'I2C0',
             'PARAMS':'OLED0',
             'DRIVER':'DISPLAY_DRIVER0'
             }
@@ -12,11 +12,17 @@ I2C0 = {
           'SCL':'COM1',
           'FREQ':400000
         }
-OLED0 = { # Main Display
-        'BOARD':'Integrated display module',
+OLED0 = {
+        'NAME':'Main Display',
+        'SIZE':'1.3',
+        'BUS':'i2c',
+        'CONTROLLER':'sh1106',
+        'INTREGATION':'1 EC11, 2 push',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
+        'ROTATE': False,
+        'EXTERNAL_VCC':False,
         }
 '''
 
@@ -29,24 +35,21 @@ class Display:
 
     def __init__(self, specs:dict):
 
-        self.bus_params = getattr(entities, specs['BUS'])
-        self.display_type = getattr(entities, specs['PARAMS'])
+        self.com = getattr(entities, specs['COM'])
         self.driver = getattr(entities, specs['DRIVER'])
+        self.params = getattr(entities, specs['PARAMS'])
 
         self.bus:object = None
         self.display:object = None
-        self.width = self.display_type['WIDTH']
-        self.height = self.display_type['HEIGHT']
-        self.addr = self.display_type['ADDRESS']
 
     def get_bus(self):
 
-        attr = f'get_{self.bus_params['TYPE']}'
-        self.bus = getattr(model, attr)(self.bus_params)
+        attr = f'get_{self.com['TYPE']}'
+        self.bus = getattr(model, attr)(self.com)
 
     def get_display(self):
 
-        self.display = self.driver(width=self.width, height=self.height, bus=self.bus, addr=self.addr)
+        self.display = self.driver(params=self.params, bus=self.bus)
         
     def update_display(self, content:list = None):
 
