@@ -21,9 +21,9 @@ def fade_up_lights():
     entities.NEXT_WP = end_index
     entities.CLIP_G =  entities.WORKING_BUFFER['GROUP'][end_index]
 
-    set_color_values(begin_index)
+    _set_color_values(begin_index)
     set_pwm_values()
-    set_up_banks(end_index)
+    _set_up_banks(end_index)
     set_bank_relays()
 
     model.get_color_steps(begin_index)
@@ -46,27 +46,27 @@ def set_up_effect():
 
     entities.CUR_WP = entities.CURRENT_EFFECT[2]
 
-    lighting_effect_boiler_plate(entities.CUR_WP)
+    _lighting_effect_boiler_plate(entities.CUR_WP)
 
 def set_next_waypoint():
 
-    lighting_effect_boiler_plate(entities.NEXT_WP)
+    _lighting_effect_boiler_plate(entities.NEXT_WP)
 
-def lighting_effect_boiler_plate(index):
+def _lighting_effect_boiler_plate(index):
     '''Common to set_up_effect and set_next_waypoint.'''
 
     current_waypoint_name = entities.WP_NAME
-    get_waypoint_name(index)
-    get_sfx_group(index)
-    get_hour(index)
+    _get_waypoint_name(index)
+    _get_sfx_group(index)
+    _get_hour(index)
 
     if not current_waypoint_name == entities.WP_NAME:
         entities.PROGRESS_MESSAGE = f'Waypoint Run Time: {entities.WAYPOINT_RUN_TIME} (sec)\n\
 New Waypoint: {entities.WP_NAME}\n\
 Sound Group: {entities.CLIP_G}'
 
-    set_color_values(index)
-    set_up_banks(index)
+    _set_color_values(index)
+    _set_up_banks(index)
 
     model.get_waypoint_duration(index)
     model.get_next_waypoint(index)
@@ -76,20 +76,20 @@ Sound Group: {entities.CLIP_G}'
     set_bank_relays()
     set_pwm_values()
 
-def get_waypoint_name(index):
+def _get_waypoint_name(index):
 
     entities.WP_NAME = entities.WORKING_BUFFER['NAME'][index]
 
-def get_sfx_group(index):
+def _get_sfx_group(index):
 
     entities.CLIP_G = entities.WORKING_BUFFER['GROUP'][index]
 
-def get_hour(index):
+def _get_hour(index):
 
     entities.HOUR = entities.WORKING_BUFFER['HOUR'][index]
     entities.TIME = entities.WORKING_BUFFER['TIME'][index]
 
-def set_color_values(index):
+def _set_color_values(index):
     
     entities.RED   = int(entities.WORKING_BUFFER['RED'][index] * entities.PWM_STEPS)
     entities.GREEN = int(entities.WORKING_BUFFER['GREEN'][index] * entities.PWM_STEPS)
@@ -97,7 +97,7 @@ def set_color_values(index):
     entities.WARM  = int(entities.WORKING_BUFFER['WARM'][index] * entities.PWM_STEPS)
     entities.COOL  = int(entities.WORKING_BUFFER['COOL'][index] * entities.PWM_STEPS)
 
-def set_up_banks(index):
+def _set_up_banks(index):
 
     entities.BANK_0 = entities.WORKING_BUFFER['BANK_0'][index]
     entities.BANK_1 = entities.WORKING_BUFFER['BANK_1'][index]
