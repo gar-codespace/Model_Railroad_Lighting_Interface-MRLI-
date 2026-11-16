@@ -1,3 +1,7 @@
+'''
+Model Railroad Lighting Interface (MRLI)
+'''
+
 import entities
 import states
 import model
@@ -6,7 +10,7 @@ import lighting
 import sound
 
 
-class Mech:
+class MRLI:
     '''
     MRLI initializes with the welcome screen displayed
     and a 'welcome' sound clip is played.

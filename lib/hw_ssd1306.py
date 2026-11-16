@@ -1,4 +1,6 @@
 '''
+Model Railroad Lighting Interface (MRLI)
+
 Hardware library for an SSD1306 OLED, I2C interface
 imports moved to entities
 '''

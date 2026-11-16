@@ -1,5 +1,7 @@
 '''
-specs:
+Model Railroad Lighting Interface (MRLI)
+
+params:
 SOUND_CARD0 = {
             'BUS':'uart0',
             'PARAMS':'SB0',
@@ -13,7 +15,11 @@ UART0 = {
           'FREQ':9600
         }
 SB0 = {
-       'BOARD': 'Adafruit Sound FX Board',
+       'NAME':'Sound Card',
+       'MAKE': 'Adafruit',
+       'MODEL': 'Sound FX Board',
+       'SIZE':'16mB',
+       'BUS':'UART',
        'WAIT':50,
        'DUPLEX':False,
        'RESET':False,
@@ -26,11 +32,11 @@ import model
 
 class Sound:
 
-    def __init__(self, specs:dict):
+    def __init__(self, params:dict):
 
-        self.bus_params = getattr(entities, specs['BUS'])
-        self.display_type = getattr(entities, specs['PARAMS'])
-        self.driver = getattr(entities, specs['DRIVER'])
+        self.bus_params = getattr(entities, params['BUS'])
+        self.display_type = getattr(entities, params['PARAMS'])
+        self.driver = getattr(entities, params['DRIVER'])
 
         self.bus:object = None
         self.board:object = None

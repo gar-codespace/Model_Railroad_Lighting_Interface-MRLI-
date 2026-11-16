@@ -1,4 +1,6 @@
 '''
+Model Railroad Lighting Interface (MRLI)
+
 specs:
 MAIN_DISPLAY = {
             'COM':'I2C0',
@@ -14,7 +16,9 @@ I2C0 = {
         }
 OLED0 = {
         'NAME':'Main Display',
-        'SIZE':'1.3',
+        'MAKE':'GODIYMODULES',
+        'MODEL':'White OLED Display Screen',
+        'SIZE':'1.3 inch',
         'BUS':'i2c',
         'CONTROLLER':'sh1106',
         'INTREGATION':'1 EC11, 2 push',

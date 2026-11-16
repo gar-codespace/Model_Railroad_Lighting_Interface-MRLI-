@@ -1,4 +1,6 @@
 '''
+Model Railroad Lighting Interface (MRLI)
+
 All the settings for the program are here.
 All the imports are in one place.
 '''
@@ -95,6 +97,8 @@ UART0 = {
 
 OLED0 = {
         'NAME':'Main Display',
+        'MAKE':'Godiymodules',
+        'MODEL':'White OLED Display Screen',
         'SIZE':'1.3 inch',
         'BUS':'i2c',
         'CONTROLLER':'sh1106',
@@ -108,6 +112,8 @@ OLED0 = {
 
 OLED1 = { 
         'NAME':'Main Display',
+        'MAKE':'Godiymodules',
+        'MODEL':'White OLED Display Screen',
         'SIZE':'0.9',
         'BUS':'i2c',
         'CONTROLLER':'ssd1306',
@@ -145,7 +151,11 @@ MAIN_FORMAT =  {
 ################## SOUND ######################
 
 SB0 = {
-       'BOARD': 'Adafruit Sound FX Board',
+       'NAME':'Sound Card',
+       'MAKE': 'Adafruit',
+       'MODEL': 'Sound FX Board',
+       'SIZE':'16mB',
+       'BUS':'UART',
        'WAIT':50,
        'DUPLEX':False,
        'RESET':False,

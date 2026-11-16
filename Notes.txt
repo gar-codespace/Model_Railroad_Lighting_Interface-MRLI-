@@ -15,7 +15,7 @@ Animated Effects:
 
 There were two ways to code an animated effect, either hold the await constant and have different increments for each color, or have all colors have the same increment and have a different await for each color (5 asyncio loops). In testing the first one was better, the color transitions could be controlled to eliminate noticeable stepping as the effect progressed.
 
-controller.Mech:
+controller.MRLI:
 run_lighting_effect()
 When a new effect is chosen, it elbows the current one out of the way and starts running beginning at the selected waypoint. The first try-block sets the waypoints. The second try-block increments the color changes, it tries to run states.animated_increment_waypoint().
 
@@ -32,7 +32,7 @@ Static effects have only one waypoint, therefore the end is the same as the begi
 
 Sound effects:
 
-controller.Mech:
+controller.MRLI:
 play_ambient_effects()
 Since it never stops running silence is accomplished by sending a silent clip to the player. Sound effects are combined together in groups. A sound effect group is assigned to every waypoint, animated and static. The code randomly selects a sound effect from the group and adds a pad of random length to the end of the sound effect. The sound effect length and pad are used as the asyncio wait. Sound effects are pushed to the player, messages are sent back from the player but I don't use them.
 

@@ -1,3 +1,7 @@
+'''
+Model Railroad Lighting Interface (MRLI)
+'''
+
 import entities
 
 
@@ -35,8 +39,6 @@ def get_index_double() ->tuple:
 def get_waypoint_duration(index):
     '''
     The duration of the waypoint is the number of times the 'while loop' is run.
-    When tested, the Picos clock was consistantly off from real time,
-    due to the overhead from asyncio, so the CLOCK_OFFSET adjusts for that.
     '''
 
     if entities.CURRENT_EFFECT[1] == 'STATIC':
@@ -97,7 +99,7 @@ def _get_color_delta(index:int, color:str):
     return int(color_delta)
 
 def get_hour_steps():
-    '''Display the time of day if appropriate.'''
+    '''Display the time of day.'''
 
     if entities.WORKING_BUFFER['HOUR'][entities.CUR_WP]:
         entities.STEP_H = (entities.TIME / entities.WP_DUR) / 60

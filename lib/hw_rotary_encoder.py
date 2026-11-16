@@ -1,4 +1,6 @@
 '''
+Model Railroad Lighting Interface (MRLI)
+
 Hardware library for the rotary encoder.
 Rolled up rotary_encoder_rp2.py into this file
 Move imports to entities

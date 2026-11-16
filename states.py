@@ -1,7 +1,8 @@
 '''
-These are the functions called from the callbacks in controller.Mech.
-'''
+Model Railroad Lighting Interface (MRLI)
 
+These are the functions called from the callbacks in controller.MRLI.
+'''
 
 import entities
 import model

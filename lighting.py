@@ -1,7 +1,5 @@
 '''
-Static effects are all grouped together in one dictionary called entities.SINGLES.
-Each animated effect gets its own dictionary.
-Special VFX functions are here as well.
+Model Railroad Lighting Interface (MRLI)
 '''
 
 import entities
@@ -156,7 +154,6 @@ def run_vfx():
 ########## VISUAL EFFECTS ###########
 '''
 Putting the VFX in class VFX is the easy way to get getattr(VFX, attrib)() to work.
-Additional visual effects can be added to this class.
 '''
 
 class VFX:

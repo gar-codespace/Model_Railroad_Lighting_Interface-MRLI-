@@ -1,5 +1,6 @@
 '''
 Model Railroad Lighting Interface (MRLI)
+
 Code to control of 5 banks of RGBWC strip lights & toggle a scenic lighting bus.
 Includes sound effects.
 Includes visual effects.
@@ -16,7 +17,7 @@ import controller
 
 async def main():
 
-    mrli = controller.Mech()
+    mrli = controller.MRLI()
     mrli.boot()
 
     while True:

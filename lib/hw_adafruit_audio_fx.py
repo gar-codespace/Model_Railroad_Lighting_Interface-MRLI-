@@ -1,4 +1,6 @@
 '''
+Model Railroad Lighting Interface (MRLI)
+
 Hardware library for the Adafruit Audio FX Sound Board.
 For this project the RX pin on the Pico is optional.
 '''
@@ -12,7 +14,11 @@ Look into this some more.
 '''
 board:
 SB0 = {
-       'BOARD': 'Adafruit Sound FX Board',
+       'NAME':'Sound Card',
+       'MAKE': 'Adafruit',
+       'MODEL': 'Sound FX Board',
+       'SIZE':'16mB',
+       'BUS':'UART',
        'WAIT':50,
        'DUPLEX':False,
        'RESET':False,
@@ -49,6 +55,8 @@ class SoundFX:
         self.duplex = board['DUPLEX']
         self.wait = board['WAIT']
         self.reset = reset
+
+        print(f'{board['NAME']}: {board['MAKE']}, {board['MODEL']}, {board['SIZE']}, {board['BUS']}')
     
     def _flush_uart_input(self):
         '''Read any available data from the UART bus until none is left.'''

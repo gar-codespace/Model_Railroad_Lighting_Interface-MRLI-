@@ -1,11 +1,15 @@
 '''
+Model Railroad Lighting Interface (MRLI)
+
 Hardware library for an SH1106 OLED, I2C interface
 imports moved to entities
 
 params:
 OLED0 = {
         'NAME':'Main Display',
-        'SIZE':'1.3',
+        'MAKE':'GODIYMODULES',
+        'MODEL':'White OLED Display Screen',
+        'SIZE':'1.3 inch',
         'BUS':'i2c',
         'CONTROLLER':'sh1106',
         'INTREGATION':'1 EC11, 2 push',
@@ -49,15 +53,16 @@ class Driver_I2C(entities.FRAMEBUF.FrameBuffer):
     def __init__(self, params:dict=None, bus:object=None):
         self.params = params
         self.i2c = bus
-        self.addr = self.params['ADDRESS']
-        self.external_vcc = self.params['EXTERNAL_VCC']
-        self.rotate = self.params['ROTATE']
-        self.width = self.params['WIDTH']
-        self.height = self.params['HEIGHT']
-        self.pages = self.params['HEIGHT'] // 8
-        self.buffer = bytearray(self.pages * self.params['WIDTH'])
-        super().__init__(self.buffer, self.params['WIDTH'], self.params['HEIGHT'], entities.FRAMEBUF.MONO_VLSB)
+        self.addr = params['ADDRESS']
+        self.external_vcc = params['EXTERNAL_VCC']
+        self.rotate = params['ROTATE']
+        self.width = params['WIDTH']
+        self.height = params['HEIGHT']
+        self.pages = params['HEIGHT'] // 8
+        self.buffer = bytearray(self.pages * params['WIDTH'])
+        super().__init__(self.buffer, params['WIDTH'], params['HEIGHT'], entities.FRAMEBUF.MONO_VLSB)
         self._init_display()
+        print(f'{params['NAME']}: {params['SIZE']}, {params['BUS']}, {params['CONTROLLER']}')
 
     def _init_display(self):
 
@@ -85,7 +90,6 @@ class Driver_I2C(entities.FRAMEBUF.FrameBuffer):
 
         self.fill(0)
         self.show()
-        print(f'{self.params['NAME']}: {self.params['SIZE']}, {self.params['BUS']}, {self.params['CONTROLLER']}')
 
     def _write_cmd(self, cmd):
         '''Write a single command'''
