@@ -3,7 +3,7 @@ Model Railroad Lighting Interface (MRLI)
 
 params:
 SOUND_CARD_0 = {
-            'BUS':'uart0',
+            'COM':'uart0',
             'PARAMS':'SB_0',
             'DRIVER':'SOUND_DRIVER0'
             }
@@ -34,31 +34,23 @@ class Sound:
 
     def __init__(self, params:dict):
 
-        self.bus_params = getattr(entities, params['BUS'])
-        self.display_type = getattr(entities, params['PARAMS'])
+        self.com = getattr(entities, params['COM'])
+        self.params = getattr(entities, params['PARAMS'])
         self.driver = getattr(entities, params['DRIVER'])
 
-        self.bus:object = None
-        self.board:object = None
+        attr = f'get_{self.com['TYPE']}'
+        self.bus = getattr(model, attr)(self.com)
 
         self.reset = self._set_reset_pin
+        self.sound_board = self.driver(self.params, self.bus, reset=self.reset)
 
     def _set_reset_pin(self):
 
         pin = None
-        if self.display_type['RESET']:
+        if self.params['RESET']:
             pin = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN)
 
         return pin
-
-    def get_bus(self):
-
-        attr = f'get_{self.bus_params['TYPE']}'
-        self.bus = getattr(model, attr)(self.bus_params)
-
-    def get_sound_board(self):
-
-        self.sound_board = self.driver(self.display_type, self.bus, reset=self.reset)
 
     def reset_sound_board(self):
         ...

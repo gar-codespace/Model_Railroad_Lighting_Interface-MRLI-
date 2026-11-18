@@ -160,7 +160,7 @@ SB_0 = {
        }
 
 SOUND_CARD_0 = {
-            'BUS':'UART_0',
+            'COM':'UART_0',
             'PARAMS':'SB_0',
             'DRIVER':'SOUND_DRIVER0'
             }

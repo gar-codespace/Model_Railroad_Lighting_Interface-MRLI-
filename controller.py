@@ -62,14 +62,10 @@ class MRLI:
         view.put_progress_message()
         self.main_display = view.Display(entities.MAIN_DISPLAY_0) # Big OLED
         # self.main_display = view.Display(entities.MAIN_DISPLAY_1) # Small OLED
-        self.main_display.get_bus()
         view.put_progress_message()
-        self.main_display.get_display()
 
         self.sound = sound.Sound(entities.SOUND_CARD_0)
-        self.sound.get_bus()
         view.put_progress_message()
-        self.sound.get_sound_board()
 # Start the interface
         entities.WORKING_BUFFER = entities.SINGLES
         model.get_menu_first_item()

@@ -39,18 +39,11 @@ class Display:
     def __init__(self, specs:dict):
 
         self.com = getattr(entities, specs['COM'])
-        self.driver = getattr(entities, specs['DRIVER'])
         self.params = getattr(entities, specs['PARAMS'])
-
-        self.bus:object = None
-        self.display:object = None
-
-    def get_bus(self):
+        self.driver = getattr(entities, specs['DRIVER'])
 
         attr = f'get_{self.com['TYPE']}'
         self.bus = getattr(model, attr)(self.com)
-
-    def get_display(self):
 
         self.display = self.driver(params=self.params, bus=self.bus)
         
