@@ -2,19 +2,19 @@
 Model Railroad Lighting Interface (MRLI)
 
 params:
-SOUND_CARD0 = {
+SOUND_CARD_0 = {
             'BUS':'uart0',
-            'PARAMS':'SB0',
+            'PARAMS':'SB_0',
             'DRIVER':'SOUND_DRIVER0'
             }
-UART0 = {
+UART_0 = {
           'TYPE':'uart',
           'ID':0,
           'TX':'COM2',
           'RX':COM3,
           'FREQ':9600
         }
-SB0 = {
+SB_0 = {
        'NAME':'Sound Card',
        'MAKE': 'Adafruit',
        'MODEL': 'Sound FX Board',

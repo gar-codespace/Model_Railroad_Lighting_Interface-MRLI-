@@ -77,7 +77,7 @@ PICO_PIN = {
 
 ################## SERIAL COMMUNICATION PROTOCOLS ######################
 
-I2C0 = {
+I2C_0 = {
           'TYPE':'i2c',
           'ID':0,
           'SDA':'COM0',
@@ -85,7 +85,7 @@ I2C0 = {
           'FREQ':400000
         }
 
-UART0 = {
+UART_0 = {
           'TYPE':'uart',
           'ID':0,
           'TX':'COM2',
@@ -95,7 +95,7 @@ UART0 = {
 
 ################## DISPLAY ######################
 
-OLED0 = {
+OLED_0 = {
         'NAME':'Main Display',
         'MAKE':'Godiymodules',
         'MODEL':'White OLED Display Screen',
@@ -109,7 +109,7 @@ OLED0 = {
         'EXTERNAL_VCC':False,
         }
 
-OLED1 = { 
+OLED_1 = { 
         'NAME':'Main Display',
         'MAKE':'Godiymodules',
         'MODEL':'White OLED Display Screen',
@@ -123,15 +123,15 @@ OLED1 = {
         'EXTERNAL_VCC':False,
         }
 
-MAIN_DISPLAY0 = { # Big OLED
-            'COM':'I2C0',
-            'PARAMS':'OLED0',
+MAIN_DISPLAY_0 = { # Big OLED
+            'COM':'I2C_0',
+            'PARAMS':'OLED_0',
             'DRIVER':'DISPLAY_DRIVER0'
             }
 
-MAIN_DISPLAY1 = { # Small OLED
-            'COM':'I2C0',
-            'PARAMS':'OLED1',
+MAIN_DISPLAY_1 = { # Small OLED
+            'COM':'I2C_0',
+            'PARAMS':'OLED_1',
             'DRIVER':'DISPLAY_DRIVER1'
             }
 
@@ -148,7 +148,7 @@ MAIN_FORMAT =  {
 
 ################## SOUND ######################
 
-SB0 = {
+SB_0 = {
        'NAME':'Sound Card',
        'MAKE': 'Adafruit',
        'MODEL': 'Sound FX Board',
@@ -159,15 +159,15 @@ SB0 = {
        'RESET':False,
        }
 
-SOUND_CARD0 = {
-            'BUS':'UART0',
-            'PARAMS':'SB0',
+SOUND_CARD_0 = {
+            'BUS':'UART_0',
+            'PARAMS':'SB_0',
             'DRIVER':'SOUND_DRIVER0'
             }
 
 ################## ENCODER PARAMETERS ######################
 
-ENCODER0 = {
+ENCODER_0 = {
             'DEBOUNCE_MS':50, # filter out pin jitter
             'ENCODER_STEP':1, # filter out pin jitter
             'HALF_STEP':False,# support increment every click for KY040 encoder
@@ -180,7 +180,7 @@ ENCODER0 = {
 
 ################## PUSH BUTTON PARAMETERS ######################
 
-BUTTON0 = {
+BUTTON_0 = {
             'IRQ_TRIGGER':True, # False for asyncio trigger
             'DEBOUNCE_TIME':40,
             'MULTI_TIME':350,

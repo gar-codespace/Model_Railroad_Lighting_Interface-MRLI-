@@ -9,7 +9,7 @@ b) continuous polling: 'IRQ_TRIGGER':False
 Moved imports to entities.
 
 params:
-BUTTON0 = {
+BUTTON_0 = {
             'IRQ_TRIGGER':True, # False for asyncio trigger
             'DEBOUNCE_TIME':40,
             'MULTI_TIME':350,

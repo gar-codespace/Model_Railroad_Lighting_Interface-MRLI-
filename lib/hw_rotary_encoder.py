@@ -6,7 +6,7 @@ Rolled up rotary_encoder_rp2.py into this file
 Move imports to entities
 
 params:
-ENCODER0 = {
+ENCODER_0 = {
             'DEBOUNCE_MS':50, # filter out pin jitter
             'ENCODER_STEP':1, # filter out pin jitter
             'HALF_STEP':False,# support increment every click for KY040 encoder

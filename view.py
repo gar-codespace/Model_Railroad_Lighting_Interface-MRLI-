@@ -3,18 +3,18 @@ Model Railroad Lighting Interface (MRLI)
 
 specs:
 MAIN_DISPLAY = {
-            'COM':'I2C0',
-            'PARAMS':'OLED0',
+            'COM':'I2C_0',
+            'PARAMS':'OLED_0',
             'DRIVER':'DISPLAY_DRIVER0'
             }
-I2C0 = {
+I2C_0 = {
           'TYPE':'i2c',
           'ID':0,
           'SDA':'COM0',
           'SCL':'COM1',
           'FREQ':400000
         }
-OLED0 = {
+OLED_0 = {
         'NAME':'Main Display',
         'MAKE':'GODIYMODULES',
         'MODEL':'White OLED Display Screen',

@@ -12,7 +12,7 @@ Look into this some more.
 '''
 '''
 board:
-SB0 = {
+SB_0 = {
        'NAME':'Sound Card',
        'MAKE': 'Adafruit',
        'MODEL': 'Sound FX Board',

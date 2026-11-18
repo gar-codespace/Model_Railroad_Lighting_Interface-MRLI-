@@ -5,7 +5,7 @@ Hardware library for an SH1106 OLED, I2C interface
 imports moved to entities
 
 params:
-OLED0 = {
+OLED_0 = {
         'NAME':'Main Display',
         'MAKE':'GODIYMODULES',
         'MODEL':'White OLED Display Screen',

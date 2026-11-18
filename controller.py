@@ -25,19 +25,19 @@ class MRLI:
         model.set_pwm_led_pins()
     # Front panel buttons use irq polling
         pin = entities.PIN(entities.PICO_PIN['CONF_0_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.bC = entities.Button(params=entities.BUTTON0, pin=pin, name='STANDBY')
+        self.bC = entities.Button(params=entities.BUTTON_0, pin=pin, name='STANDBY')
         pin = entities.PIN(entities.PICO_PIN['BANK_0_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b0 = entities.Button(params=entities.BUTTON0, pin=pin, name='BANK_0')
+        self.b0 = entities.Button(params=entities.BUTTON_0, pin=pin, name='BANK_0')
         pin = entities.PIN(entities.PICO_PIN['BANK_1_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b1 = entities.Button(params=entities.BUTTON0, pin=pin, name='BANK_1')
+        self.b1 = entities.Button(params=entities.BUTTON_0, pin=pin, name='BANK_1')
         pin = entities.PIN(entities.PICO_PIN['BANK_2_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b2 = entities.Button(params=entities.BUTTON0, pin=pin, name='BANK_2')
+        self.b2 = entities.Button(params=entities.BUTTON_0, pin=pin, name='BANK_2')
         pin = entities.PIN(entities.PICO_PIN['BANK_3_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b3 = entities.Button(params=entities.BUTTON0, pin=pin, name='BANK_3')
+        self.b3 = entities.Button(params=entities.BUTTON_0, pin=pin, name='BANK_3')
         pin = entities.PIN(entities.PICO_PIN['BANK_4_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b4 = entities.Button(params=entities.BUTTON0, pin=pin, name='BANK_4')
+        self.b4 = entities.Button(params=entities.BUTTON_0, pin=pin, name='BANK_4')
         pin = entities.PIN(entities.PICO_PIN['SCENIC_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.bS = entities.Button(params=entities.BUTTON0, pin=pin, name='SCENIC')
+        self.bS = entities.Button(params=entities.BUTTON_0, pin=pin, name='SCENIC')
 
         self.bC.on(event=self.bC.RELEASE, callback=self.cb_conf_release)
         self.b0.on(event=self.b0.RELEASE, callback=self.cb_bank_release)
@@ -51,7 +51,7 @@ class MRLI:
         tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.encoder = entities.RotaryEncoderRP2(params=entities.ENCODER0, pin_clk=trb, pin_dt=tra, pin_sw=psh)
+        self.encoder = entities.RotaryEncoderRP2(params=entities.ENCODER_0, pin_clk=trb, pin_dt=tra, pin_sw=psh)
         self.encoder.on(self.encoder.CW, self.cb_clock_wise)
         self.encoder.on(self.encoder.ACW, self.cb_anti_clock_wise)
         self.encoder.on(self.encoder.CLICK, self.cb_click)
@@ -60,13 +60,13 @@ class MRLI:
     def boot(self):
 # Initialize the interface
         view.put_progress_message()
-        self.main_display = view.Display(entities.MAIN_DISPLAY0) # Big OLED
-        # self.main_display = view.Display(entities.MAIN_DISPLAY1) # Small OLED
+        self.main_display = view.Display(entities.MAIN_DISPLAY_0) # Big OLED
+        # self.main_display = view.Display(entities.MAIN_DISPLAY_1) # Small OLED
         self.main_display.get_bus()
         view.put_progress_message()
         self.main_display.get_display()
 
-        self.sound = sound.Sound(entities.SOUND_CARD0)
+        self.sound = sound.Sound(entities.SOUND_CARD_0)
         self.sound.get_bus()
         view.put_progress_message()
         self.sound.get_sound_board()
