@@ -21,7 +21,6 @@ OLED0 = {
         'SIZE':'1.3 inch',
         'BUS':'i2c',
         'CONTROLLER':'sh1106',
-        'INTREGATION':'1 EC11, 2 push',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
@@ -99,7 +98,7 @@ def get_effects_list() -> list:
     menu_list: list = []
     for i in range(entities.MAIN_FORMAT['ROWS']):
         line_prefix = entities.EFFECTS_MENU_ANIMATED_SYMBOL
-        if entities.EFFECTS_MENU.get(index_subset[i])[1] == 'STATIC':
+        if entities.EFFECTS_MENU.get(index_subset[i])[1] == 'SINGLES':
             line_prefix = entities.EFFECTS_MENU_STATIC_SYMBOL
         line = f'{line_prefix} {entities.EFFECTS_MENU.get(index_subset[i])[0]}'
         menu_list.append(line)

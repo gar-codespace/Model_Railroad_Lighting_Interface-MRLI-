@@ -12,7 +12,6 @@ OLED0 = {
         'SIZE':'1.3 inch',
         'BUS':'i2c',
         'CONTROLLER':'sh1106',
-        'INTREGATION':'1 EC11, 2 push',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
@@ -21,7 +20,6 @@ OLED0 = {
         }
 '''
 __author__ = 'https://github.com/CrispStrobe/sh1106-py'
-
 
 import entities
 

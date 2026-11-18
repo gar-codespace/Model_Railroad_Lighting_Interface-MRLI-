@@ -41,7 +41,7 @@ def get_waypoint_duration(index):
     The duration of the waypoint is the number of times the 'while loop' is run.
     '''
 
-    if entities.CURRENT_EFFECT[1] == 'STATIC':
+    if entities.CURRENT_EFFECT[1] == 'SINGLES':
         entities.WP_DUR = 1
     else:
     # Convert duration to milliseconds
@@ -66,7 +66,7 @@ def get_waypoint_duration(index):
 
 def get_next_waypoint(index):
 
-    if entities.CURRENT_EFFECT[1] == 'STATIC':
+    if entities.CURRENT_EFFECT[1] == 'SINGLES':
         entities.NEXT_WP = entities.CURRENT_EFFECT[2]
 
     else:

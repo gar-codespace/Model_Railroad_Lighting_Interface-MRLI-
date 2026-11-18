@@ -91,7 +91,7 @@ def effects_click():
 
     entities.CURRENT_EFFECT = entities.EFFECTS_MENU.get(entities.EFFECTS_HILIGHTED_EFFECT)
     entities.MACHINE_STATE = States.STATIC
-    if not entities.CURRENT_EFFECT[1] == 'STATIC':
+    if not entities.CURRENT_EFFECT[1] == 'SINGLES':
         entities.MACHINE_STATE = States.ANIMATED
 
     entities.PROGRESS_MESSAGE = f'Machine State: {entities.MACHINE_STATE}'

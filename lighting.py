@@ -14,7 +14,7 @@ def fade_up_lights():
     begin_index = 0
     end_index = entities.CURRENT_EFFECT[2]
 
-    entities.WORKING_BUFFER = entities.SINGLES
+    # entities.WORKING_BUFFER = entities.SINGLES
     entities.WP_DUR = entities.STARTUP_EFFECT_DURATION / entities.DEFAULT_CYCLE
     entities.NEXT_WP = end_index
     entities.CLIP_G =  entities.WORKING_BUFFER['GROUP'][end_index]
@@ -35,7 +35,7 @@ def fade_up_lights():
 def set_up_effect():
     '''Load initial values into the Working Buffer.'''
 
-    if entities.CURRENT_EFFECT[1] == 'STATIC':
+    if entities.CURRENT_EFFECT[1] == 'SINGLES':
         entities.WORKING_BUFFER = entities.SINGLES
     else:
         entities.WORKING_BUFFER = getattr(entities, entities.CURRENT_EFFECT[1])

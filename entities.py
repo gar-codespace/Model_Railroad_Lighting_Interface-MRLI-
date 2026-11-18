@@ -102,7 +102,6 @@ OLED0 = {
         'SIZE':'1.3 inch',
         'BUS':'i2c',
         'CONTROLLER':'sh1106',
-        'INTREGATION':'1 EC11, 2 push',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
@@ -117,7 +116,6 @@ OLED1 = {
         'SIZE':'0.9',
         'BUS':'i2c',
         'CONTROLLER':'ssd1306',
-        'INTREGATION':'1 EC11, 2 push',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
@@ -212,11 +210,11 @@ STARTUP_EFFECT_DURATION = 5000 # Milliseconds
 WELCOME_SCREEN = ['M.U.T.T.', 'Metropolitan', 'Union ', 'Transfer', 'Terminal'] # 6 lines maximum, 15 char per line
 
 EFFECTS_MENU = { #     Name             Type    Index
-             0: ('Maintenance',   'STATIC',  1),
-             1: ('Daytime',       'STATIC',  2),
-             2: ('Overcast',      'STATIC',  3),
-             3: ('Twilight',      'STATIC',  5),
-             4: ('Nightime',      'STATIC',  4),
+             0: ('Maintenance',  'SINGLES',  1),
+             1: ('Daytime',      'SINGLES',  2),
+             2: ('Overcast',     'SINGLES',  3),
+             3: ('Twilight',     'SINGLES',  5),
+             4: ('Nightime',     'SINGLES',  4),
              5: ('11PM',         'ALL_DAY',  0),
              6: ('3AM',          'ALL_DAY',  2),
              7: ('7AM',          'ALL_DAY',  4),
