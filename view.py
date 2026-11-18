@@ -2,7 +2,8 @@
 Model Railroad Lighting Interface (MRLI)
 
 specs:
-MAIN_DISPLAY = {
+DISPLAY_0 = {
+            'NAME':'1.3" OLED Display',
             'COM':'I2C_0',
             'PARAMS':'OLED_0',
             }

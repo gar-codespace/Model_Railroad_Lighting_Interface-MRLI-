@@ -119,12 +119,14 @@ OLED_1 = {
 
 ################## DISPLAY DEFINITIONS ######################
 
-DISPLAY_0 = { # Big OLED
+DISPLAY_0 = {
+            'NAME':'1.3" OLED Display',
             'COM':'I2C_0',
             'PARAMS':'OLED_0',
             }
 
-DISPLAY_1 = { # Small OLED
+DISPLAY_1 = {
+            'NAME':'0.9" OLED Display',
             'COM':'I2C_0',
             'PARAMS':'OLED_1',
             }
