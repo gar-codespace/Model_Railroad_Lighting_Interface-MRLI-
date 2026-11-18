@@ -16,6 +16,7 @@ SB_0 = {
        'NAME':'Sound Card',
        'MAKE': 'Adafruit',
        'MODEL': 'Sound FX Board',
+       'DRIVER': 'hw_adafruit_audio_fx',
        'SIZE':'16mB',
        'BUS':'UART',
        'WAIT':50,

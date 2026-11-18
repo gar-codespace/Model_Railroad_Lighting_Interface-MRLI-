@@ -21,10 +21,8 @@ from hw_rotary_encoder import RotaryEncoderRP2
 from hw_push_button import Button
 
 ###### PICK A DISPLAY DRIVER ######
-DISPLAY_DRIVER0 = __import__('hw_sh1106').Driver_I2C # Big OLED
+DISPLAY_DRIVER_0 = __import__('hw_sh1106').Driver_I2C # Big OLED
 # DISPLAY_DRIVER1 = __import__('hw_ssd1306').Driver_I2C # Small OLED
-
-SOUND_DRIVER0 = __import__('hw_adafruit_audio_fx').SoundFX
 
 ################## HARDWARE ######################
 
@@ -93,12 +91,13 @@ UART_0 = {
           'FREQ':9600
         }
 
-################## DISPLAY ######################
+################## DISPLAY PARAMETERS ######################
 
 OLED_0 = {
         'NAME':'Main Display',
         'MAKE':'Godiymodules',
         'MODEL':'White OLED Display Screen',
+        'DRIVER': 'hw_sh1106',
         'SIZE':'1.3 inch',
         'BUS':'i2c',
         'CONTROLLER':'sh1106',
@@ -113,6 +112,7 @@ OLED_1 = {
         'NAME':'Main Display',
         'MAKE':'Godiymodules',
         'MODEL':'White OLED Display Screen',
+        'DRIVER': 'hw_ssd1306',
         'SIZE':'0.9',
         'BUS':'i2c',
         'CONTROLLER':'ssd1306',
@@ -123,28 +123,19 @@ OLED_1 = {
         'EXTERNAL_VCC':False,
         }
 
-MAIN_DISPLAY_0 = { # Big OLED
+################## DISPLAY DEFINITIONS ######################
+
+DISPLAY_0 = { # Big OLED
             'COM':'I2C_0',
             'PARAMS':'OLED_0',
-            'DRIVER':'DISPLAY_DRIVER0'
+            'DRIVER':'DISPLAY_DRIVER_0'
             }
 
-MAIN_DISPLAY_1 = { # Small OLED
+DISPLAY_1 = { # Small OLED
             'COM':'I2C_0',
             'PARAMS':'OLED_1',
             'DRIVER':'DISPLAY_DRIVER1'
             }
-
-DISPLAY_BRIGHT = 70
-DISPLAY_DIM = 1
-
-MAIN_DISPLAY_BRIGHT = DISPLAY_BRIGHT
-MAIN_FORMAT =  {
-                'LINE_HEIGHT': 10, # Pixels
-                'ROWS': 6,
-                'CHAR_PER_ROW':15,
-                'X_OFFSET': 4, # Pixels
-                }
 
 ################## SOUND ######################
 
@@ -152,6 +143,7 @@ SB_0 = {
        'NAME':'Sound Card',
        'MAKE': 'Adafruit',
        'MODEL': 'Sound FX Board',
+       'DRIVER': 'hw_adafruit_audio_fx',
        'SIZE':'16mB',
        'BUS':'UART',
        'WAIT':50,
@@ -162,7 +154,7 @@ SB_0 = {
 SOUND_CARD_0 = {
             'COM':'UART_0',
             'PARAMS':'SB_0',
-            'DRIVER':'SOUND_DRIVER0'
+            # 'DRIVER':'SOUND_DRIVER_0'
             }
 
 ################## ENCODER PARAMETERS ######################
@@ -191,6 +183,20 @@ BUTTON_0 = {
             }
 
 ################## SOFTWARE ######################
+
+################## DISPLAY SETTINGS ######################
+
+DISPLAY_BRIGHT = 70
+DISPLAY_DIM = 1
+MAIN_DISPLAY_BRIGHT = DISPLAY_BRIGHT
+
+MAIN_FORMAT =  {
+                'LINE_HEIGHT': 10, # Pixels
+                'ROWS': 6,
+                'CHAR_PER_ROW':15,
+                'X_OFFSET': 2, # Pixels
+                'Y_OFFSET': 2, # Pixels
+                }
 
 ################## TIME BASE ######################
 

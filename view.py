@@ -5,7 +5,7 @@ specs:
 MAIN_DISPLAY = {
             'COM':'I2C_0',
             'PARAMS':'OLED_0',
-            'DRIVER':'DISPLAY_DRIVER0'
+            'DRIVER':'DISPLAY_DRIVER_0'
             }
 I2C_0 = {
           'TYPE':'i2c',
@@ -52,7 +52,7 @@ class Display:
         self.display.fill(0)
         self.display.contrast(entities.MAIN_DISPLAY_BRIGHT)
 
-        line_y = 3 # vertically center the text in the display
+        line_y = entities.MAIN_FORMAT['Y_OFFSET'] # vertically center the text in the display
         for i in range(entities.MAIN_FORMAT['ROWS']):
             self.display.text(content[i], entities.MAIN_FORMAT['X_OFFSET'], line_y)
             line_y += entities.MAIN_FORMAT['LINE_HEIGHT']

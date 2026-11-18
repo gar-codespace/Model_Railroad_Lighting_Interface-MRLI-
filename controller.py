@@ -60,8 +60,8 @@ class MRLI:
     def boot(self):
 # Initialize the interface
         view.put_progress_message()
-        self.main_display = view.Display(entities.MAIN_DISPLAY_0) # Big OLED
-        # self.main_display = view.Display(entities.MAIN_DISPLAY_1) # Small OLED
+        self.main_display = view.Display(entities.DISPLAY_0) # Big OLED
+        # self.main_display = view.Display(entities.DISPLAY_1) # Small OLED
         view.put_progress_message()
 
         self.sound = sound.Sound(entities.SOUND_CARD_0)

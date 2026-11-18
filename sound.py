@@ -3,9 +3,8 @@ Model Railroad Lighting Interface (MRLI)
 
 params:
 SOUND_CARD_0 = {
-            'COM':'uart0',
+            'COM':'UART_0',
             'PARAMS':'SB_0',
-            'DRIVER':'SOUND_DRIVER0'
             }
 UART_0 = {
           'TYPE':'uart',
@@ -18,6 +17,7 @@ SB_0 = {
        'NAME':'Sound Card',
        'MAKE': 'Adafruit',
        'MODEL': 'Sound FX Board',
+       'DRIVER': 'hw_adafruit_audio_fx',
        'SIZE':'16mB',
        'BUS':'UART',
        'WAIT':50,
@@ -33,16 +33,18 @@ import model
 class Sound:
 
     def __init__(self, params:dict):
-
+    # Get the hardware parameters
         self.com = getattr(entities, params['COM'])
         self.params = getattr(entities, params['PARAMS'])
-        self.driver = getattr(entities, params['DRIVER'])
-
+    # Import the driver library specified in self.params[DRIVER]
+        driver = self.params['DRIVER']
+        self.driver = __import__(driver).SoundFX
+    # Make the bus type specified in self.params[BUS]
         attr = f'get_{self.com['TYPE']}'
         self.bus = getattr(model, attr)(self.com)
-
+    # For this board there is a reset pin, but not always
         self.reset = self._set_reset_pin
-        self.sound_board = self.driver(self.params, self.bus, reset=self.reset)
+        self.sound_board = self.driver(board=self.params, bus=self.bus, reset=self.reset)
 
     def _set_reset_pin(self):
 
