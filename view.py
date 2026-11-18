@@ -5,7 +5,6 @@ specs:
 MAIN_DISPLAY = {
             'COM':'I2C_0',
             'PARAMS':'OLED_0',
-            'DRIVER':'DISPLAY_DRIVER_0'
             }
 I2C_0 = {
           'TYPE':'i2c',
@@ -16,11 +15,11 @@ I2C_0 = {
         }
 OLED_0 = {
         'NAME':'Main Display',
-        'MAKE':'GODIYMODULES',
+        'MAKE':'Godiymodules',
         'MODEL':'White OLED Display Screen',
+        'DRIVER': 'hw_sh1106',
         'SIZE':'1.3 inch',
         'BUS':'i2c',
-        'CONTROLLER':'sh1106',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
@@ -37,11 +36,13 @@ import states
 class Display:
 
     def __init__(self, specs:dict):
-
+    # Get the hardware parameters
         self.com = getattr(entities, specs['COM'])
         self.params = getattr(entities, specs['PARAMS'])
-        self.driver = getattr(entities, specs['DRIVER'])
-
+    # Import the driver library specified in self.params[DRIVER]
+        driver = self.params['DRIVER']
+        self.driver = __import__(driver).Driver_I2C
+    # Make the bus type specified in self.params[BUS]
         attr = f'get_{self.com['TYPE']}'
         self.bus = getattr(model, attr)(self.com)
 

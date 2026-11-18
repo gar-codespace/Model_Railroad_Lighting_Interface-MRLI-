@@ -20,10 +20,6 @@ import uasyncio as UASYNCIO
 from hw_rotary_encoder import RotaryEncoderRP2
 from hw_push_button import Button
 
-###### PICK A DISPLAY DRIVER ######
-DISPLAY_DRIVER_0 = __import__('hw_sh1106').Driver_I2C # Big OLED
-# DISPLAY_DRIVER1 = __import__('hw_ssd1306').Driver_I2C # Small OLED
-
 ################## HARDWARE ######################
 
 ################## RASPI PICO PARAMETERS ######################
@@ -100,7 +96,6 @@ OLED_0 = {
         'DRIVER': 'hw_sh1106',
         'SIZE':'1.3 inch',
         'BUS':'i2c',
-        'CONTROLLER':'sh1106',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
@@ -115,7 +110,6 @@ OLED_1 = {
         'DRIVER': 'hw_ssd1306',
         'SIZE':'0.9',
         'BUS':'i2c',
-        'CONTROLLER':'ssd1306',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
@@ -128,13 +122,11 @@ OLED_1 = {
 DISPLAY_0 = { # Big OLED
             'COM':'I2C_0',
             'PARAMS':'OLED_0',
-            'DRIVER':'DISPLAY_DRIVER_0'
             }
 
 DISPLAY_1 = { # Small OLED
             'COM':'I2C_0',
             'PARAMS':'OLED_1',
-            'DRIVER':'DISPLAY_DRIVER1'
             }
 
 ################## SOUND ######################

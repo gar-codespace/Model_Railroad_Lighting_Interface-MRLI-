@@ -7,11 +7,11 @@ imports moved to entities
 params:
 OLED_0 = {
         'NAME':'Main Display',
-        'MAKE':'GODIYMODULES',
+        'MAKE':'Godiymodules',
         'MODEL':'White OLED Display Screen',
+        'DRIVER': 'hw_sh1106',
         'SIZE':'1.3 inch',
         'BUS':'i2c',
-        'CONTROLLER':'sh1106',
         'ADDRESS': CONST(0x3C),
         'WIDTH': 128,
         'HEIGHT': 64,
@@ -61,7 +61,7 @@ class Driver_I2C(entities.FRAMEBUF.FrameBuffer):
         self.buffer = bytearray(self.pages * params['WIDTH'])
         super().__init__(self.buffer, params['WIDTH'], params['HEIGHT'], entities.FRAMEBUF.MONO_VLSB)
         self._init_display()
-        print(f'{params['NAME']}: {params['SIZE']}, {params['BUS']}, {params['CONTROLLER']}')
+        print(f'{params['NAME']}: {params['SIZE']}, {params['BUS']}, {params['DRIVER']}')
 
     def _init_display(self):
 
