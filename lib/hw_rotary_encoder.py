@@ -5,35 +5,17 @@ Hardware library for the rotary encoder.
 Rolled up rotary_encoder_rp2.py into this file
 Move imports to entities
 
-usage example:
-controller.py
-
-    tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-    trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-    psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-    self.encoder = entities.RotaryEncoderRP2(params=entities.ENCODER0, pin_clk=trb, pin_dt=tra, pin_sw=psh)
-    self.encoder.on(self.encoder.CW, self.cb_clock_wise)
-    self.encoder.on(self.encoder.ACW, self.cb_anti_clock_wise)
-    self.encoder.on(self.encoder.CLICK, self.cb_click)
-    self.encoder.on(self.encoder.MULTI, self.cb_multi)
-
-entities.py:
-
-    from machine import Pin as PIN
-    from machine import Timer as TIMER
-    import uasyncio as UASYNCIO
-    import utime as UTIME
-
-    ENCODER0 = {
-                'DEBOUNCE_MS':50, # filter out pin jitter
-                'ENCODER_STEP':1, # filter out pin jitter
-                'HALF_STEP':False,# support increment every click for KY040 encoder
-                'ONE_STEP_MS':15, # It is a crunch, but it works for now
-                'CLICK_MS':400, # detect a single click
-                'STEP_MS':200, # detect a multiple press
-                'LONG_MS':1000, # detect a long press
-                'FAST_MS':50, # detect a fast encoder turn
-                }
+params:
+ENCODER0 = {
+            'DEBOUNCE_MS':50, # filter out pin jitter
+            'ENCODER_STEP':1, # filter out pin jitter
+            'HALF_STEP':False,# support increment every click for KY040 encoder
+            'ONE_STEP_MS':15, # It is a crunch, but it works for now
+            'CLICK_MS':400, # detect a single click
+            'STEP_MS':200, # detect a multiple press
+            'LONG_MS':1000, # detect a long press
+            'FAST_MS':50, # detect a fast encoder turn
+            }
 '''
 
 __fork__ = 'https://github.com/TTitanUA/micropython_rotary_encoder/tree/main'
@@ -140,12 +122,6 @@ class RotaryEncoder:
         self._sw_last_event_ms = timestamp
 
     def _sw_tick_process_event(self):
-
-        __sw_l_s = self._sw_last_state
-        __sw_h_w_e = self._sw_held_with_encoder
-        __sw_s_ms = self.sw_step_ms
-        __sw_l_e_ms = self._sw_last_event_ms
-        __sw_p_e_ms = self._sw_prev_event_ms
 
     # button event already processed
         if self._sw_last_state == self._sw_prev_state:

@@ -20,6 +20,7 @@ OLED0 = {
         }
 '''
 __author__ = 'https://github.com/CrispStrobe/sh1106-py'
+__refactor__ = 'Greg Ritacco'
 
 import entities
 

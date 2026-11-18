@@ -4,7 +4,6 @@ Model Railroad Lighting Interface (MRLI)
 Hardware library for the Adafruit Audio FX Sound Board.
 For this project the RX pin on the Pico is optional.
 '''
-
 '''
 TODO If the UART pin is connected to ground to set the board to uart mode,
 reset does not work. Only power cycling

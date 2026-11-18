@@ -2,8 +2,7 @@
 Model Railroad Lighting Interface (MRLI)
 
 Code to control of 5 banks of RGBWC strip lights & toggle a scenic lighting bus.
-Includes sound effects.
-Includes visual effects.
+Includes ambient sound effects and visual effects.
 Written to run on a Raspi Pico 2. WiFi not utilized.
 Copyright 2026 Greg Ritacco
 '''
