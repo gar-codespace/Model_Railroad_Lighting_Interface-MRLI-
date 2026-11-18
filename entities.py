@@ -232,8 +232,10 @@ EFFECTS_MENU_FIRST_ITEM:int # calculated on startup by model.get_menu_first_item
 EFFECTS_MENU_STATIC_SYMBOL = '|'
 EFFECTS_MENU_ANIMATED_SYMBOL = '>'
 CURRENT_EFFECT = EFFECTS_MENU[EFFECTS_HILIGHTED_EFFECT] # Must be a STATIC effect. Also used as the default effect.
+EFFECTS_RECT = [0, 'y', 128, 12, 1]
 
 STATIC_SELECT_ROW = 3 # In STATIC state, the encoder moves the rectangle up and down
+STATIC_RECT = [0, 'y', 128, 12, 1]
 
 EDIT_ROUNDING_VALUE = 4
 EDIT_SCREEN_ITEMS = [
@@ -244,6 +246,7 @@ EDIT_SCREEN_ITEMS = [
                  'WARM',
                  'COOL'
                 ]
+EDIT_RECT = [54, 'y', 74, 12, 1]
 EDIT_PWM_TICKS = 10 # How many ticks per indent of the rotary encoder when changing color values.
                     # Smaller is finer control.
 

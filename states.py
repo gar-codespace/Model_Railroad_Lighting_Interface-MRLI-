@@ -102,10 +102,12 @@ def effects_click():
 
 def effects_get_hilight():
 
+    rect = entities.EFFECTS_RECT
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.EFFECTS_HIGHLIGHT_ROW * hilight_height
+    rect[1] = hilight_row
 
-    return hilight_row
+    return rect
 
 def effects_toggle():
     '''Puts machine in standby.'''
@@ -220,10 +222,12 @@ def static_click2():
 
 def static_get_hilight():
 
+    rect = entities.STATIC_RECT
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
+    rect[1] = hilight_row
 
-    return hilight_row
+    return rect
 
 def static_toggle():
     '''Puts machine in standby.'''
@@ -300,10 +304,12 @@ def edit_click():
 
 def edit_get_hilight():
 
+    rect = entities.EDIT_RECT
     hilight_height = entities.MAIN_FORMAT['LINE_HEIGHT']
     hilight_row = entities.STATIC_SELECT_ROW * hilight_height
+    rect[1] = hilight_row
 
-    return hilight_row
+    return rect
 
 def edit_toggle():
     '''Puts machine in standby.'''

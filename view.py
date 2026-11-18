@@ -67,8 +67,8 @@ class Display:
 
         try: # add the hilight rectangle
             attrib = f'{entities.MACHINE_STATE}_get_hilight'
-            h = getattr(states, attrib)()
-            self.display.rect(0, h, 128, 12, 1)
+            rect = getattr(states, attrib)()
+            self.display.rect(rect[0], rect[1], rect[2], rect[3], rect[4])
         except:
             pass
 
