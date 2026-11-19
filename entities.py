@@ -5,7 +5,7 @@ All the settings for the program are here.
 All the imports are in one place.
 '''
 
-__version__ = '20261001.1.1'
+__version__ = '20261001.1.3'
 
 # packaged libraries are kept to a minimum
 from machine import Pin as PIN, I2C, PWM, UART
@@ -131,7 +131,7 @@ DISPLAY_1 = {
             'PARAMS':'OLED_1',
             }
 
-################## SOUND ######################
+################## SOUND PARAMETERS ######################
 
 SB_0 = {
        'NAME':'Sound Card',
@@ -145,10 +145,12 @@ SB_0 = {
        'RESET':False,
        }
 
+################## SOUND DEFINITIONS ######################
+
 SOUND_CARD_0 = {
+            'NAME': 'Adafruit Sound Effects Card',
             'COM':'UART_0',
             'PARAMS':'SB_0',
-            # 'DRIVER':'SOUND_DRIVER_0'
             }
 
 ################## ENCODER PARAMETERS ######################
@@ -253,7 +255,6 @@ EDIT_PWM_TICKS = 10 # How many ticks per indent of the rotary encoder when chang
 WORKING_BUFFER = {} # Either the static dictionary or one of the animated dictionaries is copied into this.
 
 ################## EFFECT BUFFER ######################
-'''See Notes.txt'''
 
 CLOCK_CYCLE = 500 # Milliseconds. WP_DUR * CLOCK_CYCLE = waypoint time
 CLOCK_OFFSET = 1 # Adjusts for asyncio overhead. Smaller = faster.
@@ -287,9 +288,9 @@ STEP_H:float = 0.0 # Increment the hour
 
 
 ################## LIGHTING EFFECT DEFINITIONS ######################
-'''See Notes.txt'''
 
 SINGLES = {
+'E_NAME': 'Static Effect Collection',
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Dark', 'Maint',   'Day',   'Ovcst', 'Night', 'Twili'), # Waypoint name
@@ -313,7 +314,8 @@ SINGLES = {
 ################## ANIMATED LIGHTING EFFECTS ######################
 
 # Each column of an animated effect is being called a waypoint
-ALL_DAY = { # simulates an entire day
+ALL_DAY = {
+'E_NAME': 'A Complete Day',
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : .859, # Smaller is faster
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
@@ -334,7 +336,8 @@ ALL_DAY = { # simulates an entire day
 'SCENIC': [       1,       1,       1,       1,       1,       0,       0,       0,       0,       1,       1,       1],
 }
 
-STORMY = { # Simulates a stormy night
+STORMY = {
+'E_NAME': 'A Stormy Night',
 'CLOCK_CYCLE'  : 8,
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Stormy','Roll Out',  'Clear', 'Roll In'), # Waypoint name
@@ -355,7 +358,8 @@ STORMY = { # Simulates a stormy night
 'SCENIC': [       1,          1,        1,         1],
 }
 
-CLOUDY = { # Simulates a cloudy day
+CLOUDY = {
+'E_NAME': 'A Cloudy Day',
 'CLOCK_CYCLE'  : 25,
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name
@@ -387,8 +391,9 @@ PAUSE_CLIP = None
 UNPAUSE_CLIP = None
 CLIP = WELCOME_CLIP
 
-# The library of sound effects:
-AMBIENCE = {  # File    Name,       Duration, Description   VFX   Vol flag
+AMBIENCE = { 
+            'NAME': 'The library of sound effects',
+              #  File      Name,    Duration, Description   VFX   Vol flag
                 'clip00':('SILENCE0OGG', 10, 'Silence',     None),
                 'clip01':('GULLS001OGG', 16, 'Seagulls 1',  None),
                 'clip02':('GULLS002OGG',  9, 'Seagulls 2',  None),
@@ -431,7 +436,8 @@ AMBIENCE = {  # File    Name,       Duration, Description   VFX   Vol flag
                 'clip39':('GULLS006OGG',  8, 'Seagulls 6',  None), # Same as Seagulls 1
                } # The name is conformed to the soundboard specification
 
-# SFX Groups
+################## AMBIENT SOUND GROUPS ######################
+
 A1 = [ # silence
       'clip00'
       ]
