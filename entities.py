@@ -5,7 +5,7 @@ All the settings for the program are here.
 All the imports are in one place.
 '''
 
-__version__ = '20261001.1.3'
+__version__ = '20261001.1.4'
 
 # packaged libraries are kept to a minimum
 from machine import Pin as PIN, I2C, PWM, UART
@@ -19,6 +19,19 @@ import uasyncio as UASYNCIO
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoderRP2
 from hw_push_button import Button
+
+################## LOGGING ######################
+
+PROGRESS_MESSAGE:str = f'Model Railroad Lighting Automation\nVersion: {__version__}'
+def log():
+      '''Write machine progress somewhere, screen, log, Etc.'''
+
+      global PROGRESS_MESSAGE
+
+      if PROGRESS_MESSAGE:
+            print(PROGRESS_MESSAGE)
+
+      PROGRESS_MESSAGE = None
 
 ################## HARDWARE ######################
 
@@ -206,7 +219,6 @@ WAYPOINT_RUN_TIME = 0 # Time the waypoint actually ran (seconds)
 
 MACHINE_STATE:str  = None
 STANDBY_TOGGLE:str = None
-PROGRESS_MESSAGE:str = f'Model Railroad Lighting Automation\nVersion: {__version__}'
 
 STARTUP_EFFECT_DURATION = 5000 # Milliseconds
 WELCOME_SCREEN = ['M.U.T.T.', 'Metropolitan', 'Union ', 'Transfer', 'Terminal'] # 6 lines maximum, 15 char per line

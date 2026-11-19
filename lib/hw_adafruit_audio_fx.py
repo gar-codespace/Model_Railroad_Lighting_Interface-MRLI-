@@ -56,7 +56,7 @@ class SoundFX:
         self.wait = board['WAIT']
         self.reset = reset
 
-        print(f'{board['NAME']}: {board['MAKE']}, {board['MODEL']}, {board['SIZE']}, {board['BUS']}')
+        entities.PROGRESS_MESSAGE = f'{board['NAME']}: {board['MAKE']}, {board['MODEL']}, {board['SIZE']}, {board['BUS']}'
     
     def _flush_uart_input(self):
         '''Read any available data from the UART bus until none is left.'''
