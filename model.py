@@ -134,7 +134,7 @@ def get_i2c(params):
     freq = params['FREQ']
 
     i2c = entities.I2C(id=id, sda=sda, scl=scl, freq=freq)
-    entities.PROGRESS_MESSAGE = [f'I2C config: {i2c}']
+    entities.LOGGING_MESSAGE = [f'I2C config: {i2c}']
 
     return i2c
 
@@ -156,6 +156,6 @@ def get_uart(params):
     baud = params['FREQ']
 
     uart = entities.UART(id, baudrate=baud, tx=tx, rx=rx)
-    entities.PROGRESS_MESSAGE = [f'UART config: {uart}']
+    entities.LOGGING_MESSAGE = [f'UART config: {uart}']
 
     return uart

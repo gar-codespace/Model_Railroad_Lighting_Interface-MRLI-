@@ -25,18 +25,18 @@ from hw_push_button import Button
 def log():
       '''Write machine progress somewhere, screen, log, Etc.'''
 
-      global PROGRESS_MESSAGE
+      global LOGGING_MESSAGE
 
-      if not PROGRESS_MESSAGE:
+      if not LOGGING_MESSAGE:
             return
 
-      for message in PROGRESS_MESSAGE:
+      for message in LOGGING_MESSAGE:
             print(message)
 
-      PROGRESS_MESSAGE = []
+      LOGGING_MESSAGE = []
 
 ################## HARDWARE ######################
-PROGRESS_MESSAGE:list = [f'Model Railroad Lighting Automation', f'Version: {__version__}']
+LOGGING_MESSAGE:list = [f'Model Railroad Lighting Automation', f'Version: {__version__}']
 
 ################## RASPI PICO PARAMETERS ######################
 

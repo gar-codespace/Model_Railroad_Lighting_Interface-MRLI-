@@ -61,7 +61,7 @@ class Driver(entities.FRAMEBUF.FrameBuffer):
         self.buffer = bytearray(self.pages * params['WIDTH'])
         super().__init__(self.buffer, params['WIDTH'], params['HEIGHT'], entities.FRAMEBUF.MONO_VLSB)
         self._init_display()
-        entities.PROGRESS_MESSAGE = [f'{params['NAME']}: {params['SIZE']}, {params['BUS']}, {params['DRIVER']}']
+        entities.LOGGING_MESSAGE = [f'{params['NAME']}: {params['SIZE']}, {params['BUS']}, {params['DRIVER']}']
 
     def _init_display(self):
 

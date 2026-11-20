@@ -32,7 +32,7 @@ def _into_standby():
 
     entities.STANDBY_TOGGLE = entities.MACHINE_STATE
     entities.MACHINE_STATE = States.STANDBY
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
 
 
 ########### MACHINE_STATE: WELCOME
@@ -40,19 +40,19 @@ def _into_standby():
 
 def welcome_turn_left():
     entities.MACHINE_STATE = States.EFFECTS
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
 
     return view.get_effects_list()
 
 def welcome_turn_right():
     entities.MACHINE_STATE = States.EFFECTS
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
 
     return view.get_effects_list()
 
 def welcome_click():
     entities.MACHINE_STATE = States.EFFECTS
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
 
     return view.get_effects_list()
 
@@ -94,7 +94,7 @@ def effects_click():
     if not entities.CURRENT_EFFECT[1] == 'SINGLES':
         entities.MACHINE_STATE = States.ANIMATED
 
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
     lighting.set_up_effect()
     entities.WAYPOINT_START = entities.UTIME.time() # Waypoint duration timer.
 
@@ -125,13 +125,13 @@ def animated_click():
 
     entities.MAIN_DISPLAY_BRIGHT = entities.DISPLAY_DIM
     entities.MACHINE_STATE = States.PAUSED
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
 
 def animated_click2():
     '''Return to the effects menu.'''
     
     entities.MACHINE_STATE = States.EFFECTS
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
 
     return view.get_effects_list()
 
@@ -208,7 +208,7 @@ def static_click():
     '''Select a color to edit.'''
 
     entities.MACHINE_STATE = States.EDIT
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
 
     return view.get_status_list()
 
@@ -216,7 +216,7 @@ def static_click2():
     '''Return to the effects menu.'''
     
     entities.MACHINE_STATE = States.EFFECTS
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
 
     return view.get_effects_list()
 
@@ -298,7 +298,7 @@ def edit_click():
     '''Return to the static menu.'''
 
     entities.MACHINE_STATE = States.STATIC
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
 
     return view.get_status_list()
 
@@ -347,7 +347,7 @@ def paused_click():
 
     entities.MACHINE_STATE = States.ANIMATED
     entities.MAIN_DISPLAY_BRIGHT = entities.DISPLAY_BRIGHT
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
 
     return view.get_status_list()
 
@@ -361,7 +361,7 @@ def standby_toggle():
     entities.CLIP = entities.STANDBY_OUT_CLIP
     lighting.set_bank_relays()
     entities.MACHINE_STATE = entities.STANDBY_TOGGLE
-    entities.PROGRESS_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
+    entities.LOGGING_MESSAGE = [f'Machine State: {entities.MACHINE_STATE}']
 
     if entities.MACHINE_STATE == 'effects':
         return view.get_effects_list()

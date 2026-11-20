@@ -56,7 +56,7 @@ class Driver:
         self.wait = params['WAIT']
         self.reset = reset
 
-        entities.PROGRESS_MESSAGE = [f'{params['NAME']}: {params['MAKE']}, {params['MODEL']}, {params['SIZE']}, {params['BUS']}']
+        entities.LOGGING_MESSAGE = [f'{params['NAME']}: {params['MAKE']}, {params['MODEL']}, {params['SIZE']}, {params['BUS']}']
     
     def _flush_uart_input(self):
         '''Read any available data from the UART bus until none is left.'''

@@ -198,7 +198,7 @@ class Button:
               callback(name, message)
 
           except Exception as e:
-              entities.PROGRESS_MESSAGE = [f'Name:{__name__}._callbacks(), Listener:{callback}, Error:{e}']
+              entities.LOGGING_MESSAGE = [f'Name:{__name__}._callbacks(), Listener:{callback}, Error:{e}']
               entities.log()
 
   def poll(self):
