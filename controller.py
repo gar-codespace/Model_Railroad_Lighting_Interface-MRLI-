@@ -23,21 +23,14 @@ class MRLI:
         model.set_relay_pins()
     # Sets pico pins to pwm
         model.set_pwm_led_pins()
-    # Front panel buttons use irq polling
-        pin = entities.PIN(entities.PICO_PIN['CONF_0_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.bC = entities.Button(params=entities.BUTTON_0, pin=pin, name='STANDBY')
-        pin = entities.PIN(entities.PICO_PIN['BANK_0_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b0 = entities.Button(params=entities.BUTTON_0, pin=pin, name='BANK_0')
-        pin = entities.PIN(entities.PICO_PIN['BANK_1_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b1 = entities.Button(params=entities.BUTTON_0, pin=pin, name='BANK_1')
-        pin = entities.PIN(entities.PICO_PIN['BANK_2_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b2 = entities.Button(params=entities.BUTTON_0, pin=pin, name='BANK_2')
-        pin = entities.PIN(entities.PICO_PIN['BANK_3_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b3 = entities.Button(params=entities.BUTTON_0, pin=pin, name='BANK_3')
-        pin = entities.PIN(entities.PICO_PIN['BANK_4_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.b4 = entities.Button(params=entities.BUTTON_0, pin=pin, name='BANK_4')
-        pin = entities.PIN(entities.PICO_PIN['SCENIC_B'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.bS = entities.Button(params=entities.BUTTON_0, pin=pin, name='SCENIC')
+    # Front panel buttons
+        self.bC = model.get_button(pico_pin=entities.PICO_PIN['CONF_0_B'], params=entities.BUTTON_0, name='STANDBY')
+        self.b0 = model.get_button(pico_pin=entities.PICO_PIN['BANK_0_B'], params=entities.BUTTON_0, name='BANK_0')
+        self.b1 = model.get_button(pico_pin=entities.PICO_PIN['BANK_1_B'], params=entities.BUTTON_0, name='BANK_1')
+        self.b2 = model.get_button(pico_pin=entities.PICO_PIN['BANK_2_B'], params=entities.BUTTON_0, name='BANK_2')
+        self.b3 = model.get_button(pico_pin=entities.PICO_PIN['BANK_3_B'], params=entities.BUTTON_0, name='BANK_3')
+        self.b4 = model.get_button(pico_pin=entities.PICO_PIN['BANK_4_B'], params=entities.BUTTON_0, name='BANK_4')
+        self.bS = model.get_button(pico_pin=entities.PICO_PIN['SCENIC_B'], params=entities.BUTTON_0, name='SCENIC')
 
         self.bC.on(event=self.bC.RELEASE, callback=self.cb_conf_release)
         self.b0.on(event=self.b0.RELEASE, callback=self.cb_bank_release)
@@ -46,8 +39,7 @@ class MRLI:
         self.b3.on(event=self.b3.RELEASE, callback=self.cb_bank_release)
         self.b4.on(event=self.b4.RELEASE, callback=self.cb_bank_release)
         self.bS.on(event=self.bS.RELEASE, callback=self.cb_bank_release)
-        
-    # Encoder uses irq polling
+    # Encoder
         tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
         psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)

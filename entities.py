@@ -18,9 +18,9 @@ import uasyncio as UASYNCIO
 
 # hardware libraries (3rd party)
 from hw_rotary_encoder import RotaryEncoderRP2
-from hw_push_button import Button
 
 ################## LOGGING ######################
+LOGGING_MESSAGE:list = [f'Model Railroad Lighting Automation', f'Version: {__version__}']
 
 def log():
       '''Write machine progress somewhere, screen, log, Etc.'''
@@ -36,7 +36,6 @@ def log():
       LOGGING_MESSAGE = []
 
 ################## HARDWARE ######################
-LOGGING_MESSAGE:list = [f'Model Railroad Lighting Automation', f'Version: {__version__}']
 
 ################## RASPI PICO PARAMETERS ######################
 
@@ -172,6 +171,9 @@ SOUND_CARD_0 = {
 ################## ENCODER PARAMETERS ######################
 
 ENCODER_0 = {
+            'DRIVER': 'hw_rotary_encoder',
+            'MODE': 'IN',
+            'PULL': 'PULL_UP',
             'DEBOUNCE_MS':50, # filter out pin jitter
             'ENCODER_STEP':1, # filter out pin jitter
             'HALF_STEP':False,# support increment every click for KY040 encoder
@@ -185,6 +187,9 @@ ENCODER_0 = {
 ################## PUSH BUTTON PARAMETERS ######################
 
 BUTTON_0 = {
+            'DRIVER': 'hw_push_button',
+            'MODE': 'IN',
+            'PULL': 'PULL_UP',
             'IRQ_TRIGGER':True, # False for asyncio trigger
             'DEBOUNCE_TIME':40,
             'MULTI_TIME':350,
