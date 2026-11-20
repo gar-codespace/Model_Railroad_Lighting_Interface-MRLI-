@@ -275,7 +275,7 @@ class RotaryEncoder:
                 listener(self._sw_clicks)
 
             except Exception as e:
-                entities.LOG_MESSAGE = f'Name:{__name__}.__call_listeners(), Listener:{listener}, Error:{e}'
+                entities.LOG_MESSAGE = [f'Name:{__name__}.__call_listeners(), Listener:{listener}, Error:{e}']
                 entities.log()
 
 

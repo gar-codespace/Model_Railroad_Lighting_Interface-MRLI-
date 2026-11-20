@@ -46,7 +46,7 @@ SH1106_SET_PAGE_ADDR = entities.CONST(0xB0)
 SH1106_SET_LOW_COL = entities.CONST(0x00)
 SH1106_SET_HIGH_COL = entities.CONST(0x10)
 
-class Driver_I2C(entities.FRAMEBUF.FrameBuffer):
+class Driver(entities.FRAMEBUF.FrameBuffer):
     '''SH1106 OLED driver for I2C interface.'''
     
     def __init__(self, params:dict=None, bus:object=None):
@@ -61,7 +61,7 @@ class Driver_I2C(entities.FRAMEBUF.FrameBuffer):
         self.buffer = bytearray(self.pages * params['WIDTH'])
         super().__init__(self.buffer, params['WIDTH'], params['HEIGHT'], entities.FRAMEBUF.MONO_VLSB)
         self._init_display()
-        entities.PROGRESS_MESSAGE = f'{params['NAME']}: {params['SIZE']}, {params['BUS']}, {params['DRIVER']}'
+        entities.PROGRESS_MESSAGE = [f'{params['NAME']}: {params['SIZE']}, {params['BUS']}, {params['DRIVER']}']
 
     def _init_display(self):
 

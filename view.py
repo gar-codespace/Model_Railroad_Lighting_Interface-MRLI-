@@ -1,5 +1,6 @@
 '''
 Model Railroad Lighting Interface (MRLI)
+The display driver library is imported here.
 
 specs:
 DISPLAY_0 = {
@@ -38,16 +39,15 @@ class Display:
 
     def __init__(self, specs:dict):
     # Get the hardware parameters
-        self.com = getattr(entities, specs['COM'])
-        self.params = getattr(entities, specs['PARAMS'])
-    # Import the driver library specified in self.params[DRIVER]
-        driver = self.params['DRIVER']
-        self.driver = __import__(driver).Driver_I2C
-    # Make the bus type specified in self.params[BUS]
-        attr = f'get_{self.com['TYPE']}'
-        self.bus = getattr(model, attr)(self.com)
+        com = getattr(entities, specs['COM'])
+        params = getattr(entities, specs['PARAMS'])
+    # Import the driver library specified in params[DRIVER]
+        driver = __import__(params['DRIVER']).Driver
+    # Make the bus type specified in params[BUS]
+        attr = f'get_{com['TYPE']}'
+        bus = getattr(model, attr)(com)
 
-        self.display = self.driver(params=self.params, bus=self.bus)
+        self.display = driver(params=params, bus=bus)
         
     def update_display(self, content:list = None):
 

@@ -1,5 +1,6 @@
 '''
 Model Railroad Lighting Interface (MRLI)
+The sound driver library is imported here.
 
 params:
 SOUND_CARD_0 = {
@@ -32,47 +33,29 @@ import model
 
 class Sound:
 
-    def __init__(self, params:dict):
+    def __init__(self, specs:dict):
     # Get the hardware parameters
-        self.com = getattr(entities, params['COM'])
-        self.params = getattr(entities, params['PARAMS'])
-    # Import the driver library specified in self.params[DRIVER]
-        driver = self.params['DRIVER']
-        self.driver = __import__(driver).SoundFX
-    # Make the bus type specified in self.params[BUS]
-        attr = f'get_{self.com['TYPE']}'
-        self.bus = getattr(model, attr)(self.com)
+        com = getattr(entities, specs['COM'])
+        params = getattr(entities, specs['PARAMS'])
+    # Import the driver library specified in params[DRIVER]
+        driver = __import__(params['DRIVER']).Driver
+    # Make the bus type specified in params[BUS]
+        attr = f'get_{com['TYPE']}'
+        bus = getattr(model, attr)(com)
     # For this board there is a reset pin, but not always
-        self.reset = self._set_reset_pin
-        self.sound_board = self.driver(board=self.params, bus=self.bus, reset=self.reset)
+        reset = None
+        if params['RESET']:
+            reset = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN)
 
-    def _set_reset_pin(self):
-
-        pin = None
-        if self.params['RESET']:
-            pin = entities.PIN(entities.PICO_PIN['RESET'], entities.PIN.IN)
-
-        return pin
+        self.sound_board = driver(params=params, bus=bus, reset=reset)
 
     def reset_sound_board(self):
         ...
 
-    def _get_clip(self):
-
-        clip = entities.AMBIENCE[entities.CLIP][0]
-
-        return clip
-
-    def _get_duration(self):
-
-        duration = entities.AMBIENCE[entities.CLIP][1] * 1000 # ms
-
-        return duration
-
     def play_sound(self) ->int:
 
-        clip = self._get_clip()
-        duration = self._get_duration()
+        clip = entities.AMBIENCE[entities.CLIP][0]
+        duration = entities.AMBIENCE[entities.CLIP][1] * 1000 # ms
 
         self.sound_board.play(clip)
 
@@ -80,8 +63,8 @@ class Sound:
 
     def play_sound_now(self) ->int:
 
-        clip = self._get_clip()
-        duration = self._get_duration()
+        clip = entities.AMBIENCE[entities.CLIP][0]
+        duration = entities.AMBIENCE[entities.CLIP][1] * 1000 # ms
 
         self.sound_board.play_now(clip)
 
@@ -101,7 +84,7 @@ def get_ambient_clip() -> tuple:
     select = entities.RANDINT(0, len(ambient_group) - 1)
 
     entities.CLIP = ambient_group[select]
-    entities.PROGRESS_MESSAGE = f'Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}'
+    entities.PROGRESS_MESSAGE = [f'Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}']
 
 def get_pad() -> int:
     '''A random ammount of time between sound clips (ms).'''

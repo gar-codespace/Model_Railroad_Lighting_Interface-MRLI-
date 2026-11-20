@@ -11,7 +11,7 @@ will reset the board when it is in UART mode.
 Look into this some more.
 '''
 '''
-board:
+params:
 SB_0 = {
        'NAME':'Sound Card',
        'MAKE': 'Adafruit',
@@ -46,17 +46,17 @@ class CMD:
     LIST = 'L'
 
 
-class SoundFX:
+class Driver:
 
-    def __init__(self, board:dict, bus:object, reset:entities.PIN=None):
+    def __init__(self, params:dict, bus:object, reset:entities.PIN=None):
 
         self.uart = bus
-        self.board = board
-        self.duplex = board['DUPLEX']
-        self.wait = board['WAIT']
+        self.params = params
+        self.duplex = params['DUPLEX']
+        self.wait = params['WAIT']
         self.reset = reset
 
-        entities.PROGRESS_MESSAGE = f'{board['NAME']}: {board['MAKE']}, {board['MODEL']}, {board['SIZE']}, {board['BUS']}'
+        entities.PROGRESS_MESSAGE = [f'{params['NAME']}: {params['MAKE']}, {params['MODEL']}, {params['SIZE']}, {params['BUS']}']
     
     def _flush_uart_input(self):
         '''Read any available data from the UART bus until none is left.'''

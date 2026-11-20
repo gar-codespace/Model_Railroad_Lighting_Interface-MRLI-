@@ -2,7 +2,7 @@
 Model Railroad Lighting Interface (MRLI)
 
 All the settings for the program are here.
-All the imports are in one place.
+All the packaged imports are in one place.
 '''
 
 __version__ = '20261001.1.4'
@@ -22,18 +22,21 @@ from hw_push_button import Button
 
 ################## LOGGING ######################
 
-PROGRESS_MESSAGE:str = f'Model Railroad Lighting Automation\nVersion: {__version__}'
 def log():
       '''Write machine progress somewhere, screen, log, Etc.'''
 
       global PROGRESS_MESSAGE
 
-      if PROGRESS_MESSAGE:
-            print(PROGRESS_MESSAGE)
+      if not PROGRESS_MESSAGE:
+            return
 
-      PROGRESS_MESSAGE = None
+      for message in PROGRESS_MESSAGE:
+            print(message)
+
+      PROGRESS_MESSAGE = []
 
 ################## HARDWARE ######################
+PROGRESS_MESSAGE:list = [f'Model Railroad Lighting Automation', f'Version: {__version__}']
 
 ################## RASPI PICO PARAMETERS ######################
 
