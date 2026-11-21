@@ -5,7 +5,7 @@ All the settings for the program are here.
 All the packaged imports are in one place.
 '''
 
-__version__ = '20261001.1.4'
+__version__ = '20261001.1.5'
 
 # packaged libraries are kept to a minimum
 from machine import Pin as PIN, I2C, PWM, UART
@@ -16,10 +16,9 @@ import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
 
-# hardware libraries (3rd party)
-from hw_rotary_encoder import RotaryEncoder
 
 ################## LOGGING ######################
+
 LOGGING_MESSAGE:list = [f'Model Railroad Lighting Automation', f'Version: {__version__}']
 
 def log():

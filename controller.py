@@ -40,11 +40,11 @@ class MRLI:
         self.b4.on(event=self.b4.RELEASE, callback=self.cb_bank_release)
         self.bS.on(event=self.bS.RELEASE, callback=self.cb_bank_release)
     # Rotary Encoder
-        self.encoder = model.get_encoder(params=entities.ENCODER_0)
-        self.encoder.on(event=self.encoder.CW, callback=self.cb_clock_wise)
-        self.encoder.on(event=self.encoder.ACW, callback=self.cb_anti_clock_wise)
-        self.encoder.on(event=self.encoder.CLICK, callback=self.cb_click)
-        self.encoder.on(event=self.encoder.MULTI, callback=self.cb_multi)
+        self.en = model.get_encoder(params=entities.ENCODER_0)
+        self.en.on(event=self.en.CW, callback=self.cb_clock_wise)
+        self.en.on(event=self.en.ACW, callback=self.cb_anti_clock_wise)
+        self.en.on(event=self.en.CLICK, callback=self.cb_click)
+        self.en.on(event=self.en.MULTI, callback=self.cb_multi)
 
     def boot(self):
 # Initialize the interface
@@ -119,7 +119,7 @@ class MRLI:
 
         while(True):
 
-            self.encoder.poll()
+            self.en.poll()
             self.bC.poll()
             self.b0.poll()
             self.b1.poll()

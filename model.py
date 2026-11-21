@@ -1,5 +1,7 @@
 '''
 Model Railroad Lighting Interface (MRLI)
+The push button driver library is imported here.
+The rotary encoder driver library is imported here.
 '''
 
 import entities
@@ -46,7 +48,6 @@ def get_encoder(params:dict) ->object:
 
     return driver(params=params, pin_clk=trb, pin_dt=tra, pin_sw=psh)
 
-
 def pwm_percent(pwm) ->float:
     '''Convert a pwm value to decimal percentage.'''
 
@@ -61,9 +62,7 @@ def get_index_double() ->tuple:
     return index_double
 
 def get_waypoint_duration(index):
-    '''
-    The duration of the waypoint is the number of times the 'while loop' is run.
-    '''
+    '''The duration of the waypoint is the number of times the 'while loop' is run.'''
 
     if entities.CURRENT_EFFECT[1] == 'SINGLES':
         entities.WP_DUR = 1
