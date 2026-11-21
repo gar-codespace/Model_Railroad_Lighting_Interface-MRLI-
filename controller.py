@@ -33,20 +33,20 @@ class MRLI:
         self.b4 = model.get_button(pico_pin=entities.PICO_PIN['BANK_4_B'], params=entities.BUTTON_0, name='BANK_4')
         self.bS = model.get_button(pico_pin=entities.PICO_PIN['SCENIC_B'], params=entities.BUTTON_0, name='SCENIC')
 
-        self.bC.on(event=self.bC.RELEASE, callback=self.cb_conf_release)
-        self.b0.on(event=self.b0.RELEASE, callback=self.cb_bank_release)
-        self.b1.on(event=self.b1.RELEASE, callback=self.cb_bank_release)
-        self.b2.on(event=self.b2.RELEASE, callback=self.cb_bank_release)
-        self.b3.on(event=self.b3.RELEASE, callback=self.cb_bank_release)
-        self.b4.on(event=self.b4.RELEASE, callback=self.cb_bank_release)
-        self.bS.on(event=self.bS.RELEASE, callback=self.cb_bank_release)
+        self.bC.on(event=self.bC.RELEASE, callback=self._cb_conf_release)
+        self.b0.on(event=self.b0.RELEASE, callback=self._cb_bank_release)
+        self.b1.on(event=self.b1.RELEASE, callback=self._cb_bank_release)
+        self.b2.on(event=self.b2.RELEASE, callback=self._cb_bank_release)
+        self.b3.on(event=self.b3.RELEASE, callback=self._cb_bank_release)
+        self.b4.on(event=self.b4.RELEASE, callback=self._cb_bank_release)
+        self.bS.on(event=self.bS.RELEASE, callback=self._cb_bank_release)
     # Rotary Encoder
         self.en = model.get_encoder(pico_tra=entities.PICO_PIN['TRA'], pico_trb=entities.PICO_PIN['TRB'], pico_psh=entities.PICO_PIN['PSH'], params=entities.ENCODER_0)
 
-        self.en.on(event=self.en.CW, callback=self.cb_clock_wise)
-        self.en.on(event=self.en.ACW, callback=self.cb_anti_clock_wise)
-        self.en.on(event=self.en.CLICK, callback=self.cb_click)
-        self.en.on(event=self.en.MULTI, callback=self.cb_multi)
+        self.en.on(event=self.en.CW, callback=self._cb_clock_wise)
+        self.en.on(event=self.en.ACW, callback=self._cb_anti_clock_wise)
+        self.en.on(event=self.en.CLICK, callback=self._cb_click)
+        self.en.on(event=self.en.MULTI, callback=self._cb_multi)
 
     def boot(self):
 # Initialize the interface
@@ -131,7 +131,7 @@ class MRLI:
 
 ################# callbacks ##################
 
-    def cb_clock_wise(self, clicks):
+    def _cb_clock_wise(self, clicks):
 
         try:
             attrib = f'{entities.MACHINE_STATE}_turn_right'
@@ -140,7 +140,7 @@ class MRLI:
         except:
             pass        
 
-    def cb_anti_clock_wise(self, clicks):
+    def _cb_anti_clock_wise(self, clicks):
         
         try:
             attrib = f'{entities.MACHINE_STATE}_turn_left'
@@ -149,7 +149,7 @@ class MRLI:
         except:
             pass
 
-    def cb_click(self, clicks):
+    def _cb_click(self, clicks):
         '''Encoder single click.'''
 
         try:
@@ -159,7 +159,7 @@ class MRLI:
         except:
             pass
 
-    def cb_multi(self, clicks):
+    def _cb_multi(self, clicks):
         '''Encoder multi clicks.'''
  
         try:
@@ -169,7 +169,7 @@ class MRLI:
         except:
             pass
 
-    def cb_conf_release(self, name, message):
+    def _cb_conf_release(self, name, message):
         '''The 'confirm' button on the display module toggles standby.'''
 
         try:
@@ -181,10 +181,10 @@ class MRLI:
 
         self.sound.play_sound_now() # Plays the standby clips
 
-    def cb_back_release(self, name, message):
+    def _cb_back_release(self, name, message):
         '''The 'back' button on the display module.'''
 
-    def cb_bank_release(self, name, message):
+    def _cb_bank_release(self, name, message):
         '''The scenic and 5 LED bank buttons.'''
 
         index = entities.CURRENT_EFFECT[2]
