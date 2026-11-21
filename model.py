@@ -34,6 +34,19 @@ def get_button(pico_pin:str, params:dict, name:str) ->object:
 
     return driver(params=params, pin=pin, name=name)
 
+def get_encoder(params:dict) ->object:
+
+    mode = getattr(entities.PIN, params['MODE'])
+    pull = getattr(entities.PIN, params['PULL'])
+    tra = entities.PIN(entities.PICO_PIN[params['TRA']], mode=mode, pull=pull)
+    trb = entities.PIN(entities.PICO_PIN[params['TRB']], mode=mode, pull=pull)
+    psh = entities.PIN(entities.PICO_PIN[params['PSH']], mode=mode, pull=pull)
+
+    driver = __import__(params['DRIVER']).RotaryEncoder
+
+    return driver(params=params, pin_clk=trb, pin_dt=tra, pin_sw=psh)
+
+
 def pwm_percent(pwm) ->float:
     '''Convert a pwm value to decimal percentage.'''
 

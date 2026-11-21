@@ -39,15 +39,12 @@ class MRLI:
         self.b3.on(event=self.b3.RELEASE, callback=self.cb_bank_release)
         self.b4.on(event=self.b4.RELEASE, callback=self.cb_bank_release)
         self.bS.on(event=self.bS.RELEASE, callback=self.cb_bank_release)
-    # Encoder
-        tra = entities.PIN(entities.PICO_PIN['TRA'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        trb = entities.PIN(entities.PICO_PIN['TRB'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        psh = entities.PIN(entities.PICO_PIN['PSH'], mode=entities.PIN.IN, pull=entities.PIN.PULL_UP)
-        self.encoder = entities.RotaryEncoderRP2(params=entities.ENCODER_0, pin_clk=trb, pin_dt=tra, pin_sw=psh)
-        self.encoder.on(self.encoder.CW, self.cb_clock_wise)
-        self.encoder.on(self.encoder.ACW, self.cb_anti_clock_wise)
-        self.encoder.on(self.encoder.CLICK, self.cb_click)
-        self.encoder.on(self.encoder.MULTI, self.cb_multi)
+    # Rotary Encoder
+        self.encoder = model.get_encoder(params=entities.ENCODER_0)
+        self.encoder.on(event=self.encoder.CW, callback=self.cb_clock_wise)
+        self.encoder.on(event=self.encoder.ACW, callback=self.cb_anti_clock_wise)
+        self.encoder.on(event=self.encoder.CLICK, callback=self.cb_click)
+        self.encoder.on(event=self.encoder.MULTI, callback=self.cb_multi)
 
     def boot(self):
 # Initialize the interface

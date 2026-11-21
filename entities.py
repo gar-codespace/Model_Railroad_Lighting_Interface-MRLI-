@@ -17,7 +17,7 @@ import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
 
 # hardware libraries (3rd party)
-from hw_rotary_encoder import RotaryEncoderRP2
+from hw_rotary_encoder import RotaryEncoder
 
 ################## LOGGING ######################
 LOGGING_MESSAGE:list = [f'Model Railroad Lighting Automation', f'Version: {__version__}']
@@ -174,6 +174,9 @@ ENCODER_0 = {
             'DRIVER': 'hw_rotary_encoder',
             'MODE': 'IN',
             'PULL': 'PULL_UP',
+            'TRA': 'TRA',
+            'TRB': 'TRB',
+            'PSH': 'PSH',
             'DEBOUNCE_MS':50, # filter out pin jitter
             'ENCODER_STEP':1, # filter out pin jitter
             'HALF_STEP':False,# support increment every click for KY040 encoder

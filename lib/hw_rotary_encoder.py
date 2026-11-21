@@ -279,7 +279,7 @@ class RotaryEncoder:
                 entities.log()
 
 
-class RotaryEncoderRP2(RotaryEncoder):
+class RotaryEncoder(RotaryEncoder):
     timer:entities.TIMER = None
     alive:bool = True
 
