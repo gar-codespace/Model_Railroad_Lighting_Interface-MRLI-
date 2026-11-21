@@ -25,7 +25,7 @@ def set_pwm_led_pins():
     entities.PWM(entities.PIN(entities.PICO_PIN['WARM']), freq=entities.PWM_FREQ)
     entities.PWM(entities.PIN(entities.PICO_PIN['COOL']), freq=entities.PWM_FREQ)
 
-def get_button(pico_pin:str, params:dict, name:str) ->object:
+def get_button(pico_pin:int, params:dict, name:str) ->object:
 
     mode = getattr(entities.PIN, params['MODE'])
     pull = getattr(entities.PIN, params['PULL'])
@@ -36,13 +36,13 @@ def get_button(pico_pin:str, params:dict, name:str) ->object:
 
     return driver(params=params, pin=pin, name=name)
 
-def get_encoder(params:dict) ->object:
+def get_encoder(pico_tra:int, pico_trb:int, pico_psh:int=None, params:dict={}) ->object:
 
     mode = getattr(entities.PIN, params['MODE'])
     pull = getattr(entities.PIN, params['PULL'])
-    tra = entities.PIN(entities.PICO_PIN[params['TRA']], mode=mode, pull=pull)
-    trb = entities.PIN(entities.PICO_PIN[params['TRB']], mode=mode, pull=pull)
-    psh = entities.PIN(entities.PICO_PIN[params['PSH']], mode=mode, pull=pull)
+    tra = entities.PIN(pico_tra, mode=mode, pull=pull)
+    trb = entities.PIN(pico_trb, mode=mode, pull=pull)
+    psh = entities.PIN(pico_psh, mode=mode, pull=pull)
 
     driver = __import__(params['DRIVER']).RotaryEncoder
 

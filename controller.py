@@ -40,7 +40,7 @@ class MRLI:
         self.b4.on(event=self.b4.RELEASE, callback=self.cb_bank_release)
         self.bS.on(event=self.bS.RELEASE, callback=self.cb_bank_release)
     # Rotary Encoder
-        self.en = model.get_encoder(params=entities.ENCODER_0)
+        self.en = model.get_encoder(pico_tra=entities.PICO_PIN['TRA'], pico_trb=entities.PICO_PIN['TRB'], pico_psh=entities.PICO_PIN['PSH'], params=entities.ENCODER_0)
         self.en.on(event=self.en.CW, callback=self.cb_clock_wise)
         self.en.on(event=self.en.ACW, callback=self.cb_anti_clock_wise)
         self.en.on(event=self.en.CLICK, callback=self.cb_click)

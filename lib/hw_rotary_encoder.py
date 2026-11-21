@@ -7,6 +7,9 @@ Move imports to entities
 
 params:
 ENCODER_0 = {
+            'DRIVER': 'hw_rotary_encoder',
+            'MODE': 'IN',
+            'PULL': 'PULL_UP',
             'DEBOUNCE_MS':50, # filter out pin jitter
             'ENCODER_STEP':1, # filter out pin jitter
             'HALF_STEP':False,# support increment every click for KY040 encoder
@@ -24,7 +27,7 @@ __refactor__ = 'Greg Ritacco'
 import entities
 
 
-class RotaryEncoder:
+class RE:
     '''Base class'''
 
 # Events
@@ -279,7 +282,7 @@ class RotaryEncoder:
                 entities.log()
 
 
-class RotaryEncoder(RotaryEncoder):
+class RotaryEncoder(RE):
     timer:entities.TIMER = None
     alive:bool = True
 

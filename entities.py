@@ -173,9 +173,6 @@ ENCODER_0 = {
             'DRIVER': 'hw_rotary_encoder',
             'MODE': 'IN',
             'PULL': 'PULL_UP',
-            'TRA': 'TRA',
-            'TRB': 'TRB',
-            'PSH': 'PSH',
             'DEBOUNCE_MS':50, # filter out pin jitter
             'ENCODER_STEP':1, # filter out pin jitter
             'HALF_STEP':False,# support increment every click for KY040 encoder
