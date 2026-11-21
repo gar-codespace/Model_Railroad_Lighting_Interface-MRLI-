@@ -3,11 +3,10 @@ Model Railroad Lighting Interface (MRLI)
 '''
 
 import entities
+import peripherals
 import states
 import model
-import view
 import lighting
-import sound
 
 
 class MRLI:
@@ -50,14 +49,14 @@ class MRLI:
 
     def boot(self):
 # Initialize the interface
-        self.main_display = view.Display(entities.DISPLAY_0) # Big OLED
-        # self.main_display = view.Display(entities.DISPLAY_1) # Small OLED
-        self.sound = sound.Sound(entities.SOUND_CARD_0)
+        self.main_display = peripherals.Display(entities.DISPLAY_0) # Big OLED
+        # self.main_display = peripherals.Display(entities.DISPLAY_1) # Small OLED
+        self.sound = peripherals.Sound(entities.SOUND_CARD_0)
         model.logger()
 # Start the interface
         entities.WORKING_BUFFER = entities.SINGLES
         model.get_menu_first_item()
-        self.main_display.update_display(view.get_welcome_list())
+        self.main_display.update_display(model.get_welcome_list())
         self.sound.play_sound() # Plays entities.CLIP, default is 'Welcome'
         lighting.fade_up_lights()
 
@@ -98,7 +97,7 @@ class MRLI:
             try: # Play a sound clip
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound(), used as a boolean
-                sound.get_ambient_clip()
+                model.get_ambient_clip()
                 duration = self.sound.play_sound()
             except:
                 pass
@@ -111,7 +110,7 @@ class MRLI:
                 pass
 
             model.logger()
-            wait = duration + sound.get_pad()
+            wait = duration + model.get_pad()
             await entities.UASYNCIO.sleep_ms(wait)            
 
     def poll_the_controls(self):

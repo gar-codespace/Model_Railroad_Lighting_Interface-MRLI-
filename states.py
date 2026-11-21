@@ -6,7 +6,6 @@ These are the functions called from the callbacks in controller.MRLI.
 
 import entities
 import model
-import view
 import lighting
 
 
@@ -42,19 +41,19 @@ def welcome_turn_left():
     entities.MACHINE_STATE = States.EFFECTS
     entities.LOGGING_MESSAGE.append(f'Machine State: {entities.MACHINE_STATE}')
 
-    return view.get_effects_list()
+    return model.get_effects_list()
 
 def welcome_turn_right():
     entities.MACHINE_STATE = States.EFFECTS
     entities.LOGGING_MESSAGE.append(f'Machine State: {entities.MACHINE_STATE}')
 
-    return view.get_effects_list()
+    return model.get_effects_list()
 
 def welcome_click():
     entities.MACHINE_STATE = States.EFFECTS
     entities.LOGGING_MESSAGE.append(f'Machine State: {entities.MACHINE_STATE}')
 
-    return view.get_effects_list()
+    return model.get_effects_list()
 
 def welcome_toggle():
     '''Puts machine in standby.'''
@@ -62,7 +61,7 @@ def welcome_toggle():
     entities.MACHINE_STATE = States.EFFECTS
     _into_standby()
 
-    return view.get_empty_list()
+    return model.get_empty_list()
 
 
 ########### MACHINE_STATE: EFFECTS
@@ -75,7 +74,7 @@ def effects_turn_left():
     if entities.EFFECTS_MENU_FIRST_ITEM < 0:
         entities.EFFECTS_MENU_FIRST_ITEM = len(entities.EFFECTS_MENU) - 1
 
-    return view.get_effects_list()
+    return model.get_effects_list()
 
 def effects_turn_right():
     '''Scrolls the effects menu.'''
@@ -84,7 +83,7 @@ def effects_turn_right():
     if entities.EFFECTS_MENU_FIRST_ITEM > len(entities.EFFECTS_MENU) - 1:
         entities.EFFECTS_MENU_FIRST_ITEM = 0
 
-    return view.get_effects_list()
+    return model.get_effects_list()
 
 def effects_click():
     '''Select an effect.'''
@@ -98,7 +97,7 @@ def effects_click():
     lighting.set_up_effect()
     entities.WAYPOINT_START = entities.UTIME.time() # Waypoint duration timer.
 
-    return view.get_status_list()
+    return model.get_status_list()
 
 def effects_get_hilight():
 
@@ -114,7 +113,7 @@ def effects_toggle():
 
     _into_standby()
 
-    return view.get_empty_list()
+    return model.get_empty_list()
 
 
 ########### MACHINE_STATE: ANIMATED
@@ -133,7 +132,7 @@ def animated_click2():
     entities.MACHINE_STATE = States.EFFECTS
     entities.LOGGING_MESSAGE.append(f'Machine State: {entities.MACHINE_STATE}')
 
-    return view.get_effects_list()
+    return model.get_effects_list()
 
 def animated_increment_waypoint():
 
@@ -155,7 +154,7 @@ def animated_toggle():
 
     _into_standby()
 
-    return view.get_empty_list()
+    return model.get_empty_list()
 
 def animated_play_sound():
     '''Sound FX clips play in this state.'''
@@ -194,7 +193,7 @@ def static_turn_left():
     row = entities.STATIC_SELECT_ROW + 1
     entities.STATIC_SELECT_ROW = min(row, 5)
 
-    return view.get_status_list()
+    return model.get_status_list()
 
 def static_turn_right():
     '''Scroll a color to edit.'''
@@ -202,7 +201,7 @@ def static_turn_right():
     row = entities.STATIC_SELECT_ROW - 1
     entities.STATIC_SELECT_ROW = max(1, row)
 
-    return view.get_status_list()
+    return model.get_status_list()
 
 def static_click():
     '''Select a color to edit.'''
@@ -210,7 +209,7 @@ def static_click():
     entities.MACHINE_STATE = States.EDIT
     entities.LOGGING_MESSAGE.append(f'Machine State: {entities.MACHINE_STATE}')
 
-    return view.get_status_list()
+    return model.get_status_list()
 
 def static_click2():
     '''Return to the effects menu.'''
@@ -218,7 +217,7 @@ def static_click2():
     entities.MACHINE_STATE = States.EFFECTS
     entities.LOGGING_MESSAGE.append(f'Machine State: {entities.MACHINE_STATE}')
 
-    return view.get_effects_list()
+    return model.get_effects_list()
 
 def static_get_hilight():
 
@@ -234,7 +233,7 @@ def static_toggle():
 
     _into_standby()
 
-    return view.get_empty_list()
+    return model.get_empty_list()
 
 def static_bank(name, index):
     '''Toggles the named LED bank on or off.'''
@@ -275,7 +274,7 @@ def edit_turn_left():
     entities.WORKING_BUFFER[color][index] = pwm_color_value # writes the new value into the STATIC_BUFFER
     lighting.set_pwm_values()
 
-    return view.get_status_list()
+    return model.get_status_list()
 
 def edit_turn_right():
     '''Increase the selected colors brightness.'''
@@ -292,7 +291,7 @@ def edit_turn_right():
     entities.WORKING_BUFFER[color][index] = pwm_color_value # writes the new value into the STATIC_BUFFER
     lighting.set_pwm_values()
 
-    return view.get_status_list()
+    return model.get_status_list()
 
 def edit_click():
     '''Return to the static menu.'''
@@ -300,7 +299,7 @@ def edit_click():
     entities.MACHINE_STATE = States.STATIC
     entities.LOGGING_MESSAGE.append(f'Machine State: {entities.MACHINE_STATE}')
 
-    return view.get_status_list()
+    return model.get_status_list()
 
 def edit_get_hilight():
 
@@ -316,7 +315,7 @@ def edit_toggle():
 
     _into_standby()
 
-    return view.get_empty_list()
+    return model.get_empty_list()
 
 def edit_bank(name, index):
     '''Toggles the named LED bank on or off.'''
@@ -349,7 +348,7 @@ def paused_click():
     entities.MAIN_DISPLAY_BRIGHT = entities.DISPLAY_BRIGHT
     entities.LOGGING_MESSAGE.append(f'Machine State: {entities.MACHINE_STATE}')
 
-    return view.get_status_list()
+    return model.get_status_list()
 
 
 ########### MACHINE_STATE: STANDBY
@@ -364,7 +363,7 @@ def standby_toggle():
     entities.LOGGING_MESSAGE.append(f'Machine State: {entities.MACHINE_STATE}')
 
     if entities.MACHINE_STATE == 'effects':
-        return view.get_effects_list()
+        return model.get_effects_list()
 
     else:
-         return view.get_status_list()
+         return model.get_status_list()

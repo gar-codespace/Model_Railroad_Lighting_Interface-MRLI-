@@ -5,6 +5,7 @@ The rotary encoder driver library is imported here.
 '''
 
 import entities
+import states
 
 
 def logger():
@@ -17,6 +18,8 @@ def logger():
             print(message)
 
       entities.LOGGING_MESSAGE = []
+
+################## MACHINE ######################
 
 def set_relay_pins():
     '''The STEMMA relay from Adafruit.'''
@@ -59,18 +62,112 @@ def get_encoder(pico_tra:int, pico_trb:int, pico_psh:int=None, params:dict={}) -
 
     return driver(params=params, pin_clk=trb, pin_dt=tra, pin_sw=psh)
 
+################## DISPLAY LISTS ######################
+
+def get_menu_first_item():
+    '''Abstracted to adjust for effects menu layout changes.'''
+
+    index_double = _get_index_double()
+
+    position = len(entities.EFFECTS_MENU) + entities.EFFECTS_HILIGHTED_EFFECT
+    entities.EFFECTS_MENU_FIRST_ITEM = index_double[position - entities.EFFECTS_HIGHLIGHT_ROW]
+
+def get_welcome_list() -> list:
+
+    welcome_list: list = []
+    char_per_row = entities.MAIN_FORMAT['CHAR_PER_ROW']
+    line_format = f'^{char_per_row}s'
+
+    for i in range(entities.MAIN_FORMAT['ROWS']):
+        try:
+            welcome_list.append(f'{entities.WELCOME_SCREEN[i]:{line_format}}')
+        except:
+            welcome_list.append('')
+
+    return welcome_list
+
+def get_effects_list() -> list:
+    '''Returns a list of effects menu items.'''
+
+    index_double = _get_index_double()
+    index_subset = index_double[entities.EFFECTS_MENU_FIRST_ITEM:] # it's only important to chop the beginning
+    entities.EFFECTS_HILIGHTED_EFFECT = index_subset[entities.EFFECTS_HIGHLIGHT_ROW]
+
+    menu_list: list = []
+    for i in range(entities.MAIN_FORMAT['ROWS']):
+        line_prefix = entities.EFFECTS_MENU_ANIMATED_SYMBOL
+        if entities.EFFECTS_MENU.get(index_subset[i])[1] == 'SINGLES':
+            line_prefix = entities.EFFECTS_MENU_STATIC_SYMBOL
+        line = f'{line_prefix} {entities.EFFECTS_MENU.get(index_subset[i])[0]}'
+        menu_list.append(line)
+
+    return menu_list
+
+def get_status_list() -> list:
+    '''The status screen is displayed when the machine state is ANIMATED, STATIC, or EDIT.'''
+
+    status_screen: list = []
+
+    # The first line can change, depending on the machine state
+    attrib = f'{entities.MACHINE_STATE}_first_line'
+    first_line = getattr(states, attrib)() # IE animated_first_line()
+
+    status_screen.append(first_line)
+    
+    value = pwm_percent(entities.RED)
+    status_screen.append(f'  Red: {value:.4%}')
+
+    value = pwm_percent(entities.GREEN)
+    status_screen.append(f'Green: {value:.4%}')
+
+    value = pwm_percent(entities.BLUE)
+    status_screen.append(f' Blue: {value:.4%}')
+
+    value = pwm_percent(entities.WARM)
+    status_screen.append(f' Warm: {value:.4%}')
+
+    value = pwm_percent(entities.COOL)
+    status_screen.append(f' Cool: {value:.4%}')
+
+    return status_screen
+
+def get_empty_list() -> list:
+
+    return ['' for _ in range(entities.MAIN_FORMAT['ROWS'])]
+
 def pwm_percent(pwm) ->float:
     '''Convert a pwm value to decimal percentage.'''
 
     return pwm / entities.PWM_STEPS
 
-def get_index_double() ->tuple:
+def _get_index_double() ->tuple:
     '''IE (0, 1, 2, 3, 4, 0, 1, 2, 3 , 4)'''
     
     index_double = tuple(range(len(entities.EFFECTS_MENU)))
     index_double = index_double + index_double
 
     return index_double
+
+################## SOUND CLIPS ######################
+
+def get_ambient_clip() -> tuple:
+    '''Randomly pick a sound clip from the ambient sounds group.'''
+    
+    ambient_group = getattr(entities, entities.CLIP_G)
+    select = entities.RANDINT(0, len(ambient_group) - 1)
+
+    entities.CLIP = ambient_group[select]
+    entities.LOGGING_MESSAGE.append(f'Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}')
+
+def get_pad() -> int:
+    '''A random ammount of time between sound clips (ms).'''
+
+    pad = entities.RANDINT(entities.PAD_MIN, entities.PAD_MAX)
+
+    return pad
+
+
+################## LIGHTING EFFECTS ######################
 
 def get_waypoint_duration(index):
     '''The duration of the waypoint is the number of times the 'while loop' is run.'''
@@ -151,13 +248,7 @@ def increment_waypoint():
         entities.HOUR += entities.STEP_H
         entities.WP_DUR -= 1
 
-def get_menu_first_item():
-    '''Abstracted to adjust for effects menu layout changes.'''
-
-    index_double = get_index_double()
-
-    position = len(entities.EFFECTS_MENU) + entities.EFFECTS_HILIGHTED_EFFECT
-    entities.EFFECTS_MENU_FIRST_ITEM = index_double[position - entities.EFFECTS_HIGHLIGHT_ROW]
+################## SERIAL PROTOCOLS ######################
 
 def get_i2c(params):
     '''I2C is used for the display.'''
