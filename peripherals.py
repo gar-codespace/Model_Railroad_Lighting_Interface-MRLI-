@@ -1,6 +1,7 @@
 '''
 Model Railroad Lighting Interface (MRLI)
 The display driver library is imported here.
+The sound driver library is imported here.
 '''
 
 import entities

@@ -58,7 +58,7 @@ def get_encoder(pico_tra:int, pico_trb:int, pico_psh:int=None, params:dict={}) -
     trb = entities.PIN(pico_trb, mode=mode, pull=pull)
     psh = entities.PIN(pico_psh, mode=mode, pull=pull)
 
-    driver = __import__(params['DRIVER']).RotaryEncoder
+    driver = __import__(params['DRIVER']).Encoder
 
     return driver(params=params, pin_clk=trb, pin_dt=tra, pin_sw=psh)
 

@@ -27,7 +27,7 @@ __refactor__ = 'Greg Ritacco'
 import entities
 
 
-class RE:
+class RotaryEncoder:
     '''Base class'''
 
 # Events
@@ -281,7 +281,7 @@ class RE:
                 entities.LOGGING_MESSAGE.append(f'Name:{__name__}.__call_listeners(), Listener:{listener}, Error:{e}')
 
 
-class RotaryEncoder(RE):
+class Encoder(RotaryEncoder):
     timer:entities.TIMER = None
     alive:bool = True
 
