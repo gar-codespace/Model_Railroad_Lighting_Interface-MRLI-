@@ -59,7 +59,9 @@ def _lighting_effect_boiler_plate(index):
     _get_hour(index)
 
     if not current_waypoint_name == entities.WP_NAME:
-        entities.LOGGING_MESSAGE = [f'Waypoint Run Time: {entities.WAYPOINT_RUN_TIME} seconds', f'New Waypoint: {entities.WP_NAME}', f'Sound Group: {entities.CLIP_G}']
+        entities.LOGGING_MESSAGE.append(f'Waypoint Run Time: {entities.WAYPOINT_RUN_TIME} seconds')
+        entities.LOGGING_MESSAGE.append(f'New Waypoint: {entities.WP_NAME}')
+        entities.LOGGING_MESSAGE.append(f'Sound Group: {entities.CLIP_G}')
 
     _set_color_values(index)
     _set_up_banks(index)
@@ -145,7 +147,7 @@ def run_vfx():
     try:
         attrib = f'run_{vfx}'
         getattr(VFX, attrib)() # IE run_bolt()
-        entities.LOGGING_MESSAGE = [f'Visual Effect: {vfx}']
+        entities.LOGGING_MESSAGE.append(f'Visual Effect: {vfx}')
     except:
         pass
 

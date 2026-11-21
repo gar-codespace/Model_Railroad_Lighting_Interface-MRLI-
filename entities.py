@@ -5,6 +5,7 @@ All the settings for the program are here.
 All the packaged imports are in one place.
 '''
 
+__project__ = 'Model Railroad Lighting Automation'
 __version__ = '20261001.1.5'
 
 # packaged libraries are kept to a minimum
@@ -19,20 +20,22 @@ import uasyncio as UASYNCIO
 
 ################## LOGGING ######################
 
-LOGGING_MESSAGE:list = [f'Model Railroad Lighting Automation', f'Version: {__version__}']
+LOGGING_MESSAGE:list = []
+LOGGING_MESSAGE.append(f'Project: {__project__}')
+LOGGING_MESSAGE.append(f'Version: {__version__}')
 
-def log():
-      '''Write machine progress somewhere, screen, log, Etc.'''
+# def log():
+#       '''Write machine progress somewhere, screen, log, Etc.'''
 
-      global LOGGING_MESSAGE
+#       global LOGGING_MESSAGE
 
-      if not LOGGING_MESSAGE:
-            return
+#       if not LOGGING_MESSAGE:
+#             return
 
-      for message in LOGGING_MESSAGE:
-            print(message)
+#       for message in LOGGING_MESSAGE:
+#             print(message)
 
-      LOGGING_MESSAGE = []
+#       LOGGING_MESSAGE = []
 
 ################## HARDWARE ######################
 

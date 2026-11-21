@@ -48,12 +48,10 @@ class MRLI:
 
     def boot(self):
 # Initialize the interface
-        entities.log()
         self.main_display = view.Display(entities.DISPLAY_0) # Big OLED
         # self.main_display = view.Display(entities.DISPLAY_1) # Small OLED
-        entities.log()
         self.sound = sound.Sound(entities.SOUND_CARD_0)
-        entities.log()
+        model.logger()
 # Start the interface
         entities.WORKING_BUFFER = entities.SINGLES
         model.get_menu_first_item()
@@ -82,7 +80,7 @@ class MRLI:
             except:
                 pass
 
-            entities.log()
+            model.logger()
             await entities.UASYNCIO.sleep_ms(entities.CLOCK_CYCLE)
 
     def play_ambient_effects(self):
@@ -100,7 +98,7 @@ class MRLI:
                 getattr(states, attrib)() # IE states.animated_play_sound(), used as a boolean
                 sound.get_ambient_clip()
                 duration = self.sound.play_sound()
-                entities.log()
+                model.logger()
             except:
                 pass
 
@@ -108,7 +106,7 @@ class MRLI:
                 attrib = f'{entities.MACHINE_STATE}_run_vfx'
                 getattr(states, attrib)() # IE states.animated_run_vfx(), used as a boolean
                 lighting.run_vfx()
-                entities.log()
+                model.logger()
             except:
                 pass
 

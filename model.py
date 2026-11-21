@@ -7,6 +7,17 @@ The rotary encoder driver library is imported here.
 import entities
 
 
+def logger():
+      '''Write machine progress somewhere, screen, log, Etc.'''
+
+      if not entities.LOGGING_MESSAGE:
+            return
+
+      for message in entities.LOGGING_MESSAGE:
+            print(message)
+
+      entities.LOGGING_MESSAGE = []
+
 def set_relay_pins():
     '''The STEMMA relay from Adafruit.'''
 
@@ -157,7 +168,7 @@ def get_i2c(params):
     freq = params['FREQ']
 
     i2c = entities.I2C(id=id, sda=sda, scl=scl, freq=freq)
-    entities.LOGGING_MESSAGE = [f'I2C config: {i2c}']
+    entities.LOGGING_MESSAGE.append(f'{i2c}')
 
     return i2c
 
@@ -179,6 +190,6 @@ def get_uart(params):
     baud = params['FREQ']
 
     uart = entities.UART(id, baudrate=baud, tx=tx, rx=rx)
-    entities.LOGGING_MESSAGE = [f'UART config: {uart}']
+    entities.LOGGING_MESSAGE.append(f'{uart}')
 
     return uart

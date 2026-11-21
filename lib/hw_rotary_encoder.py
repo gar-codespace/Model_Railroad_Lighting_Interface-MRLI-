@@ -278,8 +278,7 @@ class RE:
                 listener(self._sw_clicks)
 
             except Exception as e:
-                entities.LOGGING_MESSAGE = [f'Name:{__name__}.__call_listeners(), Listener:{listener}, Error:{e}']
-                entities.log()
+                entities.LOGGING_MESSAGE.append(f'Name:{__name__}.__call_listeners(), Listener:{listener}, Error:{e}')
 
 
 class RotaryEncoder(RE):
