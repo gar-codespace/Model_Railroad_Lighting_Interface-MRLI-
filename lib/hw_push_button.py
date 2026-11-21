@@ -10,6 +10,9 @@ Moved imports to entities.
 
 params:
 BUTTON_0 = {
+            'DRIVER': 'hw_push_button',
+            'MODE': 'IN',
+            'PULL': 'PULL_UP',
             'IRQ_TRIGGER':True, # False for asyncio trigger
             'DEBOUNCE_TIME':40,
             'MULTI_TIME':350,

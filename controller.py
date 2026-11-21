@@ -12,8 +12,9 @@ import sound
 
 class MRLI:
     '''
-    MRLI initializes with the welcome screen displayed
-    and a 'welcome' sound clip is played.
+    The MRLI display initializes with the welcome screen.
+    The lights fade up from dark.
+    A 'welcome' sound clip is played.
     '''
 
     def __init__(self):
@@ -41,6 +42,7 @@ class MRLI:
         self.bS.on(event=self.bS.RELEASE, callback=self.cb_bank_release)
     # Rotary Encoder
         self.en = model.get_encoder(pico_tra=entities.PICO_PIN['TRA'], pico_trb=entities.PICO_PIN['TRB'], pico_psh=entities.PICO_PIN['PSH'], params=entities.ENCODER_0)
+
         self.en.on(event=self.en.CW, callback=self.cb_clock_wise)
         self.en.on(event=self.en.ACW, callback=self.cb_anti_clock_wise)
         self.en.on(event=self.en.CLICK, callback=self.cb_click)
@@ -98,7 +100,6 @@ class MRLI:
                 getattr(states, attrib)() # IE states.animated_play_sound(), used as a boolean
                 sound.get_ambient_clip()
                 duration = self.sound.play_sound()
-                model.logger()
             except:
                 pass
 
@@ -106,10 +107,10 @@ class MRLI:
                 attrib = f'{entities.MACHINE_STATE}_run_vfx'
                 getattr(states, attrib)() # IE states.animated_run_vfx(), used as a boolean
                 lighting.run_vfx()
-                model.logger()
             except:
                 pass
 
+            model.logger()
             wait = duration + sound.get_pad()
             await entities.UASYNCIO.sleep_ms(wait)            
 
@@ -149,6 +150,7 @@ class MRLI:
             pass
 
     def cb_click(self, clicks):
+        '''Encoder single click.'''
 
         try:
             attrib = f'{entities.MACHINE_STATE}_click'
@@ -158,6 +160,7 @@ class MRLI:
             pass
 
     def cb_multi(self, clicks):
+        '''Encoder multi clicks.'''
  
         try:
             attrib = f'{entities.MACHINE_STATE}_click2'
@@ -167,7 +170,7 @@ class MRLI:
             pass
 
     def cb_conf_release(self, name, message):
-        '''The 'confirm' button on the display module, toggles standby.'''
+        '''The 'confirm' button on the display module toggles standby.'''
 
         try:
             attrib = f'{entities.MACHINE_STATE}_toggle' # IE states.standby_toggle()

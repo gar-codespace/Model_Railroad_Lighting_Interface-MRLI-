@@ -7,6 +7,7 @@ All the packaged imports are in one place.
 
 __project__ = 'Model Railroad Lighting Automation'
 __version__ = '20261001.1.5'
+__repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
 
 # packaged libraries are kept to a minimum
 from machine import Pin as PIN, I2C, PWM, UART
@@ -17,25 +18,6 @@ import utime as UTIME
 import framebuf as FRAMEBUF
 import uasyncio as UASYNCIO
 
-
-################## LOGGING ######################
-
-LOGGING_MESSAGE:list = []
-LOGGING_MESSAGE.append(f'Project: {__project__}')
-LOGGING_MESSAGE.append(f'Version: {__version__}')
-
-# def log():
-#       '''Write machine progress somewhere, screen, log, Etc.'''
-
-#       global LOGGING_MESSAGE
-
-#       if not LOGGING_MESSAGE:
-#             return
-
-#       for message in LOGGING_MESSAGE:
-#             print(message)
-
-#       LOGGING_MESSAGE = []
 
 ################## HARDWARE ######################
 
@@ -202,6 +184,12 @@ BUTTON_0 = {
             }
 
 ################## SOFTWARE ######################
+
+################## LOGGING ######################
+
+LOGGING_MESSAGE:list = []
+LOGGING_MESSAGE.append(f'Project: {__project__}')
+LOGGING_MESSAGE.append(f'Version: {__version__}')
 
 ################## DISPLAY SETTINGS ######################
 

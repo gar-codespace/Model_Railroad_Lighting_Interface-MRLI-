@@ -6,9 +6,8 @@ Includes ambient sound effects and visual effects.
 Written to run on a Raspi Pico 2. WiFi not utilized.
 Copyright 2026 Greg Ritacco
 '''
-__author__ = 'Greg Ritacco'
-__repo__ = 'https://github.com/gar-codespace/Diorama_Lighting_Automation'
 
+__author__ = 'Greg Ritacco'
 
 import entities
 import controller
