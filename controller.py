@@ -92,13 +92,11 @@ class MRLI:
 
         while True:
 
-            duration = 1000
-
             try: # Play a sound clip
                 attrib = f'{entities.MACHINE_STATE}_play_sound'
                 getattr(states, attrib)() # IE states.animated_play_sound(), used as a boolean
                 model.get_ambient_clip()
-                duration = self.sound.play_sound()
+                self.sound.play_sound()
             except:
                 pass
 
@@ -110,7 +108,7 @@ class MRLI:
                 pass
 
             model.logger()
-            wait = duration + model.get_pad()
+            wait = model.get_clip_duration() + model.get_pad()
             await entities.UASYNCIO.sleep_ms(wait)            
 
     def poll_the_controls(self):

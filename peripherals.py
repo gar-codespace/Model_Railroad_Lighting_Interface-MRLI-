@@ -121,20 +121,14 @@ class Sound:
     def play_sound(self) ->int:
 
         clip = entities.AMBIENCE[entities.CLIP][0]
-        duration = entities.AMBIENCE[entities.CLIP][1] * 1000 # ms
 
         self.sound_board.play(clip)
-
-        return duration
 
     def play_sound_now(self) ->int:
 
         clip = entities.AMBIENCE[entities.CLIP][0]
-        duration = entities.AMBIENCE[entities.CLIP][1] * 1000 # ms
 
         self.sound_board.play_now(clip)
-
-        return duration
 
     def stop_sound(self):
 

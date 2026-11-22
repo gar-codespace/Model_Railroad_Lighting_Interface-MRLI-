@@ -150,7 +150,7 @@ def _get_index_double() ->tuple:
 
 ################## SOUND CLIPS ######################
 
-def get_ambient_clip() -> tuple:
+def get_ambient_clip() -> str:
     '''Randomly pick a sound clip from the ambient sounds group.'''
     
     ambient_group = getattr(entities, entities.CLIP_G)
@@ -159,12 +159,15 @@ def get_ambient_clip() -> tuple:
     entities.CLIP = ambient_group[select]
     entities.LOGGING_MESSAGE.append(f'Sound Clip: {entities.AMBIENCE[entities.CLIP][2]}')
 
+def get_clip_duration() -> int:
+    '''Clip length in milliseconds.'''
+
+    return entities.AMBIENCE[entities.CLIP][1] * 1000
+
 def get_pad() -> int:
     '''A random ammount of time between sound clips (ms).'''
 
-    pad = entities.RANDINT(entities.PAD_MIN, entities.PAD_MAX)
-
-    return pad
+    return entities.RANDINT(entities.PAD_MIN, entities.PAD_MAX)
 
 
 ################## LIGHTING EFFECTS ######################

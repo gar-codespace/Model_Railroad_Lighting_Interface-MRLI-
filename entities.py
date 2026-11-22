@@ -304,7 +304,7 @@ SINGLES = {
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Dark', 'Maint',   'Day',   'Ovcst', 'Night', 'Twili'), # Waypoint name
-'GROUP':  (   'A1',    'A1',    'A3',      'A3',    'A5',    'A4'), # sound effects group
+'GROUP':  (   'A1',    'A1',    'B1',      'B1',    'D1',    'C1'), # sound effects group
 'HOUR':   (      0,       0,       0,         0,       0,       0),
 'TIME':   (      0,       0,       0,         0,       0,       0), # duration of waypoint
 'RANDOM': (     .0,      .0,      .0,        .0,      .0,      .0),
@@ -327,9 +327,9 @@ SINGLES = {
 ALL_DAY = {
 'E_NAME': 'A Complete Day',
 'CLOCK_CYCLE'  : 250,
-'CLOCK_OFFSET' : .995, # Smaller is faster
+'CLOCK_OFFSET' : .859, # Smaller is faster
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
-'GROUP':  (    'A5',    'A5',    'A5',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A4',    'A5'), # sound effects group
+'GROUP':  (    'D1',    'D1',    'D1',    'C1',    'B1',    'B1',    'B1',    'B1',    'B1',    'C1',    'C1',    'D1'), # sound effects group
 'HOUR':   (      23,       1,       3,       5,       7,       9,      11,      13,      15,      17,      19,      21), # the time of day
 'TIME':   (     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120,     120), # duration of waypoint in real time minutes
 'RANDOM': (      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0,      .0), 
@@ -351,7 +351,7 @@ STORMY = {
 'CLOCK_CYCLE'  : 8,
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Stormy','Roll Out',  'Clear', 'Roll In'), # Waypoint name
-'GROUP':  (    'D1',       'D1',     'D1',      'D1'), # sound effects group
+'GROUP':  (    'E1',       'E1',     'E1',      'E1'), # sound effects group
 'HOUR':   (       0,          0,        0,         0),
 'TIME':   (     1.0,        1.2,      1.0,       1.2), # duration of waypoint in minutes
 'RANDOM': (      .8,         .8,       .8,        .8),
@@ -373,7 +373,7 @@ CLOUDY = {
 'CLOCK_CYCLE'  : 25,
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name
-'GROUP':  (    'A3',     'A3',     'A3',      'A3'), # sound effects group
+'GROUP':  (    'B1',     'B1',     'B1',      'B1'), # sound effects group
 'HOUR':   (       0,        0,        0,         0),
 'TIME':   (       4,      2.5,      2.9,       2.5), # duration of waypoint in real time minutes
 'RANDOM': (      .7,       .7,       .7,        .7),
@@ -452,7 +452,7 @@ A1 = [ # silence
       'clip00'
       ]
 
-A3 = [ # Daytime
+B1 = [ # Daytime
       'clip01', # Seagulls
       'clip02', # Seagulls
       'clip03', # Seagulls
@@ -473,7 +473,7 @@ A3 = [ # Daytime
       'clip36', # Horn
       ]
 
-A4 = [ # Twlight, same as day + crickets + morning + geese - gulls
+C1 = [ # Twlight, same as day + crickets + morning + geese - gulls
       'clip06', # Bells
       'clip07', # Bells
       'clip08', # Bells
@@ -495,7 +495,7 @@ A4 = [ # Twlight, same as day + crickets + morning + geese - gulls
       'clip38'  # Geese
       ]
 
-A5 = [ # Night time, daytime - gulls + crickets + owles
+D1 = [ # Night time, daytime - gulls + crickets + owles
       'clip06', # Bell
       'clip07', # Bell
       'clip08', # Bell
@@ -515,7 +515,7 @@ A5 = [ # Night time, daytime - gulls + crickets + owles
       'clip36', # Horn
       ]
 
-D11 = [ # Stormy
+E2 = [ # Stormy
       'clip27', # Thunder
       'clip27', # Thunder
       'clip28', # Thunder
@@ -534,7 +534,7 @@ D11 = [ # Stormy
       'clip36', # Horn
       ]
 
-D1 = [ # Stormy test
+E1 = [ # Stormy test
       'clip27',
       'clip28',
       'clip29',
