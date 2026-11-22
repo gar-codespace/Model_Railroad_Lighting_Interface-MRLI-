@@ -5,29 +5,6 @@ Model Railroad Lighting Interface (MRLI)
 import entities
 import model
 
-def fade_up_lights():
-    '''
-    Edge case, runs only on startup.
-    This effect fades up LEDs from dark (SINGLES.Dark) to the the values of entities.CURRENT_EFFECT.
-    '''
-# TODO fix hard coding
-    entities.CUR_WP = 0
-    entities.NEXT_WP = 2
-    start_duration = entities.WORKING_BUFFER['TIME'][entities.CUR_WP] * 60000  # minutes * 60 sec/min * 1000 ms/sec = milliseconds
-    entities.WP_DUR = start_duration / entities.DEFAULT_CYCLE
-
-    _set_color_values(entities.CUR_WP)
-    set_pwm_values()
-    _set_up_banks(entities.NEXT_WP)
-    set_bank_relays()
-
-    model.get_color_steps(entities.CUR_WP)
-    while entities.WP_DUR > 0:
-
-        model.increment_waypoint()
-        set_pwm_values()
-
-        entities.UTIME.sleep_ms(entities.DEFAULT_CYCLE)
 
 def set_up_effect():
     '''Load initial values into the Working Buffer.'''
@@ -65,7 +42,7 @@ def _lighting_effect_boiler_plate(index):
 
     model.get_waypoint_duration(index)
     model.get_next_waypoint(index)
-    model.get_color_steps(index)
+    model.get_color_steps()
     model.get_hour_steps()
 
     set_bank_relays()
@@ -132,7 +109,31 @@ def set_banks_to_0():
     entities.PIN(entities.PICO_PIN['BANK_4_R']).value(0)
     entities.PIN(entities.PICO_PIN['SCENIC_R']).value(0)
 
-################ visual effects method #################
+################ visual effects methods #################
+
+def fade_lights(begin:str='Black', end:str=None):
+    '''
+    Fades between two waypoints in the SINGLES dictionary.
+    Effect run time is the TIME value in the begin waypoint.
+    '''
+
+    entities.CUR_WP = entities.WORKING_BUFFER['NAME'].index(begin)
+    entities.NEXT_WP = entities.WORKING_BUFFER['NAME'].index(end)
+    start_duration = entities.WORKING_BUFFER['TIME'][entities.CUR_WP] * 60000  # minutes * 60 sec/min * 1000 ms/sec = milliseconds
+    entities.WP_DUR = start_duration / entities.DEFAULT_CYCLE
+
+    _set_color_values(entities.CUR_WP)
+    set_pwm_values()
+    _set_up_banks(entities.NEXT_WP)
+    set_bank_relays()
+
+    model.get_color_steps()
+    while entities.WP_DUR > 0:
+
+        model.increment_waypoint()
+        set_pwm_values()
+
+        entities.UTIME.sleep_ms(entities.DEFAULT_CYCLE)
 
 def run_vfx():
     '''Runs the associated visual effect if it exists.

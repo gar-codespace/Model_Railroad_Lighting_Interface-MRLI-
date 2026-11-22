@@ -208,24 +208,25 @@ def get_next_waypoint(index):
         if next_index == len(entities.WORKING_BUFFER['TIME']):
             next_index = 0
 
+        entities.CUR_WP = index
         entities.NEXT_WP = int(next_index)
 
-def get_color_steps(index):
+def get_color_steps():
     '''How much each pwm color changes per cycle.'''
     
-    entities.STEP_R = _get_color_delta(index, 'RED') / entities.WP_DUR
-    entities.STEP_G = _get_color_delta(index, 'GREEN') / entities.WP_DUR
-    entities.STEP_B = _get_color_delta(index, 'BLUE') / entities.WP_DUR
-    entities.STEP_W = _get_color_delta(index, 'WARM') / entities.WP_DUR
-    entities.STEP_C = _get_color_delta(index, 'COOL') / entities.WP_DUR
+    entities.STEP_R = _get_color_delta('RED') / entities.WP_DUR
+    entities.STEP_G = _get_color_delta('GREEN') / entities.WP_DUR
+    entities.STEP_B = _get_color_delta('BLUE') / entities.WP_DUR
+    entities.STEP_W = _get_color_delta('WARM') / entities.WP_DUR
+    entities.STEP_C = _get_color_delta('COOL') / entities.WP_DUR
 
-def _get_color_delta(index:int, color:str):
+def _get_color_delta(color:str):
     '''
     The value each color changes between waypoints expressed im PWM steps.
     Can return zero, a positive or negative value.
     '''
 
-    color_begin = entities.WORKING_BUFFER[color][index] # decimal percent
+    color_begin = entities.WORKING_BUFFER[color][entities.CUR_WP] # decimal percent
     color_end = entities.WORKING_BUFFER[color][entities.NEXT_WP] # decimal percent
     color_delta = color_begin - color_end # decimal percent
     color_delta *= entities.PWM_STEPS # pwm steps

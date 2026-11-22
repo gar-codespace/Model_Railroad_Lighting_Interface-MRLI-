@@ -58,7 +58,7 @@ class MRLI:
         model.get_menu_first_item()
         self.main_display.update_display(model.get_welcome_list())
         self.sound.play_sound() # Plays entities.CLIP, default is 'Welcome'
-        lighting.fade_up_lights()
+        lighting.fade_lights(begin='Black', end='Day')
 
 ################ methods in main - await entities.UASYNCIO.gather ##################
 # How do these work without using async def ...?

@@ -303,7 +303,7 @@ SINGLES = {
 'E_NAME': 'Static Effect Collection',
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : 1,
-'NAME':   ( 'Dark', 'Maint',   'Day',   'Ovcst', 'Night', 'Twili'), # Waypoint name
+'NAME':   ('Black', 'Maint',   'Day',   'Ovcst', 'Night', 'Twili'), # Waypoint name
 'GROUP':  (   'A1',    'A1',    'B1',      'B1',    'D1',    'C1'), # sound effects group
 'HOUR':   (      0,       0,       0,         0,       0,       0),
 'TIME':   (   .083,    .083,    .083,      .083,    .083,    .083), # duration of waypoint
@@ -371,7 +371,7 @@ STORMY = {
 CLOUDY = {
 'E_NAME': 'A Cloudy Day',
 'CLOCK_CYCLE'  : 25,
-'CLOCK_OFFSET' : 1,
+'CLOCK_OFFSET' : .8,
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name
 'GROUP':  (    'B1',     'B1',     'B1',      'B1'), # sound effects group
 'HOUR':   (       0,        0,        0,         0),
