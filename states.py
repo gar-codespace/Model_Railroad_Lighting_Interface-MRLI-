@@ -37,13 +37,13 @@ def _into_standby():
 ########### MACHINE_STATE: WELCOME
 
 
-def welcome_turn_left():
+def welcome_anti_clockwise():
     entities.MACHINE_STATE = States.EFFECTS
     entities.LOGGING_MESSAGE.append(f'Machine State: {entities.MACHINE_STATE}')
 
     return model.get_effects_list()
 
-def welcome_turn_right():
+def welcome_clockwise():
     entities.MACHINE_STATE = States.EFFECTS
     entities.LOGGING_MESSAGE.append(f'Machine State: {entities.MACHINE_STATE}')
 
@@ -67,7 +67,7 @@ def welcome_toggle():
 ########### MACHINE_STATE: EFFECTS
 
 
-def effects_turn_left():
+def effects_anti_clockwise():
     '''Scrolls the effects menu.'''
 
     entities.EFFECTS_MENU_FIRST_ITEM -= 1
@@ -76,7 +76,7 @@ def effects_turn_left():
 
     return model.get_effects_list()
 
-def effects_turn_right():
+def effects_clockwise():
     '''Scrolls the effects menu.'''
 
     entities.EFFECTS_MENU_FIRST_ITEM += 1
@@ -187,7 +187,7 @@ def animated_first_line():
 ########### MACHINE_STATE: STATIC
 
 
-def static_turn_left():
+def static_anti_clockwise():
     '''Scroll a color to edit.'''
 
     row = entities.STATIC_SELECT_ROW + 1
@@ -195,7 +195,7 @@ def static_turn_left():
 
     return model.get_status_list()
 
-def static_turn_right():
+def static_clockwise():
     '''Scroll a color to edit.'''
 
     row = entities.STATIC_SELECT_ROW - 1
@@ -259,7 +259,7 @@ def static_first_line():
 ########### MACHINE_STATE: EDIT
 
 
-def edit_turn_left():
+def edit_anti_clockwise():
     '''Reduce the selected colors brightness.'''
 
     index = entities.CURRENT_EFFECT[2]
@@ -276,7 +276,7 @@ def edit_turn_left():
 
     return model.get_status_list()
 
-def edit_turn_right():
+def edit_clockwise():
     '''Increase the selected colors brightness.'''
     
     index = entities.CURRENT_EFFECT[2]

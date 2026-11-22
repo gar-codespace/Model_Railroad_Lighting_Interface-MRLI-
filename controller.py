@@ -42,8 +42,8 @@ class MRLI:
     # Rotary Encoder
         self.en = model.get_encoder(pico_tra=entities.PICO_PIN['TRA'], pico_trb=entities.PICO_PIN['TRB'], pico_psh=entities.PICO_PIN['PSH'], params=entities.ENCODER_0)
 
-        self.en.on(event=self.en.CW, callback=self._cb_clock_wise)
-        self.en.on(event=self.en.ACW, callback=self._cb_anti_clock_wise)
+        self.en.on(event=self.en.CW, callback=self._cb_clockwise)
+        self.en.on(event=self.en.ACW, callback=self._cb_anti_clockwise)
         self.en.on(event=self.en.CLICK, callback=self._cb_click)
         self.en.on(event=self.en.MULTI, callback=self._cb_multi)
 
@@ -128,20 +128,20 @@ class MRLI:
 
 ################# callbacks ##################
 
-    def _cb_clock_wise(self, clicks):
+    def _cb_clockwise(self, clicks):
 
         try:
-            attrib = f'{entities.MACHINE_STATE}_turn_right'
-            display_content = getattr(states, attrib)() # IE states.welcome_turn_right()
+            attrib = f'{entities.MACHINE_STATE}_clockwise'
+            display_content = getattr(states, attrib)() # IE states.welcome_clockwise()
             self.main_display.update_display(display_content)
         except:
             pass        
 
-    def _cb_anti_clock_wise(self, clicks):
+    def _cb_anti_clockwise(self, clicks):
         
         try:
-            attrib = f'{entities.MACHINE_STATE}_turn_left'
-            display_content = getattr(states, attrib)() # IE states.welcome_turn_left()
+            attrib = f'{entities.MACHINE_STATE}_anti_clockwise'
+            display_content = getattr(states, attrib)() # IE states.welcome_anti_clockwise()
             self.main_display.update_display(display_content)
         except:
             pass
