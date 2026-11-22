@@ -10,21 +10,18 @@ def fade_up_lights():
     Edge case, runs only on startup.
     This effect fades up LEDs from dark (SINGLES.Dark) to the the values of entities.CURRENT_EFFECT.
     '''
+# TODO fix hard coding
+    entities.CUR_WP = 0
+    entities.NEXT_WP = 2
+    start_duration = entities.WORKING_BUFFER['TIME'][entities.CUR_WP] * 60000  # minutes * 60 sec/min * 1000 ms/sec = milliseconds
+    entities.WP_DUR = start_duration / entities.DEFAULT_CYCLE
 
-    begin_index = 0
-    end_index = entities.CURRENT_EFFECT[2]
-
-    # entities.WORKING_BUFFER = entities.SINGLES
-    entities.WP_DUR = entities.STARTUP_EFFECT_DURATION / entities.DEFAULT_CYCLE
-    entities.NEXT_WP = end_index
-    entities.CLIP_G =  entities.WORKING_BUFFER['GROUP'][end_index]
-
-    _set_color_values(begin_index)
+    _set_color_values(entities.CUR_WP)
     set_pwm_values()
-    _set_up_banks(end_index)
+    _set_up_banks(entities.NEXT_WP)
     set_bank_relays()
 
-    model.get_color_steps(begin_index)
+    model.get_color_steps(entities.CUR_WP)
     while entities.WP_DUR > 0:
 
         model.increment_waypoint()

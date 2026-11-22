@@ -217,10 +217,10 @@ WAYPOINT_RUN_TIME = 0 # Time the waypoint actually ran (seconds)
 
 MACHINE_STATE:str  = None
 STANDBY_TOGGLE:str = None
-
+########### MACHINE_STATE: WELCOME
 STARTUP_EFFECT_DURATION = 5000 # Milliseconds
 WELCOME_SCREEN = ['M.U.T.T.', 'Metropolitan', 'Union ', 'Transfer', 'Terminal'] # 6 lines maximum, 15 char per line
-
+########### MACHINE_STATE: EFFECTS
 EFFECTS_MENU = { #     Name             Type    Index
              0: ('Maintenance',  'SINGLES',  1),
              1: ('Daytime',      'SINGLES',  2),
@@ -243,10 +243,10 @@ EFFECTS_MENU_STATIC_SYMBOL = '|'
 EFFECTS_MENU_ANIMATED_SYMBOL = '>'
 CURRENT_EFFECT = EFFECTS_MENU[EFFECTS_HILIGHTED_EFFECT] # Must be a STATIC effect. Also used as the default effect.
 EFFECTS_RECT = [0, 'y', 128, 12, 1]
-
+########### MACHINE_STATE: STATIC
 STATIC_SELECT_ROW = 3 # In STATIC state, the encoder moves the rectangle up and down
 STATIC_RECT = [0, 'y', 128, 12, 1]
-
+########### MACHINE_STATE: EDIT
 EDIT_ROUNDING_VALUE = 4
 EDIT_SCREEN_ITEMS = [
                  'WP_NAME',
@@ -306,7 +306,7 @@ SINGLES = {
 'NAME':   ( 'Dark', 'Maint',   'Day',   'Ovcst', 'Night', 'Twili'), # Waypoint name
 'GROUP':  (   'A1',    'A1',    'B1',      'B1',    'D1',    'C1'), # sound effects group
 'HOUR':   (      0,       0,       0,         0,       0,       0),
-'TIME':   (      0,       0,       0,         0,       0,       0), # duration of waypoint
+'TIME':   (   .083,    .083,    .083,      .083,    .083,    .083), # duration of waypoint
 'RANDOM': (     .0,      .0,      .0,        .0,      .0,      .0),
 'RED':    [      0,       0,       0,         0,       0,    .002],
 'GREEN':  [      0,       0,       0,         0,       0,    .016],
