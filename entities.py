@@ -308,14 +308,14 @@ SINGLES = {
 'HOUR':   (      0,       0,       0,         0,       0,       0),
 'TIME':   (      0,       0,       0,         0,       0,       0), # duration of waypoint
 'RANDOM': (     .0,      .0,      .0,        .0,      .0,      .0),
-'RED':    [      0,       0,       0,         0,       0,    .004],
-'GREEN':  [      0,       0,       0,         0,       0,    .006],
-'BLUE':   [      0,       0,       0,         0,   .0035,       0],
-'WARM':   [      0,     .99,     .22,      .002,       0,    .005],
-'COOL':   [      0,     .99,     .02,      .002,   .0008,       0],
+'RED':    [      0,       0,       0,         0,       0,    .002],
+'GREEN':  [      0,       0,       0,         0,       0,    .016],
+'BLUE':   [      0,       0,       0,         0,   .0038,    .003],
+'WARM':   [      0,     .99,     .22,      .004,       0,    .005],
+'COOL':   [      0,     .99,     .02,      .008,    .001,    .001],
 'BANK_0': [      0,       1,       1,         1,       0,      0,],
 'BANK_1': [      0,       1,       0,         0,       0,      0,],
-'BANK_2': [      0,       1,       1,         0,       0,      0,],
+'BANK_2': [      0,       1,       1,         1,       0,      0,],
 'BANK_3': [      0,       0,       1,         0,       0,      0,],
 'BANK_4': [      0,       1,       1,         1,       1,      1,],
 'SCENIC': [      0,       1,       0,         1,       1,      1,],
@@ -327,7 +327,7 @@ SINGLES = {
 ALL_DAY = {
 'E_NAME': 'A Complete Day',
 'CLOCK_CYCLE'  : 250,
-'CLOCK_OFFSET' : .859, # Smaller is faster
+'CLOCK_OFFSET' : .995, # Smaller is faster
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
 'GROUP':  (    'A5',    'A5',    'A5',    'A4',    'A3',    'A3',    'A3',    'A3',    'A3',    'A4',    'A4',    'A5'), # sound effects group
 'HOUR':   (      23,       1,       3,       5,       7,       9,      11,      13,      15,      17,      19,      21), # the time of day
@@ -375,13 +375,13 @@ CLOUDY = {
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name
 'GROUP':  (    'A3',     'A3',     'A3',      'A3'), # sound effects group
 'HOUR':   (       0,        0,        0,         0),
-'TIME':   (       4,      3.5,      2.5,       3.5), # duration of waypoint in real time minutes
+'TIME':   (       4,      2.5,      2.9,       2.5), # duration of waypoint in real time minutes
 'RANDOM': (      .7,       .7,       .7,        .7),
 'RED':    [    0.00,     0.00,     0.00,      0.00],
 'GREEN':  [    0.00,     0.00,     0.00,      0.00],
 'BLUE':   [    0.00,     0.00,     0.00,      0.00],
-'WARM':   [     .22,      .22,     .045,      .045],
-'COOL':   [     .02,      .02,     .026,      .026],
+'WARM':   [     .22,      .22,     .035,      .035],
+'COOL':   [     .02,      .02,     .020,      .020],
 'BANK_0': [       1,        1,        1,         1],
 'BANK_1': [       0,        0,        0,         0],
 'BANK_2': [       1,        1,        1,         1],

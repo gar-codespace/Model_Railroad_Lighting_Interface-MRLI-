@@ -77,7 +77,7 @@ class MRLI:
                 attrib = f'{entities.MACHINE_STATE}_increment_waypoint'
                 getattr(states, attrib)() # IE states.animated_increment_waypoint()
                 lighting.set_pwm_values()
-                self.main_display.update_display(view.get_status_list())
+                self.main_display.update_display(model.get_status_list())
             except:
                 pass
 
