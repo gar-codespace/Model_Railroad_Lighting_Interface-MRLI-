@@ -1,7 +1,7 @@
 '''
 Model Railroad Lighting Interface (MRLI)
 
-Hardware library for the fromt panel buttons.
+Hardware library for the front panel buttons.
 Catches single release, multi release and long press.
 Button actions are triggered by either:
 a) an IRQ event: 'IRQ_TRIGGER':True

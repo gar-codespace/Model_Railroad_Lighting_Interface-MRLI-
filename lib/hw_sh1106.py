@@ -2,7 +2,7 @@
 Model Railroad Lighting Interface (MRLI)
 
 Hardware library for an SH1106 OLED, I2C interface
-imports moved to entities
+Imports moved to entities.
 
 params:
 OLED_0 = {

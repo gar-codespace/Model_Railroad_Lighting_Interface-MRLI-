@@ -2,7 +2,7 @@
 Model Railroad Lighting Interface (MRLI)
 
 Hardware library for an SSD1306 OLED, I2C interface
-imports moved to entities
+Imports moved to entities.
 '''
 __author__ = 'https://github.com/stlehmann/micropython-ssd1306/blob/master/ssd1306.py'
 

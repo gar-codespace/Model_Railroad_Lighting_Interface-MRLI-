@@ -12,7 +12,7 @@ import lighting
 class MRLI:
     '''
     The MRLI display initializes with the welcome screen.
-    The lights fade up from dark.
+    The lights fade in.
     A 'welcome' sound clip is played.
     '''
 

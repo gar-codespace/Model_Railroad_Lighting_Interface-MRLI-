@@ -1,7 +1,7 @@
 '''
 Model Railroad Lighting Interface (MRLI)
-The push button driver library is imported here.
-The rotary encoder driver library is imported here.
+The push button driver library is imported from the parameters dictionary.
+The rotary encoder driver library is imported from the parameters dictionary.
 '''
 
 import entities

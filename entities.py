@@ -300,32 +300,32 @@ STEP_H:float = 0.0 # Increment the hour
 ################## LIGHTING EFFECT DEFINITIONS ######################
 
 SINGLES = {
-'E_NAME': 'Static Effect Collection',
+'EFFECT_NAME': 'Static Effect Collection',
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : 1,
-'NAME':   ('Black', 'Maint',   'Day',   'Ovcst', 'Night', 'Twili'), # Waypoint name
-'GROUP':  (   'A1',    'A1',    'B1',      'B1',    'D1',    'C1'), # sound effects group
-'HOUR':   (      0,       0,       0,         0,       0,       0),
-'TIME':   (   .083,    .083,    .083,      .083,    .083,    .083), # duration of waypoint
-'RANDOM': (     .0,      .0,      .0,        .0,      .0,      .0),
-'RED':    [      0,       0,       0,         0,       0,    .002],
-'GREEN':  [      0,       0,       0,         0,       0,    .016],
-'BLUE':   [      0,       0,       0,         0,   .0038,    .003],
-'WARM':   [      0,     .99,     .22,      .004,       0,    .005],
-'COOL':   [      0,     .99,     .02,      .008,    .001,    .001],
-'BANK_0': [      0,       1,       1,         1,       0,      0,],
-'BANK_1': [      0,       1,       0,         0,       0,      0,],
-'BANK_2': [      0,       1,       1,         1,       0,      0,],
-'BANK_3': [      0,       0,       1,         0,       0,      0,],
-'BANK_4': [      0,       1,       1,         1,       1,      1,],
-'SCENIC': [      0,       1,       0,         1,       1,      1,],
+'NAME':   ('Black','Maintenance','Day','Overcast','Night','Twilight'), # Waypoint name
+'GROUP':  (   'A1',         'A1', 'B1',      'B1',   'D1',      'C1'), # sound effects group
+'HOUR':   (      0,            0,    0,         0,      0,         0),
+'TIME':   (   .083,         .083, .083,      .083,   .083,      .083), # duration of waypoint
+'RANDOM': (     .0,           .0,   .0,        .0,     .0,        .0),
+'RED':    [      0,            0,    0,         0,      0,      .002],
+'GREEN':  [      0,            0,    0,         0,      0,      .016],
+'BLUE':   [      0,            0,    0,         0,  .0038,      .003],
+'WARM':   [      0,          .99,  .22,      .004,      0,      .005],
+'COOL':   [      0,          .99,  .02,      .008,   .001,      .001],
+'BANK_0': [      0,            1,    1,         1,      0,        0,],
+'BANK_1': [      0,            1,    0,         0,      0,        0,],
+'BANK_2': [      0,            1,    1,         1,      0,        0,],
+'BANK_3': [      0,            0,    1,         0,      0,        0,],
+'BANK_4': [      0,            1,    1,         1,      1,        1,],
+'SCENIC': [      0,            1,    0,         1,      1,        1,],
 }
 
 ################## ANIMATED LIGHTING EFFECTS ######################
 
 # Each column of an animated effect is being called a waypoint
 ALL_DAY = {
-'E_NAME': 'A Complete Day',
+'EFFECT_NAME': 'A Complete Day',
 'CLOCK_CYCLE'  : 250,
 'CLOCK_OFFSET' : .860, # Smaller is faster
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
@@ -347,7 +347,7 @@ ALL_DAY = {
 }
 
 STORMY = {
-'E_NAME': 'A Stormy Night',
+'EFFECT_NAME': 'A Stormy Night',
 'CLOCK_CYCLE'  : 8,
 'CLOCK_OFFSET' : 1,
 'NAME':   ( 'Stormy','Roll Out',  'Clear', 'Roll In'), # Waypoint name
@@ -369,7 +369,7 @@ STORMY = {
 }
 
 CLOUDY = {
-'E_NAME': 'A Cloudy Day',
+'EFFECT_NAME': 'A Cloudy Day',
 'CLOCK_CYCLE'  : 25,
 'CLOCK_OFFSET' : .8,
 'NAME':   ( 'Clear','Roll In', 'Cloudy','Roll Out'), # Waypoint name

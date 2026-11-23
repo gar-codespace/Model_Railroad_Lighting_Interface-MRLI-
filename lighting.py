@@ -113,7 +113,7 @@ def set_banks_to_0():
 
 def fade_lights(begin:str='Black', end:str=None):
     '''
-    Fades between two waypoints in the SINGLES dictionary.
+    Fades between two waypoints in the SINGLES dictionary only.
     Effect run time is the TIME value in the begin waypoint.
     '''
 
@@ -136,7 +136,8 @@ def fade_lights(begin:str='Black', end:str=None):
         entities.UTIME.sleep_ms(entities.DEFAULT_CYCLE)
 
 def run_vfx():
-    '''Runs the associated visual effect if it exists.
+    '''
+    Runs the associated visual effect if it exists.
     Sound effects trigger visual effects.
     '''
 
@@ -171,7 +172,6 @@ class VFX:
         for _ in range(sub_set_length):
             pick_one = entities.RANDINT(0, sample_count) # Random integer
             sub_set.append(entities.LIGHTNING[pick_one]) # An entry from entities.LIGHTNING picked at random
-
     # Run the randomly created list
         c = entities.PICO_PIN['COOL']
         for i in sub_set:
