@@ -11,23 +11,24 @@ import entities
 
 
 # register definitions
-SET_CONTRAST = entities.CONST(0x81)
-SET_ENTIRE_ON = entities.CONST(0xA4)
-SET_NORM_INV = entities.CONST(0xA6)
 SET_DISP = entities.CONST(0xAE)
-SET_MEM_ADDR = entities.CONST(0x20)
-SET_COL_ADDR = entities.CONST(0x21)
-SET_PAGE_ADDR = entities.CONST(0x22)
-SET_DISP_START_LINE = entities.CONST(0x40)
-SET_SEG_REMAP = entities.CONST(0xA0)
-SET_MUX_RATIO = entities.CONST(0xA8)
-SET_COM_OUT_DIR = entities.CONST(0xC0)
-SET_DISP_OFFSET = entities.CONST(0xD3)
-SET_COM_PIN_CFG = entities.CONST(0xDA)
 SET_DISP_CLK_DIV = entities.CONST(0xD5)
+SET_MUX_RATIO = entities.CONST(0xA8)
+SET_DISP_OFFSET = entities.CONST(0xD3)
+SET_DISP_START_LINE = entities.CONST(0x40)
+SET_CHARGE_PUMP = entities.CONST(0x8D)
+SET_SEG_REMAP = entities.CONST(0xA0)
+SET_COM_OUT_DIR = entities.CONST(0xC0)
+SET_COM_PIN_CFG = entities.CONST(0xDA)
+SET_CONTRAST = entities.CONST(0x81)
 SET_PRECHARGE = entities.CONST(0xD9)
 SET_VCOM_DESEL = entities.CONST(0xDB)
-SET_CHARGE_PUMP = entities.CONST(0x8D)
+SET_ENTIRE_ON = entities.CONST(0xA4)
+SET_NORM_INV = entities.CONST(0xA6)
+
+SET_PAGE_ADDR = entities.CONST(0x22)
+SET_COL_ADDR = entities.CONST(0x21)
+SET_MEM_ADDR = entities.CONST(0x20)
 
 # Subclassing FrameBuffer provides support for graphics primitives
 # http://docs.micropython.org/en/latest/pyboard/library/framebuf.html
@@ -42,39 +43,30 @@ class SSD1306(entities.FRAMEBUF.FrameBuffer):
         self.init_display()
 
     def init_display(self):
-        for cmd in (
+
+        init_commands = [
             SET_DISP | 0x00,  # off
-            # address setting
-            SET_MEM_ADDR,
-            0x00,  # horizontal
-            # resolution and layout
+            SET_DISP_CLK_DIV | 0x00,
+            SET_MUX_RATIO | self.height - 1,
+            SET_DISP_OFFSET | 0x00,
             SET_DISP_START_LINE | 0x00,
+            SET_CHARGE_PUMP | 0x10 if self.external_vcc else 0x14,
             SET_SEG_REMAP | 0x01,  # column addr 127 mapped to SEG0
-            SET_MUX_RATIO,
-            self.height - 1,
             SET_COM_OUT_DIR | 0x08,  # scan from COM[N] to COM0
-            SET_DISP_OFFSET,
-            0x00,
-            SET_COM_PIN_CFG,
-            0x02 if self.width > 2 * self.height else 0x12,
-            # timing and driving scheme
-            SET_DISP_CLK_DIV,
-            0x80,
-            SET_PRECHARGE,
-            0x22 if self.external_vcc else 0xF1,
-            SET_VCOM_DESEL,
-            0x30,  # 0.83*Vcc
-            # display
-            SET_CONTRAST,
-            0xFF,  # maximum
+            SET_COM_PIN_CFG | 0x02 if self.width > 2 * self.height else 0x12,
+            SET_CONTRAST | 0xFF,  # maximum
+            SET_PRECHARGE | 0x22 if self.external_vcc else 0xF1,
+            SET_VCOM_DESEL | 0x30,  # 0.83*Vcc
             SET_ENTIRE_ON,  # output follows RAM contents
             SET_NORM_INV,  # not inverted
-            # charge pump
-            SET_CHARGE_PUMP,
-            0x10 if self.external_vcc else 0x14,
+            SET_MEM_ADDR,
             SET_DISP | 0x01,
-        ):  # on
-            self.write_cmd(cmd)
+        ]
+
+        for cmd in init_commands:
+            self._write_cmd(cmd)
+            entities.UTIME.sleep_ms(1)
+
         self.fill(0)
         self.show()
 
@@ -123,6 +115,3 @@ class Driver_I2C(SSD1306):
     def write_data(self, buf):
         self.write_list[1] = buf
         self.i2c.writevto(self.addr, self.write_list)
-
-
-

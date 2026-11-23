@@ -327,7 +327,7 @@ SINGLES = {
 ALL_DAY = {
 'E_NAME': 'A Complete Day',
 'CLOCK_CYCLE'  : 250,
-'CLOCK_OFFSET' : .859, # Smaller is faster
+'CLOCK_OFFSET' : .860, # Smaller is faster
 'NAME':   ( '23:00', '01:00', '03:00', '05:00', '07:00', '09:00', '11:00', '13:00', '15:00', '17:00', '19:00', '21:00'), # Waypoint name
 'GROUP':  (    'D1',    'D1',    'D1',    'C1',    'B1',    'B1',    'B1',    'B1',    'B1',    'C1',    'C1',    'D1'), # sound effects group
 'HOUR':   (      23,       1,       3,       5,       7,       9,      11,      13,      15,      17,      19,      21), # the time of day
