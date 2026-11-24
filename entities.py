@@ -2,7 +2,7 @@
 Model Railroad Lighting Interface (MRLI)
 
 All the settings for the program are here.
-All the packaged imports are in one place.
+All the packaged libraries are in one place.
 '''
 
 __project__ = 'Model Railroad Lighting Automation'
